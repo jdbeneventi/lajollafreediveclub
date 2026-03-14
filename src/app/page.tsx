@@ -132,8 +132,11 @@ export default function Home() {
       {/* ═══ HERO ═══ */}
       <section className="relative min-h-screen flex items-center justify-center text-center overflow-hidden">
         {/* BG */}
-        <div className="absolute inset-0 bg-gradient-to-b from-deep via-ocean via-55% to-teal" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_120%_60%_at_50%_100%,rgba(61,184,164,0.15)_0%,transparent_70%)]" />
+        <div className="absolute inset-0">
+          <img src="/images/hero.jpg" alt="" className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-deep/60" />
+          <div className="absolute inset-0 bg-gradient-to-b from-deep/80 via-deep/40 to-ocean/80" />
+        </div>
 
         {/* Waves */}
         <div className="absolute bottom-0 left-0 right-0 h-[200px] overflow-hidden">
@@ -205,8 +208,9 @@ export default function Home() {
       <section className="bg-white py-28 px-6">
         <div className="max-w-[1240px] mx-auto grid md:grid-cols-2 gap-20 items-center">
           <Reveal>
-            <div className="relative h-[520px] rounded-2xl overflow-hidden bg-gradient-to-br from-ocean to-teal">
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_70%,rgba(61,184,164,0.3)_0%,transparent_50%)]" />
+            <div className="relative h-[520px] rounded-2xl overflow-hidden">
+              <img src="/images/intro.jpg" alt="La Jolla coastline" className="w-full h-full object-cover" />
+              <div className="absolute inset-0 bg-gradient-to-t from-deep/70 via-transparent to-transparent" />
               <div className="absolute bottom-8 left-8 right-8 text-white">
                 <div className="font-serif text-6xl leading-none mb-2">70%</div>
                 <p className="text-sm opacity-70">
@@ -347,8 +351,9 @@ export default function Home() {
           </Reveal>
 
           <Reveal delay={100}>
-            <div className="relative h-[440px] rounded-2xl overflow-hidden bg-gradient-to-br from-coral to-sun">
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_60%_40%,rgba(255,255,255,0.15)_0%,transparent_50%)]" />
+            <div className="relative h-[440px] rounded-2xl overflow-hidden">
+              <img src="/images/camp.jpg" alt="La Jolla Shores beach" className="w-full h-full object-cover" />
+              <div className="absolute inset-0 bg-gradient-to-t from-deep/40 via-transparent to-transparent" />
               <div className="absolute top-6 right-6 bg-white/20 backdrop-blur-md px-5 py-3 rounded-xl text-white text-center">
                 <div className="font-serif text-2xl">8–16</div>
                 <small className="text-[0.7rem] opacity-80">years old</small>
