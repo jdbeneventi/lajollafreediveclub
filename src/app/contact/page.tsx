@@ -17,7 +17,13 @@ export default function ContactPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await fetch("https://formspree.io/f/mojknqlk", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(Object.fromEntries(new FormData(e.target as HTMLFormElement))) });
+    await fetch("https://formspree.io/f/mojknqlk", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(
+        Object.fromEntries(new FormData(e.target as HTMLFormElement))
+      ),
+    });
     setSubmitted(true);
   };
 
@@ -67,6 +73,7 @@ export default function ContactPage() {
                     <label className="block text-sm font-medium mb-2">First Name *</label>
                     <input
                       type="text"
+                      name="first_name"
                       required
                       className="w-full px-4 py-3 rounded-xl bg-salt border border-deep/10 text-deep outline-none focus:border-teal transition-colors"
                       placeholder="Your first name"
@@ -76,6 +83,7 @@ export default function ContactPage() {
                     <label className="block text-sm font-medium mb-2">Last Name *</label>
                     <input
                       type="text"
+                      name="last_name"
                       required
                       className="w-full px-4 py-3 rounded-xl bg-salt border border-deep/10 text-deep outline-none focus:border-teal transition-colors"
                       placeholder="Your last name"
@@ -87,6 +95,7 @@ export default function ContactPage() {
                   <label className="block text-sm font-medium mb-2">Email *</label>
                   <input
                     type="email"
+                    name="email"
                     required
                     className="w-full px-4 py-3 rounded-xl bg-salt border border-deep/10 text-deep outline-none focus:border-teal transition-colors"
                     placeholder="you@email.com"
@@ -97,6 +106,7 @@ export default function ContactPage() {
                   <label className="block text-sm font-medium mb-2">Phone</label>
                   <input
                     type="tel"
+                    name="phone"
                     className="w-full px-4 py-3 rounded-xl bg-salt border border-deep/10 text-deep outline-none focus:border-teal transition-colors"
                     placeholder="(optional)"
                   />
@@ -123,7 +133,10 @@ export default function ContactPage() {
                   <label className="block text-sm font-medium mb-2">
                     Experience Level
                   </label>
-                  <select className="w-full px-4 py-3 rounded-xl bg-salt border border-deep/10 text-deep outline-none focus:border-teal transition-colors">
+                  <select
+                    name="experience_level"
+                    className="w-full px-4 py-3 rounded-xl bg-salt border border-deep/10 text-deep outline-none focus:border-teal transition-colors"
+                  >
                     <option>Complete beginner — never freedived</option>
                     <option>Some experience — snorkeling / casual diving</option>
                     <option>Certified freediver (AIDA 2 or equivalent)</option>
@@ -137,6 +150,7 @@ export default function ContactPage() {
                     Anything else we should know?
                   </label>
                   <textarea
+                    name="message"
                     rows={4}
                     className="w-full px-4 py-3 rounded-xl bg-salt border border-deep/10 text-deep outline-none focus:border-teal transition-colors resize-none"
                     placeholder="Questions, goals, concerns — we want to hear it all."
