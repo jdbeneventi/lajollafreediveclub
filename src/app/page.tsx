@@ -85,6 +85,7 @@ const blogPosts = [
     date: "March 2026",
     readTime: "12 min read",
     gradient: "from-ocean to-teal",
+    image: "/images/blog-beginners.jpg",
   },
   {
     slug: "breath-hold-training-surfers",
@@ -95,6 +96,7 @@ const blogPosts = [
     date: "March 2026",
     readTime: "8 min read",
     gradient: "from-[#14566a] to-seafoam",
+    image: "/images/blog-surfers.jpg",
   },
   {
     slug: "best-freediving-spots-san-diego",
@@ -105,6 +107,7 @@ const blogPosts = [
     date: "March 2026",
     readTime: "10 min read",
     gradient: "from-deep to-[#14566a]",
+    image: "/images/blog-spots.jpg",
   },
 ];
 
@@ -422,7 +425,9 @@ export default function Home() {
                   href={`/blog/${post.slug}`}
                   className="block bg-white rounded-2xl overflow-hidden no-underline text-deep hover:-translate-y-1 hover:shadow-[0_16px_48px_rgba(10,22,40,0.08)] transition-all group"
                 >
-                  <div className={`${i === 0 ? "h-[280px]" : "h-[200px]"} relative bg-gradient-to-br ${post.gradient}`}>
+                  <div className={`${i === 0 ? "h-[280px]" : "h-[200px]"} relative`}>
+                    <img src={post.image} alt="" className="w-full h-full object-cover" />
+                    <div className={`absolute inset-0 bg-gradient-to-br ${post.gradient} opacity-30`} />
                     <span className="absolute bottom-4 left-4 px-3 py-1.5 bg-white/15 backdrop-blur-md rounded-md text-white text-[0.7rem] font-semibold tracking-wide uppercase">
                       {post.category}
                     </span>
