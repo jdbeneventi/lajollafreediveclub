@@ -10,10 +10,10 @@ export function EmailCapture({
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (email && email.includes("@")) {
-      // TODO: Connect to email service (ConvertKit, Mailchimp, etc.)
+    await fetch("https://api.convertkit.com/v3/forms/9207242/subscribe", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ api_key: "SQ-xRHb2BJ5doZZpTOTwew", email: email }) });
       setSubmitted(true);
       setEmail("");
       setTimeout(() => setSubmitted(false), 4000);
