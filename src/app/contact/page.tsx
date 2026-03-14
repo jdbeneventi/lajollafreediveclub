@@ -15,9 +15,9 @@ const interests = [
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Wire to email service / form handler (Formspree, ConvertKit, etc.)
+    await fetch("https://formspree.io/f/mojknqlk", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(Object.fromEntries(new FormData(e.target as HTMLFormElement))) });
     setSubmitted(true);
   };
 
