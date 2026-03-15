@@ -1,12 +1,59 @@
 import { NextResponse } from "next/server";
 
-// Seasonal average water temps for La Jolla (Scripps Pier historical data, °F)
+// Seasonal averages (°F) from Scripps Pier 100+ year record
 const SEASONAL_TEMPS: Record<number, number> = {
   0: 58, 1: 58, 2: 59, 3: 60, 4: 62, 5: 64,
   6: 67, 7: 69, 8: 70, 9: 67, 10: 63, 11: 59,
 };
 
-// Source 1: seatemperature.net — reliable, updated daily, satellite-derived
+// PRIMARY: NDBC Station 46254 real-time text file
+// Scripps Nearshore Waverider Buoy — sea temp at 0.46m depth, 46m water depth
+// Updates every 30 minutes, columns are space-separated
+// Header: #YY MM DD hh mm WDIR WSPD GST WVHT DPD APD MWD PRES ATMP WTMP DEWP VIS PTDY TIDE
+async function fetchFrom46254Realtime(): Promise<{ temp: number; waveHt: number | null; wavePd: number | null; updated: string } | null> {
+  try {
+    const res = await fetch("https://www.ndbc.noaa.gov/data/realtime2/46254.txt", {
+      next: { revalidate: 600 },
+      headers: { "User-Agent": "LaJollaFreediveClub/1.0" },
+      signal: AbortSignal.timeout(8000),
+    });
+    if (!res.ok) return null;
+    const text = await res.text();
+    const lines = text.trim().split("\n");
+
+    // Skip header lines (start with #)
+    for (const line of lines) {
+      if (line.startsWith("#")) continue;
+      const cols = line.trim().split(/\s+/);
+      if (cols.length < 15) continue;
+
+      // WTMP is column index 14 (0-based)
+      const wtmp = cols[14];
+      if (wtmp === "MM") continue; // MM = missing
+
+      const tempC = parseFloat(wtmp);
+      if (isNaN(tempC) || tempC < 5 || tempC > 35) continue;
+
+      const tempF = Math.round(tempC * 9 / 5 + 32);
+      const year = cols[0], month = cols[1], day = cols[2], hour = cols[3], min = cols[4];
+      const updated = `${year}-${month}-${day}T${hour}:${min}:00Z`;
+
+      // Also grab wave data if available
+      const wvht = cols[8] !== "MM" ? parseFloat(cols[8]) : null;
+      const dpd = cols[9] !== "MM" ? parseFloat(cols[9]) : null;
+
+      // Convert wave height from meters to feet
+      const waveHtFt = wvht !== null ? Math.round(wvht * 3.281 * 10) / 10 : null;
+
+      return { temp: tempF, waveHt: waveHtFt, wavePd: dpd, updated };
+    }
+    return null;
+  } catch {
+    return null;
+  }
+}
+
+// FALLBACK: seatemperature.net (satellite-derived, updated daily)
 async function fetchFromSeaTempNet(): Promise<number | null> {
   try {
     const res = await fetch(
@@ -20,77 +67,22 @@ async function fetchFromSeaTempNet(): Promise<number | null> {
     if (!res.ok) return null;
     const html = await res.text();
 
-    // Look for the current temperature in Celsius — shown prominently on the page
-    // Pattern: "Current Water Temperature" section followed by a temp value
-    // The page shows temp like "14.7°C"
-    const celsiusMatch = html.match(/Current Water Temperature[\s\S]{0,200}?([\d.]+)\s*°C/i);
-    if (celsiusMatch) {
-      const celsius = parseFloat(celsiusMatch[1]);
-      if (!isNaN(celsius) && celsius > 5 && celsius < 35) {
-        return Math.round(celsius * 9 / 5 + 32);
-      }
+    // Only match Celsius values — Fahrenheit values on the page appear in unrelated text
+    const p1 = html.match(/Current Water Temperature[\s\S]{0,300}?([\d]+\.[\d]+)\s*°C/i);
+    if (p1) {
+      const c = parseFloat(p1[1]);
+      if (!isNaN(c) && c > 5 && c < 35) return Math.round(c * 9 / 5 + 32);
     }
-
-    // Also try matching Fahrenheit directly
-    const fahrenheitMatch = html.match(/([\d.]+)\s*°F/i);
-    if (fahrenheitMatch) {
-      const f = parseFloat(fahrenheitMatch[1]);
-      if (!isNaN(f) && f > 40 && f < 90) return Math.round(f);
+    const p2 = html.match(/([\d]+\.[\d]+)\s*°C[\s\S]{0,50}?Today/i);
+    if (p2) {
+      const c = parseFloat(p2[1]);
+      if (!isNaN(c) && c > 5 && c < 35) return Math.round(c * 9 / 5 + 32);
     }
-
-    return null;
-  } catch {
-    return null;
-  }
-}
-
-// Source 2: NDBC station RSS feeds
-async function fetchFromNDBC(stationId: string): Promise<number | null> {
-  try {
-    const res = await fetch(
-      `https://www.ndbc.noaa.gov/data/latest_obs/${stationId}.rss`,
-      {
-        next: { revalidate: 600 },
-        headers: { "User-Agent": "LaJollaFreediveClub/1.0" },
-        signal: AbortSignal.timeout(5000),
-      }
-    );
-    if (!res.ok) return null;
-    const xml = await res.text();
-    const descs = xml.match(/<description><!\[CDATA\[([\s\S]*?)\]\]><\/description>/g);
-    if (!descs || descs.length < 2) return null;
-
-    for (const label of ["Sea Temperature", "Water Temperature", "Sea Surface Temperature"]) {
-      const re = new RegExp(`<strong>${label}:</strong>\\s*([\\d.]+)`, "i");
-      const m = descs[1].match(re);
-      if (m) {
-        const temp = parseFloat(m[1]);
-        if (!isNaN(temp)) return temp < 40 ? Math.round(temp * 9 / 5 + 32) : Math.round(temp);
-      }
+    const p3 = html.match(/today is\s*([\d]+)\s*°C/i);
+    if (p3) {
+      const c = parseFloat(p3[1]);
+      if (!isNaN(c) && c > 5 && c < 35) return Math.round(c * 9 / 5 + 32);
     }
-    return null;
-  } catch {
-    return null;
-  }
-}
-
-// Source 3: NDBC mobile page
-async function fetchFromNDBCMobile(stationId: string): Promise<number | null> {
-  try {
-    const res = await fetch(
-      `https://www.ndbc.noaa.gov/mobile/station.php?station=${stationId}`,
-      {
-        next: { revalidate: 600 },
-        headers: { "User-Agent": "LaJollaFreediveClub/1.0" },
-        signal: AbortSignal.timeout(5000),
-      }
-    );
-    if (!res.ok) return null;
-    const html = await res.text();
-    const m = html.match(/Water Temp:\s*(\d+)\s*°F/i);
-    if (m) return parseInt(m[1]);
-    const mc = html.match(/Water Temp:\s*(\d+)\s*°C/i);
-    if (mc) return Math.round(parseInt(mc[1]) * 9 / 5 + 32);
     return null;
   } catch {
     return null;
@@ -102,27 +94,27 @@ export async function GET() {
     let waterTemp: number | null = null;
     let tempSource = "";
     let isEstimate = false;
+    let buoyWaveHt: number | null = null;
+    let buoyWavePd: number | null = null;
+    let buoyUpdated: string | null = null;
 
-    // Try sources in order of reliability
-    waterTemp = await fetchFromSeaTempNet();
-    if (waterTemp) { tempSource = "NOAA satellite (seatemperature.net)"; }
-
-    if (!waterTemp) {
-      waterTemp = await fetchFromNDBC("46254");
-      if (waterTemp) tempSource = "NDBC Scripps Nearshore Buoy";
+    // Source 1: NDBC 46254 real-time text file (best source — actual buoy at Scripps, 30min updates)
+    const buoyData = await fetchFrom46254Realtime();
+    if (buoyData) {
+      waterTemp = buoyData.temp;
+      tempSource = "Scripps Nearshore Buoy (46254)";
+      buoyWaveHt = buoyData.waveHt;
+      buoyWavePd = buoyData.wavePd;
+      buoyUpdated = buoyData.updated;
     }
 
+    // Source 2: seatemperature.net (satellite, daily)
     if (!waterTemp) {
-      waterTemp = await fetchFromNDBC("ljpc1");
-      if (waterTemp) tempSource = "NDBC Scripps Pier";
+      waterTemp = await fetchFromSeaTempNet();
+      if (waterTemp) tempSource = "NOAA satellite (seatemperature.net)";
     }
 
-    if (!waterTemp) {
-      waterTemp = await fetchFromNDBCMobile("46254");
-      if (waterTemp) tempSource = "NDBC Scripps Nearshore (mobile)";
-    }
-
-    // Seasonal fallback
+    // Source 3: Seasonal estimate
     if (!waterTemp) {
       const month = new Date().getMonth();
       waterTemp = SEASONAL_TEMPS[month] || 62;
@@ -150,15 +142,12 @@ export async function GET() {
             time: p.t,
             height: parseFloat(p.v),
           }));
-
           for (let i = 1; i < preds.length - 1; i++) {
-            if (preds[i].height > preds[i - 1].height && preds[i].height > preds[i + 1].height) {
+            if (preds[i].height > preds[i - 1].height && preds[i].height > preds[i + 1].height)
               tides.push({ time: preds[i].time, height: preds[i].height.toFixed(1), type: "high" });
-            } else if (preds[i].height < preds[i - 1].height && preds[i].height < preds[i + 1].height) {
+            else if (preds[i].height < preds[i - 1].height && preds[i].height < preds[i + 1].height)
               tides.push({ time: preds[i].time, height: preds[i].height.toFixed(1), type: "low" });
-            }
           }
-
           if (tides.length >= 2) {
             const pacificNow = new Date(now.toLocaleString("en-US", { timeZone: "America/Los_Angeles" }));
             const currentMinutes = pacificNow.getHours() * 60 + pacificNow.getMinutes();
@@ -182,13 +171,16 @@ export async function GET() {
         water_temp: waterTemp,
         temp_source: tempSource,
         is_estimate: isEstimate,
+        buoy_wave_ht: buoyWaveHt,
+        buoy_wave_pd: buoyWavePd,
+        buoy_updated: buoyUpdated,
         tides,
         tide_state: tideState,
         updated: new Date().toISOString(),
       },
       {
         headers: {
-          "Cache-Control": "public, s-maxage=1800, stale-while-revalidate=3600",
+          "Cache-Control": "public, s-maxage=600, stale-while-revalidate=1200",
         },
       }
     );
