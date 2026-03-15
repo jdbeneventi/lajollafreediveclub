@@ -7,6 +7,7 @@ import { Logo } from "./Logo";
 const links = [
   { href: "/programs", label: "Programs" },
   { href: "/camp-garibaldi", label: "Camp Garibaldi" },
+  { href: "/conditions", label: "Conditions" },
   { href: "/blog", label: "Journal" },
   { href: "/about", label: "About" },
 ];

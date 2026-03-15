@@ -1,0 +1,256 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import { Reveal } from "@/components/Reveal";
+import { ConditionsWidget } from "./ConditionsWidget";
+
+export const metadata: Metadata = {
+  title: "Dive Conditions — La Jolla Real-Time Ocean Data",
+  description:
+    "Real-time wave height, swell period, wind, and water temperature at Scripps Pier, La Jolla. Freediving conditions report, pier cam, and local dive spot guidance for San Diego freedivers.",
+  keywords: [
+    "La Jolla dive conditions",
+    "Scripps Pier wave data",
+    "La Jolla water temperature",
+    "freediving conditions San Diego",
+    "La Jolla Cove visibility",
+  ],
+};
+
+const spots = [
+  {
+    name: "La Jolla Cove",
+    depth: "5–30 ft",
+    best: "Small swell, light wind, morning",
+    notes: "Protected from south swell. Best vis on incoming tide with NW wind or calm. Avoid after rain.",
+  },
+  {
+    name: "La Jolla Shores",
+    depth: "10–40 ft",
+    best: "Low swell, calm wind",
+    notes: "Sandy entry, gradual depth. Gets surge on south swells. Best on flat days or with north wind.",
+  },
+  {
+    name: "La Jolla Canyon",
+    depth: "30–80+ ft",
+    best: "Calm conditions only",
+    notes: "Current can rip along the rim. Only dive with experienced buddies on good days. Check for upwelling.",
+  },
+  {
+    name: "Cardiff Reef",
+    depth: "10–25 ft",
+    best: "Low swell, incoming tide",
+    notes: "Warmer water than La Jolla. Leopard sharks in summer. Best vis on incoming tide, calm mornings.",
+  },
+];
+
+const resources = [
+  {
+    name: "Scripps Pier Cam (Surface)",
+    url: "https://scripps.ucsd.edu/piercam",
+    desc: "Live view of La Jolla Shores from Scripps Pier. Best way to check surface conditions visually.",
+  },
+  {
+    name: "Scripps Pier Cam (Underwater)",
+    url: "https://coollab.ucsd.edu/pierviz/",
+    desc: "Live underwater camera at ~13ft depth on a pier piling. Shows vis, marine life, and water clarity.",
+  },
+  {
+    name: "CDIP La Jolla Forecast",
+    url: "https://cdip.ucsd.edu/themes/?d2=p70:s:073:st:1",
+    desc: "Wave model forecast from Scripps' Coastal Data Information Program. The most accurate local source.",
+  },
+  {
+    name: "Surf Forecast — San Diego",
+    url: "https://www.surf-forecast.com/regions/San-Diego-County",
+    desc: "Swell forecast by break. Check La Jolla Cove, La Jolla Shores, and Scripps Pier specifically.",
+  },
+  {
+    name: "NDBC Buoy LJPC1",
+    url: "https://www.ndbc.noaa.gov/station_page.php?station=ljpc1",
+    desc: "Raw buoy data from Scripps Pier — wave height, period, wind, updated every 30 minutes.",
+  },
+  {
+    name: "2026 Tide Calendar (PDF)",
+    url: "https://scripps.ucsd.edu/system/files/2025-12/Tides2026.pdf",
+    desc: "Scripps tide predictions for the year. Incoming tide generally means better vis for freediving.",
+  },
+  {
+    name: "Sea Surface Temperature",
+    url: "https://data.caloos.org/#dashboards/sensors/6f6e75db-710c-491a-87d6-af4a4d065537/by-station?selected=120738",
+    desc: "Real-time SST from CalOOS. Helps decide between your 3mm and 5mm wetsuit.",
+  },
+];
+
+export default function ConditionsPage() {
+  return (
+    <>
+      {/* Header */}
+      <section className="bg-gradient-to-b from-deep to-ocean pt-36 pb-20 px-6 text-center">
+        <Reveal>
+          <div className="section-label text-seafoam before:bg-seafoam justify-center">
+            Dive Conditions
+          </div>
+          <h1 className="font-serif text-[clamp(2.5rem,5vw,4rem)] text-white font-normal leading-tight tracking-tight mb-6">
+            Know before you go
+          </h1>
+          <p className="text-lg text-white/60 max-w-[560px] mx-auto leading-relaxed">
+            Real-time ocean data from Scripps Pier, live cameras, and
+            freediving-specific guidance for La Jolla dive spots.
+          </p>
+        </Reveal>
+      </section>
+
+      {/* Live Data Widget */}
+      <section className="bg-salt py-16 px-6">
+        <div className="max-w-[900px] mx-auto">
+          <Reveal>
+            <ConditionsWidget />
+          </Reveal>
+        </div>
+      </section>
+
+      {/* Pier Cams */}
+      <section className="bg-white py-16 px-6">
+        <div className="max-w-[900px] mx-auto">
+          <Reveal>
+            <div className="section-label">Live cameras</div>
+            <h2 className="section-title mb-8">Eyes on the water</h2>
+            <div className="grid md:grid-cols-2 gap-6">
+              <a
+                href="https://scripps.ucsd.edu/piercam"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block bg-salt rounded-2xl overflow-hidden no-underline text-deep hover:-translate-y-1 hover:shadow-lg transition-all group"
+              >
+                <div className="h-[180px] bg-gradient-to-br from-ocean to-teal flex items-center justify-center">
+                  <div className="text-center text-white">
+                    <div className="font-serif text-2xl mb-1">Surface Cam</div>
+                    <div className="text-sm opacity-60">Scripps Pier → La Jolla Shores</div>
+                  </div>
+                </div>
+                <div className="p-5">
+                  <p className="text-sm text-[#5a6a7a] leading-relaxed">
+                    Live view of La Jolla Shores from Scripps Pier. Check surface
+                    conditions, swell size, and wind chop before heading out.
+                  </p>
+                  <span className="text-teal text-sm font-medium mt-3 block group-hover:underline">
+                    View live cam →
+                  </span>
+                </div>
+              </a>
+              <a
+                href="https://coollab.ucsd.edu/pierviz/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block bg-salt rounded-2xl overflow-hidden no-underline text-deep hover:-translate-y-1 hover:shadow-lg transition-all group"
+              >
+                <div className="h-[180px] bg-gradient-to-br from-deep to-ocean flex items-center justify-center">
+                  <div className="text-center text-white">
+                    <div className="font-serif text-2xl mb-1">Underwater Cam</div>
+                    <div className="text-sm opacity-60">~13ft depth at Scripps Pier</div>
+                  </div>
+                </div>
+                <div className="p-5">
+                  <p className="text-sm text-[#5a6a7a] leading-relaxed">
+                    Live underwater camera on a pier piling. See actual visibility,
+                    marine life, and water clarity in real time.
+                  </p>
+                  <span className="text-teal text-sm font-medium mt-3 block group-hover:underline">
+                    View underwater cam →
+                  </span>
+                </div>
+              </a>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* Spot Guide */}
+      <section className="bg-salt py-16 px-6">
+        <div className="max-w-[900px] mx-auto">
+          <Reveal>
+            <div className="section-label">Spot guide</div>
+            <h2 className="section-title mb-4">Reading the conditions</h2>
+            <p className="section-desc mb-10">
+              Every spot responds differently to swell, wind, and tide. Here&apos;s
+              what to look for at each of our regular dive sites.
+            </p>
+          </Reveal>
+          <div className="space-y-4">
+            {spots.map((spot, i) => (
+              <Reveal key={spot.name} delay={i * 60}>
+                <div className="bg-white rounded-xl p-6 md:p-8">
+                  <div className="flex flex-col md:flex-row md:items-start gap-4 md:gap-8">
+                    <div className="md:w-48 shrink-0">
+                      <h3 className="font-serif text-xl mb-1">{spot.name}</h3>
+                      <span className="text-xs text-[#5a6a7a]">{spot.depth}</span>
+                    </div>
+                    <div className="flex-1">
+                      <div className="text-sm mb-2">
+                        <span className="font-semibold text-teal">Best conditions: </span>
+                        <span className="text-[#2a2a2a]">{spot.best}</span>
+                      </div>
+                      <p className="text-sm text-[#5a6a7a] leading-relaxed">{spot.notes}</p>
+                    </div>
+                  </div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Resources */}
+      <section className="bg-white py-16 px-6">
+        <div className="max-w-[900px] mx-auto">
+          <Reveal>
+            <div className="section-label">Resources</div>
+            <h2 className="section-title mb-4">The full toolkit</h2>
+            <p className="section-desc mb-10">
+              These are the same sources we check every morning before deciding
+              where to dive. Bookmark the ones that matter to you.
+            </p>
+          </Reveal>
+          <div className="grid md:grid-cols-2 gap-4">
+            {resources.map((r, i) => (
+              <Reveal key={r.name} delay={i * 40}>
+                <a
+                  href={r.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block bg-salt rounded-xl p-5 no-underline text-deep hover:-translate-y-0.5 hover:shadow-md transition-all group"
+                >
+                  <h3 className="text-sm font-semibold mb-2 group-hover:text-teal transition-colors">
+                    {r.name} <span className="opacity-40">↗</span>
+                  </h3>
+                  <p className="text-xs text-[#5a6a7a] leading-relaxed">{r.desc}</p>
+                </a>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="bg-deep py-20 px-6 text-center">
+        <Reveal>
+          <div className="max-w-[500px] mx-auto">
+            <h2 className="font-serif text-3xl text-white mb-4">
+              Conditions look good?
+            </h2>
+            <p className="text-white/50 text-sm mb-8 leading-relaxed">
+              Join our Saturday group sessions. We check conditions every
+              morning and pick the best spot for the day.
+            </p>
+            <Link
+              href="/contact"
+              className="inline-flex px-8 py-3 bg-coral text-white rounded-full font-semibold no-underline hover:-translate-y-0.5 hover:shadow-[0_8px_25px_rgba(232,115,74,0.4)] transition-all"
+            >
+              Join the club →
+            </Link>
+          </div>
+        </Reveal>
+      </section>
+    </>
+  );
+}
