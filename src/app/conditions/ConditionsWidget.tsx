@@ -117,7 +117,7 @@ export function ConditionsWidget() {
     fetch("/api/conditions").then(r => r.text()).then(xml => { setBuoy(parseBuoyRSS(xml)); setLastRefresh(nowPacific()); }).catch(() => {}).finally(() => setLoading(false));
     fetch("/api/visibility").then(r => r.json()).then(d => setVis(d)).catch(() => {});
     fetch("/api/watertemp").then(r => r.json()).then(d => {
-      if (d.water_temp) { const n = parseFloat(d.water_temp); if (!isNaN(n)) setWaterTemp(n < 40 ? Math.round(n * 9/5 + 32) : Math.round(n)); }
+      if (d.water_temp && !isNaN(d.water_temp)) setWaterTemp(Math.round(d.water_temp));
       if (d.tide_state) setTideState(d.tide_state);
       if (d.tides) setTides(d.tides);
     }).catch(() => {});
@@ -238,7 +238,7 @@ export function ConditionsWidget() {
                 </div>
               ))}
             </div>
-            <p className="text-[10px] text-[#5a6a7a] mt-2">Incoming tide generally improves vis. Best diving is 1\u20132 hours into an incoming tide.</p>
+            <p className="text-[10px] text-[#5a6a7a] mt-2">Incoming tide generally improves vis. Best diving is 1–2 hours into an incoming tide.</p>
           </div>
         )}
 
@@ -251,7 +251,7 @@ export function ConditionsWidget() {
             { label: "Wave forecast", url: "https://cdip.ucsd.edu/themes/?d2=p70:s:073:st:1" },
             { label: "Beach advisories", url: "https://www.sdbeachinfo.com/" },
           ].map((link) => (
-            <a key={link.label} href={link.url} target="_blank" rel="noopener noreferrer" className="px-3 py-1.5 bg-white rounded-full text-xs text-teal font-medium no-underline hover:shadow-sm transition-shadow">{link.label} \u2197</a>
+            <a key={link.label} href={link.url} target="_blank" rel="noopener noreferrer" className="px-3 py-1.5 bg-white rounded-full text-xs text-teal font-medium no-underline hover:shadow-sm transition-shadow">{link.label} ↗</a>
           ))}
         </div>
       </div>
@@ -266,7 +266,7 @@ export function ConditionsWidget() {
           </p>
         </div>
         <a href="/contact" className="shrink-0 px-6 py-3 bg-coral text-white rounded-full font-medium text-sm no-underline hover:-translate-y-0.5 hover:shadow-[0_8px_25px_rgba(199,91,58,0.4)] transition-all text-center">
-          Sign up for daily report \u2192
+          Sign up for daily report →
         </a>
       </div>
     </div>
