@@ -205,6 +205,193 @@ export const posts: BlogPost[] = [
 </ul>
     `,
   },
+  {
+    slug: "aida-certification-levels-explained",
+    title: "AIDA Certification Levels Explained: Which Course Should You Take?",
+    description:
+      "A detailed breakdown of AIDA 1, 2, 3, and 4 freediving certifications — what you'll learn, the requirements, and which level is right for your experience.",
+    category: "Training Science",
+    date: "March 2026",
+    readTime: "11 min read",
+    gradient: "from-ocean to-teal",
+    content: `
+<p>If you're looking into freediving certification, you've probably seen "AIDA" mentioned everywhere. It's the global standard — used in over 100 countries, recognized at every dive center on the planet, and the system we use at La Jolla Freedive Club. But the leveling system can be confusing from the outside. Here's a clear, data-driven breakdown of what each level actually involves.</p>
+
+<h2>What is AIDA?</h2>
+
+<p>AIDA stands for the International Association for the Development of Apnea. They've been the global authority in freediving education, safety standards, and competition since 1992. Unlike commercial dive agencies, AIDA is a nonprofit run by freedivers for freedivers. Their certification system is progressive — each level builds on the previous one in both technical skill and physiological understanding.</p>
+
+<h2>AIDA 1 — Introduction to Freediving</h2>
+
+<p><strong>Duration:</strong> 1 day (3–6 hours) · <strong>Max depth:</strong> 10m · <strong>Prerequisites:</strong> Swim 100m non-stop</p>
+
+<p>AIDA 1 is a one-day introduction for people who want to test the water — literally — before committing to a full certification. You'll learn basic relaxation techniques, try your first static breath holds, practice finning and duck dives, and learn buddy safety fundamentals.</p>
+
+<p>There are no performance minimums. You earn the certification by demonstrating correct technique, relaxation, and safe behavior. It's designed to give you a solid foundation and help you decide whether to continue to AIDA 2.</p>
+
+<p><strong>Start with AIDA 1 if:</strong> You're completely new to freediving, you want a gentle one-day introduction, or you've never used fins, equalized, or practiced breathing drills.</p>
+
+<h2>AIDA 2 — Freediver Certification</h2>
+
+<p><strong>Duration:</strong> 2.5 days minimum · <strong>Max depth:</strong> 20m · <strong>Prerequisites:</strong> Swim 200m non-stop (or 300m with fins/snorkel)</p>
+
+<p>This is the first full certification level and the most popular course we run. AIDA 2 is where freediving gets real — you'll cover theory, pool disciplines, and open water depth diving over multiple days.</p>
+
+<p>The certification requirements are specific:</p>
+
+<ul>
+<li><strong>Static apnea (STA):</strong> 2:00 minute breath hold</li>
+<li><strong>Dynamic apnea (DYNB):</strong> 40m horizontal underwater swim with bi-fins</li>
+<li><strong>Constant weight (CWTB):</strong> 12–20m depth dive</li>
+<li><strong>Theory exam:</strong> 75% minimum</li>
+</ul>
+
+<p>You'll also learn rescue from 5–10m (both blackout and loss of motor control scenarios), equalization technique, proper weighting, and the buddy protocols that make freediving safe.</p>
+
+<p>The course format includes at least 2 classroom sessions, 2 confined water (pool) sessions, and 3 open water sessions across 2 days. Instructor ratios are 8:1 in the pool and 4:1 in open water.</p>
+
+<p><strong>Start with AIDA 2 if:</strong> You're a strong swimmer, comfortable in open water, and want an internationally recognized certification. Prior snorkeling, diving, or breath-hold experience helps but isn't required.</p>
+
+<h2>AIDA 3 — Advanced Freediver</h2>
+
+<p><strong>Duration:</strong> 3 days minimum · <strong>Max depth:</strong> 30m · <strong>Prerequisites:</strong> AIDA 2 certification (or crossover from SSI, PADI, Molchanovs)</p>
+
+<p>AIDA 3 is where the training gets deeper — in every sense. This course is about developing real autonomy: the ability to plan your own training, manage your own safety, and dive beyond 20 meters with precision and control.</p>
+
+<p>The certification standards step up significantly:</p>
+
+<ul>
+<li><strong>Static apnea (STA):</strong> 2:45 minute breath hold</li>
+<li><strong>Dynamic apnea (DYNB):</strong> 55m horizontal underwater swim</li>
+<li><strong>Constant weight (CWTB):</strong> 24m depth dive</li>
+<li><strong>Theory exam:</strong> 75% minimum</li>
+</ul>
+
+<p>New skills include advanced Frenzel equalization (the technique that makes depth beyond 20m possible), free-fall technique, CO₂ and O₂ tolerance tables, deep-water rescue protocols, and a much deeper understanding of physiology — barotrauma, lung function under pressure, blood shift, decompression theory.</p>
+
+<p>Lanyards are required beyond 20m in this course. The format includes 3+ hours of theory, 2 confined water sessions, and 4 open water sessions over 2 days.</p>
+
+<p><strong>Take AIDA 3 if:</strong> You're AIDA 2 certified and want to dive deeper, train smarter, or are considering the competition or instructor path.</p>
+
+<h2>AIDA 4 — Master Freediver</h2>
+
+<p><strong>Max depth:</strong> 38m+ · <strong>Prerequisites:</strong> AIDA 3 certification</p>
+
+<p>AIDA 4 is for experienced divers considering the instructor or competition track. It covers depth diving beyond 30m, mouthfill equalization, advanced physiology, and detailed risk mitigation. Not all schools offer AIDA 4 — it requires specific facilities and conditions. It's the prerequisite for the AIDA Instructor Course.</p>
+
+<h2>How the levels compare</h2>
+
+<p>Here's the full picture in numbers:</p>
+
+<ul>
+<li><strong>AIDA 1:</strong> 1 day, 10m max, no performance minimums</li>
+<li><strong>AIDA 2:</strong> 2.5 days, 20m max, STA 2:00 / DYN 40m / depth 12–20m</li>
+<li><strong>AIDA 3:</strong> 3 days, 30m max, STA 2:45 / DYN 55m / depth 24m</li>
+<li><strong>AIDA 4:</strong> 38m+, mouthfill equalization, instructor prerequisite</li>
+</ul>
+
+<p>Each level roughly doubles the time investment and adds 10m of depth capability. The jump from AIDA 2 to AIDA 3 is the biggest in terms of physiological knowledge and technical skill.</p>
+
+<h2>What about crossovers?</h2>
+
+<p>If you hold a certification from another agency — SSI, PADI, Molchanovs, etc. — you can do a crossover evaluation instead of repeating the full course. This involves demonstrating that your existing skills meet AIDA standards at the equivalent level. We run crossover evaluations on a case-by-case basis.</p>
+
+<h2>Where to start in La Jolla</h2>
+
+<p>Most people who come through our door start with AIDA 2 — it's the sweet spot of commitment and payoff. You walk away with an internationally recognized certification, the skills to dive to 20m safely, and a community of divers to practice with every Saturday.</p>
+
+<p>If you're on the fence, AIDA 1 is a low-commitment way to find out if freediving clicks for you. And if you're already certified and want to go deeper, our AIDA 3 course runs on demand based on interest.</p>
+    `,
+  },
+  {
+    slug: "freediving-disciplines-sta-dyn-cwt-explained",
+    title: "Freediving Disciplines Explained: STA, DYN, CWT, FIM and More",
+    description:
+      "A complete guide to every competitive and training freediving discipline — what the abbreviations mean, how they work, and which ones you'll learn in your AIDA course.",
+    category: "Training Science",
+    date: "March 2026",
+    readTime: "9 min read",
+    gradient: "from-deep to-ocean",
+    content: `
+<p>Freediving has its own alphabet — STA, DYN, DNF, CWT, CWTB, CNF, FIM, VWT, NLT. If you're new to the sport, this looks like gibberish. But each abbreviation represents a specific discipline with its own rules, techniques, and training applications. Here's what they all mean and which ones matter for your training.</p>
+
+<h2>Pool disciplines</h2>
+
+<p>These are performed in a pool and focus on breath-hold duration or horizontal distance. They're the foundation of freediving training because they isolate specific skills without the complexity of depth, equalization, or ocean conditions.</p>
+
+<h3>STA — Static Apnea</h3>
+
+<p>Holding your breath without movement, usually floating face-down at the surface. STA measures pure breath-hold time. It's the most mental discipline in freediving — your body is still, so it's entirely about relaxation, CO₂ tolerance, and the ability to stay calm as the urge to breathe builds.</p>
+
+<p><strong>AIDA requirements:</strong> 2:00 min (AIDA 2) · 2:45 min (AIDA 3)</p>
+
+<p><strong>Training value:</strong> STA is where you learn the fundamentals of the mammalian dive reflex, diaphragm contraction management, and mental composure. Every other discipline builds on the capacity you develop here.</p>
+
+<h3>DYN — Dynamic Apnea with Fins</h3>
+
+<p>Swimming horizontally underwater with bi-fins or a monofin. DYN measures distance covered on a single breath. It combines breath-hold capacity with efficient movement — you need good technique (streamlining, kick cycle, glide phase) to minimize oxygen consumption.</p>
+
+<p><strong>AIDA requirements (DYNB — bi-fins):</strong> 40m (AIDA 2) · 55m (AIDA 3)</p>
+
+<h3>DNF — Dynamic Apnea without Fins</h3>
+
+<p>Swimming horizontally underwater using only a modified breaststroke — no fins. DNF measures distance and is the most physically demanding pool discipline. It requires excellent body control, streamlining, and energy efficiency since you're generating all propulsion with your arms and legs.</p>
+
+<p>DNF isn't part of AIDA recreational certification requirements, but it's a powerful training tool. If you can swim 50m DNF, your finning efficiency will be dramatically better because you've learned to minimize drag.</p>
+
+<h2>Depth disciplines</h2>
+
+<p>These are performed in open water using a vertical dive line and measure maximum depth achieved. This is where freediving becomes a three-dimensional sport — you're adding equalization, pressure changes, buoyancy shifts, and the psychological dimension of depth.</p>
+
+<h3>CWT / CWTB — Constant Weight (with fins / with bi-fins)</h3>
+
+<p>Diving vertically with fins, descending and ascending under your own power. You cannot pull on the rope or drop weights — what you take down, you bring back up. CWT is the flagship depth discipline and what most people picture when they think of freediving.</p>
+
+<p>CWTB (the "B" means bi-fins specifically, as opposed to a monofin) is the standard in AIDA training courses.</p>
+
+<p><strong>AIDA requirements (CWTB):</strong> 12–20m (AIDA 2) · 24m (AIDA 3)</p>
+
+<p><strong>What makes it challenging:</strong> As you descend, buoyancy shifts from positive to negative around 10m. Above that, you're fighting to get down. Below it, you're sinking and need to control your descent speed. Equalization gets progressively harder as your lung volume compresses — from 6L at the surface to 3L at 10m to 2L at 20m.</p>
+
+<h3>FIM — Free Immersion</h3>
+
+<p>Diving by pulling yourself down and up the rope — no fins. FIM is often the first depth discipline beginners learn because it eliminates the complexity of finning and lets you focus entirely on equalization and relaxation at depth. You control your speed precisely with your hands on the rope.</p>
+
+<p>FIM is included in AIDA 2 and 3 training. Many experienced divers use FIM as a warm-up before CWT dives because it's gentler on the body and allows more focus on equalization practice.</p>
+
+<h3>CNF — Constant Weight without Fins</h3>
+
+<p>Diving vertically without fins, using only arm strokes and a dolphin kick. CNF is considered the purest depth discipline — no equipment assistance at all. It's the most physically demanding way to reach depth and requires exceptional efficiency and body awareness.</p>
+
+<p>CNF isn't part of recreational AIDA courses, but it's a respected competitive discipline. If you see someone's CNF number, it tells you a lot about their overall freediving ability.</p>
+
+<h2>Specialized disciplines</h2>
+
+<h3>VWT — Variable Weight</h3>
+
+<p>Descending with a weighted sled and ascending by finning or pulling the rope. VWT allows you to reach depths beyond what your equalization or fitness would normally permit on the descent, while still requiring you to ascend under your own power. It's a training tool more than a competitive discipline in most contexts.</p>
+
+<h3>NLT — No Limits</h3>
+
+<p>Descending with a weighted sled and ascending with a lift bag or other assistive device. NLT is the discipline that produces the deepest numbers — over 200m in some cases — but it's not part of AIDA recreational education. It's a specialized, high-risk discipline reserved for experienced athletes with extensive safety infrastructure.</p>
+
+<h2>Which disciplines will I learn?</h2>
+
+<p>In AIDA certification courses, you'll train these disciplines:</p>
+
+<ul>
+<li><strong>AIDA 1:</strong> STA introduction, basic finning</li>
+<li><strong>AIDA 2:</strong> STA, DYNB (dynamic with bi-fins), CWTB (constant weight with bi-fins), FIM (free immersion)</li>
+<li><strong>AIDA 3:</strong> All AIDA 2 disciplines at higher standards, plus CO₂/O₂ table training and advanced equalization for depth</li>
+</ul>
+
+<p>In our weekly group sessions, we practice a mix of all disciplines depending on whether we're in the pool or the ocean. CWT and FIM get the most ocean time. STA and DYN are the focus of pool sessions and dry training.</p>
+
+<h2>The bottom line</h2>
+
+<p>You don't need to memorize all these abbreviations before your first course — your instructor will teach each discipline as it comes up. But understanding the landscape helps you see where freediving can take you. Most people start with STA and CWTB in their AIDA 2 course and discover that each discipline develops a different aspect of their diving. STA builds mental composure. DYN builds efficiency. CWT builds depth confidence. FIM builds equalization skill. Together, they make a complete freediver.</p>
+    `,
+  },
 ];
 
 export function getPost(slug: string): BlogPost | undefined {
