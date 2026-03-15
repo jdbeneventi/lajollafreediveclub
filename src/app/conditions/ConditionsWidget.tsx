@@ -3,7 +3,7 @@
 import { useEffect, useState, useCallback } from "react";
 
 // ─── Types ───
-interface BuoyData { waveHeight: string; wavePeriod: string; avgPeriod: string; windDir: string; windSpeed: string; windGust: string; updated: string; }
+interface ConditionsData { waveHeight: number | null; wavePeriod: number | null; avgPeriod: number | null; windDir: string | null; windSpeed: string | null; windGust: string | null; waterTemp: number | null; buoyUpdated: string | null; windUpdated: string | null; }
 interface VisData { visibility_ft_low: number | null; visibility_ft_high: number | null; grade: string; water_color: string; summary: string; cam_url: string; }
 interface TideEvent { time: string; height: string; type: string; }
 interface FactorScore { name: string; score: number; weight: number; label: string; color: string; detail: string; education: string; sourceLabel: string; sourceUrl: string; }
@@ -13,20 +13,11 @@ function nowPacific(): string {
   return new Date().toLocaleString("en-US", { timeZone: "America/Los_Angeles", hour: "numeric", minute: "2-digit", hour12: true, weekday: "long", month: "short", day: "numeric" });
 }
 
-function parseBuoyRSS(xml: string): BuoyData | null {
+function formatBuoyTime(isoTime: string | null): string {
+  if (!isoTime) return "recently";
   try {
-    const desc = xml.match(/<description><!\[CDATA\[([\s\S]*?)\]\]><\/description>/g);
-    if (!desc || desc.length < 2) return null;
-    const content = desc[1];
-    const extract = (label: string) => {
-      const re = new RegExp(`<strong>${label}:</strong>\\s*([^<]+)`, "i");
-      const m = content.match(re);
-      if (!m) return "\u2014";
-      return m[1].trim().replace(/&#(\d+);/g, (_, code) => String.fromCharCode(Number(code)));
-    };
-    const timeMatch = content.match(/<strong>([A-Z][a-z]+ \d+, \d{4} [\d:]+ [ap]m [A-Z]+)<\/strong>/);
-    return { waveHeight: extract("Significant Wave Height"), wavePeriod: extract("Dominant Wave Period"), avgPeriod: extract("Average Period"), windDir: extract("Wind Direction"), windSpeed: extract("Wind Speed"), windGust: extract("Wind Gust"), updated: timeMatch ? timeMatch[1] : "recently" };
-  } catch { return null; }
+    return new Date(isoTime).toLocaleString("en-US", { timeZone: "America/Los_Angeles", month: "short", day: "numeric", hour: "numeric", minute: "2-digit", hour12: true, timeZoneName: "short" });
+  } catch { return "recently"; }
 }
 
 // ─── Scoring ───
@@ -45,10 +36,10 @@ function scoreVisibility(vis: VisData | null, tideState: string): FactorScore {
   return { name: "Visibility", score, weight: 30, label: `${vis.visibility_ft_low}\u2013${vis.visibility_ft_high}ft \u00B7 ${label}`, color, detail: vis.summary + tideNote, education: "Visibility is estimated using AI analysis of the Scripps Pier underwater camera. Reference pilings at 4ft, 11ft, 14ft, and 30ft serve as distance markers. Which pilings are visible and how sharp they appear determines the estimate. Modifiers: rainfall (\u2212), incoming tide (+), plankton blooms (\u2212), upwelling SST drop (+).", ...src };
 }
 
-function scoreSwell(buoy: BuoyData | null): FactorScore {
-  const src = { sourceLabel: "NDBC Station LJPC1", sourceUrl: "https://www.ndbc.noaa.gov/station_page.php?station=ljpc1" };
-  if (!buoy) return { name: "Swell", score: 50, weight: 25, label: "No data", color: "#5a6a7a", detail: "Buoy data unavailable.", education: "Wave height and period from the Scripps Pier buoy (LJPC1), updated every 30 minutes.", ...src };
-  const height = parseFloat(buoy.waveHeight); const period = parseFloat(buoy.wavePeriod);
+function scoreSwell(data: ConditionsData | null): FactorScore {
+  const src = { sourceLabel: "NDBC Station 46254", sourceUrl: "https://www.ndbc.noaa.gov/station_page.php?station=46254" };
+  if (!data || data.waveHeight === null) return { name: "Swell", score: 50, weight: 25, label: "No data", color: "#5a6a7a", detail: "Buoy data unavailable.", education: "Wave height and period from the Scripps Nearshore buoy (46254), updated every 30 minutes.", ...src };
+  const height = data.waveHeight; const period = data.wavePeriod || 0;
   let score: number, label: string, color: string;
   if (height <= 1 && period >= 10) { score = 95; label = "Glass"; color = "#1B6B6B"; }
   else if (height <= 2) { score = 80; label = "Clean"; color = "#1B6B6B"; }
@@ -57,13 +48,13 @@ function scoreSwell(buoy: BuoyData | null): FactorScore {
   else { score = 15; label = "Heavy"; color = "#C75B3A"; }
   if (period >= 12) score = Math.min(100, score + 10);
   else if (period < 6) score = Math.max(0, score - 15);
-  return { name: "Swell", score, weight: 25, label: `${buoy.waveHeight} @ ${buoy.wavePeriod} \u00B7 ${label}`, color, detail: height <= 2 ? "Minimal swell \u2014 flat to small conditions." : height <= 4 ? "Moderate swell \u2014 expect surge at exposed spots. Cove should be fine." : "Heavy swell \u2014 experienced divers only at sheltered spots.", education: "Wave height (ft) and period (seconds between waves) from LJPC1 buoy. For freediving, smaller + longer period = better. A 2ft swell at 14 seconds is much cleaner than 2ft at 5 seconds. Period under 6s means choppy, confused seas.", ...src };
+  return { name: "Swell", score, weight: 25, label: `${height} ft @ ${period} sec \u00B7 ${label}`, color, detail: height <= 2 ? "Minimal swell \u2014 flat to small conditions." : height <= 4 ? "Moderate swell \u2014 expect surge at exposed spots. Cove should be fine." : "Heavy swell \u2014 experienced divers only at sheltered spots.", education: "Wave height (ft) and period (seconds between waves) from the 46254 buoy at Scripps Pier. For freediving, smaller + longer period = better. A 2ft swell at 14 seconds is much cleaner than 2ft at 5 seconds.", ...src };
 }
 
-function scoreWind(buoy: BuoyData | null): FactorScore {
+function scoreWind(data: ConditionsData | null): FactorScore {
   const src = { sourceLabel: "NDBC Station LJPC1", sourceUrl: "https://www.ndbc.noaa.gov/station_page.php?station=ljpc1" };
-  if (!buoy) return { name: "Wind", score: 50, weight: 20, label: "No data", color: "#5a6a7a", detail: "Wind data unavailable.", education: "Wind measured at Scripps Pier anemometer, 20m above sea level.", ...src };
-  const speed = parseFloat(buoy.windSpeed); const dir = buoy.windDir;
+  if (!data || !data.windSpeed) return { name: "Wind", score: 50, weight: 20, label: "No data", color: "#5a6a7a", detail: "Wind data unavailable.", education: "Wind measured at Scripps Pier anemometer, 20m above sea level.", ...src };
+  const speed = parseFloat(data.windSpeed); const dir = data.windDir || "";
   let score: number, label: string, color: string;
   if (speed <= 3) { score = 95; label = "Calm"; color = "#1B6B6B"; }
   else if (speed <= 7) { score = 75; label = "Light"; color = "#1B6B6B"; }
@@ -72,7 +63,7 @@ function scoreWind(buoy: BuoyData | null): FactorScore {
   else { score = 10; label = "Strong"; color = "#C75B3A"; }
   if (dir.includes("E") && !dir.includes("SE")) score = Math.min(100, score + 10);
   if (dir.includes("W") && speed > 8) score = Math.max(0, score - 10);
-  return { name: "Wind", score, weight: 20, label: `${buoy.windSpeed} ${dir} \u00B7 ${label}`, color, detail: speed <= 5 ? "Light wind \u2014 smooth surface, minimal chop." : speed <= 10 ? `Moderate ${dir} wind.${dir.includes("E") ? " Offshore \u2014 favorable." : ""}` : `Strong ${dir} wind \u2014 expect significant chop.`, education: "Wind direction matters as much as speed. Offshore wind (east) smooths the surface. Onshore wind (west) creates chop and reduces visibility. Gusts above 15 knots make surface swimming uncomfortable and your dive flag harder to spot.", ...src };
+  return { name: "Wind", score, weight: 20, label: `${data.windSpeed} ${dir} \u00B7 ${label}`, color, detail: speed <= 5 ? "Light wind \u2014 smooth surface, minimal chop." : speed <= 10 ? `Moderate ${dir} wind.${dir.includes("E") ? " Offshore \u2014 favorable." : ""}` : `Strong ${dir} wind \u2014 expect significant chop.`, education: "Wind direction matters as much as speed. Offshore wind (east) smooths the surface. Onshore wind (west) creates chop and reduces visibility. Gusts above 15 knots make surface swimming uncomfortable and your dive flag harder to spot.", ...src };
 }
 
 function scoreTemperature(tempF: number | null, isEstimate: boolean = false): FactorScore {
@@ -111,7 +102,7 @@ function calculateOverallGrade(factors: FactorScore[]) {
 
 // ─── Main Widget ───
 export function ConditionsWidget() {
-  const [buoy, setBuoy] = useState<BuoyData | null>(null);
+  const [conditions, setConditions] = useState<ConditionsData | null>(null);
   const [vis, setVis] = useState<VisData | null>(null);
   const [waterTemp, setWaterTemp] = useState<number | null>(null);
   const [tempIsEstimate, setTempIsEstimate] = useState(false);
@@ -120,16 +111,24 @@ export function ConditionsWidget() {
   const [loading, setLoading] = useState(true);
   const [openTooltip, setOpenTooltip] = useState<string | null>(null);
   const [lastRefresh, setLastRefresh] = useState<string>(nowPacific());
+  const [buoyTime, setBuoyTime] = useState<string | null>(null);
 
   const fetchData = useCallback(() => {
-    fetch("/api/conditions").then(r => r.text()).then(xml => { setBuoy(parseBuoyRSS(xml)); setLastRefresh(nowPacific()); }).catch(() => {}).finally(() => setLoading(false));
+    fetch("/api/conditions").then(r => r.json()).then(d => {
+      setConditions(d);
+      // Use buoy temp if available (most accurate, from 46254)
+      if (d.waterTemp) { setWaterTemp(d.waterTemp); setTempIsEstimate(false); }
+      setBuoyTime(d.buoyUpdated);
+      setLastRefresh(nowPacific());
+    }).catch(() => {}).finally(() => setLoading(false));
     fetch("/api/visibility").then(r => r.json()).then(d => setVis(d)).catch(() => {});
     fetch("/api/watertemp").then(r => r.json()).then(d => {
-      if (d.water_temp && !isNaN(d.water_temp)) { setWaterTemp(Math.round(d.water_temp)); setTempIsEstimate(d.is_estimate || false); }
+      // Only use watertemp API if conditions API didn't provide temp
+      if (!waterTemp && d.water_temp && !isNaN(d.water_temp)) { setWaterTemp(Math.round(d.water_temp)); setTempIsEstimate(d.is_estimate || false); }
       if (d.tide_state) setTideState(d.tide_state);
       if (d.tides) setTides(d.tides);
     }).catch(() => {});
-  }, []);
+  }, [waterTemp]);
 
   useEffect(() => {
     fetchData();
@@ -140,8 +139,8 @@ export function ConditionsWidget() {
 
   const factors: FactorScore[] = [
     scoreVisibility(vis, tideState),
-    scoreSwell(buoy),
-    scoreWind(buoy),
+    scoreSwell(conditions),
+    scoreWind(conditions),
     scoreTemperature(waterTemp, tempIsEstimate),
     scoreSafety(false),
   ];
@@ -178,7 +177,7 @@ export function ConditionsWidget() {
           <div className="flex-1">
             <h2 className="font-serif text-2xl tracking-tight mb-2">{overall.summary}</h2>
             <div className="text-xs text-[#5a6a7a]">
-              Buoy data from {buoy?.updated || "recently"} · Auto-refreshes every 10 min
+              Buoy data from {formatBuoyTime(buoyTime)} · Auto-refreshes every 10 min
             </div>
           </div>
         </div>
@@ -186,8 +185,8 @@ export function ConditionsWidget() {
         {/* Quick stats row */}
         <div className="grid grid-cols-2 md:grid-cols-4 border-t border-deep/[0.06]">
           {[
-            { label: "Swell", value: buoy?.waveHeight || "\u2014", sub: buoy ? `@ ${buoy.wavePeriod}` : "" },
-            { label: "Wind", value: buoy?.windSpeed || "\u2014", sub: buoy?.windDir || "" },
+            { label: "Swell", value: conditions?.waveHeight ? `${conditions.waveHeight} Ft` : "\u2014", sub: conditions?.wavePeriod ? `@ ${conditions.wavePeriod} sec` : "" },
+            { label: "Wind", value: conditions?.windSpeed ? `${conditions.windSpeed} Knots` : "\u2014", sub: conditions?.windDir || "" },
             { label: "Water", value: waterTemp ? `${waterTemp}\u00B0F` : "\u2014", sub: waterTemp && waterTemp >= 65 ? "3mm" : "5mm" },
             { label: "Tide", value: tideState !== "unknown" ? tideState : "\u2014", sub: tides[0] ? `Next: ${tides[0].height}ft ${tides[0].type}` : "" },
           ].map((s, i) => (
