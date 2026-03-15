@@ -72,7 +72,7 @@ function scoreWind(buoy: BuoyData | null): FactorScore {
   return { name: "Wind", score, weight: 20, label: `${buoy.windSpeed} ${dir} \u00B7 ${label}`, color, detail: speed <= 5 ? "Light wind \u2014 smooth surface, minimal chop." : speed <= 10 ? `Moderate ${dir} wind.${dir.includes("E") ? " Offshore \u2014 favorable." : ""}` : `Strong ${dir} wind \u2014 expect significant chop.`, education: "Wind direction matters as much as speed. Offshore wind (east) smooths the surface. Onshore wind (west) creates chop and reduces visibility. Gusts above 15 knots make surface swimming uncomfortable and your dive flag harder to spot." };
 }
 
-function scoreTemperature(tempF: number | null): FactorScore {
+function scoreTemperature(tempF: number | null, isEstimate: boolean = false): FactorScore {
   if (!tempF) return { name: "Water temp", score: 60, weight: 10, label: "Loading...", color: "#5a6a7a", detail: "Temperature data loading.", education: "Water temp measured at 3.4m depth at La Jolla NOS station (LJAC1)." };
   let score: number, label: string, color: string, wetsuit: string;
   if (tempF >= 70) { score = 90; label = "Warm"; color = "#1B6B6B"; wetsuit = "3mm or shorty"; }
@@ -80,7 +80,9 @@ function scoreTemperature(tempF: number | null): FactorScore {
   else if (tempF >= 60) { score = 55; label = "Cool"; color = "#D4A574"; wetsuit = "5mm recommended"; }
   else if (tempF >= 56) { score = 35; label = "Cold"; color = "#163B4E"; wetsuit = "5mm + hood"; }
   else { score = 20; label = "Very cold"; color = "#163B4E"; wetsuit = "5mm + hood + gloves"; }
-  return { name: "Water temp", score, weight: 10, label: `${tempF}\u00B0F \u00B7 ${label}`, color, detail: `Wetsuit: ${wetsuit}.${tempF < 60 ? " Cold water reduces breath hold \u2014 limit session length." : ""}`, education: "La Jolla water ranges from ~56\u00B0F (winter) to ~72\u00B0F (late summer). A sudden 4\u00B0F+ drop often signals upwelling \u2014 cold, clear water rising from the Canyon \u2014 which typically improves visibility significantly." };
+  const prefix = isEstimate ? "~" : "";
+  const suffix = isEstimate ? " (seasonal avg)" : "";
+  return { name: "Water temp", score, weight: 10, label: `${prefix}${tempF}\u00B0F \u00B7 ${label}${suffix}`, color, detail: `Wetsuit: ${wetsuit}.${isEstimate ? " Based on Scripps Pier 100-year seasonal average for this month." : ""}${tempF < 60 ? " Cold water reduces breath hold \u2014 limit session length." : ""}`, education: "La Jolla water ranges from ~56\u00B0F (winter) to ~72\u00B0F (late summer). A sudden 4\u00B0F+ drop often signals upwelling \u2014 cold, clear water rising from the Canyon \u2014 which typically improves visibility significantly." };
 }
 
 function scoreSafety(recentRain: boolean): FactorScore {
@@ -107,6 +109,7 @@ export function ConditionsWidget() {
   const [buoy, setBuoy] = useState<BuoyData | null>(null);
   const [vis, setVis] = useState<VisData | null>(null);
   const [waterTemp, setWaterTemp] = useState<number | null>(null);
+  const [tempIsEstimate, setTempIsEstimate] = useState(false);
   const [tideState, setTideState] = useState<string>("unknown");
   const [tides, setTides] = useState<TideEvent[]>([]);
   const [loading, setLoading] = useState(true);
@@ -117,7 +120,7 @@ export function ConditionsWidget() {
     fetch("/api/conditions").then(r => r.text()).then(xml => { setBuoy(parseBuoyRSS(xml)); setLastRefresh(nowPacific()); }).catch(() => {}).finally(() => setLoading(false));
     fetch("/api/visibility").then(r => r.json()).then(d => setVis(d)).catch(() => {});
     fetch("/api/watertemp").then(r => r.json()).then(d => {
-      if (d.water_temp && !isNaN(d.water_temp)) setWaterTemp(Math.round(d.water_temp));
+      if (d.water_temp && !isNaN(d.water_temp)) { setWaterTemp(Math.round(d.water_temp)); setTempIsEstimate(d.is_estimate || false); }
       if (d.tide_state) setTideState(d.tide_state);
       if (d.tides) setTides(d.tides);
     }).catch(() => {});
@@ -134,7 +137,7 @@ export function ConditionsWidget() {
     scoreVisibility(vis, tideState),
     scoreSwell(buoy),
     scoreWind(buoy),
-    scoreTemperature(waterTemp),
+    scoreTemperature(waterTemp, tempIsEstimate),
     scoreSafety(false),
   ];
   const overall = calculateOverallGrade(factors);

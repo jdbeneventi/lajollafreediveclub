@@ -1,39 +1,97 @@
 import { NextResponse } from "next/server";
 
-// Try multiple stations for water temp — some may be offline
-const TEMP_SOURCES = [
-  { id: "46254", name: "Scripps Nearshore Buoy", label: "Sea Temperature" },
-  { id: "ljpc1", name: "Scripps Pier", label: "Sea Temperature" },
-  { id: "ljac1", name: "La Jolla NOS", label: "Water Temperature" },
-];
+// Seasonal average water temps for La Jolla (Scripps Pier historical data, °F)
+const SEASONAL_TEMPS: Record<number, number> = {
+  0: 58, 1: 58, 2: 59, 3: 60, 4: 62, 5: 64,
+  6: 67, 7: 69, 8: 70, 9: 67, 10: 63, 11: 59,
+};
 
-async function fetchTempFromRSS(stationId: string, tempLabel: string): Promise<number | null> {
+// Source 1: seatemperature.net — reliable, updated daily, satellite-derived
+async function fetchFromSeaTempNet(): Promise<number | null> {
+  try {
+    const res = await fetch(
+      "https://seatemperature.net/current/united-states/san-diego-california-united-states-sea-temperature",
+      {
+        next: { revalidate: 3600 },
+        headers: { "User-Agent": "Mozilla/5.0 (compatible; LaJollaFreediveClub/1.0)" },
+        signal: AbortSignal.timeout(8000),
+      }
+    );
+    if (!res.ok) return null;
+    const html = await res.text();
+
+    // Look for the current temperature in Celsius — shown prominently on the page
+    // Pattern: "Current Water Temperature" section followed by a temp value
+    // The page shows temp like "14.7°C"
+    const celsiusMatch = html.match(/Current Water Temperature[\s\S]{0,200}?([\d.]+)\s*°C/i);
+    if (celsiusMatch) {
+      const celsius = parseFloat(celsiusMatch[1]);
+      if (!isNaN(celsius) && celsius > 5 && celsius < 35) {
+        return Math.round(celsius * 9 / 5 + 32);
+      }
+    }
+
+    // Also try matching Fahrenheit directly
+    const fahrenheitMatch = html.match(/([\d.]+)\s*°F/i);
+    if (fahrenheitMatch) {
+      const f = parseFloat(fahrenheitMatch[1]);
+      if (!isNaN(f) && f > 40 && f < 90) return Math.round(f);
+    }
+
+    return null;
+  } catch {
+    return null;
+  }
+}
+
+// Source 2: NDBC station RSS feeds
+async function fetchFromNDBC(stationId: string): Promise<number | null> {
   try {
     const res = await fetch(
       `https://www.ndbc.noaa.gov/data/latest_obs/${stationId}.rss`,
       {
-        next: { revalidate: 900 },
+        next: { revalidate: 600 },
         headers: { "User-Agent": "LaJollaFreediveClub/1.0" },
         signal: AbortSignal.timeout(5000),
       }
     );
     if (!res.ok) return null;
     const xml = await res.text();
-    
-    // Try to find temperature in the RSS description
-    const re = new RegExp(`<strong>${tempLabel}:</strong>\\s*([\\d.]+)`, "i");
     const descs = xml.match(/<description><!\[CDATA\[([\s\S]*?)\]\]><\/description>/g);
     if (!descs || descs.length < 2) return null;
-    
-    const m = descs[1].match(re);
-    if (!m) return null;
-    
-    const temp = parseFloat(m[1]);
-    if (isNaN(temp)) return null;
-    
-    // NDBC reports in Fahrenheit for US stations
-    // If value seems to be Celsius (below 40), convert
-    return temp < 40 ? Math.round(temp * 9 / 5 + 32) : Math.round(temp);
+
+    for (const label of ["Sea Temperature", "Water Temperature", "Sea Surface Temperature"]) {
+      const re = new RegExp(`<strong>${label}:</strong>\\s*([\\d.]+)`, "i");
+      const m = descs[1].match(re);
+      if (m) {
+        const temp = parseFloat(m[1]);
+        if (!isNaN(temp)) return temp < 40 ? Math.round(temp * 9 / 5 + 32) : Math.round(temp);
+      }
+    }
+    return null;
+  } catch {
+    return null;
+  }
+}
+
+// Source 3: NDBC mobile page
+async function fetchFromNDBCMobile(stationId: string): Promise<number | null> {
+  try {
+    const res = await fetch(
+      `https://www.ndbc.noaa.gov/mobile/station.php?station=${stationId}`,
+      {
+        next: { revalidate: 600 },
+        headers: { "User-Agent": "LaJollaFreediveClub/1.0" },
+        signal: AbortSignal.timeout(5000),
+      }
+    );
+    if (!res.ok) return null;
+    const html = await res.text();
+    const m = html.match(/Water Temp:\s*(\d+)\s*°F/i);
+    if (m) return parseInt(m[1]);
+    const mc = html.match(/Water Temp:\s*(\d+)\s*°C/i);
+    if (mc) return Math.round(parseInt(mc[1]) * 9 / 5 + 32);
+    return null;
   } catch {
     return null;
   }
@@ -41,25 +99,47 @@ async function fetchTempFromRSS(stationId: string, tempLabel: string): Promise<n
 
 export async function GET() {
   try {
-    // Try each station until we get a temp reading
     let waterTemp: number | null = null;
     let tempSource = "";
+    let isEstimate = false;
 
-    for (const source of TEMP_SOURCES) {
-      waterTemp = await fetchTempFromRSS(source.id, source.label);
-      if (waterTemp !== null) {
-        tempSource = source.name;
-        break;
-      }
+    // Try sources in order of reliability
+    waterTemp = await fetchFromSeaTempNet();
+    if (waterTemp) { tempSource = "NOAA satellite (seatemperature.net)"; }
+
+    if (!waterTemp) {
+      waterTemp = await fetchFromNDBC("46254");
+      if (waterTemp) tempSource = "NDBC Scripps Nearshore Buoy";
     }
 
-    // Fetch tide predictions from NOAA CO-OPS
+    if (!waterTemp) {
+      waterTemp = await fetchFromNDBC("ljpc1");
+      if (waterTemp) tempSource = "NDBC Scripps Pier";
+    }
+
+    if (!waterTemp) {
+      waterTemp = await fetchFromNDBCMobile("46254");
+      if (waterTemp) tempSource = "NDBC Scripps Nearshore (mobile)";
+    }
+
+    // Seasonal fallback
+    if (!waterTemp) {
+      const month = new Date().getMonth();
+      waterTemp = SEASONAL_TEMPS[month] || 62;
+      tempSource = "Seasonal estimate (Scripps Pier 100yr avg)";
+      isEstimate = true;
+    }
+
+    // Fetch tide predictions
     const tides: { time: string; height: string; type: string }[] = [];
     let tideState = "unknown";
 
     try {
+      const now = new Date();
+      const pacificDate = now.toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
+
       const tidesRes = await fetch(
-        "https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?date=today&station=9410230&product=predictions&datum=MLLW&time_zone=lst_ldt&interval=h&units=english&format=json",
+        `https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?begin_date=${pacificDate.replace(/-/g, "")}&range=24&station=9410230&product=predictions&datum=MLLW&time_zone=lst_ldt&interval=h&units=english&format=json`,
         { next: { revalidate: 3600 } }
       );
 
@@ -79,10 +159,9 @@ export async function GET() {
             }
           }
 
-          // Determine tide state
           if (tides.length >= 2) {
-            const now = new Date();
-            const currentMinutes = now.getHours() * 60 + now.getMinutes();
+            const pacificNow = new Date(now.toLocaleString("en-US", { timeZone: "America/Los_Angeles" }));
+            const currentMinutes = pacificNow.getHours() * 60 + pacificNow.getMinutes();
             for (let i = 0; i < tides.length - 1; i++) {
               const parts = tides[i].time.split(" ")[1]?.split(":") || ["0", "0"];
               const tideMin = parseInt(parts[0]) * 60 + parseInt(parts[1]);
@@ -102,20 +181,21 @@ export async function GET() {
       {
         water_temp: waterTemp,
         temp_source: tempSource,
+        is_estimate: isEstimate,
         tides,
         tide_state: tideState,
         updated: new Date().toISOString(),
       },
       {
         headers: {
-          "Cache-Control": "public, s-maxage=900, stale-while-revalidate=1800",
+          "Cache-Control": "public, s-maxage=1800, stale-while-revalidate=3600",
         },
       }
     );
   } catch {
     return NextResponse.json(
-      { water_temp: null, tides: [], tide_state: "unknown" },
-      { status: 502 }
+      { water_temp: 59, temp_source: "Seasonal fallback", is_estimate: true, tides: [], tide_state: "unknown" },
+      { status: 200 }
     );
   }
 }
