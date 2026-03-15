@@ -1,38 +1,70 @@
 import { NextResponse } from "next/server";
 
+// Try multiple stations for water temp — some may be offline
+const TEMP_SOURCES = [
+  { id: "46254", name: "Scripps Nearshore Buoy", label: "Sea Temperature" },
+  { id: "ljpc1", name: "Scripps Pier", label: "Sea Temperature" },
+  { id: "ljac1", name: "La Jolla NOS", label: "Water Temperature" },
+];
+
+async function fetchTempFromRSS(stationId: string, tempLabel: string): Promise<number | null> {
+  try {
+    const res = await fetch(
+      `https://www.ndbc.noaa.gov/data/latest_obs/${stationId}.rss`,
+      {
+        next: { revalidate: 900 },
+        headers: { "User-Agent": "LaJollaFreediveClub/1.0" },
+        signal: AbortSignal.timeout(5000),
+      }
+    );
+    if (!res.ok) return null;
+    const xml = await res.text();
+    
+    // Try to find temperature in the RSS description
+    const re = new RegExp(`<strong>${tempLabel}:</strong>\\s*([\\d.]+)`, "i");
+    const descs = xml.match(/<description><!\[CDATA\[([\s\S]*?)\]\]><\/description>/g);
+    if (!descs || descs.length < 2) return null;
+    
+    const m = descs[1].match(re);
+    if (!m) return null;
+    
+    const temp = parseFloat(m[1]);
+    if (isNaN(temp)) return null;
+    
+    // NDBC reports in Fahrenheit for US stations
+    // If value seems to be Celsius (below 40), convert
+    return temp < 40 ? Math.round(temp * 9 / 5 + 32) : Math.round(temp);
+  } catch {
+    return null;
+  }
+}
+
 export async function GET() {
   try {
-    // Use NOAA CO-OPS API directly for water temp and tide predictions
-    // Station 9410230 = La Jolla, CA
-    const [tempRes, tidesRes] = await Promise.allSettled([
-      fetch(
-        "https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?date=latest&station=9410230&product=water_temperature&units=english&time_zone=lst_ldt&format=json",
-        { next: { revalidate: 900 } }
-      ),
-      fetch(
-        "https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?date=today&station=9410230&product=predictions&datum=MLLW&time_zone=lst_ldt&interval=h&units=english&format=json",
-        { next: { revalidate: 3600 } }
-      ),
-    ]);
-
-    // Parse water temperature
+    // Try each station until we get a temp reading
     let waterTemp: number | null = null;
-    let tempTime: string | null = null;
-    if (tempRes.status === "fulfilled" && tempRes.value.ok) {
-      try {
-        const data = await tempRes.value.json();
-        if (data.data && data.data.length > 0) {
-          waterTemp = parseFloat(data.data[0].v);
-          tempTime = data.data[0].t;
-        }
-      } catch { /* parsing failed */ }
+    let tempSource = "";
+
+    for (const source of TEMP_SOURCES) {
+      waterTemp = await fetchTempFromRSS(source.id, source.label);
+      if (waterTemp !== null) {
+        tempSource = source.name;
+        break;
+      }
     }
 
-    // Parse tide predictions — find highs and lows
+    // Fetch tide predictions from NOAA CO-OPS
     const tides: { time: string; height: string; type: string }[] = [];
-    if (tidesRes.status === "fulfilled" && tidesRes.value.ok) {
-      try {
-        const data = await tidesRes.value.json();
+    let tideState = "unknown";
+
+    try {
+      const tidesRes = await fetch(
+        "https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?date=today&station=9410230&product=predictions&datum=MLLW&time_zone=lst_ldt&interval=h&units=english&format=json",
+        { next: { revalidate: 3600 } }
+      );
+
+      if (tidesRes.ok) {
+        const data = await tidesRes.json();
         if (data.predictions && data.predictions.length > 2) {
           const preds = data.predictions.map((p: { t: string; v: string }) => ({
             time: p.t,
@@ -40,46 +72,39 @@ export async function GET() {
           }));
 
           for (let i = 1; i < preds.length - 1; i++) {
-            const prev = preds[i - 1].height;
-            const curr = preds[i].height;
-            const next = preds[i + 1].height;
-            if (curr > prev && curr > next) {
-              tides.push({ time: preds[i].time, height: curr.toFixed(1), type: "high" });
-            } else if (curr < prev && curr < next) {
-              tides.push({ time: preds[i].time, height: curr.toFixed(1), type: "low" });
+            if (preds[i].height > preds[i - 1].height && preds[i].height > preds[i + 1].height) {
+              tides.push({ time: preds[i].time, height: preds[i].height.toFixed(1), type: "high" });
+            } else if (preds[i].height < preds[i - 1].height && preds[i].height < preds[i + 1].height) {
+              tides.push({ time: preds[i].time, height: preds[i].height.toFixed(1), type: "low" });
+            }
+          }
+
+          // Determine tide state
+          if (tides.length >= 2) {
+            const now = new Date();
+            const currentMinutes = now.getHours() * 60 + now.getMinutes();
+            for (let i = 0; i < tides.length - 1; i++) {
+              const parts = tides[i].time.split(" ")[1]?.split(":") || ["0", "0"];
+              const tideMin = parseInt(parts[0]) * 60 + parseInt(parts[1]);
+              const nextParts = tides[i + 1].time.split(" ")[1]?.split(":") || ["0", "0"];
+              const nextTideMin = parseInt(nextParts[0]) * 60 + parseInt(nextParts[1]);
+              if (currentMinutes >= tideMin && currentMinutes < nextTideMin) {
+                tideState = tides[i].type === "low" ? "incoming" : "outgoing";
+                break;
+              }
             }
           }
         }
-      } catch { /* parsing failed */ }
-    }
-
-    // Determine current tide state
-    let tideState = "unknown";
-    if (tides.length >= 2) {
-      const now = new Date();
-      const currentMinutes = now.getHours() * 60 + now.getMinutes();
-      
-      for (let i = 0; i < tides.length - 1; i++) {
-        const timeParts = tides[i].time.split(" ")[1]?.split(":") || ["0", "0"];
-        const tideMinutes = parseInt(timeParts[0]) * 60 + parseInt(timeParts[1]);
-        const nextTimeParts = tides[i + 1].time.split(" ")[1]?.split(":") || ["0", "0"];
-        const nextTideMinutes = parseInt(nextTimeParts[0]) * 60 + parseInt(nextTimeParts[1]);
-
-        if (currentMinutes >= tideMinutes && currentMinutes < nextTideMinutes) {
-          tideState = tides[i].type === "low" ? "incoming" : "outgoing";
-          break;
-        }
       }
-    }
+    } catch { /* tides failed */ }
 
     return NextResponse.json(
       {
         water_temp: waterTemp,
-        water_temp_time: tempTime,
+        temp_source: tempSource,
         tides,
         tide_state: tideState,
         updated: new Date().toISOString(),
-        sources: ["NOAA CO-OPS Station 9410230 (La Jolla)"],
       },
       {
         headers: {
@@ -89,7 +114,7 @@ export async function GET() {
     );
   } catch {
     return NextResponse.json(
-      { error: "Failed to fetch water data", water_temp: null, tides: [], tide_state: "unknown" },
+      { water_temp: null, tides: [], tide_state: "unknown" },
       { status: 502 }
     );
   }
