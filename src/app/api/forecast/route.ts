@@ -1,21 +1,21 @@
 import { NextResponse } from "next/server";
 
 interface ForecastPeriod {
-  name: string;       // e.g. "TONIGHT", "MON", "MON NIGHT", "TUE"
-  wind: string;       // e.g. "Wind NW 10 kt"
-  seas: string;       // e.g. "Seas 3 to 4 ft"
-  waveDetail: string; // e.g. "NW 2 ft at 4 seconds, W 3 ft at 12 seconds"
+  name: string;
+  wind: string;
+  seas: string;
+  waveDetail: string;
 }
 
 interface DayForecast {
-  day: string;        // e.g. "Mon", "Tue"
-  date: string;       // e.g. "Mar 17"
-  windSpeed: number;  // knots
+  day: string;
+  date: string;
+  windSpeed: number;
   windDir: string;
-  seaHeight: number;  // ft (max)
-  swellPeriod: number | null; // seconds (longest)
-  grade: string;      // A through F
-  score: number;      // 0-100
+  seaHeight: number;
+  swellPeriod: number | null;
+  grade: string;
+  score: number;
   summary: string;
   color: string;
 }
@@ -23,24 +23,57 @@ interface DayForecast {
 function parseForecast(text: string): ForecastPeriod[] {
   const periods: ForecastPeriod[] = [];
 
-  // The NWS format uses .NAME... to start each period
-  // Split on the period marker pattern
-  const chunks = text.split(/(?=\.[A-Z][A-Z ]+?\.\.\.)/);
+  // The NDBC forecast HTML contains multiple zones. 
+  // Find PZZ740 section (inner coastal, 0-10nm — most relevant for freediving)
+  // Fall back to PZZ750 if PZZ740 not found
+  let section = text;
+  const pzz740Start = text.indexOf("PZZ740");
+  const pzz750Start = text.indexOf("PZZ750");
+  
+  if (pzz740Start !== -1) {
+    // Find the end of PZZ740 section (starts at next PZZ or $$ marker)
+    const nextSection = text.indexOf("PZZ", pzz740Start + 6);
+    const dollarEnd = text.indexOf("$$", pzz740Start);
+    const endIdx = Math.min(
+      nextSection !== -1 ? nextSection : text.length,
+      dollarEnd !== -1 ? dollarEnd : text.length
+    );
+    section = text.slice(pzz740Start, endIdx);
+  } else if (pzz750Start !== -1) {
+    const nextSection = text.indexOf("PZZ", pzz750Start + 6);
+    const dollarEnd = text.indexOf("$$", pzz750Start);
+    const endIdx = Math.min(
+      nextSection !== -1 ? nextSection : text.length,
+      dollarEnd !== -1 ? dollarEnd : text.length
+    );
+    section = text.slice(pzz750Start, endIdx);
+  }
 
-  for (const chunk of chunks) {
-    // Match the period name
-    const nameMatch = chunk.match(/^\.([A-Z][A-Z ]+?)\.\.\./);
-    if (!nameMatch) continue;
+  // The NDBC HTML format uses period names without leading dots
+  // Pattern: "TODAY Wind...", "TONIGHT Wind...", "MON Wind..."
+  // Or with dots: ".TODAY...Wind..."
+  // Split on period markers — handle both formats
+  const periodPattern = /(?:^|\n)\s*\.?([A-Z][A-Z ]*?)(?:\.{3}|\s+(?=Wind|Seas))/gm;
+  const matches: { name: string; startIdx: number }[] = [];
+  let match;
+  
+  while ((match = periodPattern.exec(section)) !== null) {
+    const name = match[1].trim();
+    // Filter out non-period names
+    if (name.length > 20) continue;
+    if (name.includes("COASTAL") || name.includes("WATERS") || name.includes("MATEO") || name.includes("BORDER") || name.includes("PDT") || name.includes("PST") || name.includes("NATIONAL")) continue;
+    matches.push({ name, startIdx: match.index });
+  }
 
-    const name = nameMatch[1].trim();
-    const body = chunk.slice(nameMatch[0].length).trim();
+  for (let i = 0; i < matches.length; i++) {
+    const body = section.slice(
+      matches[i].startIdx,
+      i < matches.length - 1 ? matches[i + 1].startIdx : section.length
+    );
 
-    // Skip if this looks like a header section, not a forecast period
-    if (name === "SYNOPSIS" || name === "REST OF") continue;
-
-    // Parse wind — handles "Wind NW 10 kt", "Wind variable less than 10 kt", "Wind W 10 to 15 kt"
-    let windStr = "variable 0 kt";
-    const windStd = body.match(/Wind\s+([A-Z]+)\s+(\d+)(?:\s+to\s+(\d+))?\s+kt/i);
+    // Parse wind
+    let windStr = "variable 5 kt";
+    const windStd = body.match(/Wind\s+([NSEW]{1,3})\s+(\d+)(?:\s+to\s+(\d+))?\s+kt/i);
     const windVar = body.match(/Wind\s+variable\s+(?:less\s+than\s+)?(\d+)\s+kt/i);
     if (windStd) {
       windStr = `${windStd[1]} ${windStd[3] || windStd[2]} kt`;
@@ -48,44 +81,40 @@ function parseForecast(text: string): ForecastPeriod[] {
       windStr = `variable ${windVar[1]} kt`;
     }
 
-    // Parse seas — handles "Seas 3 to 4 ft", "Seas 3 ft"
+    // Parse seas
     let seasStr = "unknown";
     const seasMatch = body.match(/Seas\s+(\d+)(?:\s+to\s+(\d+))?\s+ft/i);
     if (seasMatch) {
       seasStr = seasMatch[2] ? `${seasMatch[1]}-${seasMatch[2]} ft` : `${seasMatch[1]} ft`;
     }
 
-    // Parse wave detail — can span multiple lines, ends at next sentence or period marker
+    // Parse wave detail
     let waveDetail = "";
-    const waveMatch = body.match(/Wave\s+Detail:\s*([\s\S]*?)(?=\s*\.|$)/i);
+    const waveMatch = body.match(/Wave\s+Detail:\s*([\s\S]*?)(?=\s*(?:TODAY|TONIGHT|SUN|MON|TUE|WED|THU|FRI|SAT|\.(?:[A-Z])|\n\s*\n|$))/i);
     if (waveMatch) {
       waveDetail = waveMatch[1].replace(/\n/g, " ").replace(/\s+/g, " ").trim();
     }
 
-    periods.push({ name, wind: windStr, seas: seasStr, waveDetail });
+    periods.push({ name: matches[i].name, wind: windStr, seas: seasStr, waveDetail });
   }
 
   return periods;
 }
 
 function scorePeriod(period: ForecastPeriod): { score: number; windSpeed: number; windDir: string; seaHeight: number; swellPeriod: number | null } {
-  let score = 50; // neutral baseline
+  let score = 50;
 
-  // Parse wind — "variable 10 kt" means light/variable, treat as ~5kt
   const isVariable = period.wind.includes("variable");
   const windSpeedMatch = period.wind.match(/(\d+)/);
   let windSpeed = windSpeedMatch ? parseInt(windSpeedMatch[1]) : 0;
-  if (isVariable) windSpeed = Math.round(windSpeed * 0.5); // "variable less than 10" ≈ 5kt
+  if (isVariable) windSpeed = Math.round(windSpeed * 0.5);
 
-  // Parse wind direction (skip "variable" as a match)
   const windDirMatch = period.wind.match(/\b([NSEW]{1,3})\b/);
   const windDir = windDirMatch ? windDirMatch[1] : "";
 
-  // Parse sea height (take max value)
   const seaMatch = period.seas.match(/(\d+)/g);
   const seaHeight = seaMatch ? Math.max(...seaMatch.map(Number)) : 0;
 
-  // Parse swell period (take longest)
   const periodMatches = period.waveDetail.match(/at\s+(\d+)\s+seconds/g);
   let swellPeriod: number | null = null;
   if (periodMatches) {
@@ -93,7 +122,7 @@ function scorePeriod(period: ForecastPeriod): { score: number; windSpeed: number
     swellPeriod = Math.max(...periods);
   }
 
-  // Score wind — freediving wants calm
+  // Wind scoring
   if (windSpeed <= 3) score += 20;
   else if (windSpeed <= 5) score += 15;
   else if (windSpeed <= 8) score += 8;
@@ -101,11 +130,10 @@ function scorePeriod(period: ForecastPeriod): { score: number; windSpeed: number
   else if (windSpeed <= 18) score -= 12;
   else score -= 25;
 
-  // Offshore wind bonus
   if (windDir.includes("E") && !windDir.includes("SE")) score += 5;
   if (windDir.includes("W") && windSpeed > 10) score -= 5;
 
-  // Score seas — this is the most important factor for freediving
+  // Seas scoring
   if (seaHeight <= 1) score += 25;
   else if (seaHeight <= 2) score += 15;
   else if (seaHeight <= 3) score += 5;
@@ -121,10 +149,10 @@ function scorePeriod(period: ForecastPeriod): { score: number; windSpeed: number
 }
 
 function gradeFromScore(score: number): { grade: string; color: string; summary: string } {
-  if (score >= 88) return { grade: "A", color: "#1B6B6B", summary: "Epic day — get in the water" };
+  if (score >= 88) return { grade: "A", color: "#1B6B6B", summary: "Epic day \u2014 get in the water" };
   if (score >= 78) return { grade: "B+", color: "#1B6B6B", summary: "Very good conditions" };
-  if (score >= 68) return { grade: "B", color: "#1B6B6B", summary: "Good diving at protected spots" };
-  if (score >= 58) return { grade: "C+", color: "#D4A574", summary: "Fair — pick your spot" };
+  if (score >= 68) return { grade: "B", color: "#1B6B6B", summary: "Good at protected spots" };
+  if (score >= 58) return { grade: "C+", color: "#D4A574", summary: "Fair \u2014 pick your spot" };
   if (score >= 45) return { grade: "C", color: "#D4A574", summary: "Below average" };
   if (score >= 30) return { grade: "D", color: "#C75B3A", summary: "Poor conditions" };
   return { grade: "F", color: "#C75B3A", summary: "Not recommended" };
@@ -132,51 +160,68 @@ function gradeFromScore(score: number): { grade: string; color: string; summary:
 
 export async function GET() {
   try {
-    // Fetch NWS coastal marine forecast for San Diego zone PZZ750
-    const res = await fetch(
+    // Try the NDBC forecast page first (has current data)
+    // Then fall back to the NWS text file
+    const urls = [
+      "https://www.ndbc.noaa.gov/data/Forecasts/FZUS56.KSGX.html",
       "https://tgftp.nws.noaa.gov/data/forecasts/marine/coastal/pz/pzz750.txt",
-      {
-        next: { revalidate: 3600 },
-        headers: { "User-Agent": "LaJollaFreediveClub/1.0" },
-        signal: AbortSignal.timeout(8000),
-      }
-    );
+    ];
 
-    if (!res.ok) {
+    let text = "";
+    for (const url of urls) {
+      try {
+        const res = await fetch(url, {
+          next: { revalidate: 3600 },
+          headers: { "User-Agent": "LaJollaFreediveClub/1.0" },
+          signal: AbortSignal.timeout(8000),
+        });
+        if (res.ok) {
+          text = await res.text();
+          // Strip HTML tags if from NDBC
+          text = text.replace(/<[^>]+>/g, " ").replace(/&nbsp;/g, " ");
+          if (text.includes("Wind") && text.includes("Seas")) break;
+        }
+      } catch { continue; }
+    }
+
+    if (!text) {
       return NextResponse.json({ error: "Forecast unavailable", days: [] }, { status: 502 });
     }
 
-    const text = await res.text();
     const periods = parseForecast(text);
-
     if (periods.length === 0) {
       return NextResponse.json({ error: "Could not parse forecast", days: [], raw: text.slice(0, 500) }, { status: 200 });
     }
 
-    // Map day names to dates
+    // Map periods to days
     const today = new Date();
     const dayNames = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
     const shortDayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const todayIdx = today.getDay();
 
-    // Group periods by day (combine day + night into one score)
+    // Group periods by day
     const dayScores = new Map<string, { scores: number[]; windSpeed: number; windDir: string; seaHeight: number; swellPeriod: number | null }>();
 
     for (const period of periods) {
-      // Determine which day this period belongs to
-      let dayKey = period.name.replace(" NIGHT", "").replace("REST OF ", "").replace("THIS ", "").trim();
+      let dayKey = period.name
+        .replace(" NIGHT", "")
+        .replace("REST OF ", "")
+        .replace("THIS ", "")
+        .replace("EARLY ", "")
+        .trim();
 
-      // Map special names to today's day
       if (dayKey === "TONIGHT" || dayKey === "TODAY" || dayKey === "AFTERNOON" || dayKey === "EVENING") {
-        dayKey = dayNames[today.getDay()];
+        dayKey = dayNames[todayIdx];
       }
 
-      const result = scorePeriod(period);
+      // Skip if not a recognized day name
+      if (!dayNames.includes(dayKey)) continue;
 
+      const result = scorePeriod(period);
       const existing = dayScores.get(dayKey);
       if (existing) {
         existing.scores.push(result.score);
-        // Use daytime values for display (not night)
         if (!period.name.includes("NIGHT") && !period.name.includes("TONIGHT")) {
           existing.windSpeed = result.windSpeed;
           existing.windDir = result.windDir;
@@ -196,16 +241,12 @@ export async function GET() {
 
     // Convert to DayForecast array
     const days: DayForecast[] = [];
-    const todayIdx = today.getDay();
-
     for (const [dayName, data] of Array.from(dayScores)) {
-      // Calculate average score for the day
       const avgScore = Math.round(data.scores.reduce((a, b) => a + b, 0) / data.scores.length);
       const { grade, color, summary } = gradeFromScore(avgScore);
 
-      // Calculate the actual date for this day name
       const dayIdx = dayNames.indexOf(dayName);
-      if (dayIdx === -1) continue; // Skip unrecognized
+      if (dayIdx === -1) continue;
 
       let daysFromNow = dayIdx - todayIdx;
       if (daysFromNow < 0) daysFromNow += 7;
@@ -220,14 +261,11 @@ export async function GET() {
         windDir: data.windDir,
         seaHeight: data.seaHeight,
         swellPeriod: data.swellPeriod,
-        grade,
-        score: avgScore,
-        summary,
-        color,
+        grade, score: avgScore, summary, color,
       });
     }
 
-    // Sort by date
+    // Sort by days from now
     days.sort((a, b) => {
       const aIdx = shortDayNames.indexOf(a.day);
       const bIdx = shortDayNames.indexOf(b.day);
@@ -239,19 +277,16 @@ export async function GET() {
     return NextResponse.json(
       {
         days,
-        source: "NWS Coastal Waters Forecast PZZ750",
-        source_url: "https://forecast.weather.gov/shmrn.php?mz=pzz750&syn=pzz700",
+        source: "NWS Coastal Waters Forecast PZZ740",
+        source_url: "https://www.ndbc.noaa.gov/data/Forecasts/FZUS56.KSGX.html",
+        periods_parsed: periods.length,
         updated: new Date().toISOString(),
       },
-      {
-        headers: {
-          "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=7200",
-        },
-      }
+      { headers: { "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=7200" } }
     );
   } catch (error) {
     return NextResponse.json(
-      { error: error instanceof Error ? error.message : "Forecast fetch failed", days: [] },
+      { error: error instanceof Error ? error.message : "Forecast failed", days: [] },
       { status: 500 }
     );
   }
