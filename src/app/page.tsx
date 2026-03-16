@@ -77,36 +77,36 @@ const testimonials = [
 
 const blogPosts = [
   {
-    slug: "beginners-guide-freediving-la-jolla",
-    category: "Beginner Guide",
-    title: "The Complete Beginner's Guide to Freediving in La Jolla",
+    slug: "mammalian-dive-reflex-explained",
+    category: "Science",
+    title: "The Mammalian Dive Reflex: Your Body's Built-In Superpower",
     excerpt:
-      "Everything you need to know before your first dive — gear, spots, safety, and what to expect.",
+      "Your body has an ancient survival mechanism that activates the moment your face hits the water. Understanding it changes everything.",
     date: "March 2026",
-    readTime: "12 min read",
-    gradient: "from-ocean to-teal",
+    readTime: "14 min read",
+    gradient: "from-deep to-ocean",
     image: "/images/blog-beginners.jpg",
   },
   {
-    slug: "breath-hold-training-surfers",
+    slug: "co2-tolerance-training-guide",
     category: "Training",
-    title: "Breath Hold Training for Surfers: Why Every Wave Rider Should Train Apnea",
+    title: "CO2 Tolerance Training: The Complete Guide for Freedivers",
     excerpt:
-      "How freediving breath training directly translates to surf survival and confidence in heavy water.",
+      "The urge to breathe isn't about running out of oxygen — it's about CO2. Here's how to recalibrate that threshold.",
     date: "March 2026",
-    readTime: "8 min read",
-    gradient: "from-[#14566a] to-seafoam",
+    readTime: "16 min read",
+    gradient: "from-teal to-ocean",
     image: "/images/blog-surfers.jpg",
   },
   {
-    slug: "best-freediving-spots-san-diego",
-    category: "Local Guide",
-    title: "5 Best Freediving Spots in San Diego",
+    slug: "dry-training-exercises-freediving",
+    category: "Training",
+    title: "7 Dry Training Exercises That Will Transform Your Freediving",
     excerpt:
-      "From La Jolla Cove to Point Loma kelp beds — a local's guide to San Diego's best freediving.",
+      "You don't need to be in the water to become a better freediver. Build the foundation on your couch.",
     date: "March 2026",
-    readTime: "10 min read",
-    gradient: "from-deep to-[#14566a]",
+    readTime: "11 min read",
+    gradient: "from-ocean to-teal",
     image: "/images/blog-spots.jpg",
   },
 ];

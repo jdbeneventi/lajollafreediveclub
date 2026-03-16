@@ -392,6 +392,357 @@ export const posts: BlogPost[] = [
 <p>You don't need to memorize all these abbreviations before your first course — your instructor will teach each discipline as it comes up. But understanding the landscape helps you see where freediving can take you. Most people start with STA and CWTB in their AIDA 2 course and discover that each discipline develops a different aspect of their diving. STA builds mental composure. DYN builds efficiency. CWT builds depth confidence. FIM builds equalization skill. Together, they make a complete freediver.</p>
     `,
   },
+  {
+    slug: "mammalian-dive-reflex-explained",
+    title: "The Mammalian Dive Reflex: Your Body's Built-In Superpower for Freediving",
+    description: "Your body has an ancient survival mechanism that activates the moment your face hits the water. Understanding the mammalian dive reflex — bradycardia, vasoconstriction, blood shift, and splenic contraction — is the key to understanding why freediving works.",
+    category: "Science",
+    date: "March 16, 2026",
+    readTime: "14 min read",
+    gradient: "from-deep to-ocean",
+    content: `
+<p>The moment your face touches water and you hold your breath, something extraordinary happens inside your body. Your heart rate drops. Blood retreats from your arms and legs. Your spleen contracts, squeezing extra red blood cells into circulation. Your lungs prepare to compress without collapsing.</p>
+
+<p>This is the mammalian dive reflex — an ancient physiological response shared by every air-breathing vertebrate on earth, from seals to humans to laboratory rats. It was first described by Edmund Goodwyn in 1786 and later characterized by Paul Bert in 1870, but freedivers have been benefiting from it for thousands of years without knowing the science behind it.</p>
+
+<p>Understanding this reflex won't just make you a better freediver. It'll change the way you think about what your body is capable of.</p>
+
+<h2>The Four Components</h2>
+
+<p>The dive reflex is an amalgam of four independent responses that work together to conserve oxygen and protect your vital organs during submersion. Each one is triggered by different stimuli, but together they form a coordinated survival system.</p>
+
+<h3>1. Bradycardia — Your Heart Slows Down</h3>
+
+<p>Within seconds of submerging your face in water while holding your breath, your heart rate drops. In untrained adults, the decrease is typically 10-25%. In elite freedivers, heart rate can drop by 50% or more — from a resting 60 beats per minute down to 30 or fewer.</p>
+
+<p>This is mediated by the vagus nerve (cranial nerve X), part of the parasympathetic nervous system. The trigeminal nerve (cranial nerve V) detects water on the face — specifically the forehead, nose, and area around the eyes — and relays that information to the brainstem. The vagus nerve then signals the heart to slow down.</p>
+
+<p>The purpose is straightforward: a slower heart consumes less oxygen. Less oxygen consumed means more oxygen available for the brain and other critical organs. It's your body shifting into power-saving mode.</p>
+
+<p>Two things amplify the bradycardia response: cold water and actual breath-holding. Facial immersion alone triggers a mild response, but the full effect requires both cold water contact and apnea together. This is why face immersion in warm water produces less bradycardia than cold, and why simply holding your breath on land without face immersion produces a weaker response than doing both.</p>
+
+<h3>2. Peripheral Vasoconstriction — Blood Retreats to the Core</h3>
+
+<p>Simultaneously with the heart rate decrease, blood vessels in your extremities constrict. Blood is shunted away from your arms, legs, skin, and non-essential muscle groups and redirected to your core — specifically your heart, brain, and lungs.</p>
+
+<p>This is driven by the sympathetic nervous system, the same system responsible for your fight-or-flight response. But instead of preparing you to run from a predator, it's preparing you to survive underwater. The result is a concentration of oxygenated blood in a "heart-brain circuit" — your body literally prioritizing the organs that matter most.</p>
+
+<p>The vasoconstriction also raises blood pressure, which is part of why the bradycardia exists — the slower heart rate partially compensates for the increased pressure, preventing your cardiovascular system from being overwhelmed.</p>
+
+<h3>3. Blood Shift — Preventing Lung Collapse at Depth</h3>
+
+<p>Until the 1960s, physiologists believed humans couldn't freedive below 50 meters. The math seemed clear: at that depth, water pressure would compress the air in your lungs to a volume so small that the chest cavity would collapse inward. In 1961, Enzo Maiorca disproved this by freediving past 50 meters. Scientists were baffled.</p>
+
+<p>The answer, discovered during studies on freediver Jacques Mayol in 1974, is the blood shift. As a freediver descends and the lungs compress under pressure, blood from the periphery fills the space that the compressed air vacates inside the chest cavity. The blood — being a liquid — cannot be compressed, so it acts as a hydraulic cushion, preventing the chest from collapsing.</p>
+
+<p>This is directly linked to the peripheral vasoconstriction described above. The blood shunted from your extremities doesn't just sit idle — it flows into the pulmonary vasculature, engorging the blood vessels in your lungs and maintaining the structural integrity of your chest cavity at depth.</p>
+
+<h3>4. Splenic Contraction — Your Secret Oxygen Reserve</h3>
+
+<p>This is the component most people have never heard of, and it might be the most fascinating. Your spleen — a fist-sized organ behind your stomach that most people think of as vestigial — acts as a reservoir for red blood cells. It stores roughly 10% of your total red blood cell volume.</p>
+
+<p>When you hold your breath and oxygen levels begin to drop, your spleen contracts in response to hypoxia and rising CO2, squeezing stored red blood cells into circulation. The result: an immediate increase in hemoglobin concentration and oxygen-carrying capacity of your blood. Research shows hemoglobin can increase by 3-5% from splenic contraction alone.</p>
+
+<p>Studies on Weddell seals found that hemoglobin rose from 17.5 g/dL at rest to 21.9 g/dL after surfacing from a dive, with the spleen contracting to 71% of its resting size. In humans the effect is smaller but measurable — and it appears to be trainable. Elite freedivers and endurance athletes show larger spleens and more pronounced contraction responses than untrained individuals.</p>
+
+<p>Interestingly, the spleen effect may explain why your later dives in a session often feel easier than your first few. The spleen doesn't fully contract immediately — it takes repeated apneas over 15-30 minutes for the full effect to kick in. This is one reason why proper warmup dives aren't just about equalization practice; they're priming your splenic response.</p>
+
+<h2>Training the Dive Reflex</h2>
+
+<p>The dive reflex is innate — every human has it from birth (infants actually have a stronger response than adults). But its intensity varies between individuals, and research suggests it can be enhanced through regular exposure.</p>
+
+<p>The Sama-Bajau people of Southeast Asia, who have hunted underwater by breath-hold diving for centuries, show enlarged spleens and more intense peripheral vasoconstriction compared to non-diving populations — with evidence of natural selection for the genes controlling these adaptations. The Haenyeo women divers of South Korea demonstrate pronounced bradycardia and exceptional cold tolerance during breath-hold diving.</p>
+
+<p>You don't need centuries of genetic adaptation to improve your dive reflex, but regular training matters. Here's what the research supports:</p>
+
+<p><strong>Face immersion practice.</strong> Even without full submersion, placing your face in cold water while holding your breath activates the reflex. Doing this regularly as part of dry training can strengthen the response over time.</p>
+
+<p><strong>Repeated apneas.</strong> Serial breath-holds with face immersion produce a cumulative effect. Each successive hold benefits from the ongoing splenic contraction and cardiovascular adjustments from previous holds.</p>
+
+<p><strong>Cold water exposure.</strong> Water below 21°C (70°F) produces significantly stronger cardiovascular responses than warm water. La Jolla's water, ranging from 56-72°F depending on season, is consistently cold enough to trigger a robust dive reflex.</p>
+
+<p><strong>Regular diving.</strong> Perhaps the most intuitive finding: people who dive frequently develop stronger dive reflexes. The more you practice, the more efficiently your body learns to shift into diving mode.</p>
+
+<h2>What This Means for Your Freediving</h2>
+
+<p>Understanding the dive reflex changes how you approach a dive. That first uncomfortable minute where everything feels wrong? That's your body transitioning from terrestrial mode to diving mode. The bradycardia hasn't fully kicked in. The vasoconstriction is still ramping up. Your spleen is just beginning to contract.</p>
+
+<p>This is why we emphasize the breathe-up and relaxation before a dive. You're not just calming your mind — you're giving your body time to activate the physiological systems that will sustain you underwater. A calm, relaxed entry with face immersion before your duck dive gives the trigeminal nerve time to detect the water and initiate the cascade.</p>
+
+<p>It's also why the first dive of a session is often the hardest. Your body hasn't fully transitioned yet. By the third or fourth dive, with the splenic contraction in full effect and the cardiovascular responses primed, the same depth feels noticeably easier.</p>
+
+<p>The dive reflex is your body's 300-million-year-old answer to the question "how do I survive underwater?" You don't need to understand every neural pathway to benefit from it. But knowing it's there — knowing that your body is designed for this — changes something fundamental about how you relate to the water.</p>
+
+<p>You're not fighting the ocean. You're remembering something your body has always known how to do.</p>
+    `,
+  },
+  {
+    slug: "co2-tolerance-training-guide",
+    title: "CO2 Tolerance Training: The Complete Guide for Freedivers",
+    description: "Carbon dioxide tolerance is what separates a 30-second breath hold from a 3-minute one. This guide covers the science behind CO2, how training tables work, the no-contraction approach, and a practical dry training program you can start today.",
+    category: "Training",
+    date: "March 16, 2026",
+    readTime: "16 min read",
+    gradient: "from-teal to-ocean",
+    content: `
+<p>Every freediver hits the same wall. You're 45 seconds into a breath hold, everything feels fine, and then suddenly your diaphragm starts convulsing. Your body is screaming at you to breathe. You surface gasping, convinced you were about to run out of oxygen.</p>
+
+<p>Here's the truth: you weren't even close. At the moment of that desperate urge to breathe, most people still have several minutes of usable oxygen in their system. What triggered the panic wasn't low oxygen — it was high carbon dioxide.</p>
+
+<p>Understanding this distinction, and learning to train your CO2 tolerance, is the single biggest unlock in freediving.</p>
+
+<h2>Why CO2 Drives the Urge to Breathe</h2>
+
+<p>Carbon dioxide is a byproduct of cellular metabolism. Every cell in your body produces it as it burns oxygen for energy. Normally, you exhale CO2 with every breath and levels stay stable. When you hold your breath, CO2 accumulates in your blood, forming carbonic acid and lowering blood pH.</p>
+
+<p>Your body has chemoreceptors — primarily in the carotid bodies at the sides of your neck and in the brainstem — that are extremely sensitive to changes in blood pH. When CO2 levels rise above a threshold, these chemoreceptors trigger the respiratory center in your brain, producing the urge to breathe. This arrives as diaphragmatic contractions — involuntary spasms of the diaphragm that are your body's way of saying "exhale this CO2 and inhale fresh oxygen."</p>
+
+<p>The key insight: this threshold is not fixed. It's a trigger point that can be recalibrated through training. A person who has never trained might feel the urge to breathe at 45 seconds. An experienced freediver might not feel contractions until 3 or 4 minutes. The oxygen in their blood at both time points might be similar — the difference is how much CO2 their body has learned to tolerate before sounding the alarm.</p>
+
+<h2>CO2 Tolerance vs. O2 Tolerance</h2>
+
+<p>Freediving training addresses two separate (but related) physiological challenges. Understanding the difference is important because they require different training approaches.</p>
+
+<p><strong>CO2 tolerance</strong> is your ability to remain calm and functional as CO2 accumulates. It determines when you feel the urge to breathe and how well you can continue functioning once that urge arrives. This is what most beginners need to develop first, and it's the safer of the two to train because you're working within comfortable oxygen ranges.</p>
+
+<p><strong>O2 tolerance</strong> (more accurately, hypoxia tolerance) is your ability to function as oxygen levels decline. This is what determines your absolute maximum breath hold and the point at which you risk hypoxic blackout. O2 training is more advanced, more physiologically demanding, and carries more risk — which is why it should only be done under supervision.</p>
+
+<p>For most recreational freedivers, CO2 tolerance is the limiting factor. You'll run out of comfort long before you run out of oxygen. That's actually a good thing — your CO2 alarm system is a safety mechanism. The goal isn't to disable it. It's to recalibrate it so it fires at the appropriate time rather than prematurely.</p>
+
+<h2>How CO2 Tables Work</h2>
+
+<p>A CO2 training table is a series of breath holds with progressively shorter rest intervals. The hold time stays constant (typically 50-60% of your maximum), but the recovery time between holds decreases with each round. Because you have less time to recover, CO2 doesn't fully clear between holds, and it builds up progressively throughout the session.</p>
+
+<p>Here's an example for someone with a 3-minute max breath hold:</p>
+
+<p><strong>CO2 Table (hold time: 1:30, rest decreases):</strong></p>
+
+<p>Round 1: Hold 1:30, Rest 2:00<br/>
+Round 2: Hold 1:30, Rest 1:45<br/>
+Round 3: Hold 1:30, Rest 1:30<br/>
+Round 4: Hold 1:30, Rest 1:15<br/>
+Round 5: Hold 1:30, Rest 1:00<br/>
+Round 6: Hold 1:30, Rest 0:45<br/>
+Round 7: Hold 1:30, Rest 0:30<br/>
+Round 8: Hold 1:30, Done</p>
+
+<p>By the later rounds, you'll feel contractions beginning earlier in each hold. That's the training effect — your body is learning to function with elevated CO2 levels.</p>
+
+<p>Compare this to an O2 table, where rest time stays constant but hold time increases. O2 tables push you toward your maximum, which means they create oxygen debt. This is more dangerous and should be approached with more caution.</p>
+
+<h2>The No-Contraction Approach</h2>
+
+<p>Classical CO2 tables work, but there's a modern refinement that many coaches now prefer: the no-contraction table. The philosophy is simple — end each hold before contractions begin.</p>
+
+<p>Why? Because repeatedly pushing deep into uncomfortable contractions can create a negative association with breath-holding. Your nervous system learns that apnea equals suffering, which actually makes relaxation harder over time. The no-contraction approach builds tolerance gradually while keeping the experience positive.</p>
+
+<p>Here's how it works: perform a series of breath holds, but stop each one the moment you feel the first sign of the urge to breathe — before any diaphragmatic contraction. Over time, that first-urge point pushes later and later. Your tolerance improves without the suffering.</p>
+
+<p>This approach takes longer to produce results than aggressive classical tables, but the results tend to be more sustainable, and it builds a healthy, relaxed relationship with breath-holding that translates better to actual diving.</p>
+
+<h2>A Practical Dry Training Program</h2>
+
+<p>You can train CO2 tolerance without water. In fact, dry training is safer and more accessible. Here's a weekly structure:</p>
+
+<h3>Beginner (first 4 weeks)</h3>
+
+<p><strong>Frequency:</strong> 3 sessions per week, never on consecutive days.</p>
+
+<p><strong>Session structure:</strong> 5 minutes of relaxed diaphragmatic breathing to establish baseline calm. Then 6 rounds of: hold your breath at a comfortable level (aim for about 50% of max) with 2-minute rest between holds. During rest, breathe normally — don't hyperventilate. Each session, try to decrease rest time by 5-10 seconds while keeping hold time constant.</p>
+
+<p><strong>Position:</strong> Lying down on your back or face down. Never standing — in the unlikely event of lightheadedness, you don't want to fall.</p>
+
+<h3>Intermediate (weeks 5-12)</h3>
+
+<p><strong>Frequency:</strong> 3-4 sessions per week. Alternate between CO2 focus and relaxation focus.</p>
+
+<p><strong>CO2 session:</strong> 8 rounds using a proper CO2 table as described above. Hold at 50-60% of max. Rest decreases from 2:00 to 0:30 across the 8 rounds.</p>
+
+<p><strong>Relaxation session:</strong> 4-5 longer holds at 60-70% of max with generous rest (2:30+). Focus on staying completely relaxed. No fighting, no tension. If contractions come, observe them without reacting.</p>
+
+<h3>Key Principles</h3>
+
+<p><strong>Never do more than one table per day.</strong> These are physiologically demanding even though you're lying still.</p>
+
+<p><strong>Don't hyperventilate during rest periods.</strong> Breathe normally. Hyperventilation blows off CO2, which defeats the purpose, and it can dangerously lower your CO2 warning system before your next hold.</p>
+
+<p><strong>Never train O2 tables alone.</strong> CO2 tables at 50-60% of max are safe to do solo (dry, lying down). O2 tables that push toward your maximum should only be done with a buddy present.</p>
+
+<p><strong>Stop if you feel lightheaded, see stars, or feel tingling in your extremities.</strong> These are signs of hypoxia, not CO2 buildup, and they mean you've pushed too far.</p>
+
+<h2>What to Expect</h2>
+
+<p>In the first two weeks, you'll notice that your initial discomfort with breath-holding decreases. The urge to breathe will still come, but it won't feel as urgent. By week four, you should see measurable improvement in your static hold time — often 30-60 seconds longer than when you started.</p>
+
+<p>The real change is psychological. You'll develop a different relationship with the urge to breathe. Instead of panic, it becomes information. That shift — from reactive fear to calm awareness — is what separates a beginner from a freediver.</p>
+
+<p>And that's what we mean when we say training starts from the inside out.</p>
+    `,
+  },
+  {
+    slug: "dry-training-exercises-freediving",
+    title: "7 Dry Training Exercises That Will Transform Your Freediving",
+    description: "You don't need to be in the water to become a better freediver. These 7 dry training exercises — from diaphragm stretches to walking apneas to intercostal mobility work — build the physical foundation that makes depth and duration possible.",
+    category: "Training",
+    date: "March 16, 2026",
+    readTime: "11 min read",
+    gradient: "from-ocean to-teal",
+    content: `
+<p>The best freedivers in the world spend more time training on land than in the water. That sounds counterintuitive until you understand what actually limits your freediving: it's not swimming speed or lung size. It's the flexibility of your rib cage, the strength of your diaphragm, your body's CO2 tolerance, and your ability to stay relaxed under physiological stress.</p>
+
+<p>All of these can be trained on your couch.</p>
+
+<p>Here are seven dry training exercises we use with every student, from first-timers to competitive divers. No equipment needed.</p>
+
+<h2>1. Diaphragmatic Breathing (The Foundation)</h2>
+
+<p><strong>What it does:</strong> Trains your primary breathing muscle — the diaphragm — to do its job properly. Most people breathe with their chest and shoulders, which is inefficient and activates the stress response. Diaphragmatic breathing is slower, deeper, and activates the parasympathetic nervous system.</p>
+
+<p><strong>How to do it:</strong> Lie on your back. Place one hand on your chest and one on your belly. Breathe in through your nose, directing the air down so your belly rises while your chest stays still. Exhale slowly through your mouth, feeling your belly fall. Start with a 4-second inhale, 6-second exhale. Do this for 5 minutes.</p>
+
+<p><strong>Why it matters:</strong> This is the single most important skill in freediving. Every breath-up before a dive uses diaphragmatic breathing. Every CO2 table starts here. Every recovery after a dive depends on it. If you only do one exercise from this list, do this one daily.</p>
+
+<h2>2. Intercostal Stretches (Rib Cage Mobility)</h2>
+
+<p><strong>What it does:</strong> Increases the flexibility of your intercostal muscles — the muscles between your ribs. More flexible intercostals mean your rib cage can expand more during inhalation and compress more at depth.</p>
+
+<p><strong>How to do it:</strong> Stand with your feet shoulder-width apart. Reach your right arm overhead and lean to the left, feeling a stretch along your right side. Hold for 30 seconds, breathing into the stretch. Switch sides. Do 3 rounds per side. Variation: lie on your side over a foam roller positioned under your ribs for 2 minutes per side.</p>
+
+<p><strong>Why it matters:</strong> At 30 meters, your lungs compress to about a quarter of their surface volume. Flexible intercostals allow this compression to happen smoothly without injury. On the surface, they let you take a bigger breath.</p>
+
+<h2>3. Uddiyana Bandha (Diaphragm Vacuum)</h2>
+
+<p><strong>What it does:</strong> Strengthens the diaphragm while dramatically increasing its range of motion.</p>
+
+<p><strong>How to do it:</strong> Stand with feet shoulder-width, hands on thighs, knees slightly bent. Exhale completely. Without inhaling, pull your abdominal wall inward and upward, as if sucking your belly button toward your spine and up under your ribs. Hold 5-15 seconds. Release, recover, repeat 5-8 times. Do this on an empty stomach.</p>
+
+<p><strong>Why it matters:</strong> The diaphragm is both your primary breathing muscle and the muscle that produces contractions when CO2 rises. A strong, flexible diaphragm gives you more control over both functions. This exercise is practiced by virtually every competitive freediver.</p>
+
+<h2>4. CO2 Table (Breath Hold Intervals)</h2>
+
+<p><strong>What it does:</strong> Recalibrates your body's CO2 alarm system. See our full CO2 tolerance training guide for the complete protocol.</p>
+
+<p><strong>How to do it:</strong> Lie down. 6-8 breath holds at 50% of max, with rest intervals decreasing by 15 seconds each round. Breathe normally during rest.</p>
+
+<p><strong>Why it matters:</strong> The cornerstone of dry apnea training. Consistent CO2 table work produces measurable improvements within 2-4 weeks.</p>
+
+<h2>5. Apnea Walking</h2>
+
+<p><strong>What it does:</strong> Trains breath-holding while physically active, which is closer to actual diving than static holds.</p>
+
+<p><strong>How to do it:</strong> Take a full breath, walk at normal pace, count steps until you feel the urge to breathe. Stop, recover 2 minutes, repeat 5-8 times. Increase step count by 5-10 per session over weeks.</p>
+
+<p><strong>Safety:</strong> Do this somewhere you can safely stop. Have someone with you the first few times. Never push to lightheadedness.</p>
+
+<p><strong>Why it matters:</strong> Bridges the gap between lying-on-the-couch training and actual diving. Teaches relaxation and efficiency while muscles are working.</p>
+
+<h2>6. Full Body Relaxation Scan</h2>
+
+<p><strong>What it does:</strong> Teaches you to identify and release unconscious muscle tension — one of the biggest oxygen consumers during a breath hold.</p>
+
+<p><strong>How to do it:</strong> Lie on your back, eyes closed. Slowly scan from toes to head, consciously relaxing each muscle group. Spend 3-5 breaths on each area. The whole scan takes about 10 minutes. After the scan, try a breath hold and notice how much longer you can hold when every muscle is truly relaxed.</p>
+
+<p><strong>Why it matters:</strong> A clenched jaw, tight shoulders, or squeezed fists during a dive burn oxygen for no benefit. Many beginners are shocked at how much tension they carry underwater without realizing it.</p>
+
+<h2>7. Thoracic Mobility Routine</h2>
+
+<p><strong>What it does:</strong> Increases flexibility of the chest, shoulders, and spine — all affecting breathing capacity and comfort at depth.</p>
+
+<p><strong>How to do it:</strong> A 15-minute routine combining cat-cow stretches (10 cycles), thread-the-needle rotations (30 seconds each side, 3 rounds), chest opener on foam roller (2-3 minutes), and seated forward fold with exhale hold (5 rounds).</p>
+
+<p><strong>Why it matters:</strong> Freediving asks your body to compress the chest, expand the ribs maximally, and move with full-body fluidity. A stiff thoracic spine limits how much air you can take in and how comfortably your lungs compress at depth.</p>
+
+<h2>A Weekly Schedule</h2>
+
+<p><strong>Monday:</strong> Diaphragmatic breathing + CO2 table + relaxation scan<br/>
+<strong>Tuesday:</strong> Intercostal stretches + uddiyana bandha + mobility routine<br/>
+<strong>Wednesday:</strong> Rest<br/>
+<strong>Thursday:</strong> Diaphragmatic breathing + CO2 table + apnea walking<br/>
+<strong>Friday:</strong> Intercostal stretches + uddiyana bandha + mobility routine<br/>
+<strong>Saturday:</strong> Ocean session<br/>
+<strong>Sunday:</strong> Rest</p>
+
+<p>Total dry training time: about 25-30 minutes per session. Consistent, moderate training beats occasional intense sessions every time. The ocean is where you test your skills. The living room is where you build them.</p>
+    `,
+  },
+  {
+    slug: "what-happens-body-freedive",
+    title: "What Happens to Your Body During a Freedive: A Minute-by-Minute Breakdown",
+    description: "From the moment you take your last breath to the moment you surface, your body goes through a remarkable sequence of physiological changes. Here's exactly what happens during a freedive — and why understanding it makes you a better diver.",
+    category: "Science",
+    date: "March 16, 2026",
+    readTime: "13 min read",
+    gradient: "from-deep to-teal",
+    content: `
+<p>You're floating at the surface at La Jolla Shores, looking down into blue water. Your buddy gives you the okay sign. You take your final breath, tuck your chin, and begin your duck dive toward the canyon wall 40 feet below.</p>
+
+<p>In the next 90 seconds, your body will undergo more dramatic physiological changes than it experiences in an entire normal day. Here's what happens, moment by moment.</p>
+
+<h2>Pre-Dive: The Breathe-Up (2-3 minutes before)</h2>
+
+<p>Before your final breath, you spend 2-3 minutes doing slow, diaphragmatic breathing at the surface. This isn't just mental preparation — it's physiological priming.</p>
+
+<p>Each slow exhale activates your parasympathetic nervous system via the vagus nerve, dropping your heart rate. Blood pressure decreases. Muscle tension releases. You're shifting your autonomic nervous system away from fight-or-flight and toward rest-and-digest.</p>
+
+<p>At the same time, repeated face immersion between breaths is beginning to trigger the mammalian dive reflex. Your heart rate is already slightly lower than when you walked into the water. Your spleen is beginning to contract.</p>
+
+<p>Your final breath fills your lungs to about 85-90% capacity — a full, comfortable breath, not a maximum pack. Overfilling creates tension, raises heart rate, and wastes oxygen.</p>
+
+<h2>0-15 Seconds: The Duck Dive</h2>
+
+<p>You pike at the waist, drive your fins skyward, and begin descending head-first. This is the most energy-intensive moment of the entire dive — strong fin kicks are needed to overcome positive buoyancy.</p>
+
+<p>The mammalian dive reflex fully activates: face immersion plus breath-holding plus cold water triggers the trigeminal nerve, which signals the vagus nerve. Your heart rate drops 10-25% within the first 10-15 seconds. Peripheral vasoconstriction begins.</p>
+
+<p>At 10 feet, you perform your first equalization. If you don't, the pressure differential causes ear pain. This is the depth where most beginners turn back.</p>
+
+<p>Oxygen saturation is still near 100%. CO2 levels are minimal. You feel fine.</p>
+
+<h2>15-30 Seconds: Freefall</h2>
+
+<p>Between 30 and 40 feet, you become negatively buoyant. The compressed air in your lungs and wetsuit no longer keeps you afloat — you sink. You stop kicking entirely. This is freefall: silent, effortless descent.</p>
+
+<p>Your heart rate continues to drop. The blood shift is underway — blood from your extremities fills the space that compressed lungs have vacated in your chest. You're equalizing every meter or two.</p>
+
+<p>CO2 is accumulating, but you haven't hit your threshold yet. Your body is efficiently burning oxygen at a reduced rate thanks to bradycardia and vasoconstriction.</p>
+
+<h2>30-60 Seconds: At Depth</h2>
+
+<p>You arrive at the canyon wall at 40 feet. Your lungs are compressed to roughly 60% of surface volume. The blood shift has filled your pulmonary vasculature, preventing chest collapse. Your spleen has contracted noticeably, boosting hemoglobin by 3-5%.</p>
+
+<p>Your heart rate may be 40-50 BPM — roughly half its normal resting rate. Cardiac output has decreased, but the blood being pumped is more oxygen-rich and directed almost exclusively to your brain and heart.</p>
+
+<p>You're exploring. A nudibranch on the rock. A horn shark under a ledge. Every movement should be slow and deliberate — unnecessary movement burns oxygen.</p>
+
+<p>Around 45-60 seconds, you feel the first awareness that your body would like to breathe. Not contractions yet — just a subtle signal from your chemoreceptors. Trained freedivers note it and continue.</p>
+
+<h2>60-90 Seconds: The Ascent</h2>
+
+<p>You turn toward the surface and begin kicking. The first few kicks take effort — you're still negatively buoyant. But as you ascend and lungs re-expand, buoyancy increases. By 15-20 feet from surface, you're rising with minimal effort.</p>
+
+<p>This is the most dangerous phase. As you ascend, the partial pressure of oxygen in your blood drops as water pressure decreases. Oxygen that was adequate at depth may become inadequate near the surface — this is why shallow water blackout typically occurs in the last 15 feet.</p>
+
+<p>CO2 is undeniable now. You may be experiencing diaphragmatic contractions. Trained freedivers ascend through them, knowing they're a CO2 signal, not an oxygen emergency. This is where all that dry training pays off.</p>
+
+<p>Your heart rate begins increasing as you approach the surface, anticipating the resumption of breathing.</p>
+
+<h2>The Surface: Recovery</h2>
+
+<p>You break the surface. Your first exhale is critical — blow out CO2-rich air forcefully, then inhale deep. Recovery breathing: exhale-inhale-hold 2 seconds, repeat. This clears CO2 and maintains positive lung pressure, helping prevent hypoxic blackout in the first 15-30 seconds after surfacing.</p>
+
+<p>Heart rate climbs back toward normal. Blood returns to your periphery. Your spleen begins re-sequestering red blood cells over the next 10 minutes. Oxygen saturation, which may have dropped to 80-90%, returns to 98-100% within a few breaths.</p>
+
+<p>Within two minutes, you feel normal. The dive reflex recedes. Your body has returned to terrestrial mode.</p>
+
+<h2>What Changes with Training</h2>
+
+<p>Every human experiences this sequence. But trained freedivers experience it differently: more pronounced bradycardia, larger splenic contraction, higher CO2 threshold, calmer psychological response to contractions, and lower oxygen consumption from less tension and more efficient movement.</p>
+
+<p>None of these require exceptional genetics. They're all trainable. Dry training builds CO2 tolerance and breathing mechanics. Ocean practice builds the dive reflex and equalization skill. Together, they transform a 30-second dive into a 2-minute exploration of the canyon wall.</p>
+
+<p>Your body already knows how to do this. Training just gives it permission to work.</p>
+    `,
+  },
 ];
 
 export function getPost(slug: string): BlogPost | undefined {
