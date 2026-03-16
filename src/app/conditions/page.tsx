@@ -2,17 +2,20 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Reveal } from "@/components/Reveal";
 import { ConditionsWidget } from "./ConditionsWidget";
+import { AlmanacWidget } from "./AlmanacWidget";
 
 export const metadata: Metadata = {
-  title: "Dive Conditions — La Jolla Real-Time Ocean Data",
+  title: "La Jolla Dive Conditions Today — Live Ocean Data",
   description:
-    "Real-time wave height, swell period, wind, and water temperature at Scripps Pier, La Jolla. Freediving conditions report, pier cam, and local dive spot guidance for San Diego freedivers.",
+    "Live La Jolla dive conditions: AI visibility, swell, wind, water temp, tides, moon phase, seasonal species, and what's in the water right now. Updated every 10 minutes from Scripps Pier.",
   keywords: [
     "La Jolla dive conditions",
     "Scripps Pier wave data",
     "La Jolla water temperature",
     "freediving conditions San Diego",
     "La Jolla Cove visibility",
+    "La Jolla tide chart",
+    "La Jolla moon phase diving",
   ],
 };
 
@@ -105,6 +108,9 @@ export default function ConditionsPage() {
         <div className="max-w-[900px] mx-auto">
           <Reveal>
             <ConditionsWidget />
+          </Reveal>
+          <Reveal>
+            <AlmanacWidget />
           </Reveal>
         </div>
       </section>
