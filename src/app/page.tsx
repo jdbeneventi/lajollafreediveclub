@@ -186,8 +186,7 @@ export default function Home() {
           </h1>
 
           <p className="text-lg text-white/65 leading-relaxed max-w-[560px] mx-auto mb-10 font-light animate-fade-up [animation-delay:0.6s]">
-            San Diego&apos;s freediving community. From your first breath hold to
-            deep blue exploration — find your people, find your depth.
+            San Diego&apos;s freediving community. Live dive conditions, seasonal species intel, AIDA certification, and a crew that dives La Jolla every week.
           </p>
 
           <div className="flex gap-4 justify-center flex-wrap animate-fade-up [animation-delay:0.8s]">
@@ -267,6 +266,74 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ═══ LIVE TOOLS ═══ */}
+      <section className="bg-salt py-28 px-6">
+        <div className="max-w-[1240px] mx-auto">
+          <Reveal>
+            <div className="text-center mb-16">
+              <div className="section-label justify-center before:hidden">Know the Water</div>
+              <h2 className="section-title">Tools we built for La Jolla divers</h2>
+              <p className="section-desc max-w-[560px] mx-auto">
+                Live ocean data, seasonal species tracking, and local knowledge
+                compiled from thousands of dives — all free, updated daily.
+              </p>
+            </div>
+          </Reveal>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
+            {[
+              {
+                href: "/conditions",
+                icon: "🌊",
+                title: "Live Conditions",
+                desc: "AI visibility analysis, swell, wind, water temp, and an overall dive grade. Updated every 10 minutes from Scripps Pier.",
+                badge: "Live",
+              },
+              {
+                href: "/map",
+                icon: "🗺️",
+                title: "Underwater Field Guide",
+                desc: "10 dive sites, 8 depth zones, 50+ species, night diving intel, and seasonal patterns — all from local knowledge.",
+                badge: null,
+              },
+              {
+                href: "/tides",
+                icon: "🌙",
+                title: "Tides & Moon Phase",
+                desc: "7-day tide calendar with best dive windows, moon phase, spring/neap detection, and grunion run alerts.",
+                badge: null,
+              },
+              {
+                href: "/gear",
+                icon: "🤿",
+                title: "Gear Guide",
+                desc: "What to wear at every water temperature, plus our recommendations for masks, fins, weights, and safety gear.",
+                badge: null,
+              },
+            ].map((tool, i) => (
+              <Reveal key={tool.href} delay={i * 80}>
+                <Link
+                  href={tool.href}
+                  className="block bg-white rounded-2xl p-7 no-underline text-deep hover:-translate-y-1 hover:shadow-[0_16px_48px_rgba(10,22,40,0.08)] transition-all group h-full"
+                >
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="text-2xl">{tool.icon}</span>
+                    {tool.badge && (
+                      <span className="px-2 py-0.5 bg-teal/10 text-teal text-[10px] font-semibold rounded-full flex items-center gap-1">
+                        <span className="w-1 h-1 rounded-full bg-teal animate-pulse-slow" />
+                        {tool.badge}
+                      </span>
+                    )}
+                  </div>
+                  <h3 className="font-serif text-lg mb-2 tracking-tight group-hover:text-teal transition-colors">{tool.title}</h3>
+                  <p className="text-xs text-[#5a6a7a] leading-relaxed">{tool.desc}</p>
+                </Link>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ═══ PROGRAMS ═══ */}
       <section id="programs" className="py-28 px-6 bg-salt">
         <div className="max-w-[1240px] mx-auto">
@@ -312,6 +379,27 @@ export default function Home() {
               </Reveal>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ═══ SEASONAL TEASER ═══ */}
+      <section className="bg-white py-20 px-6">
+        <div className="max-w-[900px] mx-auto text-center">
+          <Reveal>
+            <div className="section-label justify-center before:hidden">This Month in La Jolla</div>
+            <h2 className="section-title mb-6">What&apos;s in the water right now</h2>
+            <p className="section-desc max-w-[560px] mx-auto mb-10">
+              Our conditions page tracks seasonal species, moon phases, grunion runs,
+              whale migrations, and everything else happening on the La Jolla coastline —
+              updated automatically so you always know what you might see.
+            </p>
+            <Link
+              href="/conditions"
+              className="btn btn-outline no-underline"
+            >
+              Check Today&apos;s Conditions →
+            </Link>
+          </Reveal>
         </div>
       </section>
 
