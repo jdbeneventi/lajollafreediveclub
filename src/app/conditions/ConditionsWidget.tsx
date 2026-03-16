@@ -21,19 +21,95 @@ function formatBuoyTime(isoTime: string | null): string {
 }
 
 // ─── Scoring ───
-function scoreVisibility(vis: VisData | null, tideState: string): FactorScore {
+
+// Predictive visibility model based on environmental factors
+// Used when camera analysis is unavailable
+function predictVisibility(conditions: ConditionsData | null, tideState: string, waterTemp: number | null): { low: number; high: number; confidence: string; factors: string[] } {
+  // Baseline: La Jolla average vis is ~12-15ft
+  let baseVis = 14;
+  const factors: string[] = [];
+
+  if (conditions) {
+    // Swell effect: bigger waves = more sediment = worse vis
+    const ht = conditions.waveHeight || 0;
+    if (ht <= 1) { baseVis += 5; factors.push("Small swell (+)"); }
+    else if (ht <= 2) { baseVis += 2; }
+    else if (ht <= 3) { baseVis -= 2; }
+    else if (ht <= 5) { baseVis -= 5; factors.push("Large swell (\u2212)"); }
+    else { baseVis -= 8; factors.push("Heavy swell (\u2212\u2212)"); }
+
+    // Period effect: short period = choppy = worse
+    const pd = conditions.wavePeriod || 8;
+    if (pd >= 14) { baseVis += 3; factors.push("Long period swell (+)"); }
+    else if (pd >= 10) { baseVis += 1; }
+    else if (pd < 6) { baseVis -= 3; factors.push("Short period chop (\u2212)"); }
+
+    // Wind effect
+    const ws = parseFloat(conditions.windSpeed || "0");
+    const wd = conditions.windDir || "";
+    if (ws <= 5) { baseVis += 2; factors.push("Calm winds (+)"); }
+    else if (ws > 12) { baseVis -= 3; factors.push("Strong wind (\u2212)"); }
+    if (wd.includes("E") && !wd.includes("SE") && ws > 3) { baseVis += 2; factors.push("Offshore wind (+)"); }
+    if (wd.includes("W") && ws > 8) { baseVis -= 2; factors.push("Onshore wind (\u2212)"); }
+  }
+
+  // Tide effect
+  if (tideState === "incoming") { baseVis += 2; factors.push("Incoming tide (+)"); }
+  else if (tideState === "outgoing") { baseVis -= 1; }
+
+  // Temperature/season effect
+  if (waterTemp) {
+    if (waterTemp >= 68) { baseVis += 2; factors.push("Warm water / summer (+)"); }
+    else if (waterTemp <= 57) { baseVis += 1; factors.push("Cold — possible upwelling (+)"); }
+  }
+
+  // Seasonal baseline (month of year)
+  const month = new Date().getMonth();
+  if (month >= 7 && month <= 9) { baseVis += 3; } // Aug-Oct best vis
+  else if (month >= 0 && month <= 2) { baseVis -= 2; } // Jan-Mar worst
+
+  // Clamp to realistic range
+  baseVis = Math.max(4, Math.min(35, baseVis));
+
+  // Create a range (±3ft uncertainty)
+  const low = Math.max(3, baseVis - 3);
+  const high = baseVis + 3;
+
+  return { low, high, confidence: "moderate", factors };
+}
+
+function scoreVisibility(vis: VisData | null, tideState: string, conditions: ConditionsData | null, waterTemp: number | null): FactorScore {
   const tideNote = tideState === "incoming" ? " Tide is incoming \u2014 favorable for visibility." : tideState === "outgoing" ? " Tide is outgoing \u2014 vis may decrease." : "";
-  const src = { sourceLabel: "Scripps Underwater Cam", sourceUrl: "https://coollab.ucsd.edu/pierviz/" };
-  if (!vis || vis.visibility_ft_low === null) return { name: "Visibility", score: 50, weight: 30, label: "Unknown", color: "#5a6a7a", detail: "Camera analysis unavailable \u2014 check the live underwater cam directly." + tideNote, education: "Visibility is the single most important factor for dive quality. In La Jolla, vis ranges from 5ft (murky) to 40ft+ (exceptional). It\u2019s affected by rainfall, tide state, plankton blooms, swell, and upwelling events. We estimate vis using AI analysis of the Scripps Pier underwater camera, where reference pilings at known distances (4ft, 11ft, 14ft, 30ft) serve as markers.", ...src };
-  const avg = ((vis.visibility_ft_low || 0) + (vis.visibility_ft_high || 0)) / 2;
+
+  // If we have camera data, use it
+  if (vis && vis.visibility_ft_low !== null) {
+    const src = { sourceLabel: "Scripps Underwater Cam (AI)", sourceUrl: "https://coollab.ucsd.edu/pierviz/" };
+    const avg = ((vis.visibility_ft_low || 0) + (vis.visibility_ft_high || 0)) / 2;
+    let score: number, label: string, color: string;
+    if (avg >= 25) { score = 95; label = "Exceptional"; color = "#1B6B6B"; }
+    else if (avg >= 20) { score = 85; label = "Excellent"; color = "#1B6B6B"; }
+    else if (avg >= 15) { score = 70; label = "Good"; color = "#1B6B6B"; }
+    else if (avg >= 10) { score = 55; label = "Fair"; color = "#D4A574"; }
+    else if (avg >= 6) { score = 35; label = "Poor"; color = "#C75B3A"; }
+    else { score = 15; label = "Very poor"; color = "#C75B3A"; }
+    return { name: "Visibility", score, weight: 30, label: `${vis.visibility_ft_low}\u2013${vis.visibility_ft_high}ft \u00B7 ${label}`, color, detail: vis.summary + tideNote, education: "Measured via AI analysis of the Scripps Pier underwater camera. Reference pilings at 4ft, 11ft, 14ft, and 30ft serve as distance markers.", ...src };
+  }
+
+  // No camera data — use predictive model
+  const prediction = predictVisibility(conditions, tideState, waterTemp);
+  const avg = (prediction.low + prediction.high) / 2;
   let score: number, label: string, color: string;
-  if (avg >= 25) { score = 95; label = "Exceptional"; color = "#1B6B6B"; }
-  else if (avg >= 20) { score = 85; label = "Excellent"; color = "#1B6B6B"; }
-  else if (avg >= 15) { score = 70; label = "Good"; color = "#1B6B6B"; }
-  else if (avg >= 10) { score = 55; label = "Fair"; color = "#D4A574"; }
-  else if (avg >= 6) { score = 35; label = "Poor"; color = "#C75B3A"; }
-  else { score = 15; label = "Very poor"; color = "#C75B3A"; }
-  return { name: "Visibility", score, weight: 30, label: `${vis.visibility_ft_low}\u2013${vis.visibility_ft_high}ft \u00B7 ${label}`, color, detail: vis.summary + tideNote, education: "Visibility is estimated using AI analysis of the Scripps Pier underwater camera. Reference pilings at 4ft, 11ft, 14ft, and 30ft serve as distance markers. Which pilings are visible and how sharp they appear determines the estimate. Modifiers: rainfall (\u2212), incoming tide (+), plankton blooms (\u2212), upwelling SST drop (+).", ...src };
+  if (avg >= 25) { score = 90; label = "Likely excellent"; color = "#1B6B6B"; }
+  else if (avg >= 20) { score = 80; label = "Likely very good"; color = "#1B6B6B"; }
+  else if (avg >= 15) { score = 65; label = "Likely good"; color = "#1B6B6B"; }
+  else if (avg >= 10) { score = 50; label = "Likely fair"; color = "#D4A574"; }
+  else if (avg >= 6) { score = 30; label = "Likely poor"; color = "#C75B3A"; }
+  else { score = 15; label = "Likely very poor"; color = "#C75B3A"; }
+
+  const factorList = prediction.factors.length > 0 ? " Key factors: " + prediction.factors.join(", ") + "." : "";
+  const src = { sourceLabel: "Predictive model (swell, wind, tide)", sourceUrl: "https://www.ndbc.noaa.gov/station_page.php?station=46254" };
+
+  return { name: "Visibility", score, weight: 30, label: `~${prediction.low}\u2013${prediction.high}ft \u00B7 ${label}`, color, detail: `Estimated from current swell, wind, tide, and seasonal data.${factorList}${tideNote}`, education: "When the underwater camera is unavailable, we estimate visibility using a predictive model based on swell height and period, wind speed and direction, tide state, water temperature (upwelling indicator), and seasonal patterns. The model is calibrated to La Jolla conditions. Camera-based AI analysis provides more accurate readings when available.", ...src };
 }
 
 function scoreSwell(data: ConditionsData | null): FactorScore {
@@ -112,22 +188,22 @@ export function ConditionsWidget() {
   const [openTooltip, setOpenTooltip] = useState<string | null>(null);
   const [lastRefresh, setLastRefresh] = useState<string>(nowPacific());
   const [buoyTime, setBuoyTime] = useState<string | null>(null);
+  const [forecast, setForecast] = useState<{ day: string; date: string; grade: string; score: number; summary: string; color: string; seaHeight: number; windSpeed: number }[]>([]);
 
   const fetchData = useCallback(() => {
     fetch("/api/conditions").then(r => r.json()).then(d => {
       setConditions(d);
-      // Use buoy temp if available (most accurate, from 46254)
       if (d.waterTemp) { setWaterTemp(d.waterTemp); setTempIsEstimate(false); }
       setBuoyTime(d.buoyUpdated);
       setLastRefresh(nowPacific());
     }).catch(() => {}).finally(() => setLoading(false));
     fetch("/api/visibility").then(r => r.json()).then(d => setVis(d)).catch(() => {});
     fetch("/api/watertemp").then(r => r.json()).then(d => {
-      // Only use watertemp API if conditions API didn't provide temp
       if (!waterTemp && d.water_temp && !isNaN(d.water_temp)) { setWaterTemp(Math.round(d.water_temp)); setTempIsEstimate(d.is_estimate || false); }
       if (d.tide_state) setTideState(d.tide_state);
       if (d.tides) setTides(d.tides);
     }).catch(() => {});
+    fetch("/api/forecast").then(r => r.json()).then(d => { if (d.days) setForecast(d.days); }).catch(() => {});
   }, [waterTemp]);
 
   useEffect(() => {
@@ -138,7 +214,7 @@ export function ConditionsWidget() {
   }, [fetchData]);
 
   const factors: FactorScore[] = [
-    scoreVisibility(vis, tideState),
+    scoreVisibility(vis, tideState, conditions, waterTemp),
     scoreSwell(conditions),
     scoreWind(conditions),
     scoreTemperature(waterTemp, tempIsEstimate),
@@ -264,6 +340,32 @@ export function ConditionsWidget() {
           ))}
         </div>
       </div>
+
+      {/* 7-Day Forecast */}
+      {forecast.length > 0 && (
+        <div className="bg-white rounded-2xl overflow-hidden">
+          <div className="px-8 py-5 border-b border-deep/[0.06] flex items-center justify-between">
+            <div>
+              <h3 className="font-serif text-lg">Week ahead</h3>
+              <p className="text-[10px] text-[#5a6a7a] mt-0.5">Based on NWS marine forecast for San Diego coastal waters</p>
+            </div>
+            <a href="https://forecast.weather.gov/shmrn.php?mz=pzz750&syn=pzz700" target="_blank" rel="noopener noreferrer" className="text-[10px] text-teal/60 hover:text-teal no-underline">Source: NWS PZZ750 ↗</a>
+          </div>
+          <div className="grid grid-cols-3 md:grid-cols-5 lg:grid-cols-7">
+            {forecast.slice(0, 7).map((day, i) => (
+              <div key={day.day} className={`p-4 text-center ${i < forecast.length - 1 ? "border-r border-deep/[0.04]" : ""}`}>
+                <div className="text-[10px] text-[#5a6a7a] uppercase tracking-wider">{day.day}</div>
+                <div className="text-[10px] text-[#5a6a7a] mb-2">{day.date}</div>
+                <div className="w-10 h-10 rounded-full flex items-center justify-center mx-auto mb-2" style={{ background: day.color + "15" }}>
+                  <span className="font-serif text-lg" style={{ color: day.color }}>{day.grade}</span>
+                </div>
+                <div className="text-[10px] text-[#5a6a7a]">{day.seaHeight}ft seas</div>
+                <div className="text-[10px] text-[#5a6a7a]">{day.windSpeed}kt wind</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Daily conditions alert signup — LEAD MAGNET */}
       <div className="bg-deep rounded-2xl p-8 flex flex-col md:flex-row md:items-center gap-6">
