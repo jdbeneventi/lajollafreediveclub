@@ -23,24 +23,46 @@ interface DayForecast {
 function parseForecast(text: string): ForecastPeriod[] {
   const periods: ForecastPeriod[] = [];
 
-  // Split by period markers like .TONIGHT..., .MON..., .MON NIGHT..., .TUE...
-  const periodRegex = /\.([A-Z][A-Z ]+?)\.\.\.([\s\S]*?)(?=\.[A-Z][A-Z ]+?\.\.\.|$$)/g;
-  let match;
+  // The NWS format uses .NAME... to start each period
+  // Split on the period marker pattern
+  const chunks = text.split(/(?=\.[A-Z][A-Z ]+?\.\.\.)/);
 
-  while ((match = periodRegex.exec(text)) !== null) {
-    const name = match[1].trim();
-    const body = match[2].trim();
+  for (const chunk of chunks) {
+    // Match the period name
+    const nameMatch = chunk.match(/^\.([A-Z][A-Z ]+?)\.\.\./);
+    if (!nameMatch) continue;
 
-    const windMatch = body.match(/Wind\s+([A-Z]+)\s+(\d+)(?:\s+to\s+\d+)?\s+kt/i);
-    const seasMatch = body.match(/Seas\s+(\d+)\s+to\s+(\d+)\s+ft/i) || body.match(/Seas\s+(\d+)\s+ft/i);
-    const waveMatch = body.match(/Wave Detail:\s*(.*?)(?:\.|$)/i);
+    const name = nameMatch[1].trim();
+    const body = chunk.slice(nameMatch[0].length).trim();
 
-    periods.push({
-      name,
-      wind: windMatch ? `${windMatch[1]} ${windMatch[2]} kt` : "variable",
-      seas: seasMatch ? `${seasMatch[1]}${seasMatch[2] ? `-${seasMatch[2]}` : ""} ft` : "unknown",
-      waveDetail: waveMatch ? waveMatch[1].trim() : "",
-    });
+    // Skip if this looks like a header section, not a forecast period
+    if (name === "SYNOPSIS" || name === "REST OF") continue;
+
+    // Parse wind — handles "Wind NW 10 kt", "Wind variable less than 10 kt", "Wind W 10 to 15 kt"
+    let windStr = "variable 0 kt";
+    const windStd = body.match(/Wind\s+([A-Z]+)\s+(\d+)(?:\s+to\s+(\d+))?\s+kt/i);
+    const windVar = body.match(/Wind\s+variable\s+(?:less\s+than\s+)?(\d+)\s+kt/i);
+    if (windStd) {
+      windStr = `${windStd[1]} ${windStd[3] || windStd[2]} kt`;
+    } else if (windVar) {
+      windStr = `variable ${windVar[1]} kt`;
+    }
+
+    // Parse seas — handles "Seas 3 to 4 ft", "Seas 3 ft"
+    let seasStr = "unknown";
+    const seasMatch = body.match(/Seas\s+(\d+)(?:\s+to\s+(\d+))?\s+ft/i);
+    if (seasMatch) {
+      seasStr = seasMatch[2] ? `${seasMatch[1]}-${seasMatch[2]} ft` : `${seasMatch[1]} ft`;
+    }
+
+    // Parse wave detail — can span multiple lines, ends at next sentence or period marker
+    let waveDetail = "";
+    const waveMatch = body.match(/Wave\s+Detail:\s*([\s\S]*?)(?=\s*\.|$)/i);
+    if (waveMatch) {
+      waveDetail = waveMatch[1].replace(/\n/g, " ").replace(/\s+/g, " ").trim();
+    }
+
+    periods.push({ name, wind: windStr, seas: seasStr, waveDetail });
   }
 
   return periods;
@@ -136,9 +158,10 @@ export async function GET() {
 
     for (const period of periods) {
       // Determine which day this period belongs to
-      let dayKey = period.name.replace(" NIGHT", "").replace("TONIGHT", "TONIGHT");
+      let dayKey = period.name.replace(" NIGHT", "").replace("REST OF ", "").replace("THIS ", "").trim();
 
-      if (dayKey === "TONIGHT" || dayKey === "TODAY" || dayKey === "REST OF TODAY" || dayKey === "THIS AFTERNOON") {
+      // Map special names to today's day
+      if (dayKey === "TONIGHT" || dayKey === "TODAY" || dayKey === "AFTERNOON" || dayKey === "EVENING") {
         dayKey = dayNames[today.getDay()];
       }
 
