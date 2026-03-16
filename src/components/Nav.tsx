@@ -8,6 +8,7 @@ const links = [
   { href: "/programs", label: "Programs" },
   { href: "/camp-garibaldi", label: "Camp Garibaldi" },
   { href: "/conditions", label: "Conditions" },
+  { href: "/map", label: "Field Guide" },
   { href: "/blog", label: "Journal" },
   { href: "/about", label: "About" },
 ];
