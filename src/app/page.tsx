@@ -142,11 +142,11 @@ export default function Home() {
         </div>
 
         {/* Waves */}
-        <div className="absolute bottom-0 left-0 right-0 h-[200px] overflow-hidden">
-          <svg className="absolute bottom-[-10px] left-0 w-[200%] h-[200px] animate-wave-1 opacity-[0.08]" viewBox="0 0 1440 200" fill="none">
+        <div className="absolute bottom-0 left-0 right-0 h-[120px] md:h-[200px] overflow-hidden">
+          <svg className="absolute bottom-[-10px] left-1/2 -translate-x-1/2 w-[200vw] h-[120px] md:h-[200px] animate-wave-1 opacity-[0.08]" viewBox="0 0 1440 200" fill="none" preserveAspectRatio="none">
             <path d="M0 80 C360 20, 540 140, 720 80 S1080 20, 1440 80 V200 H0Z" fill="white" />
           </svg>
-          <svg className="absolute bottom-[-10px] left-0 w-[200%] h-[200px] animate-wave-2 opacity-[0.05]" viewBox="0 0 1440 200" fill="none">
+          <svg className="absolute bottom-[-10px] left-1/2 -translate-x-1/2 w-[200vw] h-[120px] md:h-[200px] animate-wave-2 opacity-[0.05]" viewBox="0 0 1440 200" fill="none" preserveAspectRatio="none">
             <path d="M0 100 C280 40, 460 160, 720 100 S1160 40, 1440 100 V200 H0Z" fill="white" />
           </svg>
         </div>
@@ -199,8 +199,8 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Scroll indicator */}
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 text-white/30 text-[0.7rem] uppercase tracking-[0.15em] flex flex-col items-center gap-3 animate-fade-up [animation-delay:1.2s]">
+        {/* Scroll indicator — desktop only */}
+        <div className="hidden md:flex absolute bottom-10 left-1/2 -translate-x-1/2 text-white/30 text-[0.7rem] uppercase tracking-[0.15em] flex-col items-center gap-3 animate-fade-up [animation-delay:1.2s]">
           Scroll
           <span className="w-px h-10 bg-gradient-to-b from-white/30 to-transparent animate-scroll-line" />
         </div>
