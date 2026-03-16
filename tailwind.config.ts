@@ -9,14 +9,17 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        deep: "#0a1628",
-        ocean: "#0c3547",
-        teal: "#1a7a7a",
+        deep: "#0B1D2C",
+        ocean: "#163B4E",
+        teal: "#1B6B6B",
         seafoam: "#3db8a4",
-        sand: "#f0e6d3",
-        salt: "#faf7f2",
-        coral: "#e8734a",
+        sand: "#D4A574",
+        salt: "#FAF3EC",
+        coral: "#C75B3A",
         sun: "#f0b429",
+        slate: "#3A4A56",
+        driftwood: "#D4A574",
+        foam: "#FAF3EC",
       },
       fontFamily: {
         serif: ["Instrument Serif", "Georgia", "serif"],
