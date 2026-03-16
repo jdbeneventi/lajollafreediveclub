@@ -69,12 +69,16 @@ function parseForecast(text: string): ForecastPeriod[] {
 }
 
 function scorePeriod(period: ForecastPeriod): { score: number; windSpeed: number; windDir: string; seaHeight: number; swellPeriod: number | null } {
-  let score = 70; // baseline
+  let score = 50; // neutral baseline
 
-  // Parse wind speed
+  // Parse wind — "variable 10 kt" means light/variable, treat as ~5kt
+  const isVariable = period.wind.includes("variable");
   const windSpeedMatch = period.wind.match(/(\d+)/);
-  const windSpeed = windSpeedMatch ? parseInt(windSpeedMatch[1]) : 0;
-  const windDirMatch = period.wind.match(/([A-Z]+)/);
+  let windSpeed = windSpeedMatch ? parseInt(windSpeedMatch[1]) : 0;
+  if (isVariable) windSpeed = Math.round(windSpeed * 0.5); // "variable less than 10" ≈ 5kt
+
+  // Parse wind direction (skip "variable" as a match)
+  const windDirMatch = period.wind.match(/\b([NSEW]{1,3})\b/);
   const windDir = windDirMatch ? windDirMatch[1] : "";
 
   // Parse sea height (take max value)
@@ -89,21 +93,23 @@ function scorePeriod(period: ForecastPeriod): { score: number; windSpeed: number
     swellPeriod = Math.max(...periods);
   }
 
-  // Score wind (0-25 pts)
-  if (windSpeed <= 5) score += 25;
-  else if (windSpeed <= 10) score += 15;
-  else if (windSpeed <= 15) score += 5;
-  else if (windSpeed <= 20) score -= 10;
+  // Score wind — freediving wants calm
+  if (windSpeed <= 3) score += 20;
+  else if (windSpeed <= 5) score += 15;
+  else if (windSpeed <= 8) score += 8;
+  else if (windSpeed <= 12) score += 0;
+  else if (windSpeed <= 18) score -= 12;
   else score -= 25;
 
   // Offshore wind bonus
   if (windDir.includes("E") && !windDir.includes("SE")) score += 5;
   if (windDir.includes("W") && windSpeed > 10) score -= 5;
 
-  // Score seas (0-30 pts)
-  if (seaHeight <= 2) score += 20;
-  else if (seaHeight <= 3) score += 10;
-  else if (seaHeight <= 4) score += 0;
+  // Score seas — this is the most important factor for freediving
+  if (seaHeight <= 1) score += 25;
+  else if (seaHeight <= 2) score += 15;
+  else if (seaHeight <= 3) score += 5;
+  else if (seaHeight <= 4) score -= 5;
   else if (seaHeight <= 6) score -= 15;
   else score -= 30;
 
