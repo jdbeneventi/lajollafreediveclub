@@ -3,11 +3,12 @@ import { NextResponse } from "next/server";
 // Possible thumbnail URLs for the Scripps Pier underwater camera
 // HDOnTap uses Wowza streaming with auto-updating thumbnails
 const SNAPSHOT_URLS = [
-  // HDOnTap Wowza thumbnail (auto-updates every few seconds)
-  "https://storage.hdontap.com/wowza_stream_thumbnails/snapshot_hosb1_scripps_underwater-cam.stream.jpg",
-  // Alternate naming patterns
-  "https://storage.hdontap.com/wowza_stream_thumbnails/snapshot_hosb1_scripps_underwater.stream.jpg",
-  "https://storage.hdontap.com/wowza_stream_thumbnails/snapshot_018408.jpg",
+  // Confirmed from HDOnTap network tab — hosb6lo server, Scripps pier underwater stream
+  "https://storage.hdontap.com/wowza_stream_thumbnails/snapshot_hosb6lo_scripps_pier-underwater.stream_hFbB4Up.jpg",
+  // Without cache-buster suffix
+  "https://storage.hdontap.com/wowza_stream_thumbnails/snapshot_hosb6lo_scripps_pier-underwater.stream.jpg",
+  // Other possible patterns
+  "https://storage.hdontap.com/wowza_stream_thumbnails/snapshot_hosb6lo_scripps_pier-underwater-cam.stream.jpg",
 ];
 
 const VISION_PROMPT = `You are analyzing an underwater camera image from Scripps Pier in La Jolla, CA to estimate underwater visibility for freedivers.
