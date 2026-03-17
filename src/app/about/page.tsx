@@ -50,6 +50,9 @@ export default function AboutPage() {
       {/* Header */}
       <section className="bg-gradient-to-b from-deep to-ocean pt-36 pb-20 px-6 text-center">
         <Reveal>
+          <div className="w-32 h-32 rounded-full overflow-hidden mx-auto mb-8 border-2 border-white/20">
+            <img src="/images/photos/joshua-red-sea.jpg" alt="Joshua Beneventi floating in the Red Sea" className="w-full h-full object-cover object-top" />
+          </div>
           <div className="section-label text-seafoam before:bg-seafoam justify-center">
             About
           </div>
@@ -117,6 +120,11 @@ export default function AboutPage() {
                 So I went.
               </p>
 
+              <div className="my-8 rounded-xl overflow-hidden">
+                <img src="/images/photos/joshua-stella.png" alt="Joshua with Stella Abbas at Freedive Tioman" className="w-full h-auto" />
+                <p className="text-[10px] text-[#5a6a7a] mt-2 italic">With Stella Abbas, Malaysian national record holder, at Freedive Tioman</p>
+              </div>
+
               <p>
                 In Dahab, I completed my AIDA 3 certification with Pieter Van Veen, a Dutch instructor
                 based in the Dahab scene. I trained at the Lighthouse,
@@ -135,6 +143,17 @@ export default function AboutPage() {
                 qualifications but a depth of experience I couldn&apos;t have gotten anywhere else.
               </p>
 
+              <div className="my-8 grid grid-cols-2 gap-4">
+                <div className="rounded-xl overflow-hidden">
+                  <img src="/images/photos/joshua-khaled.jpg" alt="Joshua with Khaled El Gammal in Dahab" className="w-full h-auto" />
+                  <p className="text-[10px] text-[#5a6a7a] mt-2 italic">With Khaled El Gammal, Dahab</p>
+                </div>
+                <div className="rounded-xl overflow-hidden">
+                  <img src="/images/photos/joshua-khaled-hannah.jpg" alt="Joshua with Khaled and Hannah after a training session" className="w-full h-auto" />
+                  <p className="text-[10px] text-[#5a6a7a] mt-2 italic">Post-dive at the Lighthouse, Dahab</p>
+                </div>
+              </div>
+
               <h2 className="font-serif text-2xl text-deep pt-6">Back to San Diego</h2>
 
               <p>
@@ -150,6 +169,17 @@ export default function AboutPage() {
                 12-year-old learning to hold their breath and a 40-year-old working on
                 equalization are both welcome and both challenged.
               </p>
+
+              <div className="my-8 grid grid-cols-2 gap-4">
+                <div className="rounded-xl overflow-hidden">
+                  <img src="/images/photos/joshua-teaching-kids.jpg" alt="Joshua teaching two kids poolside" className="w-full h-auto" />
+                  <p className="text-[10px] text-[#5a6a7a] mt-2 italic">Poolside breathing drills with young students</p>
+                </div>
+                <div className="rounded-xl overflow-hidden">
+                  <img src="/images/photos/joshua-kid-beach.jpg" alt="Joshua with a young student at Mission Bay" className="w-full h-auto" />
+                  <p className="text-[10px] text-[#5a6a7a] mt-2 italic">Post-session at Mission Bay</p>
+                </div>
+              </div>
 
               <h2 className="font-serif text-2xl text-deep pt-6">The philosophy</h2>
 

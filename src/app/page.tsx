@@ -211,7 +211,7 @@ export default function Home() {
         <div className="max-w-[1240px] mx-auto grid md:grid-cols-2 gap-20 items-center">
           <Reveal>
             <div className="relative h-[520px] rounded-2xl overflow-hidden">
-              <img src="/images/intro.jpg" alt="La Jolla coastline" className="w-full h-full object-cover" />
+              <img src="/images/photos/joshua-red-sea.jpg" alt="Joshua Beneventi floating in the Red Sea" className="w-full h-full object-cover" />
               <div className="absolute inset-0 bg-gradient-to-t from-deep/70 via-transparent to-transparent" />
               <div className="absolute bottom-8 left-8 right-8 text-white">
                 <div className="font-serif text-6xl leading-none mb-2">70%</div>
@@ -443,7 +443,7 @@ export default function Home() {
 
           <Reveal delay={100}>
             <div className="relative h-[440px] rounded-2xl overflow-hidden">
-              <img src="/images/camp.jpg" alt="La Jolla Shores beach" className="w-full h-full object-cover" />
+              <img src="/images/photos/joshua-teaching-kids.jpg" alt="Joshua teaching kids at poolside" className="w-full h-full object-cover" />
               <div className="absolute inset-0 bg-gradient-to-t from-deep/40 via-transparent to-transparent" />
               <div className="absolute top-6 right-6 bg-white/20 backdrop-blur-md px-5 py-3 rounded-xl text-white text-center">
                 <div className="font-serif text-2xl">8–16</div>
