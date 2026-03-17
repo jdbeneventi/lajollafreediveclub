@@ -77,37 +77,37 @@ const testimonials = [
 
 const blogPosts = [
   {
+    slug: "beginners-guide-freediving-la-jolla",
+    category: "Beginner Guide",
+    title: "The Complete Beginner's Guide to Freediving in La Jolla",
+    excerpt:
+      "Everything you need to know before your first dive — gear, spots, safety, and what to expect.",
+    date: "March 2026",
+    readTime: "12 min read",
+    gradient: "from-ocean to-teal",
+    image: "/images/photos/joshua-brooke-kristina.jpg",
+  },
+  {
     slug: "mammalian-dive-reflex-explained",
     category: "Science",
     title: "The Mammalian Dive Reflex: Your Body's Built-In Superpower",
     excerpt:
-      "Your body has an ancient survival mechanism that activates the moment your face hits the water. Understanding it changes everything.",
+      "Your body has an ancient survival mechanism that activates the moment your face hits the water.",
     date: "March 2026",
     readTime: "14 min read",
     gradient: "from-deep to-ocean",
-    image: "/images/blog-beginners.jpg",
+    image: "/images/photos/joshua-red-sea.jpg",
   },
   {
-    slug: "co2-tolerance-training-guide",
-    category: "Training",
-    title: "CO2 Tolerance Training: The Complete Guide for Freedivers",
+    slug: "best-freediving-spots-san-diego",
+    category: "Local Guide",
+    title: "5 Best Freediving Spots in San Diego",
     excerpt:
-      "The urge to breathe isn't about running out of oxygen — it's about CO2. Here's how to recalibrate that threshold.",
+      "From La Jolla Cove to Point Loma kelp beds — a local's guide to San Diego's best freediving.",
     date: "March 2026",
-    readTime: "16 min read",
-    gradient: "from-teal to-ocean",
-    image: "/images/blog-surfers.jpg",
-  },
-  {
-    slug: "dry-training-exercises-freediving",
-    category: "Training",
-    title: "7 Dry Training Exercises That Will Transform Your Freediving",
-    excerpt:
-      "You don't need to be in the water to become a better freediver. Build the foundation on your couch.",
-    date: "March 2026",
-    readTime: "11 min read",
-    gradient: "from-ocean to-teal",
-    image: "/images/blog-spots.jpg",
+    readTime: "10 min read",
+    gradient: "from-deep to-teal",
+    image: "/images/photos/joshua-lena-shores.jpg",
   },
 ];
 
@@ -190,11 +190,11 @@ export default function Home() {
           </p>
 
           <div className="flex gap-4 justify-center flex-wrap animate-fade-up [animation-delay:0.8s]">
-            <Link href="/contact" className="btn btn-primary no-underline">
-              Start Your Journey →
+            <Link href="/conditions" className="btn btn-primary no-underline">
+              Today&apos;s Conditions →
             </Link>
             <Link href="/programs" className="btn btn-ghost no-underline">
-              Explore Programs
+              View Courses
             </Link>
           </div>
         </div>
@@ -203,66 +203,6 @@ export default function Home() {
         <div className="hidden md:flex absolute bottom-10 left-1/2 -translate-x-1/2 text-white/30 text-[0.7rem] uppercase tracking-[0.15em] flex-col items-center gap-3 animate-fade-up [animation-delay:1.2s]">
           Scroll
           <span className="w-px h-10 bg-gradient-to-b from-white/30 to-transparent animate-scroll-line" />
-        </div>
-      </section>
-
-      {/* ═══ INTRO ═══ */}
-      <section className="bg-white py-16 md:py-28 px-6">
-        <div className="max-w-[1240px] mx-auto grid md:grid-cols-2 gap-10 md:gap-20 items-center">
-          <Reveal>
-            <div className="relative h-[520px] rounded-2xl overflow-hidden">
-              <img src="/images/photos/joshua-brooke-kristina.jpg" alt="Joshua with Brooke and Kristina after a dive session" className="w-full h-full object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-t from-deep/70 via-transparent to-transparent" />
-              <div className="absolute bottom-8 left-8 right-8 text-white">
-                <div className="font-serif text-6xl leading-none mb-2">70%</div>
-                <p className="text-sm opacity-70">
-                  of our members had never freedived before joining
-                </p>
-              </div>
-            </div>
-          </Reveal>
-
-          <Reveal delay={100}>
-            <div className="section-label">Why We Exist</div>
-            <h2 className="section-title">
-              The ocean is better
-              <br />
-              with a crew
-            </h2>
-            <p className="section-desc mb-10">
-              La Jolla Freedive Club is more than courses and certifications.
-              We&apos;re a community of ocean people — from first-timers to experienced
-              divers — who train together, dive together, and push each other to
-              go deeper. Literally.
-            </p>
-
-            <div className="flex flex-col gap-6">
-              {[
-                {
-                  title: "Breath-First Training",
-                  desc: "Every program starts with building internal calm and breath control before we hit the water.",
-                },
-                {
-                  title: "Real Community",
-                  desc: "Weekly group sessions, buddy dive meetups, and a crew that actually shows up.",
-                },
-                {
-                  title: "Progressive Development",
-                  desc: "From pool sessions to open ocean, from 5 meters to 30+. Clear pathways at every level.",
-                },
-              ].map((f) => (
-                <div key={f.title} className="flex gap-4 items-start">
-                  <div className="w-11 h-11 rounded-xl bg-teal/[0.08] flex items-center justify-center flex-shrink-0 text-teal">
-                    <Check />
-                  </div>
-                  <div>
-                    <h4 className="text-[0.95rem] font-semibold mb-1">{f.title}</h4>
-                    <p className="text-sm text-[#5a6a7a] leading-relaxed">{f.desc}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </Reveal>
         </div>
       </section>
 
@@ -331,6 +271,66 @@ export default function Home() {
               </Reveal>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ═══ INTRO ═══ */}
+      <section className="bg-white py-16 md:py-28 px-6">
+        <div className="max-w-[1240px] mx-auto grid md:grid-cols-2 gap-10 md:gap-20 items-center">
+          <Reveal>
+            <div className="relative h-[520px] rounded-2xl overflow-hidden">
+              <img src="/images/photos/joshua-brooke-kristina.jpg" alt="Joshua with Brooke and Kristina after a dive session" className="w-full h-full object-cover" />
+              <div className="absolute inset-0 bg-gradient-to-t from-deep/70 via-transparent to-transparent" />
+              <div className="absolute bottom-8 left-8 right-8 text-white">
+                <div className="font-serif text-6xl leading-none mb-2">70%</div>
+                <p className="text-sm opacity-70">
+                  of our members had never freedived before joining
+                </p>
+              </div>
+            </div>
+          </Reveal>
+
+          <Reveal delay={100}>
+            <div className="section-label">Why We Exist</div>
+            <h2 className="section-title">
+              The ocean is better
+              <br />
+              with a crew
+            </h2>
+            <p className="section-desc mb-10">
+              La Jolla Freedive Club is more than courses and certifications.
+              We&apos;re a community of ocean people — from first-timers to experienced
+              divers — who train together, dive together, and push each other to
+              go deeper. Literally.
+            </p>
+
+            <div className="flex flex-col gap-6">
+              {[
+                {
+                  title: "Breath-First Training",
+                  desc: "Every program starts with building internal calm and breath control before we hit the water.",
+                },
+                {
+                  title: "Real Community",
+                  desc: "Weekly group sessions, buddy dive meetups, and a crew that actually shows up.",
+                },
+                {
+                  title: "Progressive Development",
+                  desc: "From pool sessions to open ocean, from 5 meters to 30+. Clear pathways at every level.",
+                },
+              ].map((f) => (
+                <div key={f.title} className="flex gap-4 items-start">
+                  <div className="w-11 h-11 rounded-xl bg-teal/[0.08] flex items-center justify-center flex-shrink-0 text-teal">
+                    <Check />
+                  </div>
+                  <div>
+                    <h4 className="text-[0.95rem] font-semibold mb-1">{f.title}</h4>
+                    <p className="text-sm text-[#5a6a7a] leading-relaxed">{f.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </Reveal>
         </div>
       </section>
 

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Reveal } from "@/components/Reveal";
 import { ConditionsWidget } from "./ConditionsWidget";
 import { AlmanacWidget } from "./AlmanacWidget";
+import { EmailCapture } from "@/components/EmailCapture";
 
 export const metadata: Metadata = {
   title: "La Jolla Dive Conditions Today — Live Ocean Data",
@@ -237,23 +238,52 @@ export default function ConditionsPage() {
         </div>
       </section>
 
+      {/* Conditions Email CTA */}
+      <section className="bg-deep py-16 px-6">
+        <div className="max-w-[600px] mx-auto text-center">
+          <Reveal>
+            <h2 className="font-serif text-2xl text-white mb-3">
+              Get this in your inbox at 6am
+            </h2>
+            <p className="text-white/50 text-sm mb-6 leading-relaxed">
+              Dive grade, water temp, swell, visibility, moon phase, and what&apos;s
+              in the water — delivered every morning so you can plan your day.
+            </p>
+            <EmailCapture
+              variant="light"
+              headline=""
+              subtext=""
+            />
+          </Reveal>
+        </div>
+      </section>
+
       {/* CTA */}
-      <section className="bg-deep py-20 px-6 text-center">
+      <section className="bg-salt py-16 px-6 text-center">
         <Reveal>
           <div className="max-w-[500px] mx-auto">
-            <h2 className="font-serif text-3xl text-white mb-4">
+            <h2 className="font-serif text-2xl text-deep mb-4">
               Conditions look good?
             </h2>
-            <p className="text-white/50 text-sm mb-8 leading-relaxed">
-              Join our Saturday group sessions. We check conditions every
-              morning and pick the best spot for the day.
+            <p className="text-[#5a6a7a] text-sm mb-6 leading-relaxed">
+              Join our Saturday sessions — morning yoga with Lena at 7am,
+              group ocean dive at 8:30am. We check conditions every morning
+              and pick the best spot for the day.
             </p>
-            <Link
-              href="/contact/courses"
-              className="inline-flex px-8 py-3 bg-coral text-white rounded-full font-semibold no-underline hover:-translate-y-0.5 hover:shadow-[0_8px_25px_rgba(232,115,74,0.4)] transition-all"
-            >
-              Join the club →
-            </Link>
+            <div className="flex gap-3 justify-center flex-wrap">
+              <Link
+                href="/contact"
+                className="inline-flex px-6 py-3 bg-coral text-white rounded-full font-semibold text-sm no-underline hover:-translate-y-0.5 hover:shadow-[0_8px_25px_rgba(199,91,58,0.4)] transition-all"
+              >
+                Join the Saturday crew →
+              </Link>
+              <Link
+                href="/contact/courses"
+                className="inline-flex px-6 py-3 border border-deep/10 text-deep rounded-full font-semibold text-sm no-underline hover:bg-deep/5 transition-all"
+              >
+                View courses
+              </Link>
+            </div>
           </div>
         </Reveal>
       </section>

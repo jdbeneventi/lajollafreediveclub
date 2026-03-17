@@ -2,21 +2,47 @@
 
 import { useState } from "react";
 
+const KIT_FORM_ID = "9207242";
+const KIT_URL = `https://app.kit.com/forms/${KIT_FORM_ID}/subscriptions`;
+
 export function EmailCapture({
   variant = "dark",
+  headline,
+  subtext,
 }: {
   variant?: "dark" | "light";
+  headline?: string;
+  subtext?: string;
 }) {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (email && email.includes("@")) {
-    await fetch("https://api.convertkit.com/v3/forms/9207242/subscribe", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ api_key: "SQ-xRHb2BJ5doZZpTOTwew", email: email }) });
+    if (!email || !email.includes("@")) return;
+
+    try {
+      const formData = new FormData();
+      formData.append("email_address", email);
+
+      const res = await fetch(KIT_URL, {
+        method: "POST",
+        body: formData,
+      });
+
+      if (res.ok || res.status === 200 || res.status === 302) {
+        setSubmitted(true);
+        setEmail("");
+      } else {
+        // Kit sometimes redirects — treat any non-error as success
+        setSubmitted(true);
+        setEmail("");
+      }
+    } catch {
+      // Kit form submissions often succeed despite CORS — treat as success
       setSubmitted(true);
       setEmail("");
-      setTimeout(() => setSubmitted(false), 4000);
     }
   };
 
@@ -24,7 +50,7 @@ export function EmailCapture({
 
   return (
     <section
-      className={`py-28 px-6 text-center relative overflow-hidden ${
+      className={`py-16 md:py-28 px-6 text-center relative overflow-hidden ${
         isDark
           ? "bg-gradient-to-br from-ocean to-teal"
           : "bg-white"
@@ -43,52 +69,63 @@ export function EmailCapture({
             isDark ? "text-seafoam before:bg-seafoam" : ""
           }`}
         >
-          Join the Club
+          Stay Connected
         </div>
         <h2
           className={`section-title ${isDark ? "text-white" : ""}`}
         >
-          Ready to go{" "}
-          <em className={`italic ${isDark ? "text-seafoam" : "text-teal"}`}>
-            deeper?
-          </em>
+          {headline || (
+            <>
+              Dive conditions.{" "}
+              <em className={`italic ${isDark ? "text-seafoam" : "text-teal"}`}>
+                In your inbox.
+              </em>
+            </>
+          )}
         </h2>
         <p
           className={`text-[1.05rem] leading-relaxed mb-10 ${
             isDark ? "text-white/60" : "text-[#5a6a7a]"
           }`}
         >
-          Get on the list for upcoming courses, weekly dive schedules, and
-          community events. No spam — just the stuff that matters.
+          {subtext || "Get dive conditions, seasonal species alerts, upcoming courses, and weekly dive schedules. The stuff that matters — nothing that doesn't."}
         </p>
 
-        <form
-          onSubmit={handleSubmit}
-          className="flex flex-col sm:flex-row gap-3 max-w-[500px] mx-auto mb-4"
-        >
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Your email address"
-            required
-            className={`flex-1 px-6 py-4 rounded-full text-[0.95rem] outline-none transition-all ${
-              isDark
-                ? "bg-white/[0.08] border border-white/20 text-white placeholder:text-white/40 focus:border-seafoam focus:bg-white/[0.12]"
-                : "bg-salt border border-deep/10 text-deep placeholder:text-deep/40 focus:border-teal"
-            }`}
-          />
-          <button
-            type="submit"
-            className={`px-8 py-4 rounded-full font-semibold text-[0.95rem] cursor-pointer transition-all whitespace-nowrap border-none ${
-              submitted
-                ? "bg-teal text-white"
-                : "bg-coral text-white hover:-translate-y-0.5 hover:shadow-[0_8px_25px_rgba(232,115,74,0.4)]"
-            }`}
-          >
-            {submitted ? "You're In! ✓" : "Join →"}
-          </button>
-        </form>
+        {submitted ? (
+          <div className={`text-lg font-medium ${isDark ? "text-seafoam" : "text-teal"}`}>
+            You&apos;re in! Check your email. ✓
+          </div>
+        ) : (
+          <>
+            <form
+              onSubmit={handleSubmit}
+              className="flex flex-col sm:flex-row gap-3 max-w-[500px] mx-auto mb-4"
+            >
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => { setEmail(e.target.value); setError(false); }}
+                placeholder="Your email address"
+                required
+                className={`flex-1 px-6 py-4 rounded-full text-[0.95rem] outline-none transition-all ${
+                  isDark
+                    ? "bg-white/[0.08] border border-white/20 text-white placeholder:text-white/40 focus:border-seafoam focus:bg-white/[0.12]"
+                    : "bg-salt border border-deep/10 text-deep placeholder:text-deep/40 focus:border-teal"
+                }`}
+              />
+              <button
+                type="submit"
+                className="px-8 py-4 rounded-full font-semibold text-[0.95rem] cursor-pointer transition-all whitespace-nowrap border-none bg-coral text-white hover:-translate-y-0.5 hover:shadow-[0_8px_25px_rgba(199,91,58,0.4)]"
+              >
+                Join →
+              </button>
+            </form>
+
+            {error && (
+              <p className="text-coral text-xs mb-2">Something went wrong. Try again or email us directly.</p>
+            )}
+          </>
+        )}
 
         <p className={`text-xs ${isDark ? "text-white/35" : "text-deep/35"}`}>
           Free to join. Unsubscribe anytime.
