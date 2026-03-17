@@ -211,7 +211,7 @@ export default function Home() {
         <div className="max-w-[1240px] mx-auto grid md:grid-cols-2 gap-20 items-center">
           <Reveal>
             <div className="relative h-[520px] rounded-2xl overflow-hidden">
-              <img src="/images/photos/joshua-red-sea.jpg" alt="Joshua Beneventi floating in the Red Sea" className="w-full h-full object-cover" />
+              <img src="/images/photos/joshua-brooke-kristina.jpg" alt="Joshua with Brooke and Kristina after a dive session" className="w-full h-full object-cover" />
               <div className="absolute inset-0 bg-gradient-to-t from-deep/70 via-transparent to-transparent" />
               <div className="absolute bottom-8 left-8 right-8 text-white">
                 <div className="font-serif text-6xl leading-none mb-2">70%</div>
