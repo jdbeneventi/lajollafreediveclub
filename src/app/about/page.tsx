@@ -71,6 +71,13 @@ export default function AboutPage() {
         <div className="max-w-[720px] mx-auto">
           <Reveal>
             <div className="space-y-6 text-[0.95rem] text-[#2a2a2a] leading-relaxed">
+              <p className="text-xs text-[#5a6a7a] uppercase tracking-wider font-semibold">
+                Joshua Beneventi · Founder &amp; Instructor ·{" "}
+                <a href="https://www.aidainternational.org/InstructorProfile/858dbbd9-9e54-4235-abf8-e0a035ccd077" target="_blank" rel="noopener noreferrer" className="text-teal no-underline hover:underline">
+                  AIDA Profile ↗
+                </a>
+              </p>
+
               <h2 className="font-serif text-2xl text-deep">Roots</h2>
 
               <p>

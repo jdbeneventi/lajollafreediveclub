@@ -411,6 +411,151 @@ export default function ProgramsPage() {
         </div>
       </section>
 
+      {/* Upcoming Courses */}
+      <section className="bg-white py-24 px-6">
+        <div className="max-w-[900px] mx-auto">
+          <Reveal>
+            <div className="text-center mb-16">
+              <div className="section-label justify-center">Schedule</div>
+              <h2 className="section-title">Upcoming courses &amp; events</h2>
+              <p className="section-desc max-w-[560px] mx-auto">
+                Dates fill up fast — inquire early to reserve your spot.
+              </p>
+            </div>
+          </Reveal>
+
+          <div className="space-y-4">
+            {[
+              {
+                date: "Apr 5–6",
+                day: "Sat–Sun",
+                title: "AIDA 2 Certification",
+                detail: "2-day course. Theory, pool session, open water dives at La Jolla Shores.",
+                spots: "4 spots",
+                href: "/contact/courses?course=aida2",
+              },
+              {
+                date: "Apr 12",
+                day: "Saturday",
+                title: "Discover Freediving",
+                detail: "Half-day intro. Perfect for first-timers. Pool session + beach dive.",
+                spots: "6 spots",
+                href: "/contact/courses?course=discover",
+              },
+              {
+                date: "Apr 19–20",
+                day: "Sat–Sun",
+                title: "AIDA 2 Certification",
+                detail: "2-day course. Theory, pool session, open water dives at La Jolla Shores.",
+                spots: "4 spots",
+                href: "/contact/courses?course=aida2",
+              },
+              {
+                date: "Apr 26",
+                day: "Saturday",
+                title: "AIDA 1 — Introduction",
+                detail: "One-day intro to freediving fundamentals. No experience needed.",
+                spots: "6 spots",
+                href: "/contact/courses?course=aida1",
+              },
+              {
+                date: "May 3–4",
+                day: "Sat–Sun",
+                title: "AIDA 3 — Advanced",
+                detail: "Advanced certification. Must hold AIDA 2. Deep training in the canyon.",
+                spots: "3 spots",
+                href: "/contact/courses?course=aida3",
+              },
+            ].map((event, i) => (
+              <Reveal key={i} delay={i * 40}>
+                <Link
+                  href={event.href}
+                  className="flex items-center gap-6 bg-salt rounded-xl p-5 no-underline text-deep hover:-translate-y-0.5 hover:shadow-md transition-all group"
+                >
+                  <div className="text-center shrink-0 w-16">
+                    <div className="font-serif text-lg text-deep leading-tight">{event.date}</div>
+                    <div className="text-[10px] text-[#5a6a7a]">{event.day}</div>
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="text-sm font-semibold group-hover:text-teal transition-colors">{event.title}</div>
+                    <div className="text-xs text-[#5a6a7a]">{event.detail}</div>
+                  </div>
+                  <div className="shrink-0 text-right">
+                    <span className="px-2 py-1 bg-teal/10 text-teal text-[10px] font-semibold rounded-full">{event.spots}</span>
+                  </div>
+                </Link>
+              </Reveal>
+            ))}
+          </div>
+
+          <Reveal>
+            <div className="text-center mt-8">
+              <p className="text-xs text-[#5a6a7a] mb-4">Don&apos;t see a date that works? We run courses on demand for groups of 2+.</p>
+              <Link href="/contact/courses" className="btn btn-outline no-underline">
+                Request custom dates →
+              </Link>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* Community Events */}
+      <section className="bg-salt py-24 px-6">
+        <div className="max-w-[900px] mx-auto">
+          <Reveal>
+            <div className="text-center mb-16">
+              <div className="section-label justify-center">Community</div>
+              <h2 className="section-title">Weekly sessions</h2>
+            </div>
+          </Reveal>
+
+          <div className="grid md:grid-cols-2 gap-6">
+            <Reveal>
+              <div className="bg-white rounded-2xl overflow-hidden">
+                <div className="h-[240px] overflow-hidden">
+                  <img src="/images/photos/joshua-lena-shores.jpg" alt="Joshua and Lena at La Jolla Shores" className="w-full h-full object-cover" />
+                </div>
+                <div className="p-6">
+                  <div className="text-[10px] text-[#5a6a7a] uppercase tracking-wider font-semibold mb-1">Saturdays · 7:00 AM</div>
+                  <h3 className="font-serif text-xl mb-2">Morning stretch &amp; breathe</h3>
+                  <p className="text-xs text-[#5a6a7a] leading-relaxed mb-4">
+                    Start your Saturday with a yoga and stretching session on the beach before
+                    we hit the water. Intercostal mobility, diaphragm work, and breathing
+                    drills — everything that makes your dive better. Open to all levels.
+                  </p>
+                  <Link href="/contact" className="text-teal text-sm font-medium no-underline hover:underline">
+                    Join the Saturday crew →
+                  </Link>
+                </div>
+              </div>
+            </Reveal>
+
+            <Reveal delay={80}>
+              <div className="bg-white rounded-2xl overflow-hidden">
+                <div className="h-[240px] overflow-hidden bg-gradient-to-br from-deep to-ocean flex items-center justify-center">
+                  <div className="text-center text-white">
+                    <div className="font-serif text-3xl mb-1">Group Dive</div>
+                    <div className="text-sm opacity-60">La Jolla Canyon</div>
+                  </div>
+                </div>
+                <div className="p-6">
+                  <div className="text-[10px] text-[#5a6a7a] uppercase tracking-wider font-semibold mb-1">Saturdays · 8:30 AM</div>
+                  <h3 className="font-serif text-xl mb-2">Group ocean session</h3>
+                  <p className="text-xs text-[#5a6a7a] leading-relaxed mb-4">
+                    Guided dive from our mooring line at the canyon edge. Safety divers,
+                    structured training, and a crew that knows these waters. AIDA 2
+                    certification (or equivalent) required.
+                  </p>
+                  <Link href="/contact/courses" className="text-teal text-sm font-medium no-underline hover:underline">
+                    Get certified to join →
+                  </Link>
+                </div>
+              </div>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
       <EmailCapture />
     </>
   );
