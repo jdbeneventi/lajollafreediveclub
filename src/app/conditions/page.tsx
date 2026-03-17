@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Reveal } from "@/components/Reveal";
 import { ConditionsWidget } from "./ConditionsWidget";
 import { AlmanacWidget } from "./AlmanacWidget";
-import { EmailCapture } from "@/components/EmailCapture";
+import { ConditionsEmailForm } from "./ConditionsEmailForm";
 
 export const metadata: Metadata = {
   title: "La Jolla Dive Conditions Today — Live Ocean Data",
@@ -240,7 +240,7 @@ export default function ConditionsPage() {
 
       {/* Conditions Email CTA */}
       <section className="bg-deep py-16 px-6">
-        <div className="max-w-[600px] mx-auto text-center">
+        <div className="max-w-[500px] mx-auto text-center">
           <Reveal>
             <h2 className="font-serif text-2xl text-white mb-3">
               Stay in the loop
@@ -249,11 +249,7 @@ export default function ConditionsPage() {
               Conditions alerts, seasonal species updates, upcoming courses, and
               weekly dive schedules — delivered to your inbox.
             </p>
-            <EmailCapture
-              variant="light"
-              headline=""
-              subtext=""
-            />
+            <ConditionsEmailForm />
           </Reveal>
         </div>
       </section>
@@ -272,7 +268,7 @@ export default function ConditionsPage() {
             </p>
             <div className="flex gap-3 justify-center flex-wrap">
               <Link
-                href="/contact"
+                href="/contact/courses"
                 className="inline-flex px-6 py-3 bg-coral text-white rounded-full font-semibold text-sm no-underline hover:-translate-y-0.5 hover:shadow-[0_8px_25px_rgba(199,91,58,0.4)] transition-all"
               >
                 Join the Saturday crew →
