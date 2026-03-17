@@ -121,7 +121,7 @@ export default function AboutPage() {
 
               <div className="my-8 rounded-xl overflow-hidden">
                 <img src="/images/photos/joshua-stella.jpg" alt="Joshua with Stella Abbas at Freedive Tioman" className="w-full h-auto" />
-                <p className="text-[10px] text-[#5a6a7a] mt-2 italic">With Stella Abbas, Malaysian national record holder, at Freedive Tioman</p>
+                <p className="text-[10px] text-[#5a6a7a] mt-2 italic">With Stella Abbas at the Blue Hole, Dahab — reunited after Tioman</p>
               </div>
 
               <h2 className="font-serif text-2xl text-deep pt-2">Dahab</h2>
@@ -264,6 +264,10 @@ export default function AboutPage() {
               {
                 title: "San Diego's only AIDA instructor",
                 detail: "The only AIDA-certified freediving instructor in San Diego County, for both adults and youth programs.",
+              },
+              {
+                title: "DAN insured",
+                detail: "Fully insured through Divers Alert Network (DAN), the leading dive safety organization worldwide.",
               },
             ].map((cred, i) => (
               <Reveal key={cred.title} delay={i * 60}>
