@@ -221,6 +221,7 @@ export async function GET(request: Request) {
   // Verify cron secret
   const { searchParams } = new URL(request.url);
   const secret = searchParams.get("secret");
+  const preview = searchParams.get("preview") === "true";
 
   if (CRON_SECRET && secret !== CRON_SECRET) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -255,6 +256,13 @@ export async function GET(request: Request) {
     } catch {}
 
     const html = buildEmailHtml(conditions, grade, moon, events, grunion, tideNote);
+
+    // Preview mode — just show the email HTML
+    if (preview) {
+      return new NextResponse(html, {
+        headers: { "Content-Type": "text/html" },
+      });
+    }
 
     // If Kit API keys are configured, send the broadcast
     if (KIT_API_SECRET) {
