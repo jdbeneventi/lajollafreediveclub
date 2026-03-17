@@ -2,10 +2,7 @@ import { NextResponse } from "next/server";
 import { getMoonPhase } from "@/lib/moon";
 import { getTopEvents, isGrunionNight } from "@/lib/seasonal";
 
-// Kit (ConvertKit) API
 const KIT_API_SECRET = process.env.KIT_API_SECRET;
-
-// Cron secret to prevent unauthorized triggers
 const CRON_SECRET = process.env.CRON_SECRET;
 
 interface ConditionsData {
@@ -13,67 +10,114 @@ interface ConditionsData {
   wavePeriod?: string;
   windSpeed?: string;
   windDir?: string;
+  windGust?: string;
   waterTemp?: number;
-  visibility?: { low: number; high: number; grade: string };
-  overallGrade?: string;
-  overallScore?: number;
 }
 
-async function fetchConditions(baseUrl: string): Promise<ConditionsData> {
-  const data: ConditionsData = {};
-
+// ─── Fetch directly from NDBC 46254 realtime text file ───
+async function fetchBuoyDirect(): Promise<Partial<ConditionsData>> {
+  const data: Partial<ConditionsData> = {};
   try {
-    // Buoy data
-    const buoyRes = await fetch(`${baseUrl}/api/conditions`);
-    if (buoyRes.ok) {
-      const xml = await buoyRes.text();
-      const extract = (label: string) => {
-        const re = new RegExp(`<strong>${label}:</strong>\\s*([^<]+)`, "i");
-        const descs = xml.match(/<description><!\[CDATA\[([\s\S]*?)\]\]><\/description>/g);
-        if (!descs || descs.length < 2) return undefined;
-        const m = descs[1].match(re);
-        return m ? m[1].trim() : undefined;
-      };
-      data.waveHeight = extract("Significant Wave Height");
-      data.wavePeriod = extract("Dominant Wave Period");
-      data.windSpeed = extract("Wind Speed");
-      data.windDir = extract("Wind Direction");
+    const res = await fetch("https://www.ndbc.noaa.gov/data/realtime2/46254.txt", {
+      headers: { "User-Agent": "LaJollaFreediveClub/1.0" },
+    });
+    if (!res.ok) return data;
+    const text = await res.text();
+    const lines = text.split("\n");
+    if (lines.length < 3) return data;
+
+    // Headers on line 0, units on line 1, data starts line 2
+    const headers = lines[0].trim().split(/\s+/);
+    const values = lines[2].trim().split(/\s+/);
+
+    const get = (col: string) => {
+      const idx = headers.indexOf(col);
+      if (idx === -1) return undefined;
+      const val = values[idx];
+      return val === "MM" || val === "99.00" || val === "999" || val === "9999.0" ? undefined : val;
+    };
+
+    // Wave data
+    const wvht = get("WVHT");
+    if (wvht) {
+      const meters = parseFloat(wvht);
+      data.waveHeight = (meters * 3.281).toFixed(1) + "ft";
+    }
+    const dpd = get("DPD");
+    if (dpd) data.wavePeriod = parseFloat(dpd).toFixed(0) + "s";
+
+    // Water temp (WTMP is in Celsius)
+    const wtmp = get("WTMP");
+    if (wtmp) {
+      const c = parseFloat(wtmp);
+      data.waterTemp = Math.round(c * 9 / 5 + 32);
     }
   } catch {}
-
-  try {
-    // Water temp
-    const tempRes = await fetch(`${baseUrl}/api/watertemp`);
-    if (tempRes.ok) {
-      const tempData = await tempRes.json();
-      if (tempData.water_temp) {
-        const num = parseFloat(tempData.water_temp);
-        data.waterTemp = !isNaN(num) ? (num < 40 ? Math.round(num * 9/5 + 32) : Math.round(num)) : undefined;
-      }
-    }
-  } catch {}
-
-  try {
-    // Visibility
-    const visRes = await fetch(`${baseUrl}/api/visibility`);
-    if (visRes.ok) {
-      const visData = await visRes.json();
-      if (visData.visibility_ft_low !== null) {
-        data.visibility = {
-          low: visData.visibility_ft_low,
-          high: visData.visibility_ft_high,
-          grade: visData.grade,
-        };
-      }
-    }
-  } catch {}
-
   return data;
 }
 
+// ─── Fetch wind from LJPC1 RSS ───
+async function fetchWindDirect(): Promise<Partial<ConditionsData>> {
+  const data: Partial<ConditionsData> = {};
+  try {
+    const res = await fetch("https://www.ndbc.noaa.gov/data/latest_obs/ljpc1.rss", {
+      headers: { "User-Agent": "LaJollaFreediveClub/1.0" },
+    });
+    if (!res.ok) return data;
+    const xml = await res.text();
+
+    const extract = (label: string) => {
+      const re = new RegExp(`<strong>${label}:</strong>\\s*([^<]+)`, "i");
+      const descs = xml.match(/<description><!\[CDATA\[([\s\S]*?)\]\]><\/description>/g);
+      if (!descs || descs.length < 2) return undefined;
+      const m = descs[1].match(re);
+      return m ? m[1].trim() : undefined;
+    };
+
+    data.windSpeed = extract("Wind Speed");
+    data.windDir = extract("Wind Direction");
+    data.windGust = extract("Wind Gust");
+  } catch {}
+  return data;
+}
+
+// ─── Fetch tide predictions from NOAA ───
+async function fetchTideNote(): Promise<string> {
+  try {
+    const now = new Date();
+    const dateStr = now.toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
+    const res = await fetch(
+      `https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?begin_date=${dateStr.replace(/-/g, "")}&range=24&station=9410230&product=predictions&datum=MLLW&time_zone=lst_ldt&interval=hilo&units=english&format=json`
+    );
+    if (!res.ok) return "Check tides page";
+    const data = await res.json();
+    if (!data.predictions || data.predictions.length === 0) return "Check tides page";
+
+    // Find low tides and compute best dive window
+    const lows = data.predictions
+      .filter((p: { type: string }) => p.type === "L")
+      .map((p: { t: string; v: string }) => {
+        const time = p.t.split(" ")[1];
+        const [h, m] = time.split(":").map(Number);
+        const startH = (h + 1) % 24;
+        const endH = (h + 3) % 24;
+        const fmt = (hr: number) => {
+          const ampm = hr >= 12 ? "PM" : "AM";
+          const h12 = hr === 0 ? 12 : hr > 12 ? hr - 12 : hr;
+          return `${h12}:${m.toString().padStart(2, "0")} ${ampm}`;
+        };
+        return `${fmt(startH)}–${fmt(endH)}`;
+      });
+
+    return lows.length > 0 ? `Best window: ${lows[0]}` : "Check tides page";
+  } catch {
+    return "Check tides page";
+  }
+}
+
+// ─── Scoring ───
 function getOverallGrade(data: ConditionsData): { grade: string; score: number; summary: string } {
-  // Simplified scoring for email
-  let score = 50; // baseline
+  let score = 50;
 
   if (data.waveHeight) {
     const h = parseFloat(data.waveHeight);
@@ -92,12 +136,9 @@ function getOverallGrade(data: ConditionsData): { grade: string; score: number; 
     else score -= 15;
   }
 
-  if (data.visibility) {
-    const avg = (data.visibility.low + data.visibility.high) / 2;
-    if (avg >= 25) score += 15;
-    else if (avg >= 15) score += 8;
-    else if (avg >= 10) score += 0;
-    else score -= 10;
+  if (data.waterTemp) {
+    if (data.waterTemp >= 65) score += 5;
+    else if (data.waterTemp < 58) score -= 5;
   }
 
   score = Math.max(0, Math.min(100, score));
@@ -113,6 +154,7 @@ function getOverallGrade(data: ConditionsData): { grade: string; score: number; 
   return { grade, score, summary };
 }
 
+// ─── Email HTML ───
 function buildEmailHtml(
   conditions: ConditionsData,
   grade: { grade: string; score: number; summary: string },
@@ -132,6 +174,8 @@ function buildEmailHtml(
   const eventsHtml = events.slice(0, 4).map(e =>
     `<tr><td style="padding:4px 8px 4px 0;font-size:13px;">${e.icon}</td><td style="padding:4px 0;font-size:13px;color:#2a2a2a;">${e.title}</td></tr>`
   ).join("");
+
+  const linkStyle = 'style="display:inline-block;padding:6px 14px;background:#FAF3EC;border-radius:20px;color:#1B6B6B;text-decoration:none;font-size:11px;font-weight:600;margin:3px;"';
 
   return `
 <!DOCTYPE html>
@@ -169,10 +213,6 @@ function buildEmailHtml(
         <td style="padding:6px 0;font-size:13px;color:#0B1D2C;text-align:right;font-weight:500;">${conditions.waterTemp ? conditions.waterTemp + "°F" : "—"}</td>
       </tr>
       <tr>
-        <td style="padding:6px 0;font-size:12px;color:#5a6a7a;">Visibility</td>
-        <td style="padding:6px 0;font-size:13px;color:#0B1D2C;text-align:right;font-weight:500;">${conditions.visibility ? conditions.visibility.low + "–" + conditions.visibility.high + "ft" : "—"}</td>
-      </tr>
-      <tr>
         <td style="padding:6px 0;font-size:12px;color:#5a6a7a;">Moon</td>
         <td style="padding:6px 0;font-size:13px;color:#0B1D2C;text-align:right;font-weight:500;">${moon.emoji} ${moon.phase} · ${moon.illumination}%</td>
       </tr>
@@ -198,17 +238,31 @@ function buildEmailHtml(
     </table>
   </div>
 
+  <!-- Quick Links -->
+  <div style="background:white;border-radius:16px;padding:16px 20px;margin-bottom:16px;text-align:center;">
+    <div style="font-size:11px;color:#5a6a7a;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px;">Quick links</div>
+    <div>
+      <a href="https://coollab.ucsd.edu/pierviz/" ${linkStyle}>Underwater cam</a>
+      <a href="https://scripps.ucsd.edu/piercam" ${linkStyle}>Surface cam</a>
+      <a href="https://lajollafreediveclub.com/tides" ${linkStyle}>Tide chart</a>
+      <a href="https://www.ndbc.noaa.gov/station_page.php?station=46254" ${linkStyle}>Buoy data</a>
+      <a href="https://lajollafreediveclub.com/map" ${linkStyle}>Field guide</a>
+      <a href="https://lajollafreediveclub.com/gear" ${linkStyle}>Gear guide</a>
+    </div>
+  </div>
+
   <!-- CTA -->
   <div style="text-align:center;margin-bottom:24px;">
     <a href="https://lajollafreediveclub.com/conditions" style="display:inline-block;background:#C75B3A;color:white;padding:12px 28px;border-radius:50px;text-decoration:none;font-weight:600;font-size:14px;">
-      Full conditions →
+      Full conditions dashboard →
     </a>
   </div>
 
   <!-- Footer -->
-  <div style="text-align:center;font-size:11px;color:#5a6a7a;line-height:1.6;">
+  <div style="text-align:center;font-size:11px;color:#5a6a7a;line-height:1.8;">
     <a href="https://lajollafreediveclub.com" style="color:#1B6B6B;text-decoration:none;">lajollafreediveclub.com</a><br>
     La Jolla Freedive Club · San Diego, CA<br>
+    AIDA Certified · DAN Insured<br>
     <a href="{{ unsubscribe_url }}" style="color:#5a6a7a;">Unsubscribe</a>
   </div>
 
@@ -217,8 +271,8 @@ function buildEmailHtml(
 </html>`;
 }
 
+// ─── Handler ───
 export async function GET(request: Request) {
-  // Verify cron secret
   const { searchParams } = new URL(request.url);
   const secret = searchParams.get("secret");
   const preview = searchParams.get("preview") === "true";
@@ -228,94 +282,79 @@ export async function GET(request: Request) {
   }
 
   try {
-    // Determine base URL
-    const baseUrl = process.env.VERCEL_URL
-      ? `https://${process.env.VERCEL_URL}`
-      : "https://lajollafreediveclub.com";
+    // Fetch directly from external data sources (not our own APIs)
+    const [buoyData, windData, tideNote] = await Promise.all([
+      fetchBuoyDirect(),
+      fetchWindDirect(),
+      fetchTideNote(),
+    ]);
 
-    // Fetch all data
-    const conditions = await fetchConditions(baseUrl);
+    const conditions: ConditionsData = {
+      ...buoyData,
+      ...windData,
+    };
+
     const grade = getOverallGrade(conditions);
     const moon = getMoonPhase();
     const events = getTopEvents(new Date(), 4);
     const grunion = isGrunionNight(new Date(), moon.age);
 
-    // Get tide info
-    let tideNote = "Check tides page";
-    try {
-      const tideRes = await fetch(`${baseUrl}/api/tides?days=1`);
-      if (tideRes.ok) {
-        const tideData = await tideRes.json();
-        if (tideData.days && tideData.days[0]) {
-          const day = tideData.days[0];
-          if (day.bestDiveWindows && day.bestDiveWindows.length > 0) {
-            tideNote = `Best window: ${day.bestDiveWindows[0]}`;
-          }
-        }
-      }
-    } catch {}
-
     const html = buildEmailHtml(conditions, grade, moon, events, grunion, tideNote);
 
-    // Preview mode — just show the email HTML
+    // Preview mode
     if (preview) {
       return new NextResponse(html, {
         headers: { "Content-Type": "text/html" },
       });
     }
 
-    // If Kit API keys are configured, send the broadcast
+    // Send via Kit
     if (KIT_API_SECRET) {
-      try {
-        const now = new Date();
-        const dateStr = now.toLocaleDateString("en-US", {
-          timeZone: "America/Los_Angeles",
-          weekday: "short",
-          month: "short",
-          day: "numeric",
-        });
+      const now = new Date();
+      const dateStr = now.toLocaleDateString("en-US", {
+        timeZone: "America/Los_Angeles",
+        weekday: "short",
+        month: "short",
+        day: "numeric",
+      });
 
-        // Create and send broadcast via Kit API v3
-        const broadcastRes = await fetch("https://api.convertkit.com/v3/broadcasts", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            api_secret: KIT_API_SECRET,
-            subject: `${grade.grade} — La Jolla Dive Conditions · ${dateStr}`,
-            content: html,
-            published: true,
-          }),
-        });
+      const broadcastRes = await fetch("https://api.convertkit.com/v3/broadcasts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          api_secret: KIT_API_SECRET,
+          subject: `${grade.grade} — La Jolla Dive Conditions · ${dateStr}`,
+          content: html,
+          published: true,
+        }),
+      });
 
-        if (!broadcastRes.ok) {
-          const err = await broadcastRes.text();
-          return NextResponse.json({
-            status: "error",
-            message: "Failed to create Kit broadcast",
-            detail: err,
-            grade: grade.grade,
-            preview: true,
-          }, { status: 502 });
-        }
-
-        const broadcast = await broadcastRes.json();
-        return NextResponse.json({
-          status: "sent",
-          broadcast_id: broadcast.broadcast?.id,
-          grade: grade.grade,
-          score: grade.score,
-          summary: grade.summary,
-        });
-      } catch (err) {
+      if (!broadcastRes.ok) {
+        const err = await broadcastRes.text();
         return NextResponse.json({
           status: "error",
-          message: err instanceof Error ? err.message : "Kit API error",
+          message: "Failed to create Kit broadcast",
+          detail: err,
           grade: grade.grade,
-        }, { status: 500 });
+        }, { status: 502 });
       }
+
+      const broadcast = await broadcastRes.json();
+      return NextResponse.json({
+        status: "sent",
+        broadcast_id: broadcast.broadcast?.id,
+        grade: grade.grade,
+        score: grade.score,
+        summary: grade.summary,
+        data: {
+          swell: conditions.waveHeight,
+          wind: conditions.windSpeed,
+          temp: conditions.waterTemp,
+        },
+      });
     }
 
-    // No Kit keys — return preview
+    // No Kit — return HTML
     return new NextResponse(html, {
       headers: { "Content-Type": "text/html" },
     });
