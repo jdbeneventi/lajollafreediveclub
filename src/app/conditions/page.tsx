@@ -249,7 +249,7 @@ export default function ConditionsPage() {
               morning and pick the best spot for the day.
             </p>
             <Link
-              href="/contact"
+              href="/contact/courses"
               className="inline-flex px-8 py-3 bg-coral text-white rounded-full font-semibold no-underline hover:-translate-y-0.5 hover:shadow-[0_8px_25px_rgba(232,115,74,0.4)] transition-all"
             >
               Join the club →

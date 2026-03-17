@@ -311,7 +311,7 @@ export default function ProgramsPage() {
                       </div>
                     </div>
 
-                    <Link href="/contact" className="btn btn-primary no-underline">
+                    <Link href="/contact/courses" className="btn btn-primary no-underline">
                       Get started →
                     </Link>
                   </div>
@@ -400,7 +400,7 @@ export default function ProgramsPage() {
                       ))}
                     </ul>
 
-                    <Link href="/contact" className="btn btn-primary no-underline">
+                    <Link href="/contact/courses" className="btn btn-primary no-underline">
                       Get started →
                     </Link>
                   </div>

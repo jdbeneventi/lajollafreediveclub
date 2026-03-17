@@ -58,7 +58,7 @@ export default function CampGaribaldiPage() {
               ocean confidence — through breath-first training.
             </p>
             <div className="flex gap-4 justify-center flex-wrap">
-              <Link href="/contact" className="btn btn-primary no-underline">
+              <Link href="/contact/camp" className="btn btn-primary no-underline">
                 Reserve a Spot →
               </Link>
               <a href="#schedule" className="btn btn-ghost no-underline">
