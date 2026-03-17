@@ -6,7 +6,7 @@ import { EmailCapture } from "@/components/EmailCapture";
 export const metadata: Metadata = {
   title: "About — La Jolla Freedive Club",
   description:
-    "The story behind La Jolla Freedive Club. Founded by Joshua Beneventi, AIDA-certified instructor trained in Malaysia, Egypt, and Mexico. San Diego's only AIDA-certified freediving instructor for adults and kids.",
+    "The story behind La Jolla Freedive Club. Founded by Joshua Beneventi, AIDA-certified instructor and youth instructor trained in Malaysia, Egypt, and Mexico. San Diego's only AIDA-certified freediving instructor for adults and kids.",
 };
 
 const faqs = [
@@ -50,130 +50,144 @@ export default function AboutPage() {
       {/* Header */}
       <section className="bg-gradient-to-b from-deep to-ocean pt-36 pb-20 px-6 text-center">
         <Reveal>
-          <div className="w-32 h-32 rounded-full overflow-hidden mx-auto mb-8 border-2 border-white/20">
-            <img src="/images/photos/joshua-red-sea.jpg" alt="Joshua Beneventi floating in the Red Sea" className="w-full h-full object-cover object-top" />
+          <div className="w-36 h-36 rounded-full overflow-hidden mx-auto mb-8 border-2 border-white/20">
+            <img src="/images/photos/joshua-red-sea.jpg" alt="Joshua Beneventi in the Red Sea" className="w-full h-full object-cover object-center" />
           </div>
           <div className="section-label text-seafoam before:bg-seafoam justify-center">
             About
           </div>
           <h1 className="font-serif text-[clamp(2.5rem,5vw,4rem)] text-white font-normal leading-tight tracking-tight mb-6">
-            The long way to<br />the water
+            The ocean is in my veins
           </h1>
           <p className="text-lg text-white/60 max-w-[560px] mx-auto leading-relaxed">
-            From Point Loma to a Thai monastery to the Blue Hole in Egypt —
-            and back to where it started.
+            From Azorean tuna fishermen to La Jolla&apos;s canyon — the story
+            behind LJFC.
           </p>
         </Reveal>
       </section>
 
-      {/* Joshua's Story */}
+      {/* Story */}
       <section className="bg-white py-24 px-6">
         <div className="max-w-[720px] mx-auto">
           <Reveal>
             <div className="space-y-6 text-[0.95rem] text-[#2a2a2a] leading-relaxed">
-              <h2 className="font-serif text-2xl text-deep">Growing up four blocks from the ocean</h2>
+              <h2 className="font-serif text-2xl text-deep">Roots</h2>
 
               <p>
-                I grew up in Point Loma and Ocean Beach — four blocks from the water. As a kid,
-                I spent most of my time at Sunset Cliffs. In high school, I started spearfishing
-                off Point Loma with friends. Eventually I picked up a longboard and learned to surf.
+                My grandmother&apos;s family came to San Diego from Pico in the Azores.
+                My great-grandfather worked whaling and on boats his whole life before
+                settling here to fish tuna. My uncles, my grandfather — they all worked
+                the tuna boats at some point. On the other side, my grandfather used to
+                freedive for abalone right here in La Jolla and bodysurfed his whole life.
+                The ocean wasn&apos;t something anyone in my family chose. It was just what we did.
               </p>
 
               <p>
-                The ocean was always the place I went to process things. Not in a poetic,
-                Instagram-caption kind of way — it was just where I went when I needed to think,
-                or when I didn&apos;t want to think at all.
-              </p>
-
-              <h2 className="font-serif text-2xl text-deep pt-6">The detour</h2>
-
-              <p>
-                After San Diego, life took me in a few unexpected directions. I lived in
-                Portugal, got my real estate license in Arizona, then went back to Portugal
-                before entering a Thai forest monastery — Sumedharama in Ericeira — where
-                I stayed for about four months. From there, Thailand.
+                I grew up in Point Loma and Ocean Beach, four blocks from the water.
+                Sunset Cliffs was where I went when I needed to feel something or stop
+                feeling something. In high school I was spearfishing off Point Loma with
+                friends. Eventually I picked up a longboard. The water was always there,
+                pulling me back.
               </p>
 
               <p>
-                At some point in the monasteries, I realized it was time to leave. And for
-                the first time in my life, I had absolutely nothing on my calendar. So I asked
-                myself a question I&apos;d never really given myself permission to ask:
-                <em> What are the things I&apos;ve always wanted to do but never made time for?</em>
+                The first freediving club in the United States was founded in La Jolla
+                in 1939 — by people who probably weren&apos;t that different from the
+                people in my family. Watermen. Fishermen. People who understood that the
+                ocean gives you something you can&apos;t get on land. Almost a century later,
+                La Jolla Freedive Club exists because that pull never went away.
               </p>
 
+              <h2 className="font-serif text-2xl text-deep pt-6">Finding freediving</h2>
+
               <p>
-                One of those things was freediving.
+                In 2023, after years of traveling and a period living in a Thai forest
+                monastery, I found myself with nothing on my calendar for the first time
+                in my life. No plan, no obligations, no next thing. So I asked a question
+                I&apos;d never given myself permission to ask: <em>what have I always
+                wanted to do but never made time for?</em>
               </p>
 
-              <h2 className="font-serif text-2xl text-deep pt-6">The training</h2>
+              <p>Freediving.</p>
 
               <p>
-                I flew to Tioman Island in Malaysia and took my first freediving course at
-                Freedive Tioman. My coach was Stella Abbas — the Malaysian national record
-                holder. I stayed for a month, mostly wrestling with equalization (like everyone).
-                At some point, Stella told me something that changed the trajectory:
-                &ldquo;I think this sport is for you. You should pursue it further.&rdquo;
-              </p>
-
-              <p>
-                I asked her where to go next. She said Dahab, Egypt — the Mecca of freediving.
-                So I went.
+                I flew to Tioman Island in Malaysia and took my first course at Freedive
+                Tioman with Stella Abbas — the Malaysian national record holder. I stayed
+                for a month, mostly wrestling with equalization, which humbled me completely.
+                At some point Stella said something that changed everything: &ldquo;I think
+                this sport is for you. You should pursue it further.&rdquo; I asked her
+                where to go. She said Dahab — the Mecca of freediving. So I went.
               </p>
 
               <div className="my-8 rounded-xl overflow-hidden">
-                <img src="/images/photos/joshua-stella.png" alt="Joshua with Stella Abbas at Freedive Tioman" className="w-full h-auto" />
+                <img src="/images/photos/joshua-stella.jpg" alt="Joshua with Stella Abbas at Freedive Tioman" className="w-full h-auto" />
                 <p className="text-[10px] text-[#5a6a7a] mt-2 italic">With Stella Abbas, Malaysian national record holder, at Freedive Tioman</p>
               </div>
 
+              <h2 className="font-serif text-2xl text-deep pt-2">Dahab</h2>
+
               <p>
-                In Dahab, I completed my AIDA 3 certification with Pieter Van Veen, a Dutch instructor
-                based in the Dahab scene. I trained at the Lighthouse,
-                dove the Blue Hole, and got immersed in one of the most concentrated freediving
-                communities in the world. Then I came back to the States and trained with
-                Harry Chamas at Freedive Passion in La Ventana, Baja California — one of the
-                top coaching facilities in Mexico.
+                Dahab is a small town on the Red Sea coast of Egypt&apos;s Sinai Peninsula.
+                It&apos;s where the world&apos;s best freedivers train, and it&apos;s where
+                I fell completely in love with this sport. I completed my AIDA 3 with
+                Pieter Van Veen, trained at the Lighthouse, dove the Blue Hole, and found
+                a community of people who understood what I was only beginning to feel —
+                that freediving isn&apos;t just an activity. It&apos;s a practice.
               </p>
 
               <p>
-                In 2025, I returned to Dahab for three months. I completed my AIDA 4 and
-                then my AIDA Instructor certification under Khaled El Gammal — Egypt&apos;s
-                deepest freediver, the first Egyptian to reach 100 meters on a single breath,
-                and a 13-time national record holder. Training under Khaled at the Lighthouse,
-                the Blue Hole, and across the Dahab scene gave me not just the technical
-                qualifications but a depth of experience I couldn&apos;t have gotten anywhere else.
+                I came back to the States and trained with Harry Chamas at Freedive Passion
+                in La Ventana, Baja California — one of the top coaching facilities in the
+                world. Then, in 2025, I went back to Dahab for three months. I completed
+                my AIDA 4 and earned my AIDA Instructor and Youth Instructor certifications
+                under Khaled El Gammal — Egypt&apos;s deepest freediver, the first Egyptian
+                to break 100 meters on a single breath, and a 13-time national record holder.
+                Training under Khaled at the Lighthouse and the Blue Hole gave me something
+                no textbook could — an understanding of what it means to hold space for
+                someone at the edge of what they think they&apos;re capable of.
               </p>
 
               <div className="my-8 grid grid-cols-2 gap-4">
                 <div className="rounded-xl overflow-hidden">
-                  <img src="/images/photos/joshua-khaled.jpg" alt="Joshua with Khaled El Gammal in Dahab" className="w-full h-auto" />
-                  <p className="text-[10px] text-[#5a6a7a] mt-2 italic">With Khaled El Gammal, Dahab</p>
+                  <img src="/images/photos/joshua-khaled.jpg" alt="Joshua with Khaled El Gammal at the Lighthouse, Dahab" className="w-full h-auto" />
+                  <p className="text-[10px] text-[#5a6a7a] mt-2 italic">With Khaled El Gammal at the Lighthouse, Dahab</p>
                 </div>
                 <div className="rounded-xl overflow-hidden">
-                  <img src="/images/photos/joshua-khaled-hannah.jpg" alt="Joshua with Khaled and Hannah after a training session" className="w-full h-auto" />
-                  <p className="text-[10px] text-[#5a6a7a] mt-2 italic">Post-dive at the Lighthouse, Dahab</p>
+                  <img src="/images/photos/joshua-khaled-hannah.jpg" alt="Joshua, Khaled, and Hannah at the Blue Hole, Dahab" className="w-full h-auto" />
+                  <p className="text-[10px] text-[#5a6a7a] mt-2 italic">With Khaled and Hannah at the Blue Hole, Dahab</p>
                 </div>
               </div>
 
-              <h2 className="font-serif text-2xl text-deep pt-6">Back to San Diego</h2>
+              <h2 className="font-serif text-2xl text-deep pt-2">Back home</h2>
 
               <p>
-                I came home in September 2025 and put my line in the water at La Jolla Shores.
-                I&apos;m now the only AIDA-certified freediving instructor in San Diego —
-                for both adults and kids.
+                I came back to San Diego in September 2025 and put my line in the water
+                at La Jolla Shores. I&apos;m now the only AIDA-certified freediving
+                instructor in San Diego — for both adults and kids.
               </p>
 
               <p>
-                La Jolla Freedive Club is the thing I wish had existed when I was growing up
-                here. A crew. A training structure. Access to the ocean with people who
-                take it seriously but don&apos;t take themselves too seriously. A place where a
-                12-year-old learning to hold their breath and a 40-year-old working on
-                equalization are both welcome and both challenged.
+                La Jolla Freedive Club is the thing I wish had existed when I was growing
+                up here. A crew. A training structure. A place where a kid learning to hold
+                their breath and an adult working on equalization are both welcome and both
+                pushed. Not a certification mill. A community.
+              </p>
+
+              <p>
+                One of the things I care most about is creating access to the ocean for
+                young people. Too many kids grow up near the coast without ever developing
+                a real relationship with the water. That&apos;s why Camp Garibaldi exists —
+                to give kids the tools to be genuinely confident in the ocean, not just
+                comfortable. Breath control, water safety, freediving fundamentals, all
+                through a methodology that builds internal composure before external skills.
+                Watching a kid go from nervous about waves to duck diving on their own is
+                the best part of what I do.
               </p>
 
               <div className="my-8 grid grid-cols-2 gap-4">
                 <div className="rounded-xl overflow-hidden">
                   <img src="/images/photos/joshua-teaching-kids.jpg" alt="Joshua teaching two kids poolside" className="w-full h-auto" />
-                  <p className="text-[10px] text-[#5a6a7a] mt-2 italic">Poolside breathing drills with young students</p>
+                  <p className="text-[10px] text-[#5a6a7a] mt-2 italic">Poolside breathing drills</p>
                 </div>
                 <div className="rounded-xl overflow-hidden">
                   <img src="/images/photos/joshua-kid-beach.jpg" alt="Joshua with a young student at Mission Bay" className="w-full h-auto" />
@@ -181,26 +195,22 @@ export default function AboutPage() {
                 </div>
               </div>
 
-              <h2 className="font-serif text-2xl text-deep pt-6">The philosophy</h2>
+              <h2 className="font-serif text-2xl text-deep pt-2">The philosophy</h2>
 
               <p>
                 I see freediving as an embodied practice — not just a sport. When you hold
                 your breath and descend into dark water, you&apos;re working with surrender,
                 with fear, with the unknown. You&apos;re confronting your own nervous system
-                and learning to find calm inside discomfort. That&apos;s not just a diving skill.
-                That&apos;s a life skill.
+                and learning to find calm inside discomfort. That&apos;s not just a diving
+                skill. That&apos;s a life skill.
               </p>
 
               <p>
-                That said, I don&apos;t run LJFC as a meditation retreat. We train like athletes.
+                But we don&apos;t sit around talking about it. We train like athletes.
                 Breathing drills, CO2 tables, equalization work, safety protocols,
                 progressive depth exposure. The science is rigorous. The methodology is
-                structured. But underneath all of it is a simple belief: when you learn to
-                control your breath, everything else follows.
-              </p>
-
-              <p>
-                That&apos;s what we mean by &ldquo;the ocean camp that starts from the inside out.&rdquo;
+                structured. And underneath all of it is a simple belief: when you learn
+                to control your breath, everything else follows.
               </p>
 
               <p className="text-xs text-[#5a6a7a] pt-4">
@@ -229,7 +239,11 @@ export default function AboutPage() {
             {[
               {
                 title: "AIDA Instructor",
-                detail: "Certified to teach AIDA 1 through AIDA 4, pool and open water, adults and kids.",
+                detail: "Certified to teach AIDA 1 through AIDA 3, pool and open water.",
+              },
+              {
+                title: "AIDA Youth Instructor",
+                detail: "Certified to teach freediving to kids and teens.",
               },
               {
                 title: "AIDA 4 Freediver",
