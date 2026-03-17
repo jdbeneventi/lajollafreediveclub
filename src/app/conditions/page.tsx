@@ -243,11 +243,11 @@ export default function ConditionsPage() {
         <div className="max-w-[600px] mx-auto text-center">
           <Reveal>
             <h2 className="font-serif text-2xl text-white mb-3">
-              Get this in your inbox at 6am
+              Stay in the loop
             </h2>
             <p className="text-white/50 text-sm mb-6 leading-relaxed">
-              Dive grade, water temp, swell, visibility, moon phase, and what&apos;s
-              in the water — delivered every morning so you can plan your day.
+              Conditions alerts, seasonal species updates, upcoming courses, and
+              weekly dive schedules — delivered to your inbox.
             </p>
             <EmailCapture
               variant="light"
