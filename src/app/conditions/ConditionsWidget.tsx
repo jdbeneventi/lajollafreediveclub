@@ -368,18 +368,54 @@ export function ConditionsWidget() {
       )}
 
       {/* Daily conditions alert signup — LEAD MAGNET */}
-      <div className="bg-deep rounded-2xl p-8 flex flex-col md:flex-row md:items-center gap-6">
-        <div className="flex-1">
-          <div className="text-seafoam text-xs font-semibold uppercase tracking-wider mb-2">Daily dive report</div>
-          <h3 className="font-serif text-xl text-white mb-2">Get conditions in your inbox at 6am</h3>
+      <div className="bg-deep rounded-2xl p-8">
+        <div className="mb-4">
+          <div className="text-seafoam text-xs font-semibold uppercase tracking-wider mb-2">Stay in the loop</div>
+          <h3 className="font-serif text-xl text-white mb-2">Conditions, species alerts, and dive schedules</h3>
           <p className="text-white/50 text-sm leading-relaxed">
-            Daily dive grade, visibility estimate, swell, wind, and water temp — delivered every morning before you decide whether to get wet.
+            Get dive conditions, seasonal updates, and weekly schedules delivered to your inbox.
           </p>
         </div>
-        <a href="/contact" className="shrink-0 px-6 py-3 bg-coral text-white rounded-full font-medium text-sm no-underline hover:-translate-y-0.5 hover:shadow-[0_8px_25px_rgba(199,91,58,0.4)] transition-all text-center">
-          Sign up for daily report →
-        </a>
+        <InlineEmailForm />
       </div>
     </div>
+  );
+}
+
+function InlineEmailForm() {
+  const [email, setEmail] = useState("");
+  const [done, setDone] = useState(false);
+
+  const submit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email || !email.includes("@")) return;
+    try {
+      const fd = new FormData();
+      fd.append("email_address", email);
+      await fetch("https://app.kit.com/forms/9207242/subscriptions", { method: "POST", body: fd });
+    } catch {}
+    setDone(true);
+    setEmail("");
+  };
+
+  if (done) return <div className="text-seafoam text-sm font-medium">You&apos;re subscribed! ✓</div>;
+
+  return (
+    <form onSubmit={submit} className="flex flex-col sm:flex-row gap-3">
+      <input
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder="Your email address"
+        required
+        className="flex-1 px-5 py-3 rounded-full text-sm outline-none bg-white/[0.08] border border-white/20 text-white placeholder:text-white/40 focus:border-seafoam focus:bg-white/[0.12] transition-all"
+      />
+      <button
+        type="submit"
+        className="px-6 py-3 rounded-full font-semibold text-sm cursor-pointer border-none bg-coral text-white hover:-translate-y-0.5 hover:shadow-[0_8px_25px_rgba(199,91,58,0.4)] transition-all whitespace-nowrap"
+      >
+        Subscribe →
+      </button>
+    </form>
   );
 }
