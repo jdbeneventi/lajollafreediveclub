@@ -242,6 +242,24 @@ export default function AboutPage() {
             </div>
           </Reveal>
 
+          <Reveal>
+            <div className="bg-deep rounded-2xl p-6 md:p-8 flex flex-col md:flex-row items-center gap-6 mb-8">
+              <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center shrink-0">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3db8a4" strokeWidth="2">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                </svg>
+              </div>
+              <div>
+                <div className="text-white font-semibold text-sm mb-1">Fully insured through the Divers Alert Network (DAN)</div>
+                <p className="text-white/50 text-xs leading-relaxed">
+                  DAN is the leading dive safety organization worldwide. Every course, every ocean
+                  session, and every Camp Garibaldi program is covered. Safety isn&apos;t a feature
+                  of what we do — it&apos;s the foundation.
+                </p>
+              </div>
+            </div>
+          </Reveal>
+
           <div className="grid md:grid-cols-2 gap-6">
             {[
               {

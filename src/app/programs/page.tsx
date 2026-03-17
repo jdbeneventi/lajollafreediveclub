@@ -411,6 +411,33 @@ export default function ProgramsPage() {
         </div>
       </section>
 
+      {/* Safety */}
+      <section className="bg-deep py-16 px-6">
+        <div className="max-w-[900px] mx-auto">
+          <Reveal>
+            <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12">
+              <div className="shrink-0 flex items-center gap-4">
+                <div className="w-14 h-14 rounded-full bg-white/10 flex items-center justify-center">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#3db8a4" strokeWidth="2">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                  </svg>
+                </div>
+                <div>
+                  <div className="text-white font-serif text-xl">Safety first. Always.</div>
+                  <div className="text-white/40 text-xs">DAN insured · AIDA certified · Rescue trained</div>
+                </div>
+              </div>
+              <div className="flex-1 text-white/60 text-sm leading-relaxed">
+                Every session has trained safety divers. Every student learns rescue protocols.
+                Joshua is fully insured through the Divers Alert Network (DAN) and holds both
+                AIDA Instructor and Youth Instructor certifications. We don&apos;t cut corners —
+                because the ocean doesn&apos;t forgive shortcuts.
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
       {/* Upcoming Courses */}
       <section className="bg-white py-24 px-6">
         <div className="max-w-[900px] mx-auto">
@@ -516,12 +543,16 @@ export default function ProgramsPage() {
                   <img src="/images/photos/joshua-lena-shores.jpg" alt="Joshua and Lena at La Jolla Shores" className="w-full h-full object-cover" />
                 </div>
                 <div className="p-6">
-                  <div className="text-[10px] text-[#5a6a7a] uppercase tracking-wider font-semibold mb-1">Saturdays · 7:00 AM</div>
-                  <h3 className="font-serif text-xl mb-2">Morning stretch &amp; breathe</h3>
+                  <div className="text-[10px] text-[#5a6a7a] uppercase tracking-wider font-semibold mb-1">Saturdays · 7:00 AM · La Jolla Shores</div>
+                  <h3 className="font-serif text-xl mb-2">Ocean Flow — yoga for freedivers</h3>
+                  <p className="text-xs text-[#5a6a7a] leading-relaxed mb-3">
+                    A pre-dive flow designed specifically for ocean people. Led by Lena — RYT yoga
+                    teacher, freediver, and artist — this session blends gentle mobility, intercostal
+                    opening, breath awareness, and deep relaxation to prepare your body and mind
+                    for the water. Vinyasa meets apnea. The perfect warmup before we hit the canyon.
+                  </p>
                   <p className="text-xs text-[#5a6a7a] leading-relaxed mb-4">
-                    Start your Saturday with a yoga and stretching session on the beach before
-                    we hit the water. Intercostal mobility, diaphragm work, and breathing
-                    drills — everything that makes your dive better. Open to all levels.
+                    Open to all levels — you don&apos;t need to be a freediver or a yogi. Just show up.
                   </p>
                   <Link href="/contact" className="text-teal text-sm font-medium no-underline hover:underline">
                     Join the Saturday crew →
