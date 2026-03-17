@@ -275,7 +275,6 @@ export async function GET(request: Request) {
             api_secret: KIT_API_SECRET,
             subject: `${grade.grade} — La Jolla Dive Conditions · ${dateStr}`,
             content: html,
-            email_layout_template: "Text Only",
             published: true,
           }),
         });
