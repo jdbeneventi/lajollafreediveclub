@@ -154,7 +154,7 @@ export default function AboutPage() {
                 someone at the edge of what they think they&apos;re capable of.
               </p>
 
-              <div className="my-8 grid grid-cols-2 gap-4">
+              <div className="my-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="rounded-xl overflow-hidden">
                   <img src="/images/photos/joshua-khaled.jpg" alt="Joshua with Khaled El Gammal at the Lighthouse, Dahab" className="w-full h-auto" />
                   <p className="text-[10px] text-[#5a6a7a] mt-2 italic">With Khaled El Gammal at the Lighthouse, Dahab</p>
@@ -191,7 +191,7 @@ export default function AboutPage() {
                 the best part of what I do.
               </p>
 
-              <div className="my-8 grid grid-cols-2 gap-4">
+              <div className="my-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="rounded-xl overflow-hidden">
                   <img src="/images/photos/joshua-teaching-kids.jpg" alt="Joshua teaching two kids poolside" className="w-full h-auto" />
                   <p className="text-[10px] text-[#5a6a7a] mt-2 italic">Poolside breathing drills</p>

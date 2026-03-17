@@ -207,8 +207,8 @@ export default function Home() {
       </section>
 
       {/* ═══ INTRO ═══ */}
-      <section className="bg-white py-28 px-6">
-        <div className="max-w-[1240px] mx-auto grid md:grid-cols-2 gap-20 items-center">
+      <section className="bg-white py-16 md:py-28 px-6">
+        <div className="max-w-[1240px] mx-auto grid md:grid-cols-2 gap-10 md:gap-20 items-center">
           <Reveal>
             <div className="relative h-[520px] rounded-2xl overflow-hidden">
               <img src="/images/photos/joshua-brooke-kristina.jpg" alt="Joshua with Brooke and Kristina after a dive session" className="w-full h-full object-cover" />
@@ -267,7 +267,7 @@ export default function Home() {
       </section>
 
       {/* ═══ LIVE TOOLS ═══ */}
-      <section className="bg-salt py-28 px-6">
+      <section className="bg-salt py-16 md:py-28 px-6">
         <div className="max-w-[1240px] mx-auto">
           <Reveal>
             <div className="text-center mb-16">
@@ -335,7 +335,7 @@ export default function Home() {
       </section>
 
       {/* ═══ PROGRAMS ═══ */}
-      <section id="programs" className="py-28 px-6 bg-salt">
+      <section id="programs" className="py-16 md:py-28 px-6 bg-salt">
         <div className="max-w-[1240px] mx-auto">
           <Reveal>
             <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-16">
@@ -404,7 +404,7 @@ export default function Home() {
       </section>
 
       {/* ═══ CAMP GARIBALDI BANNER ═══ */}
-      <section className="bg-deep py-28 px-6 relative overflow-hidden">
+      <section className="bg-deep py-16 md:py-28 px-6 relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_80%_at_80%_50%,rgba(232,115,74,0.12)_0%,transparent_60%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_40%_60%_at_20%_80%,rgba(61,184,164,0.08)_0%,transparent_50%)]" />
 
@@ -420,7 +420,7 @@ export default function Home() {
               water confidence through a breath-first methodology.
             </p>
 
-            <div className="grid grid-cols-2 gap-4 mb-10">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
               {[
                 "Breath & composure training",
                 "Freediving fundamentals",
@@ -455,7 +455,7 @@ export default function Home() {
       </section>
 
       {/* ═══ TESTIMONIALS ═══ */}
-      <section className="bg-white py-28 px-6 text-center">
+      <section className="bg-white py-16 md:py-28 px-6 text-center">
         <Reveal>
           <div className="max-w-[600px] mx-auto mb-16">
             <div className="section-label justify-center before:hidden">What People Say</div>
@@ -492,7 +492,7 @@ export default function Home() {
       </section>
 
       {/* ═══ BLOG PREVIEW ═══ */}
-      <section className="py-28 px-6 bg-salt">
+      <section className="py-16 md:py-28 px-6 bg-salt">
         <div className="max-w-[1240px] mx-auto">
           <Reveal>
             <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-14">

@@ -61,7 +61,7 @@ export function TextArea({
 
 export function SuccessState({ message }: { message?: string }) {
   return (
-    <div className="bg-white rounded-2xl p-12 text-center">
+    <div className="bg-white rounded-2xl p-8 md:p-12 text-center">
       <div className="w-16 h-16 rounded-full bg-teal/10 flex items-center justify-center mx-auto mb-6">
         <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#1B6B6B" strokeWidth="2">
           <polyline points="20 6 9 17 4 12" />

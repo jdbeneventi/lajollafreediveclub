@@ -73,7 +73,7 @@ export default function CampGaribaldiPage() {
       <section className="bg-white py-24 px-6">
         <div className="max-w-[900px] mx-auto">
           <Reveal>
-            <div className="grid md:grid-cols-2 gap-16 items-start">
+            <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-start">
               <div>
                 <div className="section-label">Our Approach</div>
                 <h2 className="section-title">
