@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Reveal } from "@/components/Reveal";
 import { EmailCapture } from "@/components/EmailCapture";
+import { WeekendEmailForm } from "@/components/WeekendEmailForm";
 
 /* ─── Data ─── */
 const programs = [
@@ -224,6 +225,56 @@ export default function Home() {
               </Reveal>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ═══ THIS WEEKEND — Tight, punchy, email magnet ═══ */}
+      <section className="bg-deep py-14 md:py-20 px-6 md:px-12 relative">
+        <div className="absolute inset-0 opacity-[0.015]" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E\")" }} />
+        <div className="max-w-[900px] mx-auto relative z-10">
+          <Reveal>
+            <div className="flex flex-col md:flex-row md:items-center gap-8 md:gap-16">
+              {/* Schedule */}
+              <div className="flex-1">
+                <div className="text-[11px] text-seafoam/60 font-medium tracking-[0.2em] uppercase mb-3">Every Weekend</div>
+                <h2 className="font-serif text-[clamp(1.6rem,3vw,2.2rem)] text-white leading-[1.15] tracking-tight mb-6">
+                  This week at La Jolla Shores
+                </h2>
+                <div className="space-y-4">
+                  <div className="flex gap-4 items-start">
+                    <div className="text-right shrink-0 w-14">
+                      <div className="text-white/80 text-sm font-medium">7:00am</div>
+                      <div className="text-white/30 text-[10px]">SAT</div>
+                    </div>
+                    <div className="w-[1px] bg-white/10 self-stretch shrink-0" />
+                    <div>
+                      <div className="text-white text-sm font-medium">Ocean Flow with Lena</div>
+                      <div className="text-white/35 text-xs">Pre-dive stretching &amp; breathing exercises on the beach</div>
+                    </div>
+                  </div>
+                  <div className="flex gap-4 items-start">
+                    <div className="text-right shrink-0 w-14">
+                      <div className="text-white/80 text-sm font-medium">8:30am</div>
+                      <div className="text-white/30 text-[10px]">SAT</div>
+                    </div>
+                    <div className="w-[1px] bg-white/10 self-stretch shrink-0" />
+                    <div>
+                      <div className="text-white text-sm font-medium">Group Ocean Session</div>
+                      <div className="text-white/35 text-xs">Guided freedive from the canyon mooring line. All levels.</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* CTA */}
+              <div className="md:w-[280px] shrink-0 bg-white/[0.04] border border-white/[0.08] rounded-xl p-6">
+                <p className="text-white/50 text-sm leading-relaxed mb-4">
+                  We go out every weekend — conditions permitting. Join the list and we&apos;ll confirm the night before.
+                </p>
+                <WeekendEmailForm />
+              </div>
+            </div>
+          </Reveal>
         </div>
       </section>
 
