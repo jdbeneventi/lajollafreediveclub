@@ -35,7 +35,7 @@ export default function Home() {
   return (
     <>
       {/* ═══ HERO — Full viewport, immersive ═══ */}
-      <section className="relative min-h-screen flex items-center md:items-end overflow-hidden">
+      <section className="relative min-h-[85vh] md:min-h-screen flex items-start md:items-end pt-32 md:pt-0 overflow-hidden">
         {/* BG layers */}
         <div className="absolute inset-0">
           <img src="/images/hero.jpg" alt="" className="w-full h-full object-cover" />
