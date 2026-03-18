@@ -46,28 +46,28 @@ export default function Home() {
         <div className="absolute inset-0 opacity-[0.03] mix-blend-overlay" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E\")" }} />
 
         {/* Content — bottom-aligned, left-heavy */}
-        <div className="relative z-10 w-full max-w-[1400px] mx-auto px-6 md:px-12 pb-16 md:pb-24">
+        <div className="relative z-10 w-full max-w-[1400px] mx-auto px-6 md:px-12 pb-8 md:pb-24">
           <div className="max-w-[720px]">
-            <div className="flex items-center gap-3 mb-6 animate-fade-up [animation-delay:0.2s]">
+            <div className="flex items-center gap-3 mb-4 md:mb-6 animate-fade-up [animation-delay:0.2s]">
               <span className="w-2 h-2 rounded-full bg-seafoam animate-pulse-slow" />
               <span className="text-[11px] text-white/50 font-medium tracking-[0.2em] uppercase">La Jolla, California</span>
             </div>
 
-            <h1 className="font-serif text-[clamp(2.8rem,6vw,5rem)] font-normal text-white leading-[1.02] tracking-[-0.02em] mb-6 animate-fade-up [animation-delay:0.4s]">
+            <h1 className="font-serif text-[clamp(2.4rem,6vw,5rem)] font-normal text-white leading-[1.02] tracking-[-0.02em] mb-4 md:mb-6 animate-fade-up [animation-delay:0.4s]">
               Breathe. Dive.<br />
               <span className="text-seafoam italic">Belong.</span>
             </h1>
 
-            <p className="text-white/50 text-lg md:text-xl leading-relaxed max-w-[520px] mb-10 animate-fade-up [animation-delay:0.6s]">
+            <p className="text-white/50 text-base md:text-xl leading-relaxed max-w-[520px] mb-6 md:mb-10 animate-fade-up [animation-delay:0.6s]">
               San Diego&apos;s freediving community. Live ocean data, AIDA certification, and a crew that dives La Jolla every week.
             </p>
 
-            <div className="flex gap-4 flex-wrap animate-fade-up [animation-delay:0.8s]">
-              <Link href="/conditions" className="group inline-flex items-center gap-3 px-7 py-3.5 bg-coral text-white rounded-full font-medium text-[0.9rem] no-underline hover:shadow-[0_8px_30px_rgba(199,91,58,0.5)] transition-all">
+            <div className="flex gap-3 md:gap-4 flex-wrap animate-fade-up [animation-delay:0.8s]">
+              <Link href="/conditions" className="group inline-flex items-center gap-3 px-6 md:px-7 py-3 md:py-3.5 bg-coral text-white rounded-full font-medium text-[0.85rem] md:text-[0.9rem] no-underline hover:shadow-[0_8px_30px_rgba(199,91,58,0.5)] transition-all">
                 Today&apos;s Conditions
                 <span className="group-hover:translate-x-1 transition-transform">→</span>
               </Link>
-              <Link href="/programs" className="inline-flex items-center gap-2 px-7 py-3.5 bg-white/[0.06] backdrop-blur-sm border border-white/[0.12] text-white rounded-full font-medium text-[0.9rem] no-underline hover:bg-white/[0.12] transition-all">
+              <Link href="/programs" className="inline-flex items-center gap-2 px-6 md:px-7 py-3 md:py-3.5 bg-white/[0.06] backdrop-blur-sm border border-white/[0.12] text-white rounded-full font-medium text-[0.85rem] md:text-[0.9rem] no-underline hover:bg-white/[0.12] transition-all">
                 View Courses
               </Link>
             </div>
