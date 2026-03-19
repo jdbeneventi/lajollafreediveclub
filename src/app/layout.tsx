@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
+import { ServiceWorkerRegister } from "@/components/ServiceWorkerRegister";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://lajollafreediveclub.com"),
@@ -65,6 +66,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="theme-color" content="#0B1D2C" />
+        <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="apple-mobile-web-app-title" content="LJFC" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -171,6 +178,7 @@ export default function RootLayout({
         />
       </head>
       <body className="bg-salt text-deep antialiased">
+        <ServiceWorkerRegister />
         <Nav />
         <main>{children}</main>
         <Footer />

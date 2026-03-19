@@ -1,0 +1,58 @@
+{
+  "name": "La Jolla Freedive Club",
+  "short_name": "LJFC",
+  "description": "Live ocean conditions, dive grades, and freediving community tools for La Jolla.",
+  "start_url": "/conditions",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0B1D2C",
+  "theme_color": "#0B1D2C",
+  "categories": ["sports", "weather", "lifestyle"],
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-maskable-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "Live Conditions",
+      "short_name": "Conditions",
+      "url": "/conditions",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Tides & Moon",
+      "short_name": "Tides",
+      "url": "/tides",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Field Guide",
+      "short_name": "Guide",
+      "url": "/map",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+    }
+  ]
+}
