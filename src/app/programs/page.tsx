@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Reveal } from "@/components/Reveal";
 import { EmailCapture } from "@/components/EmailCapture";
+import { ExpandableCourse } from "@/components/ExpandableCourse";
 
 export const metadata: Metadata = {
   title: "Programs — AIDA Freediving Courses & Training in San Diego",
@@ -200,14 +201,6 @@ const otherPrograms = [
   },
 ];
 
-function Check() {
-  return (
-    <svg className="w-5 h-5 text-seafoam shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-      <polyline points="20 6 9 17 4 12" />
-    </svg>
-  );
-}
-
 export default function ProgramsPage() {
   return (
     <>
@@ -241,102 +234,10 @@ export default function ProgramsPage() {
             </p>
           </Reveal>
 
-          <div className="space-y-12">
+          <div className="space-y-4">
             {aidaCourses.map((course, i) => (
               <Reveal key={course.id} delay={i * 50}>
-                <div id={course.id} className="bg-white rounded-2xl overflow-hidden shadow-sm scroll-mt-28">
-                  <div className={`h-3 bg-gradient-to-r ${course.gradient}`} />
-
-                  <div className="p-8 md:p-12">
-                    {/* Header */}
-                    <div className="flex flex-wrap gap-3 mb-4">
-                      <span className="px-3 py-1 bg-teal/10 text-teal rounded-full text-xs font-semibold">
-                        {course.duration}
-                      </span>
-                      <span className="px-3 py-1 bg-deep/[0.06] text-[#5a6a7a] rounded-full text-xs font-semibold">
-                        {course.level}
-                      </span>
-                      <span className="px-3 py-1 bg-coral/10 text-coral rounded-full text-xs font-semibold">
-                        Max depth: {course.maxDepth}
-                      </span>
-                    </div>
-
-                    <h2 className="font-serif text-3xl mb-2 tracking-tight">{course.title}</h2>
-                    <p className="text-[#5a6a7a] text-lg mb-4">{course.subtitle}</p>
-
-                    {/* Price */}
-                    <div className="flex items-baseline gap-3 mb-6 pb-6 border-b border-deep/[0.06]">
-                      <span className="font-serif text-3xl text-deep tracking-tight">{course.price}</span>
-                      <span className="text-xs text-[#5a6a7a]">{course.priceNote}</span>
-                    </div>
-
-                    <p className="text-[1.02rem] leading-relaxed text-[#2a2a2a] mb-8">{course.description}</p>
-
-                    {/* Two-column: Skills + Requirements */}
-                    <div className="grid md:grid-cols-2 gap-8 mb-8">
-                      <div>
-                        <h3 className="text-sm font-semibold uppercase tracking-wide text-teal mb-4">
-                          What you&apos;ll learn
-                        </h3>
-                        <ul className="space-y-2.5">
-                          {course.skills.map((skill) => (
-                            <li key={skill} className="flex gap-3 items-start text-sm text-[#2a2a2a]">
-                              <Check />
-                              {skill}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-
-                      <div>
-                        <h3 className="text-sm font-semibold uppercase tracking-wide text-teal mb-4">
-                          Requirements
-                        </h3>
-                        <div className="space-y-4">
-                          {[
-                            { label: "Age", value: course.requirements.age },
-                            { label: "Swim test", value: course.requirements.swim },
-                            { label: "Prerequisites", value: course.requirements.prerequisites },
-                            { label: "Certification standards", value: course.requirements.certification },
-                          ].map((req) => (
-                            <div key={req.label}>
-                              <div className="text-xs font-semibold text-[#5a6a7a] uppercase tracking-wide mb-1">
-                                {req.label}
-                              </div>
-                              <div className="text-sm text-[#2a2a2a]">{req.value}</div>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Course format */}
-                    <div className="bg-salt rounded-xl p-6 mb-8">
-                      <h3 className="text-sm font-semibold uppercase tracking-wide text-teal mb-4">
-                        Course format
-                      </h3>
-                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        {[
-                          { label: "Duration", value: course.format.duration },
-                          { label: "Theory", value: course.format.theory },
-                          { label: "Water sessions", value: course.format.water },
-                          { label: "Ratios", value: course.format.ratios },
-                        ].map((item) => (
-                          <div key={item.label}>
-                            <div className="text-xs font-semibold text-[#5a6a7a] uppercase tracking-wide mb-1">
-                              {item.label}
-                            </div>
-                            <div className="text-sm text-[#2a2a2a] leading-relaxed">{item.value}</div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    <Link href="/contact/courses" className="btn btn-primary no-underline">
-                      Get started →
-                    </Link>
-                  </div>
-                </div>
+                <ExpandableCourse course={course} isAida={true} />
               </Reveal>
             ))}
           </div>
@@ -394,46 +295,10 @@ export default function ProgramsPage() {
             <h2 className="section-title mb-12">Beyond certification</h2>
           </Reveal>
 
-          <div className="space-y-10">
+          <div className="space-y-4">
             {otherPrograms.map((p, i) => (
               <Reveal key={p.id} delay={i * 50}>
-                <div id={p.id} className="bg-salt rounded-2xl overflow-hidden scroll-mt-28">
-                  <div className={`h-2 bg-gradient-to-r ${p.gradient}`} />
-                  <div className="p-8 md:p-10">
-                    <div className="flex flex-wrap gap-3 mb-4">
-                      <span className="px-3 py-1 bg-teal/10 text-teal rounded-full text-xs font-semibold">
-                        {p.duration}
-                      </span>
-                      <span className="px-3 py-1 bg-deep/[0.06] text-[#5a6a7a] rounded-full text-xs font-semibold">
-                        {p.level}
-                      </span>
-                    </div>
-
-                    <h3 className="font-serif text-2xl mb-2 tracking-tight">{p.title}</h3>
-                    <p className="text-[#5a6a7a] mb-3">{p.subtitle}</p>
-
-                    {/* Price */}
-                    <div className="flex items-baseline gap-3 mb-4 pb-4 border-b border-deep/[0.06]">
-                      <span className="font-serif text-2xl text-deep tracking-tight">{p.price}</span>
-                      <span className="text-xs text-[#5a6a7a]">{p.priceNote}</span>
-                    </div>
-
-                    <p className="text-[0.95rem] leading-relaxed text-[#2a2a2a] mb-6">{p.description}</p>
-
-                    <ul className="space-y-2.5 mb-6">
-                      {p.includes.map((item) => (
-                        <li key={item} className="flex gap-3 items-start text-sm text-[#2a2a2a]">
-                          <Check />
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-
-                    <Link href="/contact/courses" className="btn btn-primary no-underline">
-                      Get started →
-                    </Link>
-                  </div>
-                </div>
+                <ExpandableCourse course={p} isAida={false} />
               </Reveal>
             ))}
           </div>
@@ -453,13 +318,14 @@ export default function ProgramsPage() {
                 </div>
                 <div>
                   <div className="text-white font-serif text-xl">Safety first. Always.</div>
-                  <div className="text-white/40 text-xs">DAN insured · AIDA certified · Rescue trained</div>
+                  <div className="text-white/40 text-xs">DAN insured · AIDA certified · Red Cross First Aid/CPR/AED · Rescue trained</div>
                 </div>
               </div>
               <div className="flex-1 text-white/60 text-sm leading-relaxed">
                 Every session has trained safety divers. Every student learns rescue protocols.
-                Joshua is fully insured through the Divers Alert Network (DAN) and holds both
-                AIDA Instructor and Youth Instructor certifications. We don&apos;t cut corners —
+                Joshua is fully insured through the Divers Alert Network (DAN), holds both
+                AIDA Instructor and Youth Instructor certifications, and is American Red Cross
+                certified in Adult and Pediatric First Aid, CPR, and AED. We don&apos;t cut corners —
                 because the ocean doesn&apos;t forgive shortcuts.
               </div>
             </div>
