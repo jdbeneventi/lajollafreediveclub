@@ -1,22 +1,39 @@
 import { NextResponse } from "next/server";
 
-// La Jolla coordinates + radius
-const LAT = 32.8568;
-const LNG = -117.2555;
-const RADIUS_KM = 15; // covers La Jolla to Point Loma
+// La Jolla Cove/Shores — centered slightly offshore to bias marine results
+const LAT = 32.856;
+const LNG = -117.265; // offshore from La Jolla Shores
+const RADIUS_KM = 5; // tight radius — La Jolla coastline only
 
-// Notable species to track on iNaturalist (taxon IDs)
+// Marine-only species to track on iNaturalist (taxon IDs)
+// Using specific species/genera rather than broad orders to avoid land animals and plants
 const NOTABLE_TAXA = [
-  { id: 47126, name: "Sharks", icon: "🦈" },
+  // Sharks
+  { id: 49907, name: "Leopard Shark", icon: "🦈" },
+  { id: 195434, name: "Sevengill Shark", icon: "🦈" },
+  { id: 49856, name: "Horn Shark", icon: "🦈" },
+  { id: 49862, name: "Angel Shark", icon: "🦈" },
+  { id: 49837, name: "Swell Shark", icon: "🦈" },
+  { id: 47126, name: "Sharks (other)", icon: "🦈" },
+  // Marine mammals
   { id: 47553, name: "Whales", icon: "🐋" },
-  { id: 47549, name: "Dolphins & Porpoises", icon: "🐬" },
-  { id: 46560, name: "Sea Turtles", icon: "🐢" },
+  { id: 47549, name: "Dolphins", icon: "🐬" },
+  { id: 41536, name: "California Sea Lion", icon: "🦭" },
+  { id: 41537, name: "Harbor Seal", icon: "🦭" },
+  // Rays
   { id: 47497, name: "Rays & Skates", icon: "🪸" },
+  // Reptiles
+  { id: 46560, name: "Sea Turtles", icon: "🐢" },
+  // Cephalopods
   { id: 47207, name: "Octopuses", icon: "🐙" },
-  { id: 47113, name: "Seals & Sea Lions", icon: "🦭" },
+  { id: 47370, name: "Squid", icon: "🦑" },
+  // Invertebrates
   { id: 48469, name: "Nudibranchs", icon: "🌈" },
   { id: 47459, name: "Jellyfish", icon: "🪼" },
-  { id: 47370, name: "Squid", icon: "🦑" },
+  // Notable fish
+  { id: 48310, name: "Garibaldi", icon: "🐠" },
+  { id: 82671, name: "Giant Sea Bass", icon: "🐟" },
+  { id: 47672, name: "Moray Eels", icon: "🐍" },
 ];
 
 interface Sighting {
@@ -41,7 +58,7 @@ async function fetchINaturalist(): Promise<Sighting[]> {
 
   for (const taxon of NOTABLE_TAXA) {
     try {
-      const url = `https://api.inaturalist.org/v1/observations?lat=${LAT}&lng=${LNG}&radius=${RADIUS_KM}&taxon_id=${taxon.id}&d1=${dateStr}&order=desc&order_by=observed_on&per_page=5&quality_grade=research,needs_id`;
+      const url = `https://api.inaturalist.org/v1/observations?lat=${LAT}&lng=${LNG}&radius=${RADIUS_KM}&taxon_id=${taxon.id}&d1=${dateStr}&order=desc&order_by=observed_on&per_page=3&quality_grade=research,needs_id`;
       const res = await fetch(url, {
         headers: { "User-Agent": "LaJollaFreediveClub/1.0 (lajollafreediveclub.com)" },
       });
@@ -49,21 +66,31 @@ async function fetchINaturalist(): Promise<Sighting[]> {
       const data = await res.json();
 
       for (const obs of data.results || []) {
+        // Filter: only include observations that are likely marine
+        // Skip if the observation is clearly on land (east of the coastline)
+        const obsLng = obs.geojson?.coordinates?.[0];
+        if (obsLng && obsLng > -117.245) continue; // east of shoreline = land
+
         const species = obs.taxon?.preferred_common_name || obs.taxon?.name || taxon.name;
         const photo = obs.photos?.[0]?.url?.replace("square", "medium");
-        const place = obs.place_guess || "La Jolla area";
+        const place = obs.place_guess || "La Jolla";
+
+        // Skip generic/unhelpful place names
+        const placeName = place.includes("La Jolla") || place.includes("San Diego") || place.includes("Scripps") || place.includes("Pacific")
+          ? place
+          : `Near La Jolla`;
 
         sightings.push({
           source: "iNaturalist",
           type: taxon.name,
           icon: taxon.icon,
           title: `${species} spotted`,
-          description: `${species} observed near ${place}`,
+          description: `Observed near ${placeName}`,
           date: obs.observed_on || obs.created_at?.split("T")[0] || "",
           url: `https://www.inaturalist.org/observations/${obs.id}`,
           image: photo || undefined,
           lat: obs.geojson?.coordinates?.[1],
-          lng: obs.geojson?.coordinates?.[0],
+          lng: obsLng,
         });
       }
     } catch {
