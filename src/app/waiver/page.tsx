@@ -178,7 +178,7 @@ export default function WaiverPage() {
 
       if (res.ok) {
         const result = await res.json();
-        console.log("WAIVER API RESPONSE:", JSON.stringify({success: result.success, emailErrors: result.emailErrors, resendConfigured: result.resendConfigured})); if (result.pdf) {
+        if (result.pdf) {
           setPdfUrl(result.pdf);
         }
       }

@@ -319,7 +319,7 @@ export async function POST(request: Request) {
       success: true,
       pdf: pdfDataUri,
       signedAt,
-      emailErrors: emailErrors.length > 0 ? emailErrors : undefined, resendConfigured: !!RESEND_API_KEY,
+      emailErrors: emailErrors.length > 0 ? emailErrors : undefined,
     });
   } catch (error) {
     return NextResponse.json(
