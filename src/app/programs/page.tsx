@@ -21,6 +21,8 @@ const aidaCourses = [
     id: "aida1",
     title: "AIDA 1 — Introduction to Freediving",
     subtitle: "A one-day door into the sport",
+    price: "$175",
+    priceNote: "Half day · All equipment guidance included",
     duration: "1 day (3–6 hours)",
     level: "Complete beginners",
     maxDepth: "10m",
@@ -53,6 +55,8 @@ const aidaCourses = [
     id: "aida2",
     title: "AIDA 2 — Freediver Certification",
     subtitle: "The first full certification — your entry into real freediving",
+    price: "$575",
+    priceNote: "Group (max 4) · Private 1-on-1 available for $800",
     duration: "2.5 days minimum",
     level: "Beginners with strong swim skills",
     maxDepth: "20m",
@@ -85,6 +89,8 @@ const aidaCourses = [
     id: "aida3",
     title: "AIDA 3 — Advanced Freediver",
     subtitle: "Go deeper with precision and autonomy",
+    price: "$700",
+    priceNote: "Group (max 4) · Private 1-on-1 available for $950",
     duration: "3 days minimum",
     level: "AIDA 2 certified (or crossover)",
     maxDepth: "30m",
@@ -120,6 +126,8 @@ const otherPrograms = [
     id: "discover",
     title: "Discover Freediving",
     subtitle: "Try it with zero commitment",
+    price: "$175",
+    priceNote: "Half day · Applies toward AIDA 1 or 2",
     duration: "Half day (4 hours)",
     level: "Complete beginners",
     gradient: "from-teal to-seafoam",
@@ -137,6 +145,8 @@ const otherPrograms = [
     id: "group",
     title: "Group Ocean Sessions",
     subtitle: "Weekly guided dives with your crew",
+    price: "Free with Ocean Flow / $25 drop-in",
+    priceNote: "Certified freedivers only · Own gear + lanyard + dive computer required",
     duration: "Every Saturday, 2–3 hours",
     level: "AIDA 2 certified or equivalent",
     gradient: "from-ocean to-[#14566a]",
@@ -154,6 +164,8 @@ const otherPrograms = [
     id: "coaching",
     title: "Private Coaching",
     subtitle: "Focused training for your specific goals",
+    price: "$175 / session",
+    priceNote: "2–3 hours · Certified freedivers only",
     duration: "Flexible — single session or ongoing",
     level: "Any level",
     gradient: "from-teal to-sun",
@@ -171,6 +183,8 @@ const otherPrograms = [
     id: "dry",
     title: "Dry Training & Community Collabs",
     subtitle: "Build your base on land",
+    price: "Free / varies",
+    priceNote: "Community events · Open to everyone",
     duration: "Various — check schedule",
     level: "Everyone welcome",
     gradient: "from-coral to-sun",
@@ -248,7 +262,14 @@ export default function ProgramsPage() {
                     </div>
 
                     <h2 className="font-serif text-3xl mb-2 tracking-tight">{course.title}</h2>
-                    <p className="text-[#5a6a7a] text-lg mb-6">{course.subtitle}</p>
+                    <p className="text-[#5a6a7a] text-lg mb-4">{course.subtitle}</p>
+
+                    {/* Price */}
+                    <div className="flex items-baseline gap-3 mb-6 pb-6 border-b border-deep/[0.06]">
+                      <span className="font-serif text-3xl text-deep tracking-tight">{course.price}</span>
+                      <span className="text-xs text-[#5a6a7a]">{course.priceNote}</span>
+                    </div>
+
                     <p className="text-[1.02rem] leading-relaxed text-[#2a2a2a] mb-8">{course.description}</p>
 
                     {/* Two-column: Skills + Requirements */}
@@ -339,6 +360,7 @@ export default function ProgramsPage() {
                     </thead>
                     <tbody className="text-[#2a2a2a]">
                       {[
+                        { label: "Price", a1: "$175", a2: "$575", a3: "$700" },
                         { label: "Duration", a1: "1 day", a2: "2.5 days", a3: "3 days" },
                         { label: "Max depth", a1: "10m", a2: "20m", a3: "30m" },
                         { label: "STA requirement", a1: "None", a2: "2:00 min", a3: "2:45 min" },
@@ -388,7 +410,14 @@ export default function ProgramsPage() {
                     </div>
 
                     <h3 className="font-serif text-2xl mb-2 tracking-tight">{p.title}</h3>
-                    <p className="text-[#5a6a7a] mb-4">{p.subtitle}</p>
+                    <p className="text-[#5a6a7a] mb-3">{p.subtitle}</p>
+
+                    {/* Price */}
+                    <div className="flex items-baseline gap-3 mb-4 pb-4 border-b border-deep/[0.06]">
+                      <span className="font-serif text-2xl text-deep tracking-tight">{p.price}</span>
+                      <span className="text-xs text-[#5a6a7a]">{p.priceNote}</span>
+                    </div>
+
                     <p className="text-[0.95rem] leading-relaxed text-[#2a2a2a] mb-6">{p.description}</p>
 
                     <ul className="space-y-2.5 mb-6">
@@ -544,7 +573,8 @@ export default function ProgramsPage() {
                 </div>
                 <div className="p-6">
                   <div className="text-[10px] text-[#5a6a7a] uppercase tracking-wider font-semibold mb-1">Saturdays · 7:00 AM · La Jolla Shores</div>
-                  <h3 className="font-serif text-xl mb-2">Ocean Flow — yoga for freedivers</h3>
+                  <h3 className="font-serif text-xl mb-1">Ocean Flow — yoga for freedivers</h3>
+                  <div className="font-serif text-lg text-teal mb-2">$20 <span className="text-xs text-[#5a6a7a] font-sans">drop-in · includes free group dive after</span></div>
                   <p className="text-xs text-[#5a6a7a] leading-relaxed mb-3">
                     A pre-dive flow designed specifically for ocean people. Led by Lena — RYT yoga
                     teacher, freediver, and artist — this session blends gentle mobility, intercostal
@@ -571,11 +601,13 @@ export default function ProgramsPage() {
                 </div>
                 <div className="p-6">
                   <div className="text-[10px] text-[#5a6a7a] uppercase tracking-wider font-semibold mb-1">Saturdays · 8:30 AM</div>
-                  <h3 className="font-serif text-xl mb-2">Group ocean session</h3>
+                  <h3 className="font-serif text-xl mb-1">Group ocean session</h3>
+                  <div className="font-serif text-lg text-teal mb-2">Free with Ocean Flow <span className="text-xs text-[#5a6a7a] font-sans">/ $25 drop-in</span></div>
                   <p className="text-xs text-[#5a6a7a] leading-relaxed mb-4">
                     Guided dive from our mooring line at the canyon edge. Safety divers,
-                    structured training, and a crew that knows these waters. AIDA 2
-                    certification (or equivalent) required.
+                    structured training, and a crew that knows these waters. Certified freedivers only (any agency).
+                    Must bring own gear: wetsuit, fins, mask, snorkel, weight belt, lanyard, and dive computer.
+                    <a href="/documents/ljfc-waiver.pdf" className="text-teal hover:underline ml-1">Signed waiver required →</a>
                   </p>
                   <Link href="/contact/courses" className="text-teal text-sm font-medium no-underline hover:underline">
                     Get certified to join →
