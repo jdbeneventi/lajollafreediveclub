@@ -1,7 +1,10 @@
 import { NextResponse } from "next/server";
 import { jsPDF } from "jspdf";
+import { Resend } from "resend";
 
 const FORMSPREE_URL = "https://formspree.io/f/mojknqlk";
+const RESEND_API_KEY = process.env.RESEND_API_KEY;
+const OWNER_EMAIL = "joshuabeneventi@gmail.com";
 
 interface WaiverData {
   fullName: string;
@@ -203,7 +206,89 @@ export async function POST(request: Request) {
     const pdfDataUri = generatePDF(data, signedAt);
     const hasYes = data.medical.some((a) => a === "yes");
 
-    // Send to Formspree (notification for Joshua)
+    // Extract raw PDF bytes from data URI for email attachment
+    const pdfBase64 = pdfDataUri.split(",")[1];
+    const fileName = `LJFC-Waiver-${data.fullName.replace(/\s+/g, "-")}-${new Date().toISOString().split("T")[0]}.pdf`;
+
+    // Send emails via Resend
+    if (RESEND_API_KEY) {
+      const resend = new Resend(RESEND_API_KEY);
+
+      const medicalSummary = hasYes
+        ? `⚠️ MEDICAL FLAG — Review required\n${medicalQuestions.map((q, i) => `${(data.medical[i] || "no").toUpperCase()}: ${q}`).join("\n")}${data.medicalDetails ? `\nDetails: ${data.medicalDetails}` : ""}`
+        : "✅ All medical questions clear";
+
+      // Email #1: To Joshua — with PDF attached
+      try {
+        await resend.emails.send({
+          from: "LJFC Waivers <waivers@lajollafreediveclub.com>",
+          to: [OWNER_EMAIL],
+          subject: `${hasYes ? "⚠️ " : ""}Signed Waiver — ${data.fullName}`,
+          html: `
+            <div style="font-family:-apple-system,sans-serif;max-width:500px;padding:20px;">
+              <h2 style="color:#0B1D2C;margin-bottom:16px;">New Waiver Signed</h2>
+              <table style="width:100%;font-size:14px;border-collapse:collapse;">
+                <tr><td style="padding:6px 0;color:#5a6a7a;">Name</td><td style="padding:6px 0;font-weight:600;">${data.fullName}</td></tr>
+                <tr><td style="padding:6px 0;color:#5a6a7a;">Email</td><td style="padding:6px 0;">${data.email}</td></tr>
+                <tr><td style="padding:6px 0;color:#5a6a7a;">Phone</td><td style="padding:6px 0;">${data.phone || "Not provided"}</td></tr>
+                <tr><td style="padding:6px 0;color:#5a6a7a;">DOB</td><td style="padding:6px 0;">${data.dob}</td></tr>
+                <tr><td style="padding:6px 0;color:#5a6a7a;">Emergency</td><td style="padding:6px 0;">${data.emergencyName} · ${data.emergencyPhone}</td></tr>
+                <tr><td style="padding:6px 0;color:#5a6a7a;">Minor</td><td style="padding:6px 0;">${data.isMinor ? `Yes — Guardian: ${data.guardianName}` : "No"}</td></tr>
+                <tr><td style="padding:6px 0;color:#5a6a7a;">Medical</td><td style="padding:6px 0;color:${hasYes ? "#C75B3A" : "#1B6B6B"};font-weight:600;">${hasYes ? "⚠️ Flagged" : "✅ Clear"}</td></tr>
+                <tr><td style="padding:6px 0;color:#5a6a7a;">Media consent</td><td style="padding:6px 0;">${data.mediaConsent ? "Yes" : "No"}</td></tr>
+                <tr><td style="padding:6px 0;color:#5a6a7a;">Signed</td><td style="padding:6px 0;">${signedAt}</td></tr>
+              </table>
+              ${hasYes ? `<div style="margin-top:16px;padding:12px;background:#FFF3EE;border-radius:8px;font-size:12px;"><pre style="white-space:pre-wrap;margin:0;">${medicalSummary}</pre></div>` : ""}
+              <p style="font-size:12px;color:#5a6a7a;margin-top:16px;">Signed PDF attached.</p>
+            </div>
+          `,
+          attachments: [
+            {
+              filename: fileName,
+              content: pdfBase64,
+            },
+          ],
+        });
+      } catch (emailErr) {
+        console.error("Resend to owner failed:", emailErr);
+      }
+
+      // Email #2: To signer — with PDF attached
+      try {
+        await resend.emails.send({
+          from: "La Jolla Freedive Club <waivers@lajollafreediveclub.com>",
+          to: [data.email],
+          subject: "Your LJFC Waiver — Signed Copy",
+          html: `
+            <div style="font-family:-apple-system,sans-serif;max-width:500px;padding:20px;">
+              <h2 style="color:#0B1D2C;margin-bottom:8px;">Waiver Signed</h2>
+              <p style="color:#5a6a7a;font-size:14px;line-height:1.6;">
+                Hi ${data.fullName.split(" ")[0]},<br><br>
+                Your La Jolla Freedive Club liability waiver has been signed and recorded.
+                A PDF copy is attached for your records.<br><br>
+                You're cleared to participate in LJFC activities. If you have any questions,
+                reply to this email or visit <a href="https://lajollafreediveclub.com/programs" style="color:#1B6B6B;">our programs page</a>.
+              </p>
+              <p style="color:#5a6a7a;font-size:12px;margin-top:24px;">
+                La Jolla Freedive Club · San Diego, CA<br>
+                AIDA Certified · DAN Insured · Red Cross First Aid/CPR/AED<br>
+                <a href="https://lajollafreediveclub.com" style="color:#1B6B6B;">lajollafreediveclub.com</a>
+              </p>
+            </div>
+          `,
+          attachments: [
+            {
+              filename: fileName,
+              content: pdfBase64,
+            },
+          ],
+        });
+      } catch (emailErr) {
+        console.error("Resend to signer failed:", emailErr);
+      }
+    }
+
+    // Also send to Formspree as backup notification
     try {
       await fetch(FORMSPREE_URL, {
         method: "POST",
@@ -217,17 +302,12 @@ export async function POST(request: Request) {
           emergency_contact: `${data.emergencyName} · ${data.emergencyPhone} · ${data.emergencyRelation}`,
           is_minor: data.isMinor ? `Yes — Guardian: ${data.guardianName}` : "No",
           medical_status: hasYes ? "⚠️ FLAGGED — review required" : "✅ All clear",
-          medical_answers: medicalQuestions
-            .map((q, i) => `${(data.medical[i] || "no").toUpperCase()}: ${q}`)
-            .join("\n"),
-          medical_details: data.medicalDetails || "None",
-          media_consent: data.mediaConsent ? "Yes" : "No",
           signed_at: signedAt,
-          pdf_generated: "Yes — PDF returned to signer for download",
+          pdf_emailed: "Yes — sent via Resend to owner and signer",
         }),
       });
     } catch {
-      // Formspree often succeeds despite CORS
+      // Formspree backup
     }
 
     return NextResponse.json({
