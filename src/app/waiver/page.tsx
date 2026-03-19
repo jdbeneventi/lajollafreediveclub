@@ -2,8 +2,6 @@
 
 import { useState, useRef, useEffect } from "react";
 
-const FORMSPREE_URL = "https://formspree.io/f/mojknqlk";
-
 const medicalQuestions = [
   "Do you have any heart or cardiovascular condition?",
   "Do you have asthma or any respiratory condition?",
@@ -144,6 +142,8 @@ export default function WaiverPage() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  const [pdfUrl, setPdfUrl] = useState<string | null>(null);
+
   const submit = async () => {
     const errs = validateStep(3);
     if (errs.length > 0) {
@@ -154,35 +154,36 @@ export default function WaiverPage() {
     setSubmitting(true);
 
     const sigData = canvasRef.current?.toDataURL("image/png") || "";
-    const hasYes = form.medical.some((a) => a === "yes");
-    const now = new Date().toISOString();
 
     try {
-      await fetch(FORMSPREE_URL, {
+      const res = await fetch("/api/waiver", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          _form_type: "waiver",
-          name: form.fullName,
-          date_of_birth: form.dob,
+          fullName: form.fullName,
+          dob: form.dob,
           email: form.email,
           phone: form.phone,
-          emergency_contact: `${form.emergencyName} · ${form.emergencyPhone} · ${form.emergencyRelation}`,
-          medical_flags: hasYes ? "YES — review required" : "All clear",
-          medical_answers: medicalQuestions
-            .map((q, i) => `${form.medical[i].toUpperCase()}: ${q}`)
-            .join("\n"),
-          medical_details: form.medicalDetails || "None",
-          is_minor: form.isMinor ? "Yes" : "No",
-          guardian_name: form.guardianName || "N/A",
-          media_consent: form.mediaConsent ? "Yes" : "No",
-          signature: "Signed digitally",
-          signature_data: sigData.substring(0, 100) + "...[truncated]",
-          signed_at: now,
+          emergencyName: form.emergencyName,
+          emergencyPhone: form.emergencyPhone,
+          emergencyRelation: form.emergencyRelation,
+          medical: form.medical,
+          medicalDetails: form.medicalDetails,
+          isMinor: form.isMinor,
+          guardianName: form.guardianName,
+          mediaConsent: form.mediaConsent,
+          signatureData: sigData,
         }),
       });
+
+      if (res.ok) {
+        const result = await res.json();
+        if (result.pdf) {
+          setPdfUrl(result.pdf);
+        }
+      }
     } catch {
-      // Formspree often succeeds despite CORS
+      // Still mark as done even if API has issues
     }
 
     setDone(true);
@@ -205,6 +206,19 @@ export default function WaiverPage() {
           </p>
           <p className="text-[#5a6a7a] text-sm mb-8">
             A confirmation has been sent to {form.email}. You&apos;re cleared to join Saturday sessions and all LJFC activities.
+          </p>
+          {pdfUrl && (
+            <a
+              href={pdfUrl}
+              download={`LJFC-Waiver-${form.fullName.replace(/\s+/g, "-")}.pdf`}
+              className="inline-flex items-center gap-2 px-6 py-3 bg-deep text-white rounded-full font-medium text-sm no-underline hover:shadow-lg transition-all mb-4"
+            >
+              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" /></svg>
+              Download Signed Waiver (PDF)
+            </a>
+          )}
+          <p className="text-[10px] text-[#5a6a7a] mb-6">
+            Keep this PDF for your records. It contains the full waiver text, your medical answers, and your digital signature.
           </p>
           {form.medical.some((a) => a === "yes") && (
             <div className="bg-coral/10 border border-coral/20 rounded-xl p-4 mb-8 text-left">
