@@ -208,11 +208,14 @@ export async function POST(request: Request) {
 
     // Extract raw PDF bytes from data URI for email attachment
     const pdfBase64 = pdfDataUri.split(",")[1];
+    const pdfBuffer = Buffer.from(pdfBase64, "base64");
     const fileName = `LJFC-Waiver-${data.fullName.replace(/\s+/g, "-")}-${new Date().toISOString().split("T")[0]}.pdf`;
 
     // Send emails via Resend
+    const emailErrors: string[] = [];
     if (RESEND_API_KEY) {
       const resend = new Resend(RESEND_API_KEY);
+      const fromAddress = "La Jolla Freedive Club <noreply@lajollafreediveclub.com>";
 
       const medicalSummary = hasYes
         ? `⚠️ MEDICAL FLAG — Review required\n${medicalQuestions.map((q, i) => `${(data.medical[i] || "no").toUpperCase()}: ${q}`).join("\n")}${data.medicalDetails ? `\nDetails: ${data.medicalDetails}` : ""}`
@@ -220,8 +223,8 @@ export async function POST(request: Request) {
 
       // Email #1: To Joshua — with PDF attached
       try {
-        await resend.emails.send({
-          from: "LJFC Waivers <waivers@lajollafreediveclub.com>",
+        const { error: ownerErr } = await resend.emails.send({
+          from: fromAddress,
           to: [OWNER_EMAIL],
           subject: `${hasYes ? "⚠️ " : ""}Signed Waiver — ${data.fullName}`,
           html: `
@@ -245,18 +248,19 @@ export async function POST(request: Request) {
           attachments: [
             {
               filename: fileName,
-              content: pdfBase64,
+              content: pdfBuffer,
             },
           ],
         });
+        if (ownerErr) emailErrors.push(`Owner email: ${ownerErr.message}`);
       } catch (emailErr) {
-        console.error("Resend to owner failed:", emailErr);
+        emailErrors.push(`Owner email exception: ${emailErr instanceof Error ? emailErr.message : "unknown"}`);
       }
 
       // Email #2: To signer — with PDF attached
       try {
-        await resend.emails.send({
-          from: "La Jolla Freedive Club <waivers@lajollafreediveclub.com>",
+        const { error: signerErr } = await resend.emails.send({
+          from: fromAddress,
           to: [data.email],
           subject: "Your LJFC Waiver — Signed Copy",
           html: `
@@ -279,12 +283,13 @@ export async function POST(request: Request) {
           attachments: [
             {
               filename: fileName,
-              content: pdfBase64,
+              content: pdfBuffer,
             },
           ],
         });
+        if (signerErr) emailErrors.push(`Signer email: ${signerErr.message}`);
       } catch (emailErr) {
-        console.error("Resend to signer failed:", emailErr);
+        emailErrors.push(`Signer email exception: ${emailErr instanceof Error ? emailErr.message : "unknown"}`);
       }
     }
 
@@ -314,6 +319,7 @@ export async function POST(request: Request) {
       success: true,
       pdf: pdfDataUri,
       signedAt,
+      emailErrors: emailErrors.length > 0 ? emailErrors : undefined,
     });
   } catch (error) {
     return NextResponse.json(
