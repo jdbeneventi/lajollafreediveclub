@@ -1,8 +1,11 @@
 import { NextResponse } from "next/server";
+import { Resend } from "resend";
 import { getMoonPhase } from "@/lib/moon";
 import { getTopEvents, isGrunionNight } from "@/lib/seasonal";
 
 const KIT_API_SECRET = process.env.KIT_API_SECRET;
+const RESEND_API_KEY = process.env.RESEND_API_KEY;
+const OWNER_EMAIL = "joshuabeneventi@gmail.com";
 
 interface ConditionsData {
   waveHeight?: string;
@@ -271,6 +274,7 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const secret = searchParams.get("secret");
   const preview = searchParams.get("preview") === "true";
+  const testMode = searchParams.get("test") === "true";
 
   // Allow access with the hardcoded secret or the env CRON_SECRET
   const validSecret = secret === "ljfc-daily-2026" || (process.env.CRON_SECRET && secret === process.env.CRON_SECRET);
@@ -301,6 +305,29 @@ export async function GET(request: Request) {
     if (preview) {
       return new NextResponse(html, {
         headers: { "Content-Type": "text/html" },
+      });
+    }
+
+    // Test mode — send via Resend to Joshua only
+    if (testMode) {
+      if (!RESEND_API_KEY) {
+        return NextResponse.json({ status: "error", message: "RESEND_API_KEY not configured" }, { status: 500 });
+      }
+      const resend = new Resend(RESEND_API_KEY);
+      const now = new Date();
+      const dateStr = now.toLocaleDateString("en-US", { timeZone: "America/Los_Angeles", weekday: "short", month: "short", day: "numeric" });
+      const { error } = await resend.emails.send({
+        from: "La Jolla Freedive Club <noreply@lajollafreediveclub.com>",
+        to: [OWNER_EMAIL],
+        subject: `[TEST] ${grade.grade} — La Jolla Dive Conditions · ${dateStr}`,
+        html,
+      });
+      return NextResponse.json({
+        status: error ? "error" : "sent_to_owner",
+        error: error?.message,
+        grade: grade.grade,
+        score: grade.score,
+        summary: grade.summary,
       });
     }
 
