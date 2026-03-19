@@ -4,6 +4,7 @@ import { Reveal } from "@/components/Reveal";
 import { ConditionsWidget } from "./ConditionsWidget";
 import { AlmanacWidget } from "./AlmanacWidget";
 import { ConditionsEmailForm } from "./ConditionsEmailForm";
+import { OceanIntel } from "./OceanIntel";
 
 export const metadata: Metadata = {
   title: "La Jolla Dive Conditions Today — Live Ocean Data",
@@ -112,6 +113,9 @@ export default function ConditionsPage() {
           </Reveal>
           <Reveal>
             <AlmanacWidget />
+          </Reveal>
+          <Reveal>
+            <OceanIntel />
           </Reveal>
         </div>
       </section>
