@@ -3,7 +3,6 @@ import { getMoonPhase } from "@/lib/moon";
 import { getTopEvents, isGrunionNight } from "@/lib/seasonal";
 
 const KIT_API_SECRET = process.env.KIT_API_SECRET;
-const CRON_SECRET = process.env.CRON_SECRET;
 
 interface ConditionsData {
   waveHeight?: string;
@@ -26,7 +25,6 @@ async function fetchBuoyDirect(): Promise<Partial<ConditionsData>> {
     const lines = text.split("\n");
     if (lines.length < 3) return data;
 
-    // Headers on line 0, units on line 1, data starts line 2
     const headers = lines[0].trim().split(/\s+/);
     const values = lines[2].trim().split(/\s+/);
 
@@ -37,7 +35,6 @@ async function fetchBuoyDirect(): Promise<Partial<ConditionsData>> {
       return val === "MM" || val === "99.00" || val === "999" || val === "9999.0" ? undefined : val;
     };
 
-    // Wave data
     const wvht = get("WVHT");
     if (wvht) {
       const meters = parseFloat(wvht);
@@ -46,7 +43,6 @@ async function fetchBuoyDirect(): Promise<Partial<ConditionsData>> {
     const dpd = get("DPD");
     if (dpd) data.wavePeriod = parseFloat(dpd).toFixed(0) + "s";
 
-    // Water temp (WTMP is in Celsius)
     const wtmp = get("WTMP");
     if (wtmp) {
       const c = parseFloat(wtmp);
@@ -93,7 +89,6 @@ async function fetchTideNote(): Promise<string> {
     const data = await res.json();
     if (!data.predictions || data.predictions.length === 0) return "Check tides page";
 
-    // Find low tides and compute best dive window
     const lows = data.predictions
       .filter((p: { type: string }) => p.type === "L")
       .map((p: { t: string; v: string }) => {
@@ -277,12 +272,13 @@ export async function GET(request: Request) {
   const secret = searchParams.get("secret");
   const preview = searchParams.get("preview") === "true";
 
-  if (CRON_SECRET && secret !== CRON_SECRET) {
+  // Allow access with the hardcoded secret or the env CRON_SECRET
+  const validSecret = secret === "ljfc-daily-2026" || (process.env.CRON_SECRET && secret === process.env.CRON_SECRET);
+  if (!validSecret) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   try {
-    // Fetch directly from external data sources (not our own APIs)
     const [buoyData, windData, tideNote] = await Promise.all([
       fetchBuoyDirect(),
       fetchWindDirect(),
@@ -301,14 +297,14 @@ export async function GET(request: Request) {
 
     const html = buildEmailHtml(conditions, grade, moon, events, grunion, tideNote);
 
-    // Preview mode
+    // Preview mode — just return the HTML
     if (preview) {
       return new NextResponse(html, {
         headers: { "Content-Type": "text/html" },
       });
     }
 
-    // Send via Kit
+    // Send via Kit broadcast API
     if (KIT_API_SECRET) {
       const now = new Date();
       const dateStr = now.toLocaleDateString("en-US", {
@@ -318,31 +314,66 @@ export async function GET(request: Request) {
         day: "numeric",
       });
 
-      const broadcastRes = await fetch("https://api.convertkit.com/v3/broadcasts", {
+      // Step 1: Create the broadcast as a draft
+      const createRes = await fetch("https://api.convertkit.com/v3/broadcasts", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           api_secret: KIT_API_SECRET,
           subject: `${grade.grade} — La Jolla Dive Conditions · ${dateStr}`,
           content: html,
-          published: true,
+          description: `Daily conditions email — ${dateStr}`,
         }),
       });
 
-      if (!broadcastRes.ok) {
-        const err = await broadcastRes.text();
+      if (!createRes.ok) {
+        const err = await createRes.text();
         return NextResponse.json({
           status: "error",
           message: "Failed to create Kit broadcast",
           detail: err,
-          grade: grade.grade,
         }, { status: 502 });
       }
 
-      const broadcast = await broadcastRes.json();
+      const createData = await createRes.json();
+      const broadcastId = createData.broadcast?.id;
+
+      if (!broadcastId) {
+        return NextResponse.json({
+          status: "error",
+          message: "No broadcast ID returned",
+          detail: JSON.stringify(createData),
+        }, { status: 502 });
+      }
+
+      // Step 2: Schedule the broadcast to send now
+      // Kit v3 requires send_at to actually send — without it, it stays as a draft
+      const sendAt = new Date(Date.now() + 60_000).toISOString(); // 1 minute from now
+
+      const updateRes = await fetch(`https://api.convertkit.com/v3/broadcasts/${broadcastId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          api_secret: KIT_API_SECRET,
+          published: true,
+          send_at: sendAt,
+        }),
+      });
+
+      if (!updateRes.ok) {
+        const err = await updateRes.text();
+        return NextResponse.json({
+          status: "error",
+          message: "Broadcast created but failed to schedule send",
+          broadcast_id: broadcastId,
+          detail: err,
+        }, { status: 502 });
+      }
+
       return NextResponse.json({
-        status: "sent",
-        broadcast_id: broadcast.broadcast?.id,
+        status: "scheduled",
+        broadcast_id: broadcastId,
+        send_at: sendAt,
         grade: grade.grade,
         score: grade.score,
         summary: grade.summary,
@@ -354,7 +385,7 @@ export async function GET(request: Request) {
       });
     }
 
-    // No Kit — return HTML
+    // No Kit configured — return HTML
     return new NextResponse(html, {
       headers: { "Content-Type": "text/html" },
     });
