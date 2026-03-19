@@ -4,6 +4,8 @@ import { getMoonPhase } from "@/lib/moon";
 import { getTopEvents, isGrunionNight } from "@/lib/seasonal";
 
 const KIT_API_SECRET = process.env.KIT_API_SECRET;
+const KIT_API_KEY = process.env.KIT_API_KEY;
+const DAILY_CONDITIONS_TAG_ID = 17696327;
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const OWNER_EMAIL = "joshuabeneventi@gmail.com";
 
@@ -331,7 +333,59 @@ export async function GET(request: Request) {
       });
     }
 
-    // Send via Kit broadcast API
+    // Send via Kit V4 broadcast API with tag targeting
+    if (KIT_API_KEY) {
+      const createRes = await fetch("https://api.kit.com/v4/broadcasts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "X-Kit-Api-Key": KIT_API_KEY },
+        body: JSON.stringify({
+          subject: `${grade.grade} — La Jolla Dive Conditions · ${dateStr}`,
+          content: html,
+          description: `Daily conditions email — ${dateStr}`,
+        }),
+      });
+
+      if (!createRes.ok) {
+        const err = await createRes.text();
+        return NextResponse.json({ status: "error", message: "Failed to create Kit broadcast (v4)", detail: err }, { status: 502 });
+      }
+
+      const createData = await createRes.json();
+      const broadcastId = createData.broadcast?.id;
+
+      if (!broadcastId) {
+        return NextResponse.json({ status: "error", message: "No broadcast ID returned", detail: JSON.stringify(createData) }, { status: 502 });
+      }
+
+      const sendAt = new Date(Date.now() + 60_000).toISOString();
+      const updateRes = await fetch(`https://api.kit.com/v4/broadcasts/${broadcastId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json", "X-Kit-Api-Key": KIT_API_KEY },
+        body: JSON.stringify({
+          public: true,
+          send_at: sendAt,
+          subscriber_filter: [{ all: [{ type: "tag", ids: [DAILY_CONDITIONS_TAG_ID] }] }],
+        }),
+      });
+
+      if (!updateRes.ok) {
+        const err = await updateRes.text();
+        return NextResponse.json({ status: "error", message: "Broadcast created but failed to schedule", broadcast_id: broadcastId, detail: err }, { status: 502 });
+      }
+
+      return NextResponse.json({
+        status: "scheduled",
+        broadcast_id: broadcastId,
+        send_at: sendAt,
+        tag: "LJFC: Daily Conditions",
+        grade: grade.grade,
+        score: grade.score,
+        summary: grade.summary,
+        data: { swell: conditions.waveHeight, wind: conditions.windSpeed, temp: conditions.waterTemp },
+      });
+    }
+
+    // Fallback to V3 (no tag targeting — warns in response)
     if (KIT_API_SECRET) {
       const now = new Date();
       const dateStr = now.toLocaleDateString("en-US", {
