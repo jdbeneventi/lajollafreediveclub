@@ -152,6 +152,113 @@ async function fetchReddit(): Promise<Sighting[]> {
   return sightings;
 }
 
+
+// --- SD Beach Water Quality (sdbeachinfo.com) ---
+const LA_JOLLA_STATIONS = [
+  "Vallecitos - La Jolla Shores",
+  "Avenida De La Playa - La Jolla Shores",
+  "La Jolla Cove",
+  "El Paseo Grande - La Jolla Shores",
+  "Camino Del Oro - La Jolla Shores",
+  "Children's Pool - La Jolla",
+  "Scripps Pier",
+  "Blacks Beach - La Jolla",
+];
+
+async function fetchWaterQuality(): Promise<Sighting[]> {
+  const sightings: Sighting[] = [];
+  try {
+    const res = await fetch("https://www.sdbeachinfo.com/", {
+      headers: { "User-Agent": "LaJollaFreediveClub/1.0" },
+    });
+    if (!res.ok) return sightings;
+    const html = await res.text();
+    const htmlLower = html.toLowerCase();
+
+    // Check advisory/closure counts from page
+    const advisoryMatch = html.match(/Advisories\s*\((\d+)\)/i);
+    const closureMatch = html.match(/Closures\s*\((\d+)\)/i);
+    const warningMatch = html.match(/Warnings\s*\((\d+)\)/i);
+    const advisoryCount = advisoryMatch ? parseInt(advisoryMatch[1]) : 0;
+    const closureCount = closureMatch ? parseInt(closureMatch[1]) : 0;
+    const warningCount = warningMatch ? parseInt(warningMatch[1]) : 0;
+
+    // The sdbeachinfo page lists all stations. We need to check if La Jolla stations
+    // are under advisory. The page uses JavaScript to load status, but the nav menu
+    // text "Advisories (7)" tells us the count. For specific stations, we search
+    // local news as a more reliable source.
+    const newsRes = await fetch(
+      "https://www.google.com/search?q=sdbeachinfo+la+jolla+advisory+OR+closure+OR+bacteria&tbs=qdr:w",
+      { headers: { "User-Agent": "LaJollaFreediveClub/1.0" } }
+    );
+
+    // Also check the lajolla.ca news site which covers these promptly
+    const ljRes = await fetch(
+      "https://lajolla.ca/news/local-impact/",
+      { headers: { "User-Agent": "LaJollaFreediveClub/1.0" } }
+    );
+
+    let ljHtml = "";
+    if (ljRes.ok) {
+      ljHtml = await ljRes.text();
+    }
+
+    const ljLower = ljHtml.toLowerCase();
+
+    // Check for La Jolla-specific water advisories in local news
+    for (const station of LA_JOLLA_STATIONS) {
+      const stationLower = station.toLowerCase();
+      const shortName = station.split(" - ")[0] || station;
+
+      // Check lajolla.ca for recent advisory mentions
+      if (ljLower.includes(stationLower.split(" - ")[0].toLowerCase()) &&
+          (ljLower.includes("advisory") || ljLower.includes("closure") || ljLower.includes("bacteria"))) {
+        const isClosure = ljLower.includes("closure") || ljLower.includes("closed");
+        sightings.push({
+          source: "SD Beach Info",
+          type: "Advisory",
+          icon: isClosure ? "\u{1F534}" : "\u{1F7E1}",
+          title: isClosure ? "Beach closure: " + shortName : "Water quality advisory: " + shortName,
+          description: isClosure
+            ? "Beach closed. Bacteria levels exceed health standards. Avoid water contact."
+            : "Bacteria levels exceed health standards. Water contact may cause illness.",
+          date: new Date().toISOString().split("T")[0],
+          url: "https://www.sdbeachinfo.com/",
+        });
+      }
+    }
+
+    // Deduplicate by title
+    const seen = new Set<string>();
+    const unique: Sighting[] = [];
+    for (const s of sightings) {
+      if (!seen.has(s.title)) {
+        seen.add(s.title);
+        unique.push(s);
+      }
+    }
+
+    // If we found specific alerts, return them
+    if (unique.length > 0) return unique;
+
+    // If no specific La Jolla alerts but many advisories countywide, note it
+    if (advisoryCount >= 5 || closureCount > 0 || warningCount > 0) {
+      return [{
+        source: "SD Beach Info",
+        type: "Advisory",
+        icon: "\u26A0\uFE0F",
+        title: advisoryCount + " advisories, " + closureCount + " closures active countywide",
+        description: "Multiple SD beaches under advisory. Check sdbeachinfo.com for La Jolla status.",
+        date: new Date().toISOString().split("T")[0],
+        url: "https://www.sdbeachinfo.com/",
+      }];
+    }
+  } catch {
+    // Water quality check failed silently
+  }
+  return sightings;
+}
+
 // ─── CDFW Harmful Algal Bloom ───
 async function fetchHABStatus(): Promise<Sighting[]> {
   const sightings: Sighting[] = [];
@@ -187,9 +294,10 @@ async function fetchHABStatus(): Promise<Sighting[]> {
 export async function GET() {
   try {
     // Fetch all sources in parallel
-    const [inat, reddit, hab] = await Promise.all([
+    const [inat, reddit, waterQualityResults, hab] = await Promise.all([
       fetchINaturalist(),
       fetchReddit(),
+      fetchWaterQuality(),
       fetchHABStatus(),
     ]);
 
