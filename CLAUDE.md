@@ -146,7 +146,7 @@ Competitor reference: JGW beginner $495, intermediate $550, private $1900 (for u
 - **Lena** — RYT yoga teacher, freediver, artist. "Ocean Flow" Saturday 7am at La Jolla Shores.
 - **Brooke** — Apnea Collective / Molchanovs coach
 
-## Blog Posts (10 total)
+## Blog Posts (11 total)
 1. Beginner's Guide to Freediving in La Jolla (Guide)
 2. Why Surfers Should Learn to Freedive (Crossover)
 3. 5 Best Freediving Spots in San Diego (Local Guide)
@@ -157,6 +157,7 @@ Competitor reference: JGW beginner $495, intermediate $550, private $1900 (for u
 8. 7 Dry Training Exercises (Training)
 9. What Happens to Your Body During a Freedive (Science)
 10. The Big Blue: The Film That Made a Generation Want to Dive (Culture)
+11. The Complete Guide to Equalization for Freediving (Training)
 
 ## Key Decisions
 - Water temp: parse Celsius from NDBC 46254 text file (WTMP column), convert to F
