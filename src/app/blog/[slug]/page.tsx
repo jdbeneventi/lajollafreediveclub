@@ -66,13 +66,13 @@ export default async function BlogPostPage({ params }: Props) {
 
       {/* Article body */}
       <article className="max-w-[720px] mx-auto px-6 py-16">
-        <Reveal>
-          <div
-            className="prose"
-            dangerouslySetInnerHTML={{ __html: post.content }}
-          />
+        <div
+          className="prose"
+          dangerouslySetInnerHTML={{ __html: post.content }}
+        />
 
-          {/* CTA */}
+        {/* CTA */}
+        <Reveal>
           <div className="bg-gradient-to-br from-ocean to-teal rounded-2xl p-10 text-center mt-12">
             <h3 className="font-serif text-2xl text-white mb-3">Ready to try it?</h3>
             <p className="text-white/60 text-sm mb-6 leading-relaxed">
