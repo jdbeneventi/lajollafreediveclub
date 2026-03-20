@@ -173,8 +173,6 @@ async function fetchWaterQuality(): Promise<Sighting[]> {
     });
     if (!res.ok) return sightings;
     const html = await res.text();
-    const htmlLower = html.toLowerCase();
-
     // Check advisory/closure counts from page
     const advisoryMatch = html.match(/Advisories\s*\((\d+)\)/i);
     const closureMatch = html.match(/Closures\s*\((\d+)\)/i);
@@ -187,11 +185,6 @@ async function fetchWaterQuality(): Promise<Sighting[]> {
     // are under advisory. The page uses JavaScript to load status, but the nav menu
     // text "Advisories (7)" tells us the count. For specific stations, we search
     // local news as a more reliable source.
-    const newsRes = await fetch(
-      "https://www.google.com/search?q=sdbeachinfo+la+jolla+advisory+OR+closure+OR+bacteria&tbs=qdr:w",
-      { headers: { "User-Agent": "LaJollaFreediveClub/1.0" } }
-    );
-
     // Also check the lajolla.ca news site which covers these promptly
     const ljRes = await fetch(
       "https://lajolla.ca/news/local-impact/",
@@ -302,7 +295,7 @@ export async function GET() {
     ]);
 
     // Combine and sort by date (newest first)
-    const all = [...inat, ...reddit, ...hab]
+    const all = [...inat, ...reddit, ...waterQualityResults, ...hab]
       .sort((a, b) => b.date.localeCompare(a.date));
 
     // Deduplicate by rough title similarity

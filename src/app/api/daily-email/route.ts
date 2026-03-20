@@ -334,6 +334,7 @@ export async function GET(request: Request) {
     }
 
     // Send via Kit V4 broadcast API with tag targeting
+    const dateStr = new Date().toLocaleDateString("en-US", { timeZone: "America/Los_Angeles", weekday: "short", month: "short", day: "numeric" });
     if (KIT_API_KEY) {
       const createRes = await fetch("https://api.kit.com/v4/broadcasts", {
         method: "POST",
