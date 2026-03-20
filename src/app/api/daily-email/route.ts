@@ -357,6 +357,21 @@ export async function GET(request: Request) {
         return NextResponse.json({ status: "error", message: "No broadcast ID returned", detail: JSON.stringify(createData) }, { status: 502 });
       }
 
+      // Step 2: Set tag filter first
+      const filterRes = await fetch(`https://api.kit.com/v4/broadcasts/${broadcastId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json", "X-Kit-Api-Key": KIT_API_KEY },
+        body: JSON.stringify({
+          subscriber_filter: [{ all: [{ type: "tag", ids: [DAILY_CONDITIONS_TAG_ID] }] }],
+        }),
+      });
+
+      if (!filterRes.ok) {
+        const err = await filterRes.text();
+        return NextResponse.json({ status: "error", message: "Failed to set tag filter", broadcast_id: broadcastId, detail: err }, { status: 502 });
+      }
+
+      // Step 3: Now schedule to send
       const sendAt = new Date(Date.now() + 60_000).toISOString();
       const updateRes = await fetch(`https://api.kit.com/v4/broadcasts/${broadcastId}`, {
         method: "PUT",
@@ -364,13 +379,12 @@ export async function GET(request: Request) {
         body: JSON.stringify({
           public: true,
           send_at: sendAt,
-          subscriber_filter: [{ all: [{ type: "tag", ids: [DAILY_CONDITIONS_TAG_ID] }] }],
         }),
       });
 
       if (!updateRes.ok) {
         const err = await updateRes.text();
-        return NextResponse.json({ status: "error", message: "Broadcast created but failed to schedule", broadcast_id: broadcastId, detail: err }, { status: 502 });
+        return NextResponse.json({ status: "error", message: "Broadcast filtered but failed to schedule", broadcast_id: broadcastId, detail: err }, { status: 502 });
       }
 
       return NextResponse.json({
