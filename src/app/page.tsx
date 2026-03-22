@@ -36,7 +36,7 @@ export default function Home() {
   return (
     <>
       {/* ═══ HERO — Full viewport, immersive ═══ */}
-      <section className="relative min-h-[85vh] md:min-h-screen flex items-start md:items-end pt-32 md:pt-0 overflow-hidden">
+      <section className="relative min-h-[80vh] md:min-h-screen flex items-end overflow-hidden">
         {/* BG layers */}
         <div className="absolute inset-0">
           <img src="/images/hero.jpg" alt="" className="w-full h-full object-cover" />
@@ -47,7 +47,7 @@ export default function Home() {
         <div className="absolute inset-0 opacity-[0.03] mix-blend-overlay" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E\")" }} />
 
         {/* Content — bottom-aligned, left-heavy */}
-        <div className="relative z-10 w-full max-w-[1400px] mx-auto px-6 md:px-12 pt-28 md:pt-0 pb-8 md:pb-24">
+        <div className="relative z-10 w-full max-w-[1400px] mx-auto px-6 md:px-12 pb-14 md:pb-24">
           <div className="max-w-[720px] text-center md:text-left">
             <div className="flex items-center gap-3 mb-4 md:mb-6 animate-fade-up [animation-delay:0.2s]">
               <span className="w-2 h-2 rounded-full bg-seafoam animate-pulse-slow" />
@@ -59,17 +59,17 @@ export default function Home() {
               <span className="text-seafoam italic">Belong.</span>
             </h1>
 
-            <p className="text-white/50 text-base md:text-xl leading-relaxed max-w-[520px] mb-6 md:mb-10 animate-fade-up [animation-delay:0.6s]">
-              San Diego&apos;s freediving community. Live ocean data, AIDA certification, and a crew that dives La Jolla every week.
+            <p className="text-white/50 text-base md:text-xl leading-relaxed max-w-[520px] mb-6 md:mb-10 animate-fade-up [animation-delay:0.6s] mx-auto md:mx-0">
+              San Diego&apos;s freediving community. AIDA certification, live ocean data, and a crew that dives every week.
             </p>
 
             <div className="flex gap-3 md:gap-4 flex-wrap justify-center md:justify-start animate-fade-up [animation-delay:0.8s]">
-              <Link href="/conditions" className="group inline-flex items-center gap-3 px-6 md:px-7 py-3 md:py-3.5 bg-coral text-white rounded-full font-medium text-[0.85rem] md:text-[0.9rem] no-underline hover:shadow-[0_8px_30px_rgba(199,91,58,0.5)] transition-all">
-                Today&apos;s Conditions
+              <Link href="/programs" className="group inline-flex items-center gap-3 px-6 md:px-7 py-3 md:py-3.5 bg-coral text-white rounded-full font-medium text-[0.85rem] md:text-[0.9rem] no-underline hover:shadow-[0_8px_30px_rgba(199,91,58,0.5)] transition-all">
+                View Courses
                 <span className="group-hover:translate-x-1 transition-transform">→</span>
               </Link>
-              <Link href="/programs" className="inline-flex items-center gap-2 px-6 md:px-7 py-3 md:py-3.5 bg-white/[0.06] backdrop-blur-sm border border-white/[0.12] text-white rounded-full font-medium text-[0.85rem] md:text-[0.9rem] no-underline hover:bg-white/[0.12] transition-all">
-                View Courses
+              <Link href="/conditions" className="inline-flex items-center gap-2 px-6 md:px-7 py-3 md:py-3.5 bg-white/[0.08] backdrop-blur-sm border border-white/[0.15] text-white rounded-full font-medium text-[0.85rem] md:text-[0.9rem] no-underline hover:bg-white/[0.15] transition-all">
+                Today&apos;s Conditions
               </Link>
             </div>
           </div>
