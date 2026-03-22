@@ -1,4 +1,7 @@
 import { Metadata } from "next";
+import Link from "next/link";
+import { Reveal } from "@/components/Reveal";
+import { EmailCapture } from "@/components/EmailCapture";
 
 export const metadata: Metadata = {
   title: "Freediving Gear Guide for La Jolla | La Jolla Freedive Club",
@@ -86,84 +89,139 @@ const GEAR_SECTIONS = [
 
 export default function GearPage() {
   return (
-    <main className="min-h-screen bg-salt">
-      <div className="max-w-4xl mx-auto px-6 py-16">
-        <div className="section-label">Gear</div>
-        <h1 className="font-serif text-4xl md:text-5xl tracking-tight text-deep mb-4">
-          What to wear and bring
-        </h1>
-        <p className="text-[#5a6a7a] text-lg leading-relaxed max-w-2xl mb-12">
-          La Jolla water ranges from 56°F in winter to 72°F in late summer.
-          The right gear makes the difference between a 20-minute shiver and a 2-hour session.
-          Here&apos;s what we recommend at every temperature.
-        </p>
+    <main className="min-h-screen">
+      {/* Hero */}
+      <section className="bg-gradient-to-b from-deep to-ocean pt-36 pb-20 px-6 text-center">
+        <Reveal>
+          <div className="section-label text-seafoam before:bg-seafoam justify-center">
+            Gear Guide
+          </div>
+          <h1 className="font-serif text-[clamp(2.5rem,5vw,4rem)] text-white font-normal leading-tight tracking-tight mb-6">
+            What to wear, what to bring,<br className="hidden sm:block" /> what to rent.
+          </h1>
+          <p className="text-lg text-white/60 max-w-[560px] mx-auto leading-relaxed">
+            La Jolla water ranges from 56°F in winter to 72°F in late summer.
+            The right gear makes the difference between a 20-minute shiver and a 2-hour session.
+          </p>
+        </Reveal>
+      </section>
 
-        {/* Wetsuit guide by temperature */}
-        <div className="mb-16">
-          <h2 className="font-serif text-2xl text-deep mb-2">Wetsuit guide by water temperature</h2>
-          <p className="text-xs text-[#5a6a7a] mb-6">Check today&apos;s water temp on our <a href="/conditions" className="text-teal no-underline hover:underline">conditions page</a></p>
+      {/* Wetsuit guide by temperature */}
+      <section className="bg-salt py-20 px-6">
+        <Reveal>
+          <div className="max-w-4xl mx-auto">
+            <div className="section-label text-teal before:bg-teal">Wetsuit Guide</div>
+            <h2 className="font-serif text-3xl text-deep mb-2">By water temperature</h2>
+            <p className="text-sm text-[#5a6a7a] mb-8">Check today&apos;s water temp on our <Link href="/conditions" className="text-teal no-underline hover:underline">conditions page</Link></p>
 
-          <div className="space-y-3">
-            {WETSUIT_GUIDE.map((w) => (
-              <div key={w.range} className="bg-white rounded-xl overflow-hidden">
-                <div className="flex">
-                  <div className="w-2 shrink-0" style={{ background: w.color }} />
-                  <div className="p-5 flex-1">
-                    <div className="flex items-start justify-between gap-4 mb-2">
-                      <div>
-                        <span className="font-serif text-lg text-deep">{w.range}</span>
-                        <span className="text-[10px] text-[#5a6a7a] ml-2">{w.season} · {w.months}</span>
+            <div className="space-y-3">
+              {WETSUIT_GUIDE.map((w) => (
+                <div key={w.range} className="bg-white rounded-xl overflow-hidden">
+                  <div className="flex">
+                    <div className="w-2 shrink-0" style={{ background: w.color }} />
+                    <div className="p-5 flex-1">
+                      <div className="flex items-start justify-between gap-4 mb-2">
+                        <div>
+                          <span className="font-serif text-lg text-deep">{w.range}</span>
+                          <span className="text-[10px] text-[#5a6a7a] ml-2">{w.season} · {w.months}</span>
+                        </div>
+                        <span className="px-3 py-1 bg-deep/5 rounded-full text-xs text-deep font-medium shrink-0">{w.recommendation}</span>
                       </div>
-                      <span className="px-3 py-1 bg-deep/5 rounded-full text-xs text-deep font-medium shrink-0">{w.recommendation}</span>
+                      <p className="text-xs text-[#5a6a7a] leading-relaxed">{w.detail}</p>
                     </div>
-                    <p className="text-xs text-[#5a6a7a] leading-relaxed">{w.detail}</p>
                   </div>
                 </div>
+              ))}
+            </div>
+
+            <div className="mt-4 p-4 bg-white rounded-xl">
+              <p className="text-xs text-[#5a6a7a] leading-relaxed">
+                <strong className="text-deep">Cold water tip:</strong> Water temperature drops 2-4°F per 30ft of depth in La Jolla Canyon.
+                If the surface is 62°F, the canyon wall at 80ft might be 56°F.
+                Winter canyon temps can hit 49°F at depth. Dress for the deepest water you plan to reach, not the surface temp.
+              </p>
+            </div>
+          </div>
+        </Reveal>
+      </section>
+
+      {/* Stats Strip */}
+      <section className="bg-deep py-16 px-6">
+        <Reveal>
+          <div className="max-w-3xl mx-auto grid grid-cols-3 gap-8 text-center">
+            {[
+              { number: "55-72°F", label: "Water range" },
+              { number: "3-7mm", label: "Wetsuit range" },
+              { number: "5", label: "Essential items" },
+            ].map((stat) => (
+              <div key={stat.label}>
+                <div className="font-serif text-2xl md:text-3xl text-white mb-1">{stat.number}</div>
+                <div className="text-xs text-white/40 tracking-wide uppercase">{stat.label}</div>
               </div>
             ))}
           </div>
+        </Reveal>
+      </section>
 
-          <div className="mt-4 p-4 bg-white rounded-xl">
-            <p className="text-xs text-[#5a6a7a] leading-relaxed">
-              <strong className="text-deep">Cold water tip:</strong> Water temperature drops 2-4°F per 30ft of depth in La Jolla Canyon.
-              If the surface is 62°F, the canyon wall at 80ft might be 56°F.
-              Winter canyon temps can hit 49°F at depth. Dress for the deepest water you plan to reach, not the surface temp.
-            </p>
-          </div>
-        </div>
+      {/* Gear sections */}
+      <section className="bg-white py-20 px-6">
+        <Reveal>
+          <div className="max-w-4xl mx-auto">
+            <div className="section-label text-teal before:bg-teal">Equipment</div>
+            <h2 className="font-serif text-3xl text-deep mb-10">What you need in the water</h2>
 
-        {/* Gear sections */}
-        <div className="space-y-12">
-          {GEAR_SECTIONS.map((section) => (
-            <div key={section.title}>
-              <h2 className="font-serif text-2xl text-deep mb-4">{section.title}</h2>
-              <div className="space-y-3">
-                {section.items.map((item) => (
-                  <div key={item.name} className="bg-white rounded-xl p-5">
-                    <h3 className="text-sm font-medium text-deep mb-2">{item.name}</h3>
-                    <p className="text-xs text-[#5a6a7a] leading-relaxed mb-3">{item.why}</p>
-                    <div className="flex gap-2 items-start">
-                      <span className="text-coral text-xs shrink-0 mt-0.5">*</span>
-                      <p className="text-[10px] text-teal/80 italic leading-relaxed">{item.tip}</p>
-                    </div>
+            <div className="space-y-12">
+              {GEAR_SECTIONS.map((section) => (
+                <div key={section.title}>
+                  <h3 className="font-serif text-2xl text-deep mb-4">{section.title}</h3>
+                  <div className="space-y-3">
+                    {section.items.map((item) => (
+                      <div key={item.name} className="bg-salt rounded-xl p-5">
+                        <h4 className="text-sm font-medium text-deep mb-2">{item.name}</h4>
+                        <p className="text-xs text-[#5a6a7a] leading-relaxed mb-3">{item.why}</p>
+                        <div className="flex gap-2 items-start">
+                          <span className="text-coral text-xs shrink-0 mt-0.5">*</span>
+                          <p className="text-[10px] text-teal/80 italic leading-relaxed">{item.tip}</p>
+                        </div>
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+          </div>
+        </Reveal>
+      </section>
 
-        {/* Bottom CTA */}
-        <div className="mt-16 bg-deep rounded-2xl p-8 text-center">
-          <h3 className="font-serif text-xl text-white mb-2">Not sure what gear you need?</h3>
-          <p className="text-white/50 text-sm leading-relaxed max-w-md mx-auto mb-4">
-            Our AIDA courses include all gear. If you&apos;re looking to buy your own kit, we&apos;ll help you get fitted properly.
-          </p>
-          <a href="/contact" className="inline-block px-6 py-3 bg-coral text-white rounded-full font-medium text-sm no-underline hover:-translate-y-0.5 hover:shadow-[0_8px_25px_rgba(199,91,58,0.4)] transition-all">
-            Ask us about gear →
-          </a>
-        </div>
-      </div>
+      {/* Bottom CTA */}
+      <section className="bg-salt py-20 px-6">
+        <Reveal>
+          <div className="max-w-2xl mx-auto text-center">
+            <h2 className="font-serif text-3xl md:text-4xl text-deep mb-4">
+              Questions about gear?
+            </h2>
+            <p className="text-[#5a6a7a] leading-relaxed mb-8">
+              Our AIDA courses cover everything you need to know about equipment.
+              If you&apos;re looking to buy your own kit, we&apos;ll help you get fitted properly.
+            </p>
+            <Link
+              href="/contact"
+              className="inline-block px-8 py-3.5 bg-coral text-white rounded-full font-medium text-sm no-underline hover:-translate-y-0.5 hover:shadow-[0_8px_25px_rgba(199,91,58,0.4)] transition-all"
+            >
+              Ask us about gear &rarr;
+            </Link>
+          </div>
+        </Reveal>
+      </section>
+
+      {/* Email Capture */}
+      <section className="bg-white py-20 px-6">
+        <Reveal>
+          <div className="max-w-xl mx-auto">
+            <EmailCapture />
+          </div>
+        </Reveal>
+      </section>
     </main>
   );
 }
