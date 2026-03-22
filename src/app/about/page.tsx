@@ -264,15 +264,15 @@ export default function AboutPage() {
             {[
               {
                 title: "AIDA Instructor",
-                detail: "Certified to teach AIDA 1 through AIDA 3, pool and open water.",
+                detail: "Certified to teach AIDA 1, AIDA 2, and AIDA 3 — pool and open water. San Diego's only AIDA-certified instructor.",
               },
               {
                 title: "AIDA Youth Instructor",
-                detail: "Certified to teach freediving to kids and teens.",
+                detail: "Certified to teach AIDA Youth levels (Bronze Dolphin through AIDA Junior) to kids ages 6–15.",
               },
               {
-                title: "AIDA 4 Freediver",
-                detail: "Advanced freediver certification. Deep constant weight, free immersion, and safety protocols.",
+                title: "AIDA 4 Freediver (personal certification)",
+                detail: "Advanced freediver certification — deep constant weight, free immersion, and advanced safety. Prerequisite for the Instructor course.",
               },
               {
                 title: "Trained under Khaled El Gammal",

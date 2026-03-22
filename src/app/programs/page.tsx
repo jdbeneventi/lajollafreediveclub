@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Reveal } from "@/components/Reveal";
 import { EmailCapture } from "@/components/EmailCapture";
 import { ExpandableCourse } from "@/components/ExpandableCourse";
+import { ExpandableYouthLevel } from "@/components/ExpandableYouthLevel";
 
 export const metadata: Metadata = {
   title: "Programs — AIDA Freediving Courses & Training in San Diego",
@@ -314,25 +315,7 @@ export default function ProgramsPage() {
                 skills: ["Open water diving (4 sessions)", "Weight belt use & dump", "Advanced rope & fin diving", "2-min relaxed floating", "Pathway to AIDA 2 crossover at 16"],
               },
             ].map((course) => (
-              <div key={course.level} className="bg-salt rounded-2xl p-5 md:p-6">
-                <div className="flex items-center gap-2 mb-1">
-                  <span className="text-lg">{course.emoji}</span>
-                  <h3 className="font-serif text-lg md:text-xl tracking-tight">{course.level}</h3>
-                </div>
-                <div className="flex gap-2 mb-3">
-                  <span className="px-2 py-0.5 bg-coral/10 text-coral rounded-full text-[10px] font-semibold">{course.age}</span>
-                  <span className="px-2 py-0.5 bg-teal/10 text-teal rounded-full text-[10px] font-semibold">{course.maxDepth}</span>
-                </div>
-                <p className="text-xs text-[#5a6a7a] leading-relaxed mb-3">{course.description}</p>
-                <ul className="space-y-1.5">
-                  {course.skills.map((skill) => (
-                    <li key={skill} className="flex gap-2 items-start text-xs text-[#2a2a2a]">
-                      <svg className="w-3.5 h-3.5 text-seafoam shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="20 6 9 17 4 12" /></svg>
-                      {skill}
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              <ExpandableYouthLevel key={course.level} course={course} />
             ))}
           </div>
 
