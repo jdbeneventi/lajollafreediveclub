@@ -224,6 +224,11 @@ export default function EducationPage() {
                         </div>
                       ))}
                     </div>
+                    {program.id === "camp-garibaldi" && (
+                      <Link href="/camp-garibaldi" className="inline-flex items-center gap-2 mt-6 text-teal text-sm font-medium no-underline hover:underline">
+                        Full Camp Garibaldi details →
+                      </Link>
+                    )}
                   </div>
                 </Reveal>
               );
