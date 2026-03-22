@@ -146,11 +146,11 @@ export default async function PartnerPage({ params }: Props) {
 
       {/* ── Additional Sections ── */}
       {partner.additionalSections?.map((section, idx) => (
-        <section key={idx} className="py-24 px-6 md:px-8 max-w-[1000px] mx-auto border-t border-seafoam/15">
-          <div className="text-[11px] text-teal/60 font-medium tracking-[0.2em] uppercase mb-4">{section.label}</div>
-          <h2 className="font-serif text-[clamp(2rem,4vw,3rem)] font-normal leading-[1.2] mb-8">
+        <section key={idx} className={`py-24 px-6 md:px-8 max-w-[1000px] mx-auto ${section.label ? "border-t border-seafoam/15" : ""}`}>
+          {section.label && <div className="text-[11px] text-teal/60 font-medium tracking-[0.2em] uppercase mb-4">{section.label}</div>}
+          {section.title && <h2 className="font-serif text-[clamp(2rem,4vw,3rem)] font-normal leading-[1.2] mb-8">
             {section.title} <em className="italic text-sand">{section.titleEm}</em>
-          </h2>
+          </h2>}
           <div className="grid md:grid-cols-2 gap-8 md:gap-16 mt-12">
             {section.cards.map((card) => (
               <div key={card.title} className="p-8 md:p-10 bg-ocean/25 border border-seafoam/10 rounded-sm">
@@ -254,7 +254,7 @@ export default async function PartnerPage({ params }: Props) {
       )}
 
       {/* ── Partnership Ideas ── */}
-      <section className="py-24 px-6 md:px-8 max-w-[1000px] mx-auto border-t border-seafoam/15">
+      {partner.partnershipIdeas.length > 0 && <section className="py-24 px-6 md:px-8 max-w-[1000px] mx-auto border-t border-seafoam/15">
         <div className="text-[11px] text-teal/60 font-medium tracking-[0.2em] uppercase mb-4">Partnership Ideas</div>
         <h2 className="font-serif text-[clamp(2rem,4vw,3rem)] font-normal leading-[1.2] mb-12">
           {partner.partnershipTitle} <em className="italic text-sand">{partner.partnershipTitleEm}</em>
@@ -272,7 +272,7 @@ export default async function PartnerPage({ params }: Props) {
             </div>
           ))}
         </div>
-      </section>
+      </section>}
 
       {/* ── Science Communication ── */}
       {partner.scienceComm && (

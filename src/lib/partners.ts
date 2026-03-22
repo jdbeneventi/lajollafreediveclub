@@ -673,6 +673,205 @@ export const partners: Partner[] = [
       { src: "/images/photos/ljfc-crew-lunch.jpg", alt: "LJFC crew after a Saturday session", caption: "The Saturday crew \u2014 students welcome", position: "after-ideas" },
     ],
   },
+  {
+    slug: "sd-lifeguards",
+    name: "San Diego Lifeguard Services",
+    heroHeadline: "I'm the freedive instructor",
+    heroHeadlineEm: "at your beach.",
+    heroSubtitle: "My name is Joshua Beneventi. I'm an AIDA-certified freediving instructor \u2014 San Diego's only one \u2014 and I operate at La Jolla Shores every Saturday, year-round. I run courses, community dive sessions, and a youth ocean camp out of Kellogg Park. I wanted to introduce myself properly, show you what I've built, and share a few ideas about how I might be useful to your team.",
+    heritageLabel: "Who I Am",
+    heritageQuote: "I grew up in Point Loma, four blocks from the water. My great-grandfather was a whaler from the Azores who settled in San Diego for tuna fishing. My grandfather freedived for abalone in La Jolla. I graduated from UCSD, trained as a freediving instructor in Malaysia, Egypt, and Baja, and came back to La Jolla because there's nowhere better to do this work. I'm AIDA Instructor and AIDA Youth Instructor certified \u2014 the only one in San Diego for both adults and kids. DAN insured for professional liability. Red Cross certified in Adult and Pediatric First Aid, CPR, and AED. I carry a rescue tube and emergency oxygen on every session. I know the canyon, the walls, the currents, the seasonal patterns, and the marine life. You've probably seen me. I'm the guy with the orange buoy and the dive flag, swimming out to the canyon rim with a group on Saturday mornings.",
+    heritageAttribution: "Joshua Beneventi \u2014 AIDA Instructor, Founder of LJFC",
+    connectionLabel: "What I Operate at La Jolla Shores",
+    connectionTitle: "Three programs,",
+    connectionTitleEm: "all from Kellogg Park.",
+    connectionCards: [
+      {
+        title: "Weekly Saturday Sessions",
+        content: [
+          "Year-round group freediving at La Jolla Shores. We meet at Kellogg Park, enter at Vallecitos, swim out to the canyon. All participants are certified freedivers with their own gear, signed waivers, and a dive computer. I provide buoys, lines, and session leadership. Typical group: 6-15 divers. We're usually in the water by 8am and out by 10:30am.",
+        ],
+      },
+      {
+        title: "Certification Courses",
+        content: [
+          "AIDA 1 (Discover Freediving) and AIDA 2 certification courses, run throughout the year. Small groups \u2014 maximum 4 students per course. Pool sessions at local facilities, open water at La Jolla Shores. All students receive safety briefings on the marine reserve, dive flag protocol, and local hazards.",
+        ],
+      },
+    ],
+    additionalSections: [
+      {
+        label: "",
+        title: "",
+        titleEm: "",
+        cards: [
+          {
+            title: "Camp Garibaldi \u2014 Youth Program",
+            content: [
+              "A week-long ocean camp for kids ages 8-16, teaching freediving, surf survival, and water confidence. Gear provided. The camp's philosophy is building breath control and internal calm before developing external water skills. Kids learn to read conditions, identify species, equalize, and hold their breath before they ever go deeper than chest-high water. I'd like to talk with you about Camp Garibaldi specifically \u2014 I want to make sure you're aware of the program before it runs this summer.",
+            ],
+          },
+          {
+            title: "Our Mooring Line",
+            content: [
+              "We maintain a mooring line at 32.856746, -117.262603 \u2014 canyon edge, approximately 35-40 feet depth, about 500 meters offshore from Kellogg Park. We always fly a dive flag. All divers use a lanyard attached to the line. We follow float, flag, anchor, and descent line requirements per marine reserve regulations.",
+            ],
+          },
+        ],
+      },
+      {
+        label: "What I'm Asking",
+        title: "Awareness first.",
+        titleEm: "Then maybe more.",
+        cards: [
+          {
+            title: "Know who I am",
+            content: [
+              "I'm a trained, insured, certified professional operating in your jurisdiction every week. I'd rather you know me than not. If there's ever an incident involving a freediver at La Jolla Shores, I want to be someone you can call. I carry rescue equipment and emergency oxygen. I know the site. I'm almost always there on Saturday mornings.",
+            ],
+          },
+          {
+            title: "Be aware of Camp Garibaldi",
+            content: [
+              "I'm running a youth ocean camp at La Jolla Shores this summer. Kids ages 8-16, in the water every day for a week. Parents will feel better knowing that lifeguards are aware of the program. I'm not asking you to supervise \u2014 I'm asking you to know it's happening so nothing catches you off guard. I'm happy to share our curriculum, safety protocols, and daily schedules in advance.",
+            ],
+          },
+        ],
+      },
+      {
+        label: "",
+        title: "",
+        titleEm: "",
+        cards: [
+          {
+            title: "Share conditions intel when it matters",
+            content: [
+              "If you close the beach, post a shark advisory, or see something unusual \u2014 I have an email list of the exact people who need to hear it. Divers, snorkelers, swimmers who are heading to La Jolla Shores that day. I can amplify your warnings to the community that's most at risk. In return, my conditions platform is yours to glance at anytime.",
+            ],
+          },
+          {
+            title: "Freediver incident resource",
+            content: [
+              "Freediving incidents look different from drowning. A diver floating face-down at the surface might be doing recovery breathing \u2014 or experiencing hypoxic blackout. The difference matters in the first 10 seconds. I can provide a one-page reference card for your towers covering freediver-specific emergencies: shallow water blackout recognition, loss of motor control, rescue breathing protocol for apnea blackout, and how to distinguish a freediver in distress from one who's fine. No cost, just a resource if you want it.",
+            ],
+          },
+        ],
+      },
+      {
+        label: "What I Can Offer Your Team",
+        title: "Training that's",
+        titleEm: "directly relevant to what you do.",
+        cards: [
+          {
+            title: "Breath-hold training for lifeguards",
+            content: [
+              "Your Dive Rescue Team conducts underwater search and recovery on breath-hold. Your seasonal guards train in surf rescue where getting held down is a daily reality. Structured breath-hold training \u2014 CO\u2082 tolerance drills, relaxation under oxygen debt, extending functional time underwater \u2014 directly improves rescue capability. I can run a 2-hour workshop for any unit: dry-land breathing drills, timed static holds, and the physiology behind why it works.",
+            ],
+          },
+          {
+            title: "Freediving awareness briefing",
+            content: [
+              "Recreational freediving is the fastest-growing underwater sport in the world. Your guards are going to see more freedivers at La Jolla Shores every year. A 90-minute awareness briefing covers: what recreational freedivers actually do, how to read a freediving operation (buoys, lanyards, safety divers, dive flags), what a normal surface interval looks like, what shallow water blackout looks like, and the specific rescue protocols that apply.",
+            ],
+          },
+        ],
+      },
+      {
+        label: "",
+        title: "",
+        titleEm: "",
+        cards: [
+          {
+            title: "Shallow water blackout reference card",
+            content: [
+              "A laminated one-pager for towers and stations covering: how to recognize a hypoxic blackout at the surface (loss of motor control, facial twitching, tonic posturing \u2014 distinct from panic drowning), immediate response protocol (airway management, rescue breathing within 10 seconds, monitor for laryngospasm), and how to distinguish a freediver doing recovery breathing from one in distress. Clear, visual, built for a guard who has 5 seconds to make a call. I'll produce this at no cost.",
+            ],
+          },
+          {
+            title: "Ongoing resource",
+            content: [
+              "Freediving incidents in San Diego are rare but they happen. When they do, having a local subject-matter expert you can call is useful. I know the freediving community here \u2014 who's certified, who's operating, what the common practices are. I can help with incident debriefs, community communication after an event, and identifying whether an operation was following standard safety protocols. Think of me as a resource in your back pocket \u2014 not a regular obligation.",
+            ],
+          },
+        ],
+      },
+      {
+        label: "Junior Lifeguards",
+        title: "Surface skills and underwater skills.",
+        titleEm: "The complete picture.",
+        cards: [
+          {
+            title: "Freediving demo day during JG sessions",
+            content: [
+              "Your JGs already visit La Jolla Cove for snorkeling and cave exploration. A freediving demo day at La Jolla Shores would give kids a taste of breath-hold diving in controlled conditions \u2014 timed breath holds on the beach, basic equalization technique, a guided shallow freedive with their JG instructors present. I handle all instruction and safety. One session, 2-3 hours, no cost.",
+            ],
+          },
+          {
+            title: "Camp Garibaldi as the \"next step\"",
+            content: [
+              "JG teaches surf safety, CPR, water rescue, ocean awareness, and fitness. Camp Garibaldi teaches breath-hold diving, equalization, underwater navigation, species identification, and dive physiology. A JG alum who's done two or three summers and wants to go underwater is the exact kid Camp Garibaldi was built for. Cross-referral between the programs gives parents a clear progression: Junior Lifeguards for surface confidence, Camp Garibaldi for underwater skills.",
+            ],
+          },
+        ],
+      },
+      {
+        label: "",
+        title: "",
+        titleEm: "",
+        cards: [
+          {
+            title: "JG Intern AIDA certification",
+            content: [
+              "Your intern program accepts 16-20 kids per summer \u2014 ages 15.5-17, running a sub-8:30 mile and a sub-10:00 500m swim. These are elite young athletes. An AIDA 1 or AIDA 2 certification for JG interns would be a legitimate professional development credential \u2014 internationally recognized, directly relevant to careers in lifeguarding, marine safety, or dive operations. I'd offer this at a deeply discounted rate or explore sponsorship to cover the cost entirely.",
+            ],
+          },
+          {
+            title: "Breath-hold physiology for A Group",
+            content: [
+              "Your A Group kids are 14-17 \u2014 old enough for real science. A 60-minute session on breath-hold physiology would cover the mammalian dive reflex (why your heart rate drops when your face hits cold water), how CO\u2082 tolerance works (why the urge to breathe is a signal, not an emergency), and the basics of shallow water blackout. This is directly relevant to surf hold-downs, rescue swimming, and their own safety. They'll feel the dive reflex activate in real time during a timed breath hold on the beach.",
+            ],
+          },
+        ],
+      },
+    ],
+    researchTitle: "A conditions platform",
+    researchTitleEm: "that might be useful to you.",
+    researchSubtitle: "I built a free ocean conditions dashboard for the La Jolla diving community. It pulls from the same data sources you check. I send a daily email to subscribers at 6am with a morning briefing. You're welcome to use any of it.",
+    researchCards: [
+      { id: "Wave & Temp", name: "NDBC 46254", detail: "Scripps Nearshore Waverider Buoy. Wave height, period, direction, sea temperature. Updated every 30 minutes." },
+      { id: "Wind", name: "NDBC LJPC1", detail: "Scripps Pier C-MAN station. Wind speed, direction, gusts. Combined with LJAC1 NOS station for pressure and water level." },
+      { id: "Tides", name: "NOAA 9410230", detail: "La Jolla tide predictions. High/low times, tidal range, and a 7-day calendar showing optimal dive windows." },
+      { id: "Visibility", name: "Scripps Underwater Cam", detail: "AI analysis of the HDOnTap camera on Scripps Pier at 13ft depth. Automated visibility estimate based on reference pilings." },
+      { id: "Marine Forecast", name: "NWS PZZ740", detail: "Inner coastal waters forecast for San Diego. Fog, wind, swell direction, and small craft advisories." },
+      { id: "Water Quality", name: "sdbeachinfo.com", detail: "Beach advisory/warning/closure status. 72-hour post-rain advisories. Persistent advisory tracking for La Jolla Cove and Children's Pool." },
+    ],
+    showCamp: false,
+    partnershipTitle: "Ideas that don't exist in this page",
+    partnershipTitleEm: "placeholder.",
+    partnershipIdeas: [],
+    credentialsLabel: "For Your Records",
+    credentials: [
+      { value: "AIDA", label: "Instructor\n+ Youth Instructor" },
+      { value: "DAN", label: "ID# 3339867\nPolicy DAN9477420" },
+      { value: "ARC", label: "First Aid / CPR / AED\nCert 022T2IJ, exp Sept 2027" },
+      { value: "AIDA 4", label: "Personal certification\nAdvanced freediver" },
+    ],
+    ctaTitle: "I'm at the Shores",
+    ctaTitleEm: "every Saturday.",
+    ctaDescription: "If you'd like to see what we do, you're welcome anytime \u2014 I'm usually at Kellogg Park by 7am on Saturdays. I'm also happy to walk through the conditions platform, share our Camp Garibaldi safety plan, talk about a breath-hold training session for your team, or discuss a freediving demo for Junior Lifeguards. Whatever makes sense, at whatever pace works for you.",
+    ctaButtonText: "Get in touch",
+    ctaEmail: "joshuabeneventi@gmail.com",
+    ctaEmailSubject: "La Jolla Freedive Club \u2014 Introduction",
+    ctaSecondary: "Joshua Beneventi \u00B7 joshuabeneventi@gmail.com",
+    ctaLinks: [
+      { label: "lajollafreediveclub.com/conditions", url: "https://lajollafreediveclub.com/conditions" },
+    ],
+    images: [
+      { src: "/images/photos/joshua-red-sea.jpg", alt: "Joshua Beneventi", caption: "AIDA Instructor, DAN insured, Red Cross certified", position: "after-heritage" },
+      { src: "/images/photos/joshua-teaching-kids.jpg", alt: "Joshua teaching kids", caption: "Camp Garibaldi at La Jolla Shores this summer", position: "after-connection" },
+      { src: "/images/photos/ljfc-crew-lunch.jpg", alt: "LJFC Saturday crew", caption: "The Saturday crew \u2014 we're at Kellogg Park every week", position: "after-ideas" },
+    ],
+  },
 ];
 
 export function getPartner(slug: string): Partner | undefined {
