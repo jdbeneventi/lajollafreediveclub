@@ -317,6 +317,7 @@ export const partners: Partner[] = [
   {
     slug: "ocean-discovery-institute",
     name: "Ocean Discovery Institute",
+    heroImage: "/images/partners/odi-living-lab.jpg",
     heroHeadline: "The ocean is 20 minutes away.",
     heroHeadlineEm: "For some kids, it might as well be another planet.",
     heroSubtitle: "ODI has spent two decades getting underserved San Diego kids into ocean science. LJFC teaches kids to be in the ocean \u2014 with breath control, freediving, and surf survival. But the deeper work is what breath-hold training does off the water: nervous system regulation, composure under pressure, and the kind of courage that only comes from facing real challenge. Together, we could build the bridge from City Heights to the waterline \u2014 and to a different relationship with fear.",
@@ -430,7 +431,8 @@ export const partners: Partner[] = [
       { label: "lajollafreediveclub.com/map", url: "https://lajollafreediveclub.com/map" },
     ],
     images: [
-      { src: "/images/photos/joshua-teaching-kids.jpg", alt: "Joshua teaching kids freediving poolside", caption: "Camp Garibaldi \u2014 breath-first ocean education", position: "after-heritage" },
+      { src: "/images/partners/odi-living-lab.jpg", alt: "Ocean Discovery Institute Living Lab in City Heights", caption: "The $17 million Living Lab \u2014 from a kayak shack to this", position: "after-heritage" },
+      { src: "/images/photos/joshua-teaching-kids.jpg", alt: "Joshua teaching kids freediving poolside", caption: "Camp Garibaldi \u2014 breath-first ocean education", position: "after-connection" },
       { src: "/images/photos/joshua-kid-beach.jpg", alt: "Joshua with a young student at the beach", caption: "From nervous about waves to confident in the ocean", position: "after-camp" },
       { src: "/images/photos/ljfc-crew-lunch.jpg", alt: "LJFC crew after a Saturday session", caption: "The community behind the program", position: "after-ideas" },
     ],
