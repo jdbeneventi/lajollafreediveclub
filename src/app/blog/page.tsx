@@ -7,6 +7,18 @@ export const metadata: Metadata = {
   title: "The Journal — Freediving Tips, Guides & Stories",
   description:
     "Freediving guides, training tips, local dive spot reviews, and stories from the La Jolla Freedive Club community.",
+  openGraph: {
+    title: "The Journal — Freediving Tips, Guides & Stories",
+    description: "Freediving guides, training tips, local dive spot reviews, and stories from the La Jolla Freedive Club community.",
+    url: "https://lajollafreediveclub.com/blog",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "The Journal — Freediving Tips, Guides & Stories",
+    description: "Freediving guides, training tips, local dive spot reviews, and stories from La Jolla Freedive Club.",
+  },
+  alternates: { canonical: "/blog" },
 };
 
 export default function BlogPage() {

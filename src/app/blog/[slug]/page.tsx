@@ -13,14 +13,31 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const post = getPost(slug);
   if (!post) return {};
+
+  const url = `https://lajollafreediveclub.com/blog/${post.slug}`;
+  const ogImage = post.heroImage
+    ? `https://lajollafreediveclub.com${post.heroImage}`
+    : "https://lajollafreediveclub.com/images/hero.jpg";
+
   return {
     title: post.title,
     description: post.description,
+    authors: [{ name: "Joshua Beneventi" }],
     openGraph: {
       title: post.title,
       description: post.description,
       type: "article",
-      publishedTime: "2026-03-14",
+      url,
+      publishedTime: post.isoDate,
+      authors: ["Joshua Beneventi"],
+      section: post.category,
+      images: [{ url: ogImage, width: 1200, height: 800, alt: post.title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.description,
+      images: [ogImage],
     },
     alternates: { canonical: `/blog/${post.slug}` },
   };
@@ -31,8 +48,37 @@ export default async function BlogPostPage({ params }: Props) {
   const post = getPost(slug);
   if (!post) notFound();
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: post.title,
+    description: post.description,
+    image: post.heroImage
+      ? `https://lajollafreediveclub.com${post.heroImage}`
+      : "https://lajollafreediveclub.com/images/hero.jpg",
+    datePublished: post.isoDate,
+    author: {
+      "@type": "Person",
+      name: "Joshua Beneventi",
+      url: "https://lajollafreediveclub.com/about",
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "La Jolla Freedive Club",
+      url: "https://lajollafreediveclub.com",
+    },
+    mainEntityOfPage: `https://lajollafreediveclub.com/blog/${post.slug}`,
+    articleSection: post.category,
+    wordCount: post.content.replace(/<[^>]+>/g, "").split(/\s+/).length,
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+
       {/* Header */}
       <header className="relative pt-36 pb-16 px-6 text-center overflow-hidden">
         {/* Background: hero image or gradient */}
