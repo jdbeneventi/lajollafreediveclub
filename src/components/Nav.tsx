@@ -11,6 +11,7 @@ const links = [
   { href: "/map", label: "Field Guide" },
   { href: "/blog", label: "Journal" },
   { href: "/about", label: "About" },
+  { href: "/community", label: "Community" },
 ];
 
 export function Nav() {
