@@ -676,6 +676,7 @@ export const partners: Partner[] = [
   {
     slug: "sd-lifeguards",
     name: "San Diego Lifeguard Services",
+    heroImage: "/images/partners/lg-tower.jpg",
     heroHeadline: "I'm the freedive instructor",
     heroHeadlineEm: "at your beach.",
     heroSubtitle: "My name is Joshua Beneventi. I'm an AIDA-certified freediving instructor \u2014 San Diego's only one \u2014 and I operate at La Jolla Shores every Saturday, year-round. I run courses, community dive sessions, and a youth ocean camp out of Kellogg Park. I wanted to introduce myself properly, show you what I've built, and share a few ideas about how I might be useful to your team.",
@@ -868,8 +869,9 @@ export const partners: Partner[] = [
     ],
     images: [
       { src: "/images/photos/joshua-red-sea.jpg", alt: "Joshua Beneventi", caption: "AIDA Instructor, DAN insured, Red Cross certified", position: "after-heritage" },
-      { src: "/images/photos/joshua-teaching-kids.jpg", alt: "Joshua teaching kids", caption: "Camp Garibaldi at La Jolla Shores this summer", position: "after-connection" },
-      { src: "/images/photos/ljfc-crew-lunch.jpg", alt: "LJFC Saturday crew", caption: "The Saturday crew \u2014 we're at Kellogg Park every week", position: "after-ideas" },
+      { src: "/images/partners/lg-jg-ocean.jpg", alt: "Junior Lifeguards running into the ocean", caption: "Your Junior Lifeguards \u2014 surface skills. Camp Garibaldi \u2014 underwater skills.", position: "after-connection" },
+      { src: "/images/photos/joshua-teaching-kids.jpg", alt: "Joshua teaching kids", caption: "Camp Garibaldi \u2014 the ocean camp that starts from the inside out", position: "after-camp" },
+      { src: "/images/partners/lg-jg-group.jpg", alt: "Junior Lifeguard group photo", caption: "JG alumni who want to go underwater are the exact kids Camp Garibaldi was built for", position: "after-ideas" },
     ],
   },
 ];
