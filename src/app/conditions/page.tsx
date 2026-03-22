@@ -148,9 +148,6 @@ export default function ConditionsPage() {
             );
           })()}
 
-          <WaterQualityCard />
-          <LocalIntel />
-
           {/* Subscribe + Support */}
           <div className="mt-8 grid sm:grid-cols-2 gap-4">
             <div className="bg-gradient-to-br from-ocean to-deep rounded-2xl p-6 text-center">
@@ -184,6 +181,9 @@ export default function ConditionsPage() {
               </div>
             </div>
           </div>
+
+          <WaterQualityCard />
+          <LocalIntel />
         </div>
       </section>
 
