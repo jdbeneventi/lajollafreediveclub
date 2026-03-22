@@ -304,7 +304,7 @@ export const partners: Partner[] = [
     ctaEmailSubject: "LJFC \u00D7 Birch Aquarium \u2014 Let's Talk",
     ctaSecondary: "Joshua Beneventi · UCSD Alum · joshuabeneventi@gmail.com",
     ctaLinks: [
-      { label: "lajollafreediveclub.com/camp-garibaldi", url: "https://lajollafreediveclub.com/camp-garibaldi" },
+      { label: "lajollafreediveclub.com/education", url: "https://lajollafreediveclub.com/education" },
       { label: "lajollafreediveclub.com/conditions", url: "https://lajollafreediveclub.com/conditions" },
       { label: "lajollafreediveclub.com/map", url: "https://lajollafreediveclub.com/map" },
     ],
@@ -428,7 +428,7 @@ export const partners: Partner[] = [
     ctaEmailSubject: "LJFC \u00D7 Ocean Discovery Institute \u2014 Youth Ocean Access",
     ctaSecondary: "Joshua Beneventi \u00B7 UCSD Alum \u00B7 joshuabeneventi@gmail.com",
     ctaLinks: [
-      { label: "lajollafreediveclub.com/camp-garibaldi", url: "https://lajollafreediveclub.com/camp-garibaldi" },
+      { label: "lajollafreediveclub.com/education", url: "https://lajollafreediveclub.com/education" },
       { label: "lajollafreediveclub.com/map", url: "https://lajollafreediveclub.com/map" },
     ],
     images: [
@@ -525,7 +525,7 @@ export const partners: Partner[] = [
     ctaEmailSubject: "LJFC \u00D7 Outdoor Outreach \u2014 Freediving for Youth",
     ctaSecondary: "Joshua Beneventi \u00B7 UCSD Alum \u00B7 joshuabeneventi@gmail.com",
     ctaLinks: [
-      { label: "lajollafreediveclub.com/camp-garibaldi", url: "https://lajollafreediveclub.com/camp-garibaldi" },
+      { label: "lajollafreediveclub.com/education", url: "https://lajollafreediveclub.com/education" },
       { label: "lajollafreediveclub.com/map", url: "https://lajollafreediveclub.com/map" },
     ],
     images: [

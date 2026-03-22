@@ -9,7 +9,7 @@ const programs = [
   { id: "aida1", title: "AIDA 1 — Introduction", meta: "1 day", desc: "Your first day in freediving. Breathing, pool skills, your first real breath hold. Walk away certified.", href: "/programs#aida1" },
   { id: "group", title: "Group Ocean Sessions", meta: "Every Saturday", desc: "Weekly guided dives at La Jolla's best spots. Structured training with safety divers.", href: "/programs" },
   { id: "coaching", title: "Private Coaching", meta: "Flexible", desc: "Personalized training — competition prep, equalization, depth anxiety, accelerated cert.", href: "/programs" },
-  { id: "camp", title: "Camp Garibaldi", meta: "Ages 8–16", desc: "Week-long ocean camp for kids. Freediving, surf survival, water confidence.", href: "/camp-garibaldi" },
+  { id: "camp", title: "Camp Garibaldi", meta: "Ages 8–16", desc: "Week-long ocean camp for kids. Freediving, surf survival, water confidence.", href: "/education#camp-garibaldi" },
 ];
 
 const tools = [

@@ -344,7 +344,7 @@ export default function ProgramsPage() {
               </div>
               <div className="mt-5 pt-4 border-t border-white/10 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6">
                 <p className="text-white/40 text-xs">4:1 max in-water ratio · Parent knowledge objectives required · No competitive elements</p>
-                <Link href="/camp-garibaldi" className="inline-flex items-center gap-2 px-5 py-2 bg-coral text-white rounded-full font-medium text-sm no-underline hover:shadow-[0_8px_25px_rgba(199,91,58,0.4)] transition-all shrink-0">
+                <Link href="/education#camp-garibaldi" className="inline-flex items-center gap-2 px-5 py-2 bg-coral text-white rounded-full font-medium text-sm no-underline hover:shadow-[0_8px_25px_rgba(199,91,58,0.4)] transition-all shrink-0">
                   Camp Garibaldi →
                 </Link>
               </div>

@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function EducationPartnersPage() {
   return (
-    <div className="bg-deep text-salt font-sans font-light leading-relaxed overflow-x-hidden">
+    <div className="partner-page bg-deep text-salt font-sans font-light leading-relaxed overflow-x-hidden">
       {/* Grain overlay */}
       <div
         className="fixed inset-0 pointer-events-none z-[1000] opacity-[0.03]"

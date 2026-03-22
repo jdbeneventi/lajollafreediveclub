@@ -7,7 +7,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const staticPages = [
     { url: base, lastModified: new Date(), changeFrequency: "weekly" as const, priority: 1 },
     { url: `${base}/programs`, lastModified: new Date(), changeFrequency: "weekly" as const, priority: 0.9 },
-    { url: `${base}/camp-garibaldi`, lastModified: new Date(), changeFrequency: "monthly" as const, priority: 0.9 },
+    { url: `${base}/education`, lastModified: new Date(), changeFrequency: "monthly" as const, priority: 0.9 },
     { url: `${base}/conditions`, lastModified: new Date(), changeFrequency: "daily" as const, priority: 0.9 },
     { url: `${base}/map`, lastModified: new Date(), changeFrequency: "monthly" as const, priority: 0.8 },
     { url: `${base}/blog`, lastModified: new Date(), changeFrequency: "weekly" as const, priority: 0.8 },
