@@ -179,7 +179,9 @@ export const partners: Partner[] = [
     ctaSecondary: "Joshua Beneventi · UCSD Alum · joshuabeneventi@gmail.com",
     images: [
       { src: "/images/partners/scripps-stairs.jpg", alt: "Stairs leading down to Scripps Pier with La Jolla coastline in background", position: "after-heritage" },
-      { src: "/images/partners/scripps-campus.jpg", alt: "Scripps Institution of Oceanography campus overlooking the Pacific", position: "after-connection" },
+      { src: "/images/photos/joshua-lena-shores.jpg", alt: "Joshua and Lena at La Jolla Shores — directly below Scripps Pier", caption: "At La Jolla Shores — your front yard, our dive site", position: "after-connection" },
+      { src: "/images/photos/joshua-teaching-kids.jpg", alt: "Joshua teaching kids freediving poolside", caption: "Camp Garibaldi — breath-first ocean education", position: "after-camp" },
+      { src: "/images/photos/ljfc-crew-lunch.jpg", alt: "LJFC crew after a Saturday session", caption: "The Saturday crew — this is who shows up every week", position: "after-ideas" },
     ],
   },
   {
@@ -303,7 +305,9 @@ export const partners: Partner[] = [
     ],
     images: [
       { src: "/images/partners/birch-child-fish.jpg", alt: "Child pointing at fish in the Birch Aquarium reef exhibit", position: "after-heritage" },
-      { src: "/images/partners/birch-whales.jpg", alt: "Families at the Birch Aquarium whale fountain entrance", caption: "550,000 visitors a year — one mile from the wild ocean", position: "after-camp" },
+      { src: "/images/photos/joshua-brooke-kristina.jpg", alt: "LJFC crew in wetsuits ready to dive La Jolla", caption: "Your audience inspired — our crew ready to take them in", position: "after-connection" },
+      { src: "/images/photos/joshua-kid-beach.jpg", alt: "Joshua with a young student at the beach after a session", caption: "Camp Garibaldi — from nervous about waves to confident in the ocean", position: "after-camp" },
+      { src: "/images/photos/ljfc-crew-lunch.jpg", alt: "LJFC crew after a Saturday session", caption: "The community behind the program", position: "after-ideas" },
     ],
   },
 ];
