@@ -127,8 +127,6 @@
   @apply font-semibold text-deep;
 }
 
-/* Partner pages: hide main site chrome */
+/* Partner pages: keep nav, hide main footer, dark background */
 body:has(.partner-page) { background: #0B1D2C !important; }
-body:has(.partner-page) nav { display: none !important; }
 body:has(.partner-page) > main + footer { display: none !important; }
-body:has(.partner-page) main { padding: 0; }
