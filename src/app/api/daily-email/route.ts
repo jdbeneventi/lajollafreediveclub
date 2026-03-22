@@ -248,6 +248,7 @@ function buildEmailHtml(
       <a href="https://www.ndbc.noaa.gov/station_page.php?station=46254" ${linkStyle}>Buoy data</a>
       <a href="https://lajollafreediveclub.com/map" ${linkStyle}>Field guide</a>
       <a href="https://lajollafreediveclub.com/gear" ${linkStyle}>Gear guide</a>
+      <a href="https://kelpwatch.org" ${linkStyle}>Kelp satellite</a>
     </div>
   </div>
 

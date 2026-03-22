@@ -114,6 +114,37 @@ export default function ConditionsPage() {
           <Reveal>
             <AlmanacWidget />
           </Reveal>
+          {/* Kelp Status */}
+          {(() => {
+            const month = new Date().getMonth();
+            const kelp = month >= 11 || month <= 1
+              ? { icon: "⚠️", status: "Winter storms thin the canopy. Kelp regrowing.", season: "Winter" }
+              : month <= 4
+              ? { icon: "🌿", status: "Spring growth — canopy rebuilding rapidly. Up to 2ft/day.", season: "Spring" }
+              : month <= 7
+              ? { icon: "🌿", status: "Peak canopy. Densest kelp of the year.", season: "Summer" }
+              : { icon: "🌿", status: "Healthy canopy. Best diving conditions.", season: "Fall" };
+            return (
+              <div className="mt-6 bg-deep rounded-2xl p-5 md:p-6 flex flex-col sm:flex-row sm:items-center gap-4">
+                <div className="flex items-center gap-3 flex-1 min-w-0">
+                  <span className="text-2xl shrink-0">{kelp.icon}</span>
+                  <div>
+                    <div className="text-white font-semibold text-sm">Kelp Status — {kelp.season}</div>
+                    <div className="text-white/50 text-xs leading-relaxed mt-0.5">{kelp.status}</div>
+                  </div>
+                </div>
+                <a
+                  href="https://kelpwatch.org"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 px-4 py-2 bg-teal/20 text-seafoam rounded-full text-xs font-semibold no-underline hover:bg-teal/30 transition-colors shrink-0"
+                >
+                  Satellite view ↗
+                </a>
+              </div>
+            );
+          })()}
+
           {/* Subscribe + Support */}
           <div className="mt-8 grid sm:grid-cols-2 gap-4">
             <div className="bg-gradient-to-br from-ocean to-deep rounded-2xl p-6 text-center">
