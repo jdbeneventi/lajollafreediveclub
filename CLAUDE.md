@@ -38,12 +38,12 @@ Camp Garibaldi is LJFC's youth program (ages 8-16) — a week-long ocean camp te
 ## Pricing (Finalized)
 | Program | Price | Notes |
 |---|---|---|
-| Discover Freediving (AIDA 1) | $175 | Half day |
+| Discover Freediving (AIDA 1) | $200 | Half day |
 | AIDA 2 (group, max 4) | $575 | 2-3 days, cert included |
 | AIDA 2 (private, 1-on-1) | $800 | Flexible schedule |
 | AIDA 3 (group, max 4) | $700 | 3-4 days, AIDA 2 prereq |
 | AIDA 3 (private) | $950 | Flexible schedule |
-| Private coaching (2-3 hrs) | $175 | Certified freedivers only |
+| Private coaching (2-3 hrs) | $150 | Certified freedivers only |
 | Saturday ocean session | Free w/ Ocean Flow / $25 drop-in | Cert + own gear + lanyard + computer required |
 | Ocean Flow with Lena | $20 drop-in | Open to anyone |
 | Camp Garibaldi (5-day) | $750 | Ages 8-16, gear provided |

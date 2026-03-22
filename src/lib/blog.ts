@@ -76,8 +76,8 @@ export const posts: BlogPost[] = [
 
 <h2>How to Get Started in La Jolla</h2>
 
-<h3>Step 1: Try a Discover Freediving Session</h3>
-<p>A half-day introduction where you learn basic breathing technique, try your first breath holds in a pool, and get a feel for whether freediving clicks with you.</p>
+<h3>Step 1: Take an AIDA 1 Course</h3>
+<p>A one-day introduction where you learn basic breathing technique, try your first breath holds in a pool, and get a feel for whether freediving clicks with you. You walk away with your first AIDA certification.</p>
 
 <h3>Step 2: Take an AIDA 2 Course</h3>
 <p>The AIDA 2 is the international standard for beginner freediving certification. Over 2–3 days, you'll learn theory, practice in a pool, and complete open water dives. You'll graduate certified to dive to 20 meters with a buddy.</p>
@@ -862,7 +862,7 @@ Round 8: Hold 1:30, Done</p>
 
 <p><strong>It burns oxygen.</strong> Engaging the large respiratory muscles consumes more oxygen than necessary. In a breath-hold discipline, efficiency matters.</p>
 
-<p>In <a href="https://www.aidainternational.org/" target="_blank" rel="noopener noreferrer">AIDA</a> courses, the Valsalva is introduced in AIDA 1 (Discover Freediving) as a starting point. By AIDA 2, students begin transitioning to Frenzel. The Valsalva is a stepping stone, not a long-term technique.</p>
+<p>In <a href="https://www.aidainternational.org/" target="_blank" rel="noopener noreferrer">AIDA</a> courses, the Valsalva is introduced in AIDA 1 (Introduction to Freediving) as a starting point. By AIDA 2, students begin transitioning to Frenzel. The Valsalva is a stepping stone, not a long-term technique.</p>
 
 <h2>The Frenzel: The Gold Standard</h2>
 

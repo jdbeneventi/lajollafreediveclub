@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 const faqs = [
   {
     q: "Do I need experience to join?",
-    a: "Not at all. About 70% of our members had zero freediving experience when they started. Our Discover Freediving session is designed specifically for complete beginners.",
+    a: "Not at all. About 70% of our members had zero freediving experience when they started. Our AIDA 1 course is a one-day introduction designed specifically for complete beginners.",
   },
   {
     q: "Is freediving safe?",
@@ -40,7 +40,7 @@ const faqs = [
   },
   {
     q: "Can I join group sessions without certification?",
-    a: "Group ocean sessions require an AIDA 2 (or equivalent) certification for safety reasons. If you're not certified yet, our Discover Freediving or AIDA 2 course will get you there.",
+    a: "Group ocean sessions require an AIDA 2 (or equivalent) certification for safety reasons. If you're not certified yet, our AIDA 1 or AIDA 2 course will get you started.",
   },
 ];
 

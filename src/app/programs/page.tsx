@@ -22,7 +22,7 @@ const aidaCourses = [
     id: "aida1",
     title: "AIDA 1 — Introduction to Freediving",
     subtitle: "A one-day door into the sport",
-    price: "$175",
+    price: "$200",
     priceNote: "Half day · All equipment guidance included",
     duration: "1 day (3–6 hours)",
     level: "Complete beginners",
@@ -124,25 +124,6 @@ const aidaCourses = [
 
 const otherPrograms = [
   {
-    id: "discover",
-    title: "Discover Freediving",
-    subtitle: "Try it with zero commitment",
-    price: "$175",
-    priceNote: "Half day · Applies toward AIDA 1 or 2",
-    duration: "Half day (4 hours)",
-    level: "Complete beginners",
-    gradient: "from-teal to-seafoam",
-    description:
-      "Not sure if freediving is for you? This half-day experience gives you a taste without the commitment of a full certification. You'll learn basic breathing technique, try your first guided breath holds in a pool, and get a feel for what freediving is all about. Most people are shocked by how long they can actually hold their breath with proper guidance — typically 2–3 minutes on the first session.",
-    includes: [
-      "Introduction to breathing technique and relaxation",
-      "Guided static breath holds",
-      "Basic pool skills and underwater swimming",
-      "All equipment provided",
-      "Applies toward AIDA 1 or 2 if you decide to continue",
-    ],
-  },
-  {
     id: "group",
     title: "Group Ocean Sessions",
     subtitle: "Weekly guided dives with your crew",
@@ -165,7 +146,7 @@ const otherPrograms = [
     id: "coaching",
     title: "Private Coaching",
     subtitle: "Focused training for your specific goals",
-    price: "$175 / session",
+    price: "$150 / session",
     priceNote: "2–3 hours · Certified freedivers only",
     duration: "Flexible — single session or ongoing",
     level: "Any level",
@@ -261,7 +242,7 @@ export default function ProgramsPage() {
                     </thead>
                     <tbody className="text-[#2a2a2a]">
                       {[
-                        { label: "Price", a1: "$175", a2: "$575", a3: "$700" },
+                        { label: "Price", a1: "$200", a2: "$575", a3: "$700" },
                         { label: "Duration", a1: "1 day", a2: "2.5 days", a3: "3 days" },
                         { label: "Max depth", a1: "10m", a2: "20m", a3: "30m" },
                         { label: "STA requirement", a1: "None", a2: "2:00 min", a3: "2:45 min" },
@@ -359,10 +340,10 @@ export default function ProgramsPage() {
               {
                 date: "Apr 12",
                 day: "Saturday",
-                title: "Discover Freediving",
-                detail: "Half-day intro. Perfect for first-timers. Pool session + beach dive.",
+                title: "AIDA 1 — Introduction",
+                detail: "One-day intro to freediving fundamentals. No experience needed.",
                 spots: "6 spots",
-                href: "/contact/courses?course=discover",
+                href: "/contact/courses?course=aida1",
               },
               {
                 date: "Apr 19–20",

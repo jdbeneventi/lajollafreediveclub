@@ -15,10 +15,9 @@ import {
 const FORMSPREE = "https://formspree.io/f/mojknqlk";
 
 const COURSES = [
-  "AIDA 1 — Pool Fundamentals",
+  "AIDA 1 — Introduction to Freediving",
   "AIDA 2 — Open Water Certification",
   "AIDA 3 — Advanced Freediver",
-  "Discover Freediving (half day)",
   "Group Ocean Sessions",
   "Private Coaching",
   "Not sure — help me decide",
@@ -33,10 +32,9 @@ function CourseFormInner() {
     const course = searchParams.get("course");
     if (course) {
       const map: Record<string, string> = {
-        aida1: "AIDA 1 — Pool Fundamentals",
+        aida1: "AIDA 1 — Introduction to Freediving",
         aida2: "AIDA 2 — Open Water Certification",
         aida3: "AIDA 3 — Advanced Freediver",
-        discover: "Discover Freediving (half day)",
         group: "Group Ocean Sessions",
         private: "Private Coaching",
       };

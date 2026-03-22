@@ -4,7 +4,7 @@ import { Logo } from "./Logo";
 const programLinks = [
   { href: "/programs", label: "All Programs" },
   { href: "/contact/courses?course=aida2", label: "AIDA 2 Course" },
-  { href: "/contact/courses?course=discover", label: "Discover Freediving" },
+  { href: "/contact/courses?course=aida1", label: "AIDA 1 — Introduction" },
   { href: "/contact/courses?course=group", label: "Group Sessions" },
   { href: "/contact/courses?course=private", label: "Private Coaching" },
   { href: "/camp-garibaldi", label: "Camp Garibaldi" },

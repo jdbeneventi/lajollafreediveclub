@@ -6,7 +6,7 @@ import { WeekendEmailForm } from "@/components/WeekendEmailForm";
 /* ─── Data ─── */
 const programs = [
   { id: "aida", title: "AIDA 2 Certification", meta: "2–3 days", desc: "The gold standard. Pool and open water training. Walk away certified to dive to 20m.", href: "/programs#aida2" },
-  { id: "discover", title: "Discover Freediving", meta: "Half day", desc: "Not ready to commit? One session. Breathing, pool skills, your first real breath hold.", href: "/programs#aida1" },
+  { id: "aida1", title: "AIDA 1 — Introduction", meta: "1 day", desc: "Your first day in freediving. Breathing, pool skills, your first real breath hold. Walk away certified.", href: "/programs#aida1" },
   { id: "group", title: "Group Ocean Sessions", meta: "Every Saturday", desc: "Weekly guided dives at La Jolla's best spots. Structured training with safety divers.", href: "/programs" },
   { id: "coaching", title: "Private Coaching", meta: "Flexible", desc: "Personalized training — competition prep, equalization, depth anxiety, accelerated cert.", href: "/programs" },
   { id: "camp", title: "Camp Garibaldi", meta: "Ages 8–16", desc: "Week-long ocean camp for kids. Freediving, surf survival, water confidence.", href: "/camp-garibaldi" },

@@ -101,7 +101,7 @@ export default function RootLayout({
                   "@type": "City",
                   name: "San Diego",
                 },
-                priceRange: "$175-$950",
+                priceRange: "$150-$950",
                 openingHours: "Sa 07:00-12:00",
                 sport: "Freediving",
                 founder: {
@@ -152,7 +152,7 @@ export default function RootLayout({
                     name: "How much does a freediving course cost in San Diego?",
                     acceptedAnswer: {
                       "@type": "Answer",
-                      text: "LJFC offers AIDA 1 (Introduction) for $175, AIDA 2 (Beginner Certification) for $575, and AIDA 3 (Advanced) for $700. Private courses available from $800.",
+                      text: "LJFC offers AIDA 1 (Introduction) for $200, AIDA 2 (Beginner Certification) for $575, and AIDA 3 (Advanced) for $700. Private coaching from $150. Private courses available from $800.",
                     },
                   },
                   {
