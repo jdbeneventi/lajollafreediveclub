@@ -34,30 +34,42 @@ export default async function BlogPostPage({ params }: Props) {
   return (
     <>
       {/* Header */}
-      <header className={`bg-gradient-to-b from-deep to-ocean pt-36 pb-16 px-6 text-center`}>
-        <div className="text-sm text-white/40 mb-8">
-          <Link href="/" className="text-white/50 no-underline hover:text-seafoam">
-            Home
-          </Link>
-          {" / "}
-          <Link href="/blog" className="text-white/50 no-underline hover:text-seafoam">
-            Journal
-          </Link>
-          {" / "}
-          {post.category}
-        </div>
+      <header className="relative pt-36 pb-16 px-6 text-center overflow-hidden">
+        {/* Background: hero image or gradient */}
+        {post.heroImage ? (
+          <>
+            <img src={post.heroImage} alt="" className="absolute inset-0 w-full h-full object-cover" />
+            <div className="absolute inset-0 bg-gradient-to-t from-deep via-deep/70 to-deep/40" />
+          </>
+        ) : (
+          <div className={`absolute inset-0 bg-gradient-to-b ${post.gradient}`} />
+        )}
 
-        <span className="inline-block px-4 py-1.5 bg-seafoam/15 text-seafoam rounded-full text-xs font-semibold tracking-wide uppercase mb-6">
-          {post.category}
-        </span>
+        <div className="relative z-10">
+          <div className="text-sm text-white/40 mb-8">
+            <Link href="/" className="text-white/50 no-underline hover:text-seafoam">
+              Home
+            </Link>
+            {" / "}
+            <Link href="/blog" className="text-white/50 no-underline hover:text-seafoam">
+              Journal
+            </Link>
+            {" / "}
+            {post.category}
+          </div>
 
-        <h1 className="font-serif text-[clamp(2.2rem,5vw,3.5rem)] text-white font-normal leading-tight max-w-[740px] mx-auto mb-6">
-          {post.title}
-        </h1>
+          <span className="inline-block px-4 py-1.5 bg-seafoam/15 text-seafoam rounded-full text-xs font-semibold tracking-wide uppercase mb-6">
+            {post.category}
+          </span>
 
-        <div className="flex justify-center gap-8 text-white/45 text-sm">
-          <span>{post.date}</span>
-          <span>{post.readTime}</span>
+          <h1 className="font-serif text-[clamp(2.2rem,5vw,3.5rem)] text-white font-normal leading-tight max-w-[740px] mx-auto mb-6">
+            {post.title}
+          </h1>
+
+          <div className="flex justify-center gap-8 text-white/45 text-sm">
+            <span>{post.date}</span>
+            <span>{post.readTime}</span>
+          </div>
         </div>
       </header>
 

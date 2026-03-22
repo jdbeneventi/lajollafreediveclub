@@ -40,8 +40,12 @@ export default function BlogPage() {
               <div
                 className={`${
                   i === 0 ? "h-[300px]" : "h-[200px]"
-                } relative bg-gradient-to-br ${post.gradient}`}
+                } relative bg-gradient-to-br ${post.gradient} overflow-hidden`}
               >
+                {post.heroImage && (
+                  <img src={post.heroImage} alt="" className="absolute inset-0 w-full h-full object-cover" />
+                )}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
                 <span className="absolute bottom-4 left-4 px-3 py-1.5 bg-white/15 backdrop-blur-md rounded-md text-white text-[0.7rem] font-semibold tracking-wide uppercase">
                   {post.category}
                 </span>

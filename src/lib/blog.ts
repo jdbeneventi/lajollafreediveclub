@@ -6,6 +6,7 @@ export interface BlogPost {
   date: string;
   readTime: string;
   gradient: string;
+  heroImage?: string;
   content: string;
 }
 
@@ -19,6 +20,7 @@ export const posts: BlogPost[] = [
     date: "March 14, 2026",
     readTime: "12 min read",
     gradient: "from-ocean to-teal",
+    heroImage: "/images/blog/freediver-underwater.jpg",
     content: `
 <p>La Jolla might be the best place in California to learn freediving. The water is clear, the marine life is ridiculous, and the underwater topography — from the shallow reefs at the Cove to the deep walls of the Canyon — gives you a natural progression from beginner to advanced without ever leaving the same stretch of coast.</p>
 
@@ -95,6 +97,7 @@ export const posts: BlogPost[] = [
     date: "March 14, 2026",
     readTime: "8 min read",
     gradient: "from-[#14566a] to-seafoam",
+    heroImage: "/images/blog/surfer-underwater.jpg",
     content: `
 <p>Here's a scenario every surfer knows: you're caught inside on a bigger day, a set wave breaks on your head, and you're held down. In that moment, the surfers who've trained their breath and their composure underwater are calm. The ones who haven't are panicking.</p>
 
@@ -149,6 +152,7 @@ export const posts: BlogPost[] = [
     date: "March 14, 2026",
     readTime: "10 min read",
     gradient: "from-deep to-[#14566a]",
+    heroImage: "/images/blog/california-coast.jpg",
     content: `
 <p>San Diego has some of the best freediving on the West Coast — clear water, diverse marine life, and underwater topography that ranges from shallow reef gardens to deep canyon walls. Here are the five best freediving locations in the area, ranked from beginner-friendly to advanced.</p>
 
@@ -214,6 +218,7 @@ export const posts: BlogPost[] = [
     date: "March 2026",
     readTime: "11 min read",
     gradient: "from-ocean to-teal",
+    heroImage: "/images/blog/diver-descending.jpg",
     content: `
 <p>If you're looking into freediving certification, you've probably seen "AIDA" mentioned everywhere. It's the global standard — used in over 100 countries, recognized at every dive center on the planet, and the system we use at La Jolla Freedive Club. But the leveling system can be confusing from the outside. Here's a clear, data-driven breakdown of what each level actually involves.</p>
 
@@ -312,6 +317,7 @@ export const posts: BlogPost[] = [
     date: "March 2026",
     readTime: "9 min read",
     gradient: "from-deep to-ocean",
+    heroImage: "/images/blog/freediver-underwater.jpg",
     content: `
 <p>Freediving has its own alphabet — STA, DYN, DNF, CWT, CWTB, CNF, FIM, VWT, NLT. If you're new to the sport, this looks like gibberish. But each abbreviation represents a specific discipline with its own rules, techniques, and training applications. Here's what they all mean and which ones matter for your training.</p>
 
@@ -400,6 +406,7 @@ export const posts: BlogPost[] = [
     date: "March 16, 2026",
     readTime: "14 min read",
     gradient: "from-deep to-ocean",
+    heroImage: "/images/blog/ocean-calm.jpg",
     content: `
 <p>The moment your face touches water and you hold your breath, something extraordinary happens inside your body. Your heart rate drops. Blood retreats from your arms and legs. Your spleen contracts, squeezing extra red blood cells into circulation. Your lungs prepare to compress without collapsing.</p>
 
@@ -484,6 +491,7 @@ export const posts: BlogPost[] = [
     date: "March 16, 2026",
     readTime: "16 min read",
     gradient: "from-teal to-ocean",
+    heroImage: "/images/blog/ocean-sunrise.jpg",
     content: `
 <p>Every freediver hits the same wall. You're 45 seconds into a breath hold, everything feels fine, and then suddenly your diaphragm starts convulsing. Your body is screaming at you to breathe. You surface gasping, convinced you were about to run out of oxygen.</p>
 
@@ -587,6 +595,7 @@ Round 8: Hold 1:30, Done</p>
     date: "March 16, 2026",
     readTime: "11 min read",
     gradient: "from-ocean to-teal",
+    heroImage: "/images/blog/ocean-sunrise.jpg",
     content: `
 <p>The best freedivers in the world spend more time training on land than in the water. That sounds counterintuitive until you understand what actually limits your freediving: it's not swimming speed or lung size. It's the flexibility of your rib cage, the strength of your diaphragm, your body's CO2 tolerance, and your ability to stay relaxed under physiological stress.</p>
 
@@ -673,6 +682,7 @@ Round 8: Hold 1:30, Done</p>
     date: "March 16, 2026",
     readTime: "13 min read",
     gradient: "from-deep to-teal",
+    heroImage: "/images/blog/diver-descending.jpg",
     content: `
 <p>You're floating at the surface at La Jolla Shores, looking down into blue water. Your buddy gives you the okay sign. You take your final breath, tuck your chin, and begin your duck dive toward the canyon wall 40 feet below.</p>
 
@@ -752,6 +762,7 @@ Round 8: Hold 1:30, Done</p>
     date: "March 18, 2026",
     readTime: "10 min read",
     gradient: "from-deep to-ocean",
+    heroImage: "/images/blog/ocean-calm.jpg",
     content: `
 <p>If you've spent any time around freedivers, someone has mentioned The Big Blue. Luc Besson's 1988 film — released in France as <em>Le Grand Bleu</em> — didn't just depict freediving. It created a generation of freedivers. It sold nearly 10 million tickets in France alone, played in theaters for a full year, and French President Jacques Chirac later described Jacques Mayol as an enduring symbol for the "Big Blue generation."</p>
 
@@ -820,6 +831,7 @@ Round 8: Hold 1:30, Done</p>
     date: "March 19, 2026",
     readTime: "16 min read",
     gradient: "from-teal to-deep",
+    heroImage: "/images/blog/freediver-underwater.jpg",
     content: `
 <p>Every freediver hits the same wall. You've got the breath-hold. You've got the duck dive. You're relaxed, streamlined, sinking into the blue — and then your ears say no. That sharp pressure behind the eardrum that stops your descent cold. You pinch your nose harder, blow harder, and nothing happens. Or worse, something does and it hurts.</p>
 
@@ -1042,6 +1054,7 @@ Round 8: Hold 1:30, Done</p>
     date: "March 21, 2026",
     readTime: "12 min read",
     gradient: "from-ocean to-teal",
+    heroImage: "/images/blog/kelp-forest.jpg",
     content: `
 <p>One of the first questions people ask when they're ready to learn freediving is: <em>which certification should I get?</em></p>
 
