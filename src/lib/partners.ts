@@ -440,6 +440,7 @@ export const partners: Partner[] = [
   {
     slug: "outdoor-outreach",
     name: "Outdoor Outreach",
+    heroImage: "/images/partners/oo-kayakers.jpg",
     heroHeadline: "You take kids climbing, surfing, kayaking.",
     heroHeadlineEm: "We take them under the surface.",
     heroSubtitle: "Outdoor Outreach runs 500+ outdoor programs a year \u2014 hiking, biking, climbing, surfing, SUP, camping. But you don't have freediving. Nobody does. LJFC would be the first freediving program for underserved youth in San Diego. Here's how we add a new dimension to what you already do brilliantly.",
@@ -527,8 +528,9 @@ export const partners: Partner[] = [
       { label: "lajollafreediveclub.com/map", url: "https://lajollafreediveclub.com/map" },
     ],
     images: [
-      { src: "/images/photos/joshua-teaching-kids.jpg", alt: "Joshua teaching kids freediving", caption: "Breath-first methodology \u2014 composure before capability", position: "after-heritage" },
-      { src: "/images/photos/joshua-kid-beach.jpg", alt: "Joshua with a young student at the beach", caption: "From never been in the ocean to confident underwater", position: "after-connection" },
+      { src: "/images/partners/oo-surfers.jpg", alt: "Outdoor Outreach kids with surfboards on the beach", caption: "500+ outdoor programs a year \u2014 hiking, biking, climbing, surfing, kayaking", position: "after-heritage" },
+      { src: "/images/photos/joshua-teaching-kids.jpg", alt: "Joshua teaching kids freediving", caption: "Breath-first methodology \u2014 composure before capability", position: "after-connection" },
+      { src: "/images/photos/joshua-kid-beach.jpg", alt: "Joshua with a young student at the beach", caption: "From never been in the ocean to confident underwater", position: "after-camp" },
       { src: "/images/photos/ljfc-crew-lunch.jpg", alt: "LJFC crew after a Saturday session", caption: "The community behind the program", position: "after-ideas" },
     ],
   },
