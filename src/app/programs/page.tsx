@@ -268,6 +268,23 @@ export default function ProgramsPage() {
         </div>
       </section>
 
+      {/* Video analysis strip */}
+      <div className="bg-deep relative overflow-hidden">
+        <div className="max-w-[1200px] mx-auto grid md:grid-cols-2 items-center">
+          <video autoPlay muted loop playsInline className="w-full h-[250px] md:h-[300px] object-cover">
+            <source src="/videos/video-analysis.mp4" type="video/mp4" />
+          </video>
+          <div className="px-8 py-10 md:py-0">
+            <div className="text-[11px] text-teal/60 font-medium tracking-[0.2em] uppercase mb-3">Every session</div>
+            <h3 className="font-serif text-2xl text-white mb-3">Underwater video analysis</h3>
+            <p className="text-white/50 text-sm leading-relaxed">
+              We film your dives and review technique together — body position, finning, duck dive, equalization timing.
+              It&apos;s the fastest way to improve and the footage is yours to keep.
+            </p>
+          </div>
+        </div>
+      </div>
+
       {/* AIDA Youth */}
       <section className="py-16 md:py-20 px-6 bg-white">
         <div className="max-w-[900px] mx-auto">
