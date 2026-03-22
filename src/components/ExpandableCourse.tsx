@@ -83,10 +83,10 @@ export function ExpandableCourse({ course, isAida }: { course: CourseData; isAid
           <p className="text-[#5a6a7a] text-sm mt-1">{course.subtitle}</p>
         </div>
 
-        <div className="flex items-center gap-4 shrink-0">
+        <div className="flex items-center gap-3 md:gap-4 shrink-0">
           <div className="text-right">
-            <div className="font-serif text-2xl md:text-3xl text-deep tracking-tight">{course.price}</div>
-            <div className="text-[10px] text-[#5a6a7a] max-w-[180px]">{course.priceNote}</div>
+            <div className="font-serif text-xl md:text-3xl text-deep tracking-tight">{course.price}</div>
+            <div className="text-[10px] text-[#5a6a7a] max-w-[140px] md:max-w-[180px]">{course.priceNote}</div>
           </div>
           <ChevronDown open={open} />
         </div>
@@ -159,7 +159,7 @@ export function ExpandableCourse({ course, isAida }: { course: CourseData; isAid
               <h3 className="text-sm font-semibold uppercase tracking-wide text-teal mb-4">
                 Course format
               </h3>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
                 {[
                   { label: "Duration", value: course.format.duration },
                   { label: "Theory", value: course.format.theory },
