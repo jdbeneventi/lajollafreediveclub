@@ -504,7 +504,9 @@ export default function ProgramsPage() {
             <Reveal>
               <div className="bg-white rounded-2xl overflow-hidden">
                 <div className="h-[180px] md:h-[240px] overflow-hidden">
-                  <img src="/images/photos/joshua-lena-shores.jpg" alt="Joshua and Lena at La Jolla Shores" className="w-full h-full object-cover" />
+                  <video autoPlay muted loop playsInline className="w-full h-full object-cover">
+                    <source src="/videos/lena-surfacing.mp4" type="video/mp4" />
+                  </video>
                 </div>
                 <div className="p-6">
                   <div className="text-[10px] text-[#5a6a7a] uppercase tracking-wider font-semibold mb-1">Saturdays · 7:00 AM · La Jolla Shores</div>

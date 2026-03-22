@@ -51,7 +51,9 @@ export default function AboutPage() {
       <section className="bg-gradient-to-b from-deep to-ocean pt-36 pb-20 px-6 text-center">
         <Reveal>
           <div className="w-36 h-36 rounded-full overflow-hidden mx-auto mb-8 border-2 border-white/20">
-            <img src="/images/photos/joshua-red-sea.jpg" alt="Joshua Beneventi in the Red Sea" className="w-full h-full object-cover object-center" />
+            <video autoPlay muted loop playsInline className="w-full h-full object-cover">
+              <source src="/videos/joshua-surfacing.mp4" type="video/mp4" />
+            </video>
           </div>
           <div className="section-label text-seafoam before:bg-seafoam justify-center">
             About

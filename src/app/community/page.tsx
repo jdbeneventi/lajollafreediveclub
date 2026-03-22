@@ -55,6 +55,15 @@ export default function CommunityPage() {
         </Reveal>
       </section>
 
+      {/* Video strip */}
+      <div className="bg-deep">
+        <div className="max-w-[1200px] mx-auto">
+          <video autoPlay muted loop playsInline className="w-full h-[200px] md:h-[300px] object-cover">
+            <source src="/videos/large-group.mp4" type="video/mp4" />
+          </video>
+        </div>
+      </div>
+
       {/* Science & Research */}
       <section className="bg-salt py-20 px-6">
         <div className="max-w-5xl mx-auto">
