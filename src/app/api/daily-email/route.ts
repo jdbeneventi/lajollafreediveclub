@@ -155,6 +155,12 @@ function getOverallGrade(data: ConditionsData): { grade: string; score: number; 
 }
 
 // ─── Email HTML ───
+interface WaterQualityEmail {
+  hasAlert: boolean;
+  alertText: string;
+  color: string;
+}
+
 function buildEmailHtml(
   conditions: ConditionsData,
   grade: { grade: string; score: number; summary: string },
@@ -162,6 +168,7 @@ function buildEmailHtml(
   events: ReturnType<typeof getTopEvents>,
   grunion: boolean,
   tideNote: string,
+  waterQuality?: WaterQualityEmail,
 ): string {
   const now = new Date();
   const dateStr = now.toLocaleDateString("en-US", {
@@ -189,6 +196,14 @@ function buildEmailHtml(
     <div style="font-size:11px;color:#5a6a7a;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px;">La Jolla Freedive Club</div>
     <div style="font-size:14px;color:#5a6a7a;">${dateStr}</div>
   </div>
+
+  ${waterQuality?.hasAlert ? `
+  <!-- Water Quality Alert -->
+  <div style="background:${waterQuality.color};border-radius:16px;padding:14px 20px;margin-bottom:16px;color:white;font-size:13px;">
+    <strong>⚠️ Water Quality Alert</strong> — ${waterQuality.alertText}
+    <a href="https://www.sdbeachinfo.com/" style="color:white;margin-left:4px;">Details →</a>
+  </div>
+  ` : ""}
 
   <!-- Grade Card -->
   <div style="background:white;border-radius:16px;padding:24px;text-align:center;margin-bottom:16px;">
@@ -296,10 +311,11 @@ export async function GET(request: Request) {
   }
 
   try {
-    const [buoyData, windData, tideNote] = await Promise.all([
+    const [buoyData, windData, tideNote, wqRes] = await Promise.all([
       fetchBuoyDirect(),
       fetchWindDirect(),
       fetchTideNote(),
+      fetch("https://www.sdbeachinfo.com/", { headers: { "User-Agent": "LaJollaFreediveClub/1.0" } }).catch(() => null),
     ]);
 
     const conditions: ConditionsData = {
@@ -312,7 +328,26 @@ export async function GET(request: Request) {
     const events = getTopEvents(new Date(), 4);
     const grunion = isGrunionNight(new Date(), moon.age);
 
-    const html = buildEmailHtml(conditions, grade, moon, events, grunion, tideNote);
+    // Parse water quality for email alert
+    let waterQuality: WaterQualityEmail | undefined;
+    if (wqRes && wqRes.ok) {
+      try {
+        const wqHtml = await wqRes.text();
+        const am = wqHtml.match(/Advisories\s*\((\d+)\)/i);
+        const cm = wqHtml.match(/Closures\s*\((\d+)\)/i);
+        const ac = am ? parseInt(am[1]) : 0;
+        const cc = cm ? parseInt(cm[1]) : 0;
+        if (ac > 0 || cc > 0) {
+          waterQuality = {
+            hasAlert: true,
+            alertText: `${ac} advisories${cc > 0 ? `, ${cc} closures` : ""} active across San Diego County. Check sdbeachinfo.com for La Jolla status.`,
+            color: cc > 0 ? "#C75B3A" : "#D4A574",
+          };
+        }
+      } catch {}
+    }
+
+    const html = buildEmailHtml(conditions, grade, moon, events, grunion, tideNote, waterQuality);
 
     // Preview mode — just return the HTML
     if (preview) {

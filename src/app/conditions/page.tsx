@@ -4,6 +4,7 @@ import { Reveal } from "@/components/Reveal";
 import { ConditionsWidget } from "./ConditionsWidget";
 import { AlmanacWidget } from "./AlmanacWidget";
 import { ConditionsEmailForm } from "./ConditionsEmailForm";
+import { WaterQualityCard } from "./WaterQualityCard";
 
 
 export const metadata: Metadata = {
@@ -114,6 +115,8 @@ export default function ConditionsPage() {
           <Reveal>
             <AlmanacWidget />
           </Reveal>
+          <WaterQualityCard />
+
           {/* Kelp Status */}
           {(() => {
             const month = new Date().getMonth();
