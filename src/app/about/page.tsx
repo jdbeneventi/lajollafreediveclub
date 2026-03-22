@@ -173,6 +173,13 @@ export default function AboutPage() {
                 instructor in San Diego — for both adults and kids.
               </p>
 
+              <div className="my-8 rounded-xl overflow-hidden">
+                <video autoPlay muted loop playsInline className="w-full h-auto rounded-xl">
+                  <source src="/videos/group-freedive.mp4" type="video/mp4" />
+                </video>
+                <p className="text-[10px] text-[#5a6a7a] mt-2 italic">Saturday group dive at La Jolla Canyon</p>
+              </div>
+
               <p>
                 La Jolla Freedive Club is the thing I wish had existed when I was growing
                 up here. A crew. A training structure. A place where a kid learning to hold

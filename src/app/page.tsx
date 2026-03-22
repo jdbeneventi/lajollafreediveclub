@@ -146,7 +146,9 @@ export default function Home() {
             <Reveal>
               <div className="relative">
                 <div className="rounded-2xl overflow-hidden aspect-[4/5] md:aspect-[3/4]">
-                  <img src="/images/photos/ljfc-crew-lunch.jpg" alt="La Jolla Freedive Club crew after a Saturday session" className="w-full h-full object-cover" />
+                  <video autoPlay muted loop playsInline className="w-full h-full object-cover">
+                    <source src="/videos/group-freedive.mp4" type="video/mp4" />
+                  </video>
                 </div>
                 {/* Overlapping stat card */}
                 <div className="absolute -bottom-6 -right-4 md:-right-8 bg-deep text-white px-6 py-4 rounded-xl shadow-[0_20px_60px_rgba(11,29,44,0.3)]">

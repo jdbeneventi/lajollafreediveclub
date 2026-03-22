@@ -528,11 +528,10 @@ export default function ProgramsPage() {
 
             <Reveal delay={80}>
               <div className="bg-white rounded-2xl overflow-hidden">
-                <div className="h-[180px] md:h-[240px] overflow-hidden bg-gradient-to-br from-deep to-ocean flex items-center justify-center">
-                  <div className="text-center text-white">
-                    <div className="font-serif text-3xl mb-1">Group Dive</div>
-                    <div className="text-sm opacity-60">La Jolla Canyon</div>
-                  </div>
+                <div className="h-[180px] md:h-[240px] overflow-hidden relative">
+                  <video autoPlay muted loop playsInline className="w-full h-full object-cover">
+                    <source src="/videos/group-freedive.mp4" type="video/mp4" />
+                  </video>
                 </div>
                 <div className="p-6">
                   <div className="text-[10px] text-[#5a6a7a] uppercase tracking-wider font-semibold mb-1">Saturdays · 8:30 AM</div>
