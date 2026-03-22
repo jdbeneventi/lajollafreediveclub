@@ -116,8 +116,6 @@ export default function ConditionsPage() {
           <Reveal>
             <AlmanacWidget />
           </Reveal>
-          <WaterQualityCard />
-          <LocalIntel />
 
           {/* Kelp Status */}
           {(() => {
@@ -149,6 +147,9 @@ export default function ConditionsPage() {
               </div>
             );
           })()}
+
+          <WaterQualityCard />
+          <LocalIntel />
 
           {/* Subscribe + Support */}
           <div className="mt-8 grid sm:grid-cols-2 gap-4">
