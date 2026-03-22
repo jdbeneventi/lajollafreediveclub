@@ -258,6 +258,16 @@ function buildEmailHtml(
     </a>
   </div>
 
+  <!-- Support -->
+  <div style="background:white;border-radius:16px;padding:20px;margin-bottom:16px;text-align:center;">
+    <div style="font-size:13px;color:#0B1D2C;font-weight:600;margin-bottom:6px;">Enjoying the daily report?</div>
+    <div style="font-size:12px;color:#5a6a7a;margin-bottom:12px;line-height:1.6;">This tool is free and always will be. If it helps you plan your dives, consider supporting the project.</div>
+    <a href="https://buymeacoffee.com/lajollafreediveclub" style="display:inline-block;background:#1B6B6B;color:white;padding:8px 20px;border-radius:50px;text-decoration:none;font-weight:600;font-size:12px;">Support LJFC ☕</a>
+    <div style="margin-top:10px;">
+      <a href="mailto:joshuabeneventi@gmail.com?subject=Daily%20Conditions%20Feedback" style="font-size:11px;color:#5a6a7a;text-decoration:underline;">Send feedback or suggestions</a>
+    </div>
+  </div>
+
   <!-- Footer -->
   <div style="text-align:center;font-size:11px;color:#5a6a7a;line-height:1.8;">
     <a href="https://lajollafreediveclub.com" style="color:#1B6B6B;text-decoration:none;">lajollafreediveclub.com</a><br>
