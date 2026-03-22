@@ -126,3 +126,9 @@
 .prose strong {
   @apply font-semibold text-deep;
 }
+
+/* Partner pages: hide main site chrome */
+body:has(.partner-page) { background: #0B1D2C !important; }
+body:has(.partner-page) nav { display: none !important; }
+body:has(.partner-page) > main + footer { display: none !important; }
+body:has(.partner-page) main { padding: 0; }

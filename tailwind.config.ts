@@ -25,6 +25,12 @@ const config: Config = {
         serif: ["Instrument Serif", "Georgia", "serif"],
         sans: ["DM Sans", "-apple-system", "sans-serif"],
       },
+      keyframes: {
+        fadeUp: {
+          from: { opacity: "0", transform: "translateY(20px)" },
+          to: { opacity: "1", transform: "translateY(0)" },
+        },
+      },
     },
   },
   plugins: [],
