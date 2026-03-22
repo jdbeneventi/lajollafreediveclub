@@ -180,6 +180,11 @@ export default function AboutPage() {
                 pushed. Not a certification mill. A community.
               </p>
 
+              <div className="my-8 rounded-xl overflow-hidden">
+                <img src="/images/photos/ljfc-crew-lunch.jpg" alt="LJFC crew after a Saturday session" className="w-full h-auto" />
+                <p className="text-[10px] text-[#5a6a7a] mt-2 italic">Post-session with the Saturday crew</p>
+              </div>
+
               <p>
                 One of the things I care most about is creating access to the ocean for
                 young people. Too many kids grow up near the coast without ever developing
