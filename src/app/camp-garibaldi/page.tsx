@@ -40,8 +40,18 @@ const weekSchedule = [
 export default function CampGaribaldiPage() {
   return (
     <>
+      {/* Education Banner */}
+      <div className="bg-ocean/60 border-b border-seafoam/15 text-center py-3 px-6 mt-[72px]">
+        <p className="text-sm text-salt/70">
+          Camp Garibaldi is the flagship program in our Ocean Education series.{" "}
+          <Link href="/education" className="text-seafoam font-medium underline underline-offset-2 hover:text-seafoam/80 transition-colors">
+            See all programs &rarr;
+          </Link>
+        </p>
+      </div>
+
       {/* Hero */}
-      <section className="relative bg-gradient-to-b from-deep via-ocean to-coral/20 pt-36 pb-24 px-6 text-center overflow-hidden">
+      <section className="relative bg-gradient-to-b from-deep via-ocean to-coral/20 pt-20 pb-24 px-6 text-center overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_80%,rgba(232,115,74,0.2)_0%,transparent_70%)]" />
 
         <Reveal>

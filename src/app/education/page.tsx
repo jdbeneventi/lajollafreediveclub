@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Reveal } from "@/components/Reveal";
+import { getAllPrograms, getSeasonalThemes, getMonthlyEvents } from "@/lib/education";
 
 export const metadata: Metadata = {
   title: "Ocean Education — Field-Based Marine Science for Kids",
@@ -24,7 +25,74 @@ export const metadata: Metadata = {
   },
 };
 
+// Card subtitles and editorial descriptions that differ from the data file
+const programMeta: Record<string, { subtitle: string; editorial: string }> = {
+  "camp-garibaldi": {
+    subtitle: "Flagship Program",
+    editorial:
+      "The original ocean camp. Five days of freediving, marine science, surf survival, and water confidence \u2014 built on a breath-first methodology. Kids learn to read real Scripps ocean data before every session, identify species in the field, and develop the internal calm that makes everything else possible.",
+  },
+  "field-trip": {
+    subtitle: "Schools & Groups",
+    editorial:
+      "A single-day, NGSS-aligned field experience for school groups and homeschool co-ops. Students read live buoy data, conduct a beach survey, enter the marine reserve with snorkel gear, and complete a species identification field journal. Tide pool option available for younger groups (ages 5\u201310).",
+  },
+  series: {
+    subtitle: "After-School & Enrichment",
+    editorial:
+      "A recurring program for families and homeschool groups who want sustained ocean immersion. Monthly or biweekly sessions build cumulative knowledge \u2014 species identification skills, data literacy, breath-hold progression, and seasonal ocean awareness. Each session features a different guest educator or field focus.",
+  },
+  "community-day": {
+    subtitle: "Open to Everyone",
+    editorial:
+      "One Saturday a month, we open the program to families. Parents and kids explore the marine reserve together \u2014 guided snorkel tour, species ID, beach science station, and a guest educator talk. No experience needed. All gear provided.",
+  },
+};
+
+// Seasonal calendar editorial descriptions (richer than data file)
+const seasonalEditorial: Record<string, string> = {
+  Summer:
+    "Leopard sharks arrive in large aggregations. Warm water (68\u201372\u00b0F). Best visibility of the year (15\u201330ft). Garibaldi nesting. Bat rays in the shallows. Grunion runs. Peak camp season.",
+  Fall:
+    "Warmest water of the year (70\u201374\u00b0F). Lobster season opens. Bioluminescence events. Giant black sea bass sightings. Yellowtail and barracuda passing through. Reduced crowds.",
+  Winter:
+    "Gray whale migration. Harbor seals pupping at Children\u2019s Pool. Big swells reshape the sand. Cool water (56\u201362\u00b0F). Storm surge ecology. Best tide pool exposures of the year.",
+  Spring:
+    "Kelp forest regrowth. Horn shark egg cases. Sea hare aggregations. Plankton blooms and food chain ecology. Water warming (60\u201366\u00b0F). Grunion runs begin.",
+};
+
+function buildDetails(program: ReturnType<typeof getAllPrograms>[number]) {
+  const details: { label: string; value: string }[] = [];
+  details.push({ label: "Ages", value: program.ages });
+  if (program.duration && program.id !== "camp-garibaldi")
+    details.push({ label: "Duration", value: program.duration });
+  if (program.id === "camp-garibaldi")
+    details.push({ label: "Schedule", value: "Mon\u2013Fri, 8am\u201312:30pm" });
+  if (program.schedule && program.id === "series")
+    details.push({ label: "Frequency", value: "Monthly or biweekly" });
+  if (program.schedule && program.id === "community-day")
+    details.push({ label: "Schedule", value: "One Saturday/month, 8:30\u201311:30am" });
+  details.push({ label: program.id === "community-day" ? "Capacity" : "Group Size", value: program.groupSize });
+  if (program.id === "series")
+    details.push({ label: "Sessions", value: "8 sessions typical" });
+  if (program.dropInRate)
+    details.push({ label: "Drop-In", value: "$50/session" });
+  details.push({ label: "Includes", value: program.id === "camp-garibaldi" ? "All gear, field journal, snacks" : program.id === "field-trip" ? "Gear, field journal, data sheets" : program.id === "series" ? "Gear, journal, guest educators" : "Gear, guide, guest educator" });
+  details.push({ label: "Location", value: program.location.replace(", Kellogg Park", "") });
+  if (program.militaryRate)
+    details.push({ label: "Military Rate", value: `$${program.militaryRate}/week` });
+  if (program.smallGroupRate)
+    details.push({ label: "Small Group Rate", value: "$75/student (under 6)" });
+  if (program.subscriberRate)
+    details.push({ label: "Subscriber Rate", value: `$${program.subscriberRate}/person` });
+  return details;
+}
+
 export default function EducationPage() {
+  const programs = getAllPrograms();
+  const seasonalThemes = getSeasonalThemes();
+  const _monthlyEvents = getMonthlyEvents();
+
   return (
     <div className="bg-deep text-salt font-sans font-light leading-relaxed overflow-x-hidden">
       {/* Grain overlay */}
@@ -137,163 +205,37 @@ export default function EducationPage() {
         </Reveal>
 
         <div className="grid md:grid-cols-2 gap-8">
-          {/* Camp Garibaldi */}
-          <Reveal>
-            <div className="p-8 md:p-10 bg-ocean/25 border border-seafoam/10 rounded-sm relative">
-              <div className="absolute top-4 right-4 flex gap-2">
-                <span className="text-[10px] tracking-[0.15em] uppercase bg-sand/20 text-sand px-3 py-1 rounded-full">Charter Eligible</span>
-              </div>
-              <div className="text-[11px] tracking-[0.15em] uppercase text-seafoam/60 mb-3">Flagship Program</div>
-              <h3 className="font-serif text-[1.6rem] font-normal text-salt mb-2">Camp Garibaldi</h3>
-              <div className="font-serif text-[1.8rem] text-sand mb-4">$750<span className="text-[0.9rem] text-salt/40">/week</span></div>
-              <p className="text-[0.95rem] text-salt/65 leading-[1.8] mb-6">
-                The original ocean camp. Five days of freediving, marine science, surf survival, and water confidence &mdash; built on a breath-first methodology. Kids learn to read real Scripps ocean data before every session, identify species in the field, and develop the internal calm that makes everything else possible.
-              </p>
-              <div className="grid grid-cols-2 gap-4 text-[0.85rem]">
-                <div>
-                  <span className="text-salt/35 block mb-1">Ages</span>
-                  <span className="text-salt/70">8&ndash;16</span>
+          {programs.map((program, i) => {
+            const meta = programMeta[program.id];
+            const details = buildDetails(program);
+            return (
+              <Reveal key={program.id} delay={i % 2 === 1 ? 100 : 0}>
+                <div className={`p-8 md:p-10 bg-ocean/25 border border-seafoam/10 rounded-sm${program.charterEligible ? " relative" : ""}`}>
+                  {program.charterEligible && (
+                    <div className="absolute top-4 right-4 flex gap-2">
+                      <span className="text-[10px] tracking-[0.15em] uppercase bg-sand/20 text-sand px-3 py-1 rounded-full">Charter Eligible</span>
+                    </div>
+                  )}
+                  <div className="text-[11px] tracking-[0.15em] uppercase text-seafoam/60 mb-3">{meta?.subtitle}</div>
+                  <h3 className="font-serif text-[1.6rem] font-normal text-salt mb-2">{program.name}</h3>
+                  <div className="font-serif text-[1.8rem] text-sand mb-4">
+                    ${program.price}<span className="text-[0.9rem] text-salt/40">/{program.priceUnit}</span>
+                  </div>
+                  <p className="text-[0.95rem] text-salt/65 leading-[1.8] mb-6">
+                    {meta?.editorial}
+                  </p>
+                  <div className="grid grid-cols-2 gap-4 text-[0.85rem]">
+                    {details.map((d) => (
+                      <div key={d.label}>
+                        <span className="text-salt/35 block mb-1">{d.label}</span>
+                        <span className="text-salt/70">{d.value}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-                <div>
-                  <span className="text-salt/35 block mb-1">Schedule</span>
-                  <span className="text-salt/70">Mon&ndash;Fri, 8am&ndash;12:30pm</span>
-                </div>
-                <div>
-                  <span className="text-salt/35 block mb-1">Group Size</span>
-                  <span className="text-salt/70">Max 8&ndash;10</span>
-                </div>
-                <div>
-                  <span className="text-salt/35 block mb-1">Includes</span>
-                  <span className="text-salt/70">All gear, field journal, snacks</span>
-                </div>
-                <div>
-                  <span className="text-salt/35 block mb-1">Location</span>
-                  <span className="text-salt/70">La Jolla Shores</span>
-                </div>
-                <div>
-                  <span className="text-salt/35 block mb-1">Military Rate</span>
-                  <span className="text-salt/70">$625/week</span>
-                </div>
-              </div>
-            </div>
-          </Reveal>
-
-          {/* Ocean Science Field Trip */}
-          <Reveal delay={100}>
-            <div className="p-8 md:p-10 bg-ocean/25 border border-seafoam/10 rounded-sm relative">
-              <div className="absolute top-4 right-4 flex gap-2">
-                <span className="text-[10px] tracking-[0.15em] uppercase bg-sand/20 text-sand px-3 py-1 rounded-full">Charter Eligible</span>
-              </div>
-              <div className="text-[11px] tracking-[0.15em] uppercase text-seafoam/60 mb-3">Schools & Groups</div>
-              <h3 className="font-serif text-[1.6rem] font-normal text-salt mb-2">Ocean Science Field Trip</h3>
-              <div className="font-serif text-[1.8rem] text-sand mb-4">$50<span className="text-[0.9rem] text-salt/40">/student</span></div>
-              <p className="text-[0.95rem] text-salt/65 leading-[1.8] mb-6">
-                A single-day, NGSS-aligned field experience for school groups and homeschool co-ops. Students read live buoy data, conduct a beach survey, enter the marine reserve with snorkel gear, and complete a species identification field journal. Tide pool option available for younger groups (ages 5&ndash;10).
-              </p>
-              <div className="grid grid-cols-2 gap-4 text-[0.85rem]">
-                <div>
-                  <span className="text-salt/35 block mb-1">Ages</span>
-                  <span className="text-salt/70">8&ndash;16 (tide pool: 5&ndash;10)</span>
-                </div>
-                <div>
-                  <span className="text-salt/35 block mb-1">Duration</span>
-                  <span className="text-salt/70">3&ndash;4 hours</span>
-                </div>
-                <div>
-                  <span className="text-salt/35 block mb-1">Group Size</span>
-                  <span className="text-salt/70">6&ndash;12 students</span>
-                </div>
-                <div>
-                  <span className="text-salt/35 block mb-1">Includes</span>
-                  <span className="text-salt/70">Gear, field journal, data sheets</span>
-                </div>
-                <div>
-                  <span className="text-salt/35 block mb-1">Location</span>
-                  <span className="text-salt/70">La Jolla Shores</span>
-                </div>
-                <div>
-                  <span className="text-salt/35 block mb-1">Small Group Rate</span>
-                  <span className="text-salt/70">$75/student (under 6)</span>
-                </div>
-              </div>
-            </div>
-          </Reveal>
-
-          {/* Ocean Science Series */}
-          <Reveal>
-            <div className="p-8 md:p-10 bg-ocean/25 border border-seafoam/10 rounded-sm">
-              <div className="text-[11px] tracking-[0.15em] uppercase text-seafoam/60 mb-3">After-School & Enrichment</div>
-              <h3 className="font-serif text-[1.6rem] font-normal text-salt mb-2">Ocean Science Series</h3>
-              <div className="font-serif text-[1.8rem] text-sand mb-4">$400<span className="text-[0.9rem] text-salt/40">/student/semester</span></div>
-              <p className="text-[0.95rem] text-salt/65 leading-[1.8] mb-6">
-                A recurring program for families and homeschool groups who want sustained ocean immersion. Monthly or biweekly sessions build cumulative knowledge &mdash; species identification skills, data literacy, breath-hold progression, and seasonal ocean awareness. Each session features a different guest educator or field focus.
-              </p>
-              <div className="grid grid-cols-2 gap-4 text-[0.85rem]">
-                <div>
-                  <span className="text-salt/35 block mb-1">Ages</span>
-                  <span className="text-salt/70">8&ndash;16</span>
-                </div>
-                <div>
-                  <span className="text-salt/35 block mb-1">Frequency</span>
-                  <span className="text-salt/70">Monthly or biweekly</span>
-                </div>
-                <div>
-                  <span className="text-salt/35 block mb-1">Sessions</span>
-                  <span className="text-salt/70">8 sessions typical</span>
-                </div>
-                <div>
-                  <span className="text-salt/35 block mb-1">Drop-In</span>
-                  <span className="text-salt/70">$50/session</span>
-                </div>
-                <div>
-                  <span className="text-salt/35 block mb-1">Includes</span>
-                  <span className="text-salt/70">Gear, journal, guest educators</span>
-                </div>
-                <div>
-                  <span className="text-salt/35 block mb-1">Location</span>
-                  <span className="text-salt/70">La Jolla Shores</span>
-                </div>
-              </div>
-            </div>
-          </Reveal>
-
-          {/* Community Ocean Day */}
-          <Reveal delay={100}>
-            <div className="p-8 md:p-10 bg-ocean/25 border border-seafoam/10 rounded-sm">
-              <div className="text-[11px] tracking-[0.15em] uppercase text-seafoam/60 mb-3">Open to Everyone</div>
-              <h3 className="font-serif text-[1.6rem] font-normal text-salt mb-2">Community Ocean Day</h3>
-              <div className="font-serif text-[1.8rem] text-sand mb-4">$35<span className="text-[0.9rem] text-salt/40">/person</span></div>
-              <p className="text-[0.95rem] text-salt/65 leading-[1.8] mb-6">
-                One Saturday a month, we open the program to families. Parents and kids explore the marine reserve together &mdash; guided snorkel tour, species ID, beach science station, and a guest educator talk. No experience needed. All gear provided.
-              </p>
-              <div className="grid grid-cols-2 gap-4 text-[0.85rem]">
-                <div>
-                  <span className="text-salt/35 block mb-1">Ages</span>
-                  <span className="text-salt/70">All ages (kids + parents)</span>
-                </div>
-                <div>
-                  <span className="text-salt/35 block mb-1">Schedule</span>
-                  <span className="text-salt/70">One Saturday/month, 8:30&ndash;11:30am</span>
-                </div>
-                <div>
-                  <span className="text-salt/35 block mb-1">Capacity</span>
-                  <span className="text-salt/70">16&ndash;20 people</span>
-                </div>
-                <div>
-                  <span className="text-salt/35 block mb-1">Includes</span>
-                  <span className="text-salt/70">Gear, guide, guest educator</span>
-                </div>
-                <div>
-                  <span className="text-salt/35 block mb-1">Location</span>
-                  <span className="text-salt/70">La Jolla Shores</span>
-                </div>
-                <div>
-                  <span className="text-salt/35 block mb-1">Subscriber Rate</span>
-                  <span className="text-salt/70">$25/person</span>
-                </div>
-              </div>
-            </div>
-          </Reveal>
+              </Reveal>
+            );
+          })}
         </div>
       </section>
 
@@ -392,38 +334,42 @@ export default function EducationPage() {
               La Jolla&apos;s marine reserve is a different classroom every season. We build the curriculum around what&apos;s actually happening in the water.
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {[
-                {
-                  season: "Summer",
-                  months: "Jun \u2013 Aug",
-                  highlights: "Leopard sharks arrive in large aggregations. Warm water (68\u201372\u00b0F). Best visibility of the year (15\u201330ft). Garibaldi nesting. Bat rays in the shallows. Grunion runs. Peak camp season.",
-                },
-                {
-                  season: "Fall",
-                  months: "Sep \u2013 Nov",
-                  highlights: "Warmest water of the year (70\u201374\u00b0F). Lobster season opens. Bioluminescence events. Giant black sea bass sightings. Yellowtail and barracuda passing through. Reduced crowds.",
-                },
-                {
-                  season: "Winter",
-                  months: "Dec \u2013 Feb",
-                  highlights: "Gray whale migration. Harbor seals pupping at Children\u2019s Pool. Big swells reshape the sand. Cool water (56\u201362\u00b0F). Storm surge ecology. Best tide pool exposures of the year.",
-                },
-                {
-                  season: "Spring",
-                  months: "Mar \u2013 May",
-                  highlights: "Kelp forest regrowth. Horn shark egg cases. Sea hare aggregations. Plankton blooms and food chain ecology. Water warming (60\u201366\u00b0F). Grunion runs begin.",
-                },
-              ].map((s) => (
-                <div key={s.season} className="p-6 bg-deep/50 border border-seafoam/[0.08] rounded-sm">
-                  <div className="font-serif text-[1.3rem] text-sand mb-1">{s.season}</div>
+              {seasonalThemes.map((s) => (
+                <div key={s.month} className="p-6 bg-deep/50 border border-seafoam/[0.08] rounded-sm">
+                  <div className="font-serif text-[1.3rem] text-sand mb-1">{s.month}</div>
                   <div className="text-[11px] tracking-[0.15em] uppercase text-seafoam/60 mb-3">{s.months}</div>
-                  <div className="text-[0.85rem] text-salt/45 leading-[1.6]">{s.highlights}</div>
+                  <div className="text-[0.85rem] text-salt/45 leading-[1.6]">{seasonalEditorial[s.month] || s.description}</div>
                 </div>
               ))}
             </div>
           </div>
         </div>
       </Reveal>
+
+      {/* ── Monthly Themes ── */}
+      <section className="py-24 px-6 md:px-8 max-w-[1200px] mx-auto border-t border-seafoam/15">
+        <Reveal>
+          <div className="text-[11px] text-teal/60 font-medium tracking-[0.2em] uppercase mb-4">Monthly Themes</div>
+          <h2 className="font-serif text-[clamp(2rem,4vw,3rem)] font-normal leading-[1.2] mb-4">
+            Twelve months. <em className="italic text-sand">Twelve themes.</em>
+          </h2>
+          <p className="text-salt/55 max-w-[700px] mb-16">
+            Each month features a different topic and guest organization, tied to what&apos;s actually happening in the water.
+          </p>
+        </Reveal>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {_monthlyEvents.map((event, i) => (
+            <Reveal key={event.month} delay={(i % 3) * 60}>
+              <div className="p-6 bg-ocean/25 border border-seafoam/10 rounded-sm">
+                <div className="text-[11px] tracking-[0.15em] uppercase text-seafoam/60 mb-2">{event.month}</div>
+                <div className="font-serif text-[1.1rem] text-salt mb-1">{event.theme}</div>
+                <div className="text-[0.8rem] text-sand/70 mb-2">{event.guestOrg}</div>
+                <div className="text-[0.85rem] text-salt/45 leading-[1.6]">{event.description}</div>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </section>
 
       {/* ── Charter Funding ── */}
       <section className="py-24 px-6 md:px-8 max-w-[1000px] mx-auto border-t border-seafoam/15">

@@ -224,6 +224,14 @@ export const partners: NetworkPartner[] = [
           "Heart rate, blood flow, and oxygen dynamics during apnea — the science of what happens to your body on a dive.",
         duration: "60min",
       },
+      {
+        title: "Dive Reflex Physiology Deep-Dive",
+        partner: "EPARC / UCSD",
+        description:
+          "Heart rate, blood flow, oxygen dynamics during apnea. Students measure their own dive reflex.",
+        duration: "60min",
+        ngss: ["HS-LS1-3"],
+      },
     ],
     showOnCommunityPage: false,
     nextStep:
@@ -244,6 +252,14 @@ export const partners: NetworkPartner[] = [
         description:
           "Acoustic tagging, migration patterns, and leopard shark aggregations — real research from La Jolla waters.",
         duration: "60min",
+      },
+      {
+        title: "Shark Research & Acoustic Tagging",
+        partner: "Hubbs-SeaWorld Research Institute",
+        description:
+          "How sharks are tracked, migration patterns, the La Jolla leopard shark aggregation.",
+        duration: "60min",
+        ngss: ["MS-LS2-1"],
       },
     ],
     showOnCommunityPage: false,
@@ -1028,6 +1044,147 @@ export const partners: NetworkPartner[] = [
     showOnCommunityPage: false,
     nextStep:
       "Continue regular observations, encourage community members to contribute",
+  },
+
+  // ─── GUEST MODULE PARTNERS (Future) ──────────────────────────────
+  {
+    id: "sd-natural-history-museum",
+    name: "SD Natural History Museum",
+    category: "science",
+    priority: "future",
+    status: "not_started",
+    whatTheyOffer:
+      "Paleontology and geology expertise, museum education resources",
+    whatWeOffer:
+      "Field-based geology sessions, community education programming",
+    guestModules: [
+      {
+        title: "Canyon Geology & Paleontology",
+        partner: "SD Natural History Museum",
+        description:
+          "The La Jolla canyon is carved into 75-million-year-old Cretaceous sandstone. Canyon wall striations, plate tectonics, sea level change.",
+        duration: "60min",
+        ngss: ["MS-ESS1-4", "MS-ESS2-3"],
+      },
+    ],
+    showOnCommunityPage: false,
+    nextStep:
+      "Contact museum education department about Camp Garibaldi geology guest sessions",
+  },
+  {
+    id: "marine-room-restaurant",
+    name: "Marine Room Restaurant",
+    category: "business",
+    priority: "future",
+    status: "not_started",
+    whatTheyOffer:
+      "Chef-led ocean-to-plate education, sustainable seafood expertise",
+    whatWeOffer:
+      "Community programming, youth ocean education partnership",
+    guestModules: [
+      {
+        title: "Ocean to Plate",
+        partner: "Marine Room Restaurant",
+        description:
+          "A chef from the Marine Room connects the species kids saw underwater to sustainable seafood — the food chain from reef to restaurant.",
+        duration: "45min",
+      },
+    ],
+    showOnCommunityPage: false,
+    nextStep:
+      "Contact Marine Room about a guest chef session for Camp Garibaldi",
+  },
+  {
+    id: "sd-fire-rescue-dive-team",
+    name: "SD Fire-Rescue Dive Team",
+    category: "government",
+    priority: "future",
+    status: "not_started",
+    whatTheyOffer:
+      "Public safety diving expertise, career pathway education",
+    whatWeOffer:
+      "Community youth programming, ocean safety awareness",
+    guestModules: [
+      {
+        title: "Underwater Search & Recovery",
+        partner: "SD Fire-Rescue Dive Team",
+        description:
+          "How the dive team operates, equipment overview, career pathways in public safety diving.",
+        duration: "60min",
+      },
+    ],
+    showOnCommunityPage: false,
+    nextStep:
+      "Contact SD Fire-Rescue dive team about a guest session for Camp Garibaldi",
+  },
+  {
+    id: "local-underwater-photographer",
+    name: "Local Underwater Photographer",
+    category: "community",
+    priority: "future",
+    status: "not_started",
+    whatTheyOffer:
+      "Underwater photography expertise, visual storytelling skills",
+    whatWeOffer:
+      "Youth education platform, community exposure",
+    guestModules: [
+      {
+        title: "Underwater Photography & Art",
+        partner: "Local Underwater Photographer",
+        description:
+          "Composition, lighting, and storytelling underwater. Kids photograph what they observed and create a visual species log.",
+        duration: "60min",
+      },
+    ],
+    showOnCommunityPage: false,
+    nextStep:
+      "Identify local underwater photographers for guest educator sessions",
+  },
+  {
+    id: "sd-zoo-wildlife-alliance",
+    name: "SD Zoo Wildlife Alliance",
+    category: "conservation",
+    priority: "future",
+    status: "not_started",
+    whatTheyOffer:
+      "Global conservation expertise, ocean conservation programs",
+    whatWeOffer:
+      "Local marine education partner, community programming",
+    guestModules: [
+      {
+        title: "Marine Conservation & Global Connections",
+        partner: "SD Zoo Wildlife Alliance",
+        description:
+          "How local marine conservation connects to global efforts. The zoo's ocean conservation programs.",
+        duration: "60min",
+      },
+    ],
+    showOnCommunityPage: false,
+    nextStep:
+      "Contact SD Zoo Wildlife Alliance about marine conservation guest sessions",
+  },
+  {
+    id: "noaa-marine-sanctuaries",
+    name: "NOAA National Marine Sanctuaries",
+    category: "government",
+    priority: "future",
+    status: "not_started",
+    whatTheyOffer:
+      "Marine protected area expertise, federal conservation education",
+    whatWeOffer:
+      "Community youth education in a marine reserve, citizen science potential",
+    guestModules: [
+      {
+        title: "Marine Protected Areas",
+        partner: "NOAA National Marine Sanctuaries",
+        description:
+          "The Matlahuayl reserve in context — how marine protected areas work and why they matter.",
+        duration: "60min",
+      },
+    ],
+    showOnCommunityPage: false,
+    nextStep:
+      "Contact NOAA National Marine Sanctuaries West Coast office about education partnership",
   },
 ];
 
