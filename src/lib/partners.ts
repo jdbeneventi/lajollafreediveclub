@@ -19,17 +19,42 @@ export interface PartnerCredential {
   label: string;
 }
 
+export interface PipelineStep {
+  icon: string;
+  label: string;
+  detail: string;
+}
+
+export interface ConnectionSection {
+  label: string;
+  title: string;
+  titleEm: string;
+  cards: { title: string; content: string[] }[];
+}
+
+export interface ScienceComm {
+  label: string;
+  title: string;
+  titleEm: string;
+  paragraphs: string[];
+}
+
 export interface Partner {
   slug: string;
   name: string;
   heroHeadline: string;
   heroHeadlineEm: string;
   heroSubtitle: string;
+  heritageLabel?: string;
   heritageQuote: string;
   heritageAttribution: string;
   connectionTitle: string;
   connectionTitleEm: string;
+  connectionLabel?: string;
   connectionCards: { title: string; content: string[] }[];
+  pipeline?: { label: string; title: string; titleEm: string; steps: PipelineStep[]; footnote?: string };
+  additionalSections?: ConnectionSection[];
+  scienceComm?: ScienceComm;
   researchTitle?: string;
   researchTitleEm?: string;
   researchSubtitle?: string;
@@ -45,8 +70,10 @@ export interface Partner {
   partnershipTitleEm: string;
   partnershipIdeas: PartnerIdea[];
   showCamp: boolean;
+  campDescription?: string;
   campHighlights?: PartnerCampHighlight[];
   credentials: PartnerCredential[];
+  credentialsLabel?: string;
   ctaTitle: string;
   ctaTitleEm: string;
   ctaDescription: string;
@@ -54,6 +81,7 @@ export interface Partner {
   ctaEmail: string;
   ctaEmailSubject: string;
   ctaSecondary: string;
+  ctaLinks?: { label: string; url: string }[];
 }
 
 export const partners: Partner[] = [
@@ -146,6 +174,125 @@ export const partners: Partner[] = [
     ctaEmail: "joshuabeneventi@gmail.com",
     ctaEmailSubject: "LJFC × Scripps — Community Data Partnership",
     ctaSecondary: "Joshua Beneventi · UCSD Alum · joshuabeneventi@gmail.com",
+  },
+  {
+    slug: "birch-aquarium",
+    name: "Birch Aquarium at Scripps",
+    heroHeadline: "550,000 visitors a year.",
+    heroHeadlineEm: "One mile from the wild ocean.",
+    heroSubtitle: "La Jolla is one of the only places in the world where families can swim with leopard sharks, watch sea lions play, and spot garibaldi on a reef \u2014 all from shore, in waist-deep water. Birch Aquarium shows them why the ocean matters. We give them the experience of being in it. Together, we could build something neither of us can offer alone.",
+    heritageLabel: "Why This Matters to Me",
+    heritageQuote: "I graduated from UCSD and came back to La Jolla to build the ocean program I wished existed when I was a kid here. My great-grandfather was a whaler from the Azores. My grandfather freedived for abalone in La Jolla. The first freediving club in America was founded here in 1939. I grew up in the water \u2014 and I know the difference between a kid who loves the ocean and a kid who's safe in it. Birch Aquarium creates the love. Camp Garibaldi builds the safety. Together, that's a complete ocean education.",
+    heritageAttribution: "Joshua Beneventi \u2014 UCSD Alum, Founder of LJFC",
+    connectionLabel: "The Opportunity",
+    connectionTitle: "The wildlife is",
+    connectionTitleEm: "right there.",
+    connectionCards: [
+      {
+        title: "An untapped tourism experience",
+        content: [
+          "Every summer, leopard sharks aggregate in knee-deep water at La Jolla Shores \u2014 visible from the sand. Sea lions play with snorkelers at the Cove. Garibaldi \u2014 California's state fish \u2014 glow bright orange on every reef dive. Horn sharks rest under ledges at 20 feet. This is world-class marine wildlife, accessible to anyone who can put their face in the water.",
+          "Birch Aquarium gets 550,000 visitors a year \u2014 many of them tourists looking for experiences. A mile away, these same animals are in the wild. But right now, there's no guided, professional bridge between the exhibit and the encounter. That's the opportunity.",
+        ],
+      },
+      {
+        title: "What we bring to the table",
+        content: [
+          "For kids, Camp Garibaldi is a week-long ocean camp: breath training, freediving, surf survival, marine species identification \u2014 all at La Jolla Shores. For adults and tourists, Discover Freediving is a 3-hour guided experience that gets them safely into the water and face-to-face with the animals they just saw behind glass. We're not an alternative to Birch's programming \u2014 we're the in-water extension.",
+          "We handle safety (AIDA certified, DAN insured, Red Cross trained), provide all gear, and know these waters intimately \u2014 we dive here every week, year-round. Birch provides the science and the audience. We provide the immersion. Together, it's a complete La Jolla ocean experience that doesn't exist anywhere else in California.",
+        ],
+      },
+    ],
+    pipeline: {
+      label: "The Family Journey",
+      title: "From exhibit to",
+      titleEm: "ocean.",
+      steps: [
+        { icon: "\uD83D\uDC20", label: "Birch Aquarium", detail: "Family visits. Kid sees the kelp forest exhibit. Falls in love with the ocean." },
+        { icon: "\uD83D\uDCA1", label: "Inspiration", detail: "\"Can we go in the ocean? Can I see a real shark?\" Parent looks for options." },
+        { icon: "\uD83C\uDF0A", label: "Camp Garibaldi", detail: "Week-long ocean camp. Breath training, freediving, surf survival, marine science." },
+        { icon: "\uD83E\uDD3F", label: "Ocean Safe", detail: "Kid can read rip currents, survive surf, hold their breath, identify species, and handle themselves in real conditions." },
+        { icon: "\uD83D\uDD04", label: "Ocean Steward", detail: "Returns to Birch with deeper understanding. Becomes a lifelong advocate for ocean conservation." },
+      ],
+      footnote: "For adults and tourists: Birch visit in the morning \u2192 Discover Freediving at La Jolla Shores in the afternoon. A complete ocean day, science to immersion, all within a mile of each other.",
+    },
+    additionalSections: [
+      {
+        label: "The Safety Case",
+        title: "Inspiration without preparation",
+        titleEm: "is a risk.",
+        cards: [
+          {
+            title: "The gap is real",
+            content: [
+              "Drowning is a leading cause of death for children ages 1\u201314. La Jolla's coastline \u2014 rip currents at the Shores, surge at the Cove, rocks at Windansea \u2014 demands respect. Every summer, lifeguards rescue hundreds of swimmers at La Jolla beaches. Many are tourists and families who love the ocean but don't know how to read it.",
+              "Birch Aquarium does something extraordinary: it makes people want to get in the water. That's a gift. But when a family leaves Birch and walks down to La Jolla Shores without knowing what a rip current looks like, there's a gap between inspiration and safety that someone should fill.",
+            ],
+          },
+          {
+            title: "What we teach",
+            content: [
+              "Camp Garibaldi's curriculum starts with ocean safety before anything else. Kids learn to read surf conditions, identify rip currents, perform the stingray shuffle, respond to hold-downs, and execute recovery breathing after submersion. These aren't theoretical lessons \u2014 they're practiced in the water, in real conditions, at La Jolla Shores.",
+              "Our Discover Freediving course for adults covers the same fundamentals: breath control, calm under pressure, surf entry and exit, and how to assess conditions before entering the water. A Birch visitor who takes this course before their beach day is genuinely safer in the ocean.",
+            ],
+          },
+        ],
+      },
+    ],
+    scienceComm: {
+      label: "Science Communication",
+      title: "We don't just teach skills.",
+      titleEm: "We teach the science behind them.",
+      paragraphs: [
+        "Camp Garibaldi isn't a generic ocean camp. Every session includes real physiology education \u2014 age-appropriate but scientifically grounded. Kids learn why the urge to breathe comes from rising CO\u2082, not low oxygen. They learn that their heart rate drops when their face hits cold water \u2014 the mammalian dive reflex \u2014 and that seals, whales, and dolphins share the same response. They learn that their spleen contracts to release oxygen-carrying red blood cells during a breath-hold.",
+        "I've independently reviewed over 150 peer-reviewed papers on breath-hold diving physiology \u2014 from cerebral blood flow dynamics during apnea to the role of hypercapnia in neural plasticity. This isn't surface-level. I can speak to Birch's audience at whatever depth they want \u2014 from a 5-minute kids' talk about why dolphins hold their breath to a full public lecture on the neuroscience of the diving response.",
+        "If Birch ever wants a guest speaker for a member event, school group, or public program on the physiology of breath-hold diving \u2014 the same physiology that governs every marine mammal in the exhibits \u2014 I'd love to do it.",
+      ],
+    },
+    showCamp: true,
+    campDescription: "A week-long ocean camp for ages 8\u201316 that starts with ocean safety and builds to freediving. Surf survival, rip current identification, breath control, and composure under pressure come first \u2014 before kids ever put a mask on. By the end of the week, they don't just love the ocean. They know how to be safe in it. That's the skill set that lasts a lifetime and the one most kids never get.",
+    campHighlights: [
+      { label: "Surf Survival First", description: "Rip current identification, wave assessment, safe entry and exit, hold-down response, recovery breathing. Real skills for real conditions at La Jolla Shores." },
+      { label: "Breath-First Methodology", description: "Breathing drills and composure training before any water skills. We build internal calm and breath control so kids don't panic when things get real." },
+      { label: "Scripps Data Literacy", description: "Kids learn to read buoy data, tide charts, and swell forecasts from the same instruments Birch's scientists use. They learn to assess the ocean before entering it." },
+      { label: "Species in the Wild", description: "The garibaldi, leopard sharks, horn sharks, and sea lions they saw at Birch \u2014 we show them the same animals in their natural habitat at La Jolla Shores and Cove." },
+      { label: "Conservation Through Competence", description: "Kids who are safe and comfortable in the ocean become its strongest advocates. Every session includes marine reserve education, species identification, and stewardship." },
+      { label: "Certified Safety", description: "AIDA Youth Instructor. DAN insured. Red Cross First Aid/CPR/AED. All gear provided. 4:1 student-to-instructor ratio in the water." },
+    ],
+    partnershipTitle: "Seven ways to connect",
+    partnershipTitleEm: "exhibit to ocean.",
+    partnershipIdeas: [
+      { title: "Co-Hosted \"Exhibit to Ocean\" Experience", description: "The flagship idea. A quarterly or seasonal event: morning at Birch with a guided tour of the kelp forest and Living Seas exhibits, afternoon at La Jolla Shores for a guided snorkel and wildlife encounter with LJFC. Families see leopard sharks, garibaldi, and sea lions in the wild \u2014 the same species they just saw behind glass. Could work as a public event, a Birch member exclusive, or a premium tourism package." },
+      { title: "Discover Freediving for Birch Visitors", description: "A 3-hour guided ocean experience for adults and tourists: breath control, ocean safety, and a guided snorkel or freedive at La Jolla Shores. The draw is the wildlife \u2014 leopard sharks in the shallows, bat rays cruising the sand, garibaldi on every reef. Could also run as a special \"Ocean After Dark\" night snorkel \u2014 hunting octopus, horn sharks, bioluminescence. Premium, memorable, and unlike anything else offered in La Jolla." },
+      { title: "Camp Garibaldi Scholarship", description: "Birch sponsors one or more Camp Garibaldi spots per summer for a family that couldn't otherwise afford it. This isn't just enrichment \u2014 it's life-saving capability. A sponsored kid learns surf survival, breath control, rip current identification, and ocean confidence. They also become a lifelong ocean steward. \"Birch Aquarium doesn't just show kids the ocean \u2014 they help make them safe in it.\" We handle all logistics and instruction." },
+      { title: "Guest Speaker \u2014 The Physiology of Diving", description: "Every marine mammal in Birch's exhibits shares the mammalian dive reflex with humans \u2014 bradycardia, peripheral vasoconstriction, splenic contraction. I can present on this topic for any Birch audience: a 5-minute kids' talk on \"why dolphins hold their breath,\" a member evening on the neuroscience of freediving, or a school group session connecting exhibit animals to human physiology. This bridges Birch's marine biology programming with human performance science in a way no other local partner can." },
+      { title: "Shared Educational Resources", description: "Our underwater field guide documents 50+ species at La Jolla with depth zones, seasonal patterns, and identification tips. Our conditions platform displays real-time Scripps data in a format anyone can understand. These resources could complement Birch exhibits, power educational handouts, or serve as a \"what's in the water today\" display in the aquarium \u2014 connecting the species behind glass to what's actually swimming outside right now." },
+      { title: "Mutual Referral & Collateral", description: "Birch lists Camp Garibaldi (youth) and Discover Freediving (adults) as \"recommended local experiences\" on its website, family resources, or visitor guide. We list Birch Aquarium on our site as the essential marine science companion. We provide professionally designed cards for the gift shop and admissions desk at no cost. Simple, low-effort, easy to start immediately." },
+      { title: "Tourism Package \u2014 \"The La Jolla Ocean Day\"", description: "The long-game vision: a co-branded tourism product. \"The La Jolla Ocean Day\" \u2014 Birch Aquarium + guided wildlife snorkel at La Jolla Shores + conditions briefing from real Scripps data, packaged as a half-day or full-day experience. Sold through Birch's website, hotel concierges, and SD Tourism Authority. La Jolla already has the wildlife, the infrastructure, and the audience. This just packages what's already there into something bookable." },
+    ],
+    credentialsLabel: "At a Glance",
+    credentials: [
+      { value: "UCSD", label: "Alumni\nCame home to build LJFC" },
+      { value: "AIDA", label: "Instructor + Youth Instructor\nSan Diego's only AIDA-certified" },
+      { value: "8\u201316", label: "Ages served\nby Camp Garibaldi" },
+      { value: "4:1", label: "Student-to-instructor\nratio in the water" },
+      { value: "50+", label: "Species documented\nin our La Jolla field guide" },
+      { value: "1 mi", label: "From Birch Aquarium\nto our dive site at Kellogg Park" },
+      { value: "DAN", label: "Professional liability insured\nDivers Alert Network" },
+      { value: "6am", label: "Daily conditions email\nPowered by Scripps data" },
+    ],
+    ctaTitle: "Let's talk about what this",
+    ctaTitleEm: "could look like.",
+    ctaDescription: "There's a world-class marine wildlife experience one mile from your front door \u2014 leopard sharks, sea lions, garibaldi, horn sharks \u2014 and no one is packaging it with Birch as a unified experience for families and tourists. I think there's something real here. I'd love 30 minutes to explore it with you.",
+    ctaButtonText: "Let's find 30 minutes",
+    ctaEmail: "joshuabeneventi@gmail.com",
+    ctaEmailSubject: "LJFC \u00D7 Birch Aquarium \u2014 Let's Talk",
+    ctaSecondary: "Joshua Beneventi · UCSD Alum · joshuabeneventi@gmail.com",
+    ctaLinks: [
+      { label: "lajollafreediveclub.com/camp-garibaldi", url: "https://lajollafreediveclub.com/camp-garibaldi" },
+      { label: "lajollafreediveclub.com/conditions", url: "https://lajollafreediveclub.com/conditions" },
+      { label: "lajollafreediveclub.com/map", url: "https://lajollafreediveclub.com/map" },
+    ],
   },
 ];
 

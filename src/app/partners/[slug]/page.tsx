@@ -65,7 +65,7 @@ export default async function PartnerPage({ params }: Props) {
       {/* ── Heritage ── */}
       <div className="bg-ocean/15 border-t border-b border-seafoam/10 py-20 px-6 md:px-8">
         <div className="max-w-[700px] mx-auto text-center">
-          <div className="text-[11px] text-teal/60 font-medium tracking-[0.2em] uppercase mb-4">Shared History</div>
+          <div className="text-[11px] text-teal/60 font-medium tracking-[0.2em] uppercase mb-4">{partner.heritageLabel || "Shared History"}</div>
           <blockquote className="font-serif italic text-[clamp(1.3rem,3vw,1.8rem)] leading-[1.6] text-salt/80 mb-6">
             &ldquo;{partner.heritageQuote}&rdquo;
           </blockquote>
@@ -75,7 +75,7 @@ export default async function PartnerPage({ params }: Props) {
 
       {/* ── Connection ── */}
       <section className="py-24 px-6 md:px-8 max-w-[1000px] mx-auto border-t border-seafoam/15">
-        <div className="text-[11px] text-teal/60 font-medium tracking-[0.2em] uppercase mb-4">The Connection</div>
+        <div className="text-[11px] text-teal/60 font-medium tracking-[0.2em] uppercase mb-4">{partner.connectionLabel || "The Connection"}</div>
         <h2 className="font-serif text-[clamp(2rem,4vw,3rem)] font-normal leading-[1.2] mb-8">
           {partner.connectionTitle}<br /><em className="italic text-sand">{partner.connectionTitleEm}</em>
         </h2>
@@ -90,6 +90,55 @@ export default async function PartnerPage({ params }: Props) {
           ))}
         </div>
       </section>
+
+      {/* ── Pipeline ── */}
+      {partner.pipeline && (
+        <div className="bg-ocean/20 border-t border-b border-seafoam/10 py-20 px-6 md:px-8">
+          <div className="max-w-[1000px] mx-auto">
+            <div className="text-[11px] text-teal/60 font-medium tracking-[0.2em] uppercase mb-4">{partner.pipeline.label}</div>
+            <h2 className="font-serif text-[clamp(2rem,4vw,3rem)] font-normal leading-[1.2] mb-12">
+              {partner.pipeline.title} <em className="italic text-sand">{partner.pipeline.titleEm}</em>
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-6">
+              {partner.pipeline.steps.map((step, i) => (
+                <div key={i} className="text-center py-6 relative">
+                  <div className="text-3xl mb-3">{step.icon}</div>
+                  <div className="font-serif text-[1.1rem] mb-1">{step.label}</div>
+                  <div className="text-[0.85rem] text-salt/45 leading-[1.5]">{step.detail}</div>
+                  {i < partner.pipeline!.steps.length - 1 && (
+                    <span className="hidden lg:block absolute right-[-0.75rem] top-1/2 -translate-y-1/2 text-sand/30 text-2xl">&rarr;</span>
+                  )}
+                </div>
+              ))}
+            </div>
+            {partner.pipeline.footnote && (
+              <p className="max-w-[700px] mx-auto mt-12 text-center text-[0.95rem] text-salt/45 leading-[1.8]">
+                <strong className="text-sand/70">{partner.pipeline.footnote}</strong>
+              </p>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* ── Additional Sections ── */}
+      {partner.additionalSections?.map((section, idx) => (
+        <section key={idx} className="py-24 px-6 md:px-8 max-w-[1000px] mx-auto border-t border-seafoam/15">
+          <div className="text-[11px] text-teal/60 font-medium tracking-[0.2em] uppercase mb-4">{section.label}</div>
+          <h2 className="font-serif text-[clamp(2rem,4vw,3rem)] font-normal leading-[1.2] mb-8">
+            {section.title} <em className="italic text-sand">{section.titleEm}</em>
+          </h2>
+          <div className="grid md:grid-cols-2 gap-8 md:gap-16 mt-12">
+            {section.cards.map((card) => (
+              <div key={card.title} className="p-8 md:p-10 bg-ocean/25 border border-seafoam/10 rounded-sm">
+                <h3 className="font-serif text-[1.4rem] font-normal text-seafoam mb-4">{card.title}</h3>
+                {card.content.map((p, i) => (
+                  <p key={i} className={`text-[0.95rem] text-salt/65 leading-[1.8] ${i > 0 ? "mt-4" : ""}`}>{p}</p>
+                ))}
+              </div>
+            ))}
+          </div>
+        </section>
+      ))}
 
       {/* ── Research ── */}
       {partner.researchCards && (
@@ -179,18 +228,32 @@ export default async function PartnerPage({ params }: Props) {
         </div>
       </section>
 
+      {/* ── Science Communication ── */}
+      {partner.scienceComm && (
+        <div className="bg-ocean/[0.12] border-t border-b border-seafoam/10 py-20 px-6 md:px-8">
+          <div className="max-w-[800px] mx-auto">
+            <div className="text-[11px] text-teal/60 font-medium tracking-[0.2em] uppercase mb-4">{partner.scienceComm.label}</div>
+            <h2 className="font-serif text-[clamp(1.8rem,3vw,2.5rem)] font-normal leading-[1.2] mb-8">
+              {partner.scienceComm.title} <em className="italic text-sand">{partner.scienceComm.titleEm}</em>
+            </h2>
+            {partner.scienceComm.paragraphs.map((p, i) => (
+              <p key={i} className={`text-[1.05rem] text-salt/65 leading-[1.8] ${i > 0 ? "mt-6" : ""}`}>{p}</p>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* ── Camp Garibaldi ── */}
       {partner.showCamp && partner.campHighlights && (
         <section className="py-24 px-6 md:px-8 max-w-[1000px] mx-auto border-t border-seafoam/15">
-          <div className="text-[11px] text-teal/60 font-medium tracking-[0.2em] uppercase mb-4">Youth Program</div>
+          <div className="text-[11px] text-teal/60 font-medium tracking-[0.2em] uppercase mb-4">
+            {partner.slug === "birch-aquarium" ? "The Program" : "Youth Program"}
+          </div>
           <h2 className="font-serif text-[clamp(2rem,4vw,3rem)] font-normal leading-[1.2] mb-8">
             Camp Garibaldi — <em className="italic text-sand">the ocean camp<br />that starts from the inside out.</em>
           </h2>
           <p className="text-[1.05rem] text-salt/65 max-w-[700px] mb-12">
-            A week-long ocean camp for ages 8–16 teaching freediving, surf survival, and water
-            confidence through a breath-first methodology. We build internal calm and breath control
-            before developing external water skills. Every session includes reading real Scripps
-            ocean data — teaching kids to understand the ocean before they enter it.
+            {partner.campDescription || "A week-long ocean camp for ages 8\u201316 teaching freediving, surf survival, and water confidence through a breath-first methodology. We build internal calm and breath control before developing external water skills. Every session includes reading real Scripps ocean data \u2014 teaching kids to understand the ocean before they enter it."}
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {partner.campHighlights.map((h) => (
@@ -205,7 +268,7 @@ export default async function PartnerPage({ params }: Props) {
 
       {/* ── Credentials ── */}
       <section className="py-24 px-6 md:px-8 max-w-[1000px] mx-auto border-t border-seafoam/15">
-        <div className="text-[11px] text-teal/60 font-medium tracking-[0.2em] uppercase mb-4">Credentials</div>
+        <div className="text-[11px] text-teal/60 font-medium tracking-[0.2em] uppercase mb-4">{partner.credentialsLabel || "Credentials"}</div>
         <h2 className="font-serif text-[clamp(2rem,4vw,3rem)] font-normal leading-[1.2] mb-12">Who we are.</h2>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-8">
           {partner.credentials.map((c) => (
@@ -232,9 +295,15 @@ export default async function PartnerPage({ params }: Props) {
         </a>
         <div className="mt-6 text-[0.85rem] text-salt/35">
           {partner.ctaSecondary}<br />
-          <a href="https://lajollafreediveclub.com/conditions" className="text-seafoam/40 no-underline">lajollafreediveclub.com/conditions</a>
-          {" · "}
-          <a href="https://lajollafreediveclub.com/map" className="text-seafoam/40 no-underline">lajollafreediveclub.com/map</a>
+          {(partner.ctaLinks || [
+            { label: "lajollafreediveclub.com/conditions", url: "https://lajollafreediveclub.com/conditions" },
+            { label: "lajollafreediveclub.com/map", url: "https://lajollafreediveclub.com/map" },
+          ]).map((link, i) => (
+            <span key={i}>
+              {i > 0 && " · "}
+              <a href={link.url} className="text-seafoam/40 no-underline">{link.label}</a>
+            </span>
+          ))}
         </div>
       </section>
 
