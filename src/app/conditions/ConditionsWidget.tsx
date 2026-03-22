@@ -146,14 +146,14 @@ function scoreTemperature(tempF: number | null, isEstimate: boolean = false): Fa
   const src = { sourceLabel: "NDBC Station 46254", sourceUrl: "https://www.ndbc.noaa.gov/station_page.php?station=46254" };
   if (!tempF) return { name: "Water temp", score: 60, weight: 10, label: "Loading...", color: "#5a6a7a", detail: "Temperature data loading.", education: "Water temp measured at 0.46m depth by the Scripps Nearshore buoy (Station 46254).", ...src };
   let score: number, label: string, color: string, wetsuit: string;
-  if (tempF >= 70) { score = 90; label = "Warm"; color = "#1B6B6B"; wetsuit = "3mm or shorty"; }
-  else if (tempF >= 65) { score = 75; label = "Comfortable"; color = "#1B6B6B"; wetsuit = "3mm full suit"; }
-  else if (tempF >= 60) { score = 55; label = "Cool"; color = "#D4A574"; wetsuit = "5mm recommended"; }
-  else if (tempF >= 56) { score = 35; label = "Cold"; color = "#163B4E"; wetsuit = "5mm + hood"; }
-  else { score = 20; label = "Very cold"; color = "#163B4E"; wetsuit = "5mm + hood + gloves"; }
+  if (tempF >= 72) { score = 90; label = "Warm"; color = "#1B6B6B"; wetsuit = "3–5mm (thermocline can drop 5–10°F at depth)"; }
+  else if (tempF >= 68) { score = 80; label = "Mild"; color = "#1B6B6B"; wetsuit = "5mm recommended (3mm if staying shallow)"; }
+  else if (tempF >= 63) { score = 65; label = "Cool"; color = "#D4A574"; wetsuit = "5mm full suit (5mm + hood for canyon depth)"; }
+  else if (tempF >= 58) { score = 40; label = "Cold"; color = "#163B4E"; wetsuit = "5–7mm + hood"; }
+  else { score = 20; label = "Very cold"; color = "#163B4E"; wetsuit = "7mm + hood + gloves"; }
   const prefix = isEstimate ? "~" : "";
   const suffix = isEstimate ? " (seasonal avg)" : "";
-  return { name: "Water temp", score, weight: 10, label: `${prefix}${tempF}\u00B0F \u00B7 ${label}${suffix}`, color, detail: `Wetsuit: ${wetsuit}.${isEstimate ? " Based on Scripps Pier 100-year seasonal average for this month." : ""}${tempF < 60 ? " Cold water reduces breath hold \u2014 limit session length." : ""}`, education: "La Jolla water ranges from ~56\u00B0F (winter) to ~72\u00B0F (late summer). A sudden 4\u00B0F+ drop often signals upwelling \u2014 cold, clear water rising from the Canyon \u2014 which typically improves visibility significantly.", ...src };
+  return { name: "Water temp", score, weight: 10, label: `${prefix}${tempF}\u00B0F \u00B7 ${label}${suffix}`, color, detail: `Wetsuit: ${wetsuit}.${isEstimate ? " Based on Scripps Pier 100-year seasonal average for this month." : ""}${tempF < 60 ? " Cold water reduces breath hold \u2014 limit session length." : ""}`, education: "Surface temp only \u2014 thermocline can drop 5\u201310\u00B0F at depth. La Jolla ranges from ~56\u00B0F (winter) to ~72\u00B0F (late summer). A sudden 4\u00B0F+ drop often signals upwelling \u2014 cold, clear water from the Canyon \u2014 which typically improves visibility.", ...src };
 }
 
 function scoreSafety(recentRain: boolean): FactorScore {
@@ -263,7 +263,7 @@ export function ConditionsWidget() {
           {[
             { label: "Swell", value: conditions?.waveHeight ? `${conditions.waveHeight} Ft` : "\u2014", sub: conditions?.wavePeriod ? `@ ${conditions.wavePeriod} sec` : "" },
             { label: "Wind", value: conditions?.windSpeed ? `${conditions.windSpeed} Knots` : "\u2014", sub: conditions?.windDir || "" },
-            { label: "Water", value: waterTemp ? `${waterTemp}\u00B0F` : "\u2014", sub: waterTemp && waterTemp >= 65 ? "3mm" : "5mm" },
+            { label: "Water", value: waterTemp ? `${waterTemp}\u00B0F` : "\u2014", sub: waterTemp && waterTemp >= 72 ? "3–5mm" : waterTemp && waterTemp >= 63 ? "5mm" : "5–7mm" },
             { label: "Tide", value: tideState !== "unknown" ? tideState : "\u2014", sub: tides[0] ? `Next: ${tides[0].height}ft ${tides[0].type}` : "" },
           ].map((s, i) => (
             <div key={s.label} className={`p-5 ${i < 3 ? "border-r border-deep/[0.04]" : ""}`}>
