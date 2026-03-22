@@ -252,8 +252,6 @@ export default async function PartnerPage({ params }: Props) {
         </div>
       </section>
 
-      {renderImages("after-camp")}
-
       {/* ── Science Communication ── */}
       {partner.scienceComm && (
         <div className="bg-ocean/[0.12] border-t border-b border-seafoam/10 py-20 px-6 md:px-8">
@@ -290,6 +288,32 @@ export default async function PartnerPage({ params }: Props) {
             ))}
           </div>
         </section>
+      )}
+
+      {renderImages("after-camp")}
+
+      {/* ── Provides ── */}
+      {partner.providesCards && (
+        <div className="bg-ocean/20 border-t border-b border-seafoam/10 py-16 px-6 md:px-8">
+          <div className="max-w-[1000px] mx-auto">
+            <div className="text-[11px] text-teal/60 font-medium tracking-[0.2em] uppercase mb-4">What LJFC Provides</div>
+            <h2 className="font-serif text-[clamp(2rem,4vw,3rem)] font-normal leading-[1.2] mb-4">
+              {partner.providesTitle} <em className="italic text-sand">{partner.providesTitleEm}</em>
+            </h2>
+            {partner.providesSubtitle && (
+              <p className="text-salt/50 text-base mb-12 max-w-[650px]">{partner.providesSubtitle}</p>
+            )}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {partner.providesCards.map((src) => (
+                <div key={src.id} className="p-6 bg-deep/50 border border-seafoam/[0.08] rounded-sm">
+                  <div className="text-[11px] tracking-[0.15em] uppercase text-seafoam/60 mb-2">{src.id}</div>
+                  <div className="font-serif text-[1.1rem] mb-1">{src.name}</div>
+                  <div className="text-[0.85rem] text-salt/45 leading-[1.6]">{src.detail}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
       )}
 
       {renderImages("after-ideas")}

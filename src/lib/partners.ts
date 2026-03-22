@@ -83,6 +83,10 @@ export interface Partner {
   ctaEmailSubject: string;
   ctaSecondary: string;
   ctaLinks?: { label: string; url: string }[];
+  providesTitle?: string;
+  providesTitleEm?: string;
+  providesSubtitle?: string;
+  providesCards?: PartnerDataSource[];
   images?: { src: string; alt: string; caption?: string; position: "after-heritage" | "after-connection" | "after-camp" | "after-ideas" }[];
 }
 
@@ -307,6 +311,127 @@ export const partners: Partner[] = [
       { src: "/images/partners/birch-child-fish.jpg", alt: "Child pointing at fish in the Birch Aquarium reef exhibit", position: "after-heritage" },
       { src: "/images/photos/joshua-brooke-kristina.jpg", alt: "LJFC crew in wetsuits ready to dive La Jolla", caption: "Your audience inspired — our crew ready to take them in", position: "after-connection" },
       { src: "/images/photos/joshua-kid-beach.jpg", alt: "Joshua with a young student at the beach after a session", caption: "Camp Garibaldi — from nervous about waves to confident in the ocean", position: "after-camp" },
+      { src: "/images/photos/ljfc-crew-lunch.jpg", alt: "LJFC crew after a Saturday session", caption: "The community behind the program", position: "after-ideas" },
+    ],
+  },
+  {
+    slug: "ocean-discovery-institute",
+    name: "Ocean Discovery Institute",
+    heroHeadline: "The ocean is 20 minutes away.",
+    heroHeadlineEm: "For some kids, it might as well be another planet.",
+    heroSubtitle: "ODI has spent two decades getting underserved San Diego kids into ocean science. LJFC teaches kids to be in the ocean \u2014 with breath control, freediving, and surf survival. But the deeper work is what breath-hold training does off the water: nervous system regulation, composure under pressure, and the kind of courage that only comes from facing real challenge. Together, we could build the bridge from City Heights to the waterline \u2014 and to a different relationship with fear.",
+    heritageLabel: "Why This Is Personal",
+    heritageQuote: "Shara Fisler started ODI from a kayak shack in Mission Bay because she realized she could make a bigger difference creating science opportunities for young people than doing science herself. I grew up in Point Loma, four blocks from the water, and never thought about ocean access because I always had it. When I started teaching freediving to kids, I realized most San Diego children \u2014 even ones who live 20 minutes from the beach \u2014 have never put their face underwater in the ocean. That's not a skill gap. That's an access gap. ODI has been working on that gap for 25 years. I want to help.",
+    heritageAttribution: "Joshua Beneventi \u2014 UCSD Alum, Founder of LJFC",
+    connectionTitle: "ODI teaches ocean science.",
+    connectionTitleEm: "We add ocean capability.",
+    connectionCards: [
+      {
+        title: "What ODI has built",
+        content: [
+          "In 25 years, ODI has gone from a kayak shack in Mission Bay to a $17 million Living Lab in the heart of City Heights, serving 6,000+ students a year across every school in the Hoover cluster. Your students already explore coastal habitats, do fieldwork in the urban canyon, and your Ocean Leaders swim and snorkel as part of their programming. You've won the Presidential Award for Science Mentoring. NOAA funds you. UC San Diego partners with you. A Scripps grad student is an ODI alumna.",
+          "None of that is something LJFC could replicate or compete with. What we offer is a very specific skill set that sits on top of everything you've already built.",
+        ],
+      },
+      {
+        title: "The specific gap we fill",
+        content: [
+          "ODI gets kids to the water and teaches ocean science brilliantly. What it doesn't do \u2014 and shouldn't have to \u2014 is teach breath-hold diving, surf survival, underwater composure, and advanced in-water capability. That's a specialized athletic discipline that requires specific certification (AIDA Youth Instructor), specific insurance (DAN), and specific training methodology.",
+          "Camp Garibaldi's breath-first methodology starts on land \u2014 composure and breathing drills that could even begin at the Living Lab \u2014 before progressing to open water at La Jolla Shores. For Ocean Leaders who already snorkel, this is the next level. For younger students, it's a foundation of water safety they'll carry for life.",
+        ],
+      },
+    ],
+    researchTitle: "Ocean competence is",
+    researchTitleEm: "a life skill.",
+    researchSubtitle: "Kids who are confident in the ocean are safer in the ocean. They become surfers, divers, marine biologists, lifeguards, conservationists. But that confidence has to be built \u2014 and right now, it's mostly built by families who already have access.",
+    researchCards: [
+      { id: "Safety", name: "Drowning Prevention", detail: "Drowning is a leading cause of death for children ages 1-14. Kids who learn breath control, rip current identification, and surf survival carry those skills for life." },
+      { id: "Confidence", name: "Composure Under Pressure", detail: "Our breath-first methodology teaches kids to manage panic, control their breathing, and stay calm when things get intense \u2014 skills that transfer far beyond the ocean." },
+      { id: "Science", name: "Ocean Data Literacy", detail: "Every camp session includes reading real Scripps buoy data, tide charts, and weather forecasts. Kids learn to assess the ocean using the same instruments scientists use." },
+      { id: "Stewardship", name: "Conservation Through Experience", detail: "Kids who've swum with leopard sharks and identified garibaldi on a reef don't need to be told the ocean matters. They know. They become its advocates." },
+      { id: "Gear Provided", name: "Zero Barrier to Entry", detail: "Wetsuits, masks, fins, snorkels \u2014 all provided. No family needs to own anything. The only requirement is showing up. We remove every equipment barrier." },
+      { id: "Location", name: "La Jolla Shores", detail: "Sandy beach, gentle slope, warm shallow water, lifeguards on duty. The easiest and safest ocean entry in San Diego. Inside the Matlahuayl Marine Reserve \u2014 protected since 1929." },
+    ],
+    additionalSections: [
+      {
+        label: "Beyond Ocean Skills",
+        title: "Breath-hold training is",
+        titleEm: "character development.",
+        cards: [
+          {
+            title: "The science of composure",
+            content: [
+              "When a kid holds their breath and feels the urge to breathe, something remarkable happens: their body floods with CO\u2082, which activates stress circuits in the brain. The urge to panic is real and measurable. But with training, kids learn to recognize that signal, stay calm, and choose their response rather than react. That's not ocean training \u2014 that's nervous system regulation. It's the same skill that helps in a test, a conflict, a job interview, or any moment where the pressure is on and the instinct is to freeze or flee.",
+              "The mammalian dive reflex \u2014 the same response that allows seals and dolphins to dive \u2014 triggers automatically in every human: heart rate drops, peripheral blood vessels constrict, the body conserves oxygen. Kids learn that their bodies are built for this. That biological truth becomes a foundation for confidence that no pep talk can match.",
+            ],
+          },
+          {
+            title: "What it builds in kids",
+            content: [
+              "Courage through incremental challenge. Every breath hold is slightly longer than the last. Every dive is slightly deeper. Kids learn to sit with discomfort, push their edge, and expand what they thought was possible \u2014 in a controlled, safe environment with a trained instructor beside them.",
+              "Trust and partnership. Freediving is a buddy discipline. One person dives, the other watches. You are responsible for someone else's safety, and they are responsible for yours. That mutual accountability is built into every session from day one.",
+              "Self-knowledge through physiology. Kids learn what happens in their body under stress \u2014 rising CO\u2082, diaphragm contractions, heart rate changes \u2014 and they learn it's not something to fear. It's information. That reframe changes how they relate to pressure everywhere.",
+            ],
+          },
+        ],
+      },
+    ],
+    showCamp: true,
+    campDescription: "Named after the garibaldi \u2014 California's state fish, bright orange, impossible to miss, and fiercely protective of its territory. Camp Garibaldi teaches kids to be that confident in the water. A week-long program for ages 8\u201316 that builds breath control, ocean awareness, and real capability before kids ever put a mask on.",
+    campHighlights: [
+      { label: "Breath-First", description: "We start on land. Breathing drills, composure exercises, and understanding what your body does under stress \u2014 before anyone gets in the water. This is how we build confidence that lasts." },
+      { label: "Surf Survival", description: "Rip current identification, wave assessment, safe entry and exit, hold-down response. Real skills for real conditions \u2014 not a pool simulation." },
+      { label: "Freediving", description: "By mid-week, kids are holding their breath for over a minute and diving to the bottom at La Jolla Shores. They learn equalization, buoyancy, and how to move efficiently underwater." },
+      { label: "Nervous System Literacy", description: "Kids learn why the urge to breathe comes from CO\u2082, not low oxygen. They learn the dive reflex. They learn to read their body's signals as information, not emergency. This transfers to every high-pressure moment in their lives." },
+      { label: "Marine Science", description: "Species identification in the wild \u2014 the same leopard sharks, garibaldi, and sea lions that live in the La Jolla reserve. Plus real Scripps ocean data literacy." },
+      { label: "Courage & Trust", description: "Incremental challenge builds real courage. The buddy system builds mutual accountability. Kids leave knowing they can handle things they didn't think they could." },
+      { label: "4:1 Ratio", description: "Maximum 4 students per instructor in the water. Every kid gets individual attention, especially the ones who are nervous. We never rush a kid past their comfort zone." },
+      { label: "All Gear Provided", description: "Wetsuit, mask, fins, snorkel \u2014 everything. No family needs to buy or bring anything. The financial barrier stops at the registration fee (and with ODI, maybe not even there)." },
+    ],
+    partnershipTitle: "Six ways to build",
+    partnershipTitleEm: "this together.",
+    partnershipIdeas: [
+      { title: "Ocean Leaders \u2014 Freediving as a STEM Skill", description: "Your Ocean Leaders cohort starts in 8th grade and runs through college. These are your most committed students \u2014 the ones who already snorkel and do fieldwork. For them, AIDA freediving certification is a tangible, internationally recognized skill that strengthens marine science career paths. A freediver can do silent underwater observation, collect data without scuba logistics, and access environments that surface observers can't. We'd offer discounted or sponsored AIDA certification for Ocean Leaders as part of their leadership development pathway." },
+      { title: "Out-of-School Summer Module \u2014 Ocean Safety & Freediving", description: "ODI already runs week-long summer camps for K-8 with changing themes each year. A \"Breath & Ocean\" week \u2014 co-designed with your curriculum team \u2014 could add breath-hold training, surf survival, and underwater confidence to the rotation. We bring the in-water instruction and all gear. ODI provides the students, the community relationships, and the educational framework. Dry sessions (breathing drills, ocean data literacy) could happen at the Living Lab. Ocean days happen at La Jolla Shores." },
+      { title: "\"First Ocean Day\" \u2014 Single-Day Pilot", description: "The lowest-commitment way to start. One Saturday, ODI brings a group of students to La Jolla Shores for a guided ocean experience: tide pool exploration, shallow water snorkeling, species identification, and introductory breath-hold exercises. No certification, no pressure \u2014 just a day in the ocean with professional guidance and all gear provided. We see how the kids respond, what works, and what to adjust before building anything bigger." },
+      { title: "Joint Grant Applications", description: "ODI already receives NOAA B-WET funding and has relationships with California Coastal Conservancy, San Diego Foundation, and Price Philanthropies. Beyond your existing funders: the Lilly Endowment just awarded the American Camp Association $45.5 million for character development at camps \u2014 with individual grants of $50,000 to $300,000 available to nonprofit camps serving underrepresented youth. Freediving is uniquely suited to character development: composure under pressure, incremental courage, trust through the buddy system, and self-knowledge through physiology. ODI's 501(c)(3) status and track record combined with LJFC's specialized curriculum makes a compelling application." },
+      { title: "Character Development Through the Ocean", description: "This is the deeper opportunity. Breath-hold training isn't just a physical skill \u2014 it teaches kids to sit with discomfort, manage panic responses, build tolerance incrementally, and trust a partner with their safety. Every breath hold is a controlled encounter with your own limits. The ACA's Character at Camp initiative specifically funds programs that develop perseverance, responsibility, and willingness to try new things \u2014 that's a freediving session described in developmental language. With ODI's expertise in youth development and LJFC's methodology, we could build a character development curriculum grounded in ocean science and breath-hold physiology that doesn't exist anywhere else." },
+      { title: "STEM Career Pathway \u2014 Marine Fieldwork", description: "ODI alumni are entering biotech, environmental consulting, fisheries, marine biology, and public policy. An ODI student who learns to freedive has a tangible, unusual skill on their college application \u2014 and a real advantage in marine science fieldwork. The pathway: Ocean Leaders introduction in high school \u2192 AIDA certification \u2192 citizen science data collection at the La Jolla marine reserve \u2192 college application with documented underwater fieldwork. That's the kind of profile that stands out at Scripps, UCSB, or any marine science program \u2014 and ODI alumna Anai Novoa's trajectory at Scripps shows it's possible." },
+    ],
+    providesTitle: "Everything except",
+    providesTitleEm: "the students.",
+    providesSubtitle: "ODI brings community trust, student relationships, and organizational infrastructure. Here's what we bring to match it.",
+    providesCards: [
+      { id: "Instruction", name: "AIDA Youth Instructor", detail: "San Diego's only AIDA-certified youth instructor. Trained specifically for teaching children ages 8-16 in open water environments." },
+      { id: "Safety", name: "DAN + Red Cross", detail: "Divers Alert Network professional liability insurance. American Red Cross Adult & Pediatric First Aid/CPR/AED. 4:1 student-to-instructor ratio." },
+      { id: "Gear", name: "Complete Equipment", detail: "Wetsuits, masks, fins, snorkels for every student. All sizes. No family needs to own or purchase anything." },
+      { id: "Curriculum", name: "Tested Program", detail: "Breath-first methodology, progressive skill building, marine science integration, Scripps data literacy. Developed specifically for kids with no prior ocean experience." },
+      { id: "Development", name: "Character & Nervous System", detail: "Breath-hold training teaches composure under pressure, incremental courage, trust through the buddy system, and self-knowledge through physiology. These skills transfer to every high-pressure moment in a young person's life." },
+      { id: "Location", name: "La Jolla Shores", detail: "Safest ocean entry in San Diego. Sandy bottom, gradual slope, warm water, lifeguards. Inside a marine reserve with abundant wildlife." },
+      { id: "Platform", name: "Ocean Data Tools", detail: "Real-time conditions dashboard, underwater field guide with 50+ species, daily ocean intelligence. Kids learn to read the ocean like scientists do." },
+    ],
+    credentials: [
+      { value: "UCSD", label: "Alumni\nCame home to build LJFC" },
+      { value: "AIDA", label: "Instructor + Youth Instructor\nSan Diego's only" },
+      { value: "8\u201316", label: "Ages served\nby Camp Garibaldi" },
+      { value: "4:1", label: "Student-to-instructor\nratio in the water" },
+      { value: "DAN", label: "Professional liability\nDivers Alert Network" },
+      { value: "ARC", label: "Red Cross First Aid\nCPR/AED certified" },
+    ],
+    ctaTitle: "Start with",
+    ctaTitleEm: "one group, one Saturday.",
+    ctaDescription: "Bring a group of ODI students to La Jolla Shores for a guided ocean day. We provide the gear, the instruction, and the safety. You provide the kids and the trust. If it works, we build from there. No contracts, no commitments \u2014 just a day in the ocean and a conversation about what's next.",
+    ctaButtonText: "Let's get kids in the water",
+    ctaEmail: "joshuabeneventi@gmail.com",
+    ctaEmailSubject: "LJFC \u00D7 Ocean Discovery Institute \u2014 Youth Ocean Access",
+    ctaSecondary: "Joshua Beneventi \u00B7 UCSD Alum \u00B7 joshuabeneventi@gmail.com",
+    ctaLinks: [
+      { label: "lajollafreediveclub.com/camp-garibaldi", url: "https://lajollafreediveclub.com/camp-garibaldi" },
+      { label: "lajollafreediveclub.com/map", url: "https://lajollafreediveclub.com/map" },
+    ],
+    images: [
+      { src: "/images/photos/joshua-teaching-kids.jpg", alt: "Joshua teaching kids freediving poolside", caption: "Camp Garibaldi \u2014 breath-first ocean education", position: "after-heritage" },
+      { src: "/images/photos/joshua-kid-beach.jpg", alt: "Joshua with a young student at the beach", caption: "From nervous about waves to confident in the ocean", position: "after-camp" },
       { src: "/images/photos/ljfc-crew-lunch.jpg", alt: "LJFC crew after a Saturday session", caption: "The community behind the program", position: "after-ideas" },
     ],
   },
