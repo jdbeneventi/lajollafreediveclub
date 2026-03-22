@@ -83,6 +83,7 @@ export interface Partner {
   ctaEmailSubject: string;
   ctaSecondary: string;
   ctaLinks?: { label: string; url: string }[];
+  threeColSection?: { label: string; title: string; titleEm: string; subtitle?: string; cards: { label: string; title: string; description: string }[] };
   providesTitle?: string;
   providesTitleEm?: string;
   providesSubtitle?: string;
@@ -532,6 +533,144 @@ export const partners: Partner[] = [
       { src: "/images/photos/joshua-teaching-kids.jpg", alt: "Joshua teaching kids freediving", caption: "Breath-first methodology \u2014 composure before capability", position: "after-connection" },
       { src: "/images/photos/joshua-kid-beach.jpg", alt: "Joshua with a young student at the beach", caption: "From never been in the ocean to confident underwater", position: "after-camp" },
       { src: "/images/photos/ljfc-crew-lunch.jpg", alt: "LJFC crew after a Saturday session", caption: "The community behind the program", position: "after-ideas" },
+    ],
+  },
+  {
+    slug: "ucsd",
+    name: "UC San Diego",
+    heroHeadline: "40,000 students. Five minutes",
+    heroHeadlineEm: "from the best diving in California.",
+    heroSubtitle: "I'm a UCSD alum. I run the only AIDA-certified freediving operation in San Diego, based at La Jolla Shores \u2014 a 5-minute drive from campus. You already have surfing, kayaking, scuba, sailing, rock climbing, and Baja trips. You don't have freediving. I'd like to change that \u2014 and I think it fits in more places than you'd expect.",
+    heritageLabel: "Coming Home",
+    heritageQuote: "I graduated from UCSD. I trained as a freediving instructor in Malaysia, Egypt, and Baja. I came back to La Jolla because there's nowhere better in the world to teach this sport \u2014 the canyon starts 100 yards from the beach, the marine reserve has been protected since 1929, and the first freediving club in America was founded here in 1939. Your Baja Surf Safari goes to the same coastline where I did my advanced training. The Scripps Scientific Diving Program \u2014 the oldest in the world \u2014 is 500 yards from where I dive every Saturday. The connection between UCSD and this ocean is already deep. Freediving just makes it personal.",
+    heritageAttribution: "Joshua Beneventi \u2014 UCSD Alum, Founder of LJFC",
+    connectionLabel: "The Opportunity",
+    connectionTitle: "Outback has everything",
+    connectionTitleEm: "except freediving.",
+    connectionCards: [
+      {
+        title: "What UCSD Recreation already runs",
+        content: [
+          "Outback Adventures: surfing at Blacks and in Baja, kayaking at Mission Bay and Catalina, rock climbing at Joshua Tree, backpacking in the Sierra, Wilderness Orientation trips that define the start of college for thousands of incoming students every year.",
+          "The UCSD scuba program: PADI certification from Open Water through Divemaster. Mission Bay Aquatic Center: 30,000+ participants per year. Scripps Scientific Diving: the oldest scientific diving program in the world, 150-200 active divers on campus. UCSD Rec already runs the most comprehensive university watersports operation in the country. Freediving is the one underwater discipline that's missing \u2014 and it happens to be the fastest-growing one in the world.",
+        ],
+      },
+      {
+        title: "Why students will love this",
+        content: [
+          "Freediving is the most Instagram-worthy, story-worthy, bucket-list-worthy water activity a student can do in San Diego. Holding your breath for 2 minutes. Diving to 30 feet on a single breath. Swimming with leopard sharks and garibaldi in a marine reserve. Coming up with a story nobody at their next class has heard before.",
+          "It's also internationally certified. An AIDA card travels with them after graduation \u2014 usable in Bali, the Philippines, Egypt, Thailand, wherever they go. For international students especially, this is a California experience and a lifelong credential in one package.",
+        ],
+      },
+    ],
+    researchTitle: "Six ways to",
+    researchTitleEm: "get in the water.",
+    researchSubtitle: "Each offering fits a different commitment level and can integrate into Outback's existing registration system.",
+    researchCards: [
+      { id: "Entry Level", name: "Discover Freediving", detail: "Half-day session. Breath training, pool work, open water experience at La Jolla Shores. No prerequisites. Student rate: $125 (vs. $175 regular). Run quarterly, capacity 8-12 students." },
+      { id: "Certification", name: "AIDA 2 Course", detail: "2-3 day course. Theory, pool sessions, open water dives. Internationally recognized certification valid in 100+ countries. Student rate: $475 (vs. $575 regular). Run during breaks." },
+      { id: "Community", name: "Saturday Ocean Sessions", detail: "Weekly group dive at La Jolla Shores. Free with Ocean Flow ($20 yoga warmup) or $25 drop-in. Requires freediving certification, own gear, and signed waiver." },
+      { id: "Club Event", name: "Breath-Hold Workshop", detail: "Free 90-minute workshop for any UCSD club \u2014 Surf Team, Club Swim, international student groups, Greek life, dorm groups. Dry-land breath training, timed holds, physiology basics. Zero cost." },
+      { id: "WO Trip", name: "Wilderness Orientation \u2014 Freedive", detail: "A new WO option: multi-day freediving trip at La Jolla Shores for incoming students. Breath training, ocean safety, species identification, and guided dives in the marine reserve." },
+      { id: "Baja Extension", name: "Freediving in Baja", detail: "Your Baja Surf Safari already goes to the Pacific coast south of Ensenada. A Baja freediving trip \u2014 warm water, clear visibility, mobula rays \u2014 is a natural sibling trip. I trained in Baja and know the dive sites." },
+    ],
+    threeColSection: {
+      label: "Where It Fits",
+      title: "Freediving connects to programs",
+      titleEm: "that already exist.",
+      subtitle: "This isn't a standalone add-on. Freediving integrates with at least seven existing UCSD programs \u2014 each one a different door into the same experience.",
+      cards: [
+        { label: "Outback Adventures", title: "The core integration", description: "Quarterly Discover Freediving sessions listed alongside surfing, kayaking, and climbing. Baja Freediving as a sibling to Baja Surf Safari. Wilderness Orientation Freedive Trip for incoming students." },
+        { label: "UCSD Scuba Program", title: "The complement", description: "UCSD already runs PADI certification from Open Water through Divemaster. Freediving sits alongside scuba \u2014 not as a replacement, but as a parallel discipline. The underwater program becomes complete." },
+        { label: "Scripps Scientific Diving", title: "The research tool", description: "150-200 scientific divers on campus. Freediving offers silent, bubble-free observation. Faster deployment, no tank logistics. For marine bio grad students studying behavior in the field, it's a practical complement." },
+        { label: "Scripps DIVERSity Fellowship", title: "The access pathway", description: "Freediving is inherently lower-barrier than scuba: less gear, lower cost, simpler logistics. A breath-hold training and water confidence module for incoming DIVERSity fellows builds comfort before the full scientific diving course." },
+        { label: "CAPS \u00D7 Rec: Tritons RISE", title: "The wellbeing workshop", description: "CAPS and Rec co-run Tritons RISE workshops. A \"breath-hold and ocean immersion\" workshop fits directly. The mammalian dive reflex activates the parasympathetic nervous system \u2014 measurable stress reduction, not abstract wellness talk." },
+        { label: "Mission Bay Aquatic Center", title: "The youth pipeline", description: "MBAC's Watersports Camp serves 30,000+ participants per year, ages 6-17. Camp Garibaldi is the underwater option for kids who are ready to go deeper. Complementary, not competitive." },
+      ],
+    },
+    additionalSections: [
+      {
+        label: "Student Clubs",
+        title: "The clubs that would",
+        titleEm: "sign up tomorrow.",
+        cards: [
+          {
+            title: "UCSD Surf Team",
+            content: [
+              "State champions for the first time since 1997. Their own constitution lists \"water safety\" as the primary risk. Surf survival \u2014 wipeout recovery, extended breath-holds, calm under turbulence \u2014 is exactly what I teach. A free breath-hold workshop for the competitive surf team is the single highest-signal workshop on campus.",
+            ],
+          },
+          {
+            title: "Club Swim + International Students + 750 Orgs",
+            content: [
+              "UCSD Club Swim is one of the fastest-growing sport clubs on campus. UCSD has one of the largest international student populations in the UC system \u2014 students actively seeking the quintessential California experience. And with 750+ registered student organizations, a free breath-hold workshop is the easiest event a club can book: no pool, no ocean, no gear, no cost. Just a room and 90 minutes.",
+            ],
+          },
+        ],
+      },
+      {
+        label: "Research & Academics",
+        title: "The academic connections",
+        titleEm: "are already there.",
+        cards: [
+          {
+            title: "EPARC & Exercise Physiology",
+            content: [
+              "The Exercise and Physical Activity Resource Center runs the \"Exercise Is Medicine\u00AE\" curriculum in UCSD Medical School and conducts applied exercise physiology research. Breath-hold physiology \u2014 cardiovascular responses to apnea, cerebral blood flow during hypoxia, parasympathetic activation \u2014 is an area with active research interest. LJFC provides a population of trained freedivers and a weekly field setting.",
+            ],
+          },
+          {
+            title: "BIPN 108 & Marine Biology",
+            content: [
+              "BIPN 108: Biology and Medicine of Exercise covers the human body's response to exercise. A guest lecture on breath-hold physiology \u2014 the mammalian dive reflex, hypoxic and hypercapnic responses during apnea \u2014 is directly relevant. For marine bio students: freediving as a field observation method. No bubbles. Silent approach. The same reefs they study, observed on a breath hold 5 minutes from campus.",
+            ],
+          },
+        ],
+      },
+    ],
+    showCamp: false,
+    partnershipTitle: "Twelve ways to make this",
+    partnershipTitleEm: "happen.",
+    partnershipIdeas: [
+      { title: "Quarterly Discover Freediving in Outback Programming", description: "The simplest integration. Add a \"Discover Freediving\" session to the Outback Adventures schedule once per quarter. LJFC handles all instruction, gear, and safety. UCSD Rec handles registration, promotion, and payment processing. Student rate: $125. Capacity: 8-12 per session. Four sessions per year, minimal administrative burden." },
+      { title: "Wilderness Orientation \u2014 Freedive Trip", description: "A new WO option: multi-day freediving trip at La Jolla Shores for incoming students. Breath training, ocean safety, species identification, and guided dives in the marine reserve. The UCSD orientation experience nobody else offers. Unique in the entire UC system." },
+      { title: "Free Club Workshops \u2014 Top of Funnel", description: "Free 90-minute breath-hold workshop for any UCSD student club. Dry-land only, no pool or ocean needed, can be held on campus. Starting with the Surf Team would send the strongest signal \u2014 if the state champions train breath-hold, word spreads fast." },
+      { title: "AIDA Certification Courses During Breaks", description: "Offer AIDA 2 certification through Outback during winter, spring, and summer breaks. Student rate: $475. Students graduate with an internationally recognized credential. Could also serve Scripps graduate students \u2014 freediving as a marine research tool." },
+      { title: "Baja Freediving Trip", description: "Sibling to Baja Surf Safari. Warm-water dive sites with clearer visibility, mobula ray encounters. I trained in Baja and know the dive sites, logistics, and local operators. Same Outback format: multi-day, transportation provided, beginner-friendly, life-changing." },
+      { title: "Tritons RISE Breath-Hold & Ocean Immersion", description: "CAPS and Rec co-run Tritons RISE workshops with co-curricular credit. A \"breath-hold and ocean immersion\" workshop fits the framework. The mammalian dive reflex triggers measurable parasympathetic activation \u2014 real stress regulation, not abstract wellness talk. Ideal for finals week." },
+      { title: "Scripps DIVERSity Fellowship Bridge Program", description: "Freediving as a lower-barrier entry point for DIVERSity fellows \u2014 less gear, lower cost, no 100-hour course. A breath-hold training and water confidence module builds comfort before the full scientific diving course." },
+      { title: "MBAC Watersports Camp \u2192 Camp Garibaldi Pipeline", description: "MBAC's Watersports Camp serves 30,000+ participants per year. Camp Garibaldi is the underwater option for ages 8-16. Cross-promotion in camp materials and a \"What comes after Watersports Camp?\" pathway." },
+      { title: "Scuba Program Cross-Training", description: "Offer freediving as a cross-training elective for scuba students. A 3-hour \"Freediving for Scuba Divers\" workshop once per quarter. Better breath-hold improves air consumption, buoyancy control, and emergency preparedness." },
+      { title: "UCSD Extension \u2014 International Student Experience", description: "UCSD Extension hosts thousands of international students. \"Discover Freediving in La Jolla\" as a weekend activity or cultural experience would stand out dramatically. AIDA certification is internationally recognized \u2014 a credential and a story they bring home." },
+      { title: "Triton Alumni Events", description: "The Triton Center opens in 2026 \u2014 245,000 alumni strong. \"Discover Freediving for Triton Alumni\" at La Jolla Shores is a premium, unique experience. I'm an alum myself. This event could launch alongside the Triton Center opening." },
+      { title: "Conditions Platform for UCSD Watersports", description: "Our real-time ocean conditions dashboard \u2014 swell, wind, temperature, visibility, tides, dive grade \u2014 powered by Scripps data. Could be linked from Outback's watersports pages as a free resource for any student heading to La Jolla Shores." },
+    ],
+    credentialsLabel: "Credentials",
+    credentials: [
+      { value: "UCSD", label: "Alumni\nCame back to build LJFC" },
+      { value: "AIDA", label: "Instructor + Youth Instructor\nSan Diego's only" },
+      { value: "$125", label: "Student rate\nDiscover Freediving" },
+      { value: "5 min", label: "Campus to dive site\nLa Jolla Shores" },
+      { value: "DAN", label: "Professional liability\nDivers Alert Network" },
+      { value: "ARC", label: "Adult & Pediatric\nFirst Aid / CPR / AED" },
+      { value: "50+", label: "Species documented\nLa Jolla Underwater Atlas" },
+      { value: "6am", label: "Daily conditions email\nScripps data, free to subscribe" },
+    ],
+    ctaTitle: "Let me run",
+    ctaTitleEm: "one session this quarter.",
+    ctaDescription: "One Discover Freediving session. Eight students. A Saturday morning at La Jolla Shores. I handle everything \u2014 instruction, gear, safety, insurance. You list it, students sign up, and we see what happens. If the reviews are strong, we talk about the rest.",
+    ctaButtonText: "Let's run one session",
+    ctaEmail: "joshuabeneventi@gmail.com",
+    ctaEmailSubject: "LJFC \u00D7 UCSD Rec \u2014 Freediving Program",
+    ctaSecondary: "Joshua Beneventi \u00B7 UCSD Alum \u00B7 joshuabeneventi@gmail.com",
+    ctaLinks: [
+      { label: "lajollafreediveclub.com/conditions", url: "https://lajollafreediveclub.com/conditions" },
+      { label: "lajollafreediveclub.com/programs", url: "https://lajollafreediveclub.com/programs" },
+    ],
+    images: [
+      { src: "/images/photos/joshua-red-sea.jpg", alt: "Joshua Beneventi", caption: "UCSD alum, came home to build LJFC", position: "after-heritage" },
+      { src: "/images/photos/joshua-lena-shores.jpg", alt: "Joshua and Lena at La Jolla Shores", caption: "La Jolla Shores \u2014 5 minutes from campus", position: "after-connection" },
+      { src: "/images/photos/ljfc-crew-lunch.jpg", alt: "LJFC crew after a Saturday session", caption: "The Saturday crew \u2014 students welcome", position: "after-ideas" },
     ],
   },
 ];

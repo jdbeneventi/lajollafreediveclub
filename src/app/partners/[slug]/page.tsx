@@ -186,6 +186,28 @@ export default async function PartnerPage({ params }: Props) {
         </div>
       )}
 
+      {/* ── Three Column Section ── */}
+      {partner.threeColSection && (
+        <section className="py-24 px-6 md:px-8 max-w-[1000px] mx-auto">
+          <div className="text-[11px] text-teal/60 font-medium tracking-[0.2em] uppercase mb-4">{partner.threeColSection.label}</div>
+          <h2 className="font-serif text-[clamp(2rem,4vw,3rem)] font-normal leading-[1.2] mb-4">
+            {partner.threeColSection.title} <em className="italic text-sand">{partner.threeColSection.titleEm}</em>
+          </h2>
+          {partner.threeColSection.subtitle && (
+            <p className="text-salt/55 max-w-[700px] mb-12">{partner.threeColSection.subtitle}</p>
+          )}
+          <div className="grid md:grid-cols-3 gap-6">
+            {partner.threeColSection.cards.map((card) => (
+              <div key={card.title} className="p-6 md:p-8 bg-ocean/25 border border-seafoam/10 rounded-sm">
+                <div className="text-[11px] tracking-[0.15em] uppercase text-seafoam/60 mb-3">{card.label}</div>
+                <h3 className="font-serif text-[1.2rem] font-normal mb-2">{card.title}</h3>
+                <p className="text-[0.85rem] text-salt/50 leading-[1.7]">{card.description}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
       {/* ── Academic Integration ── */}
       {partner.academicIdeas && (
         <section className="py-24 px-6 md:px-8 max-w-[1000px] mx-auto">
