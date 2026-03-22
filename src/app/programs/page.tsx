@@ -267,8 +267,111 @@ export default function ProgramsPage() {
         </div>
       </section>
 
+      {/* AIDA Youth */}
+      <section className="py-16 md:py-20 px-6 bg-white">
+        <div className="max-w-[900px] mx-auto">
+          <Reveal>
+            <div className="section-label text-coral before:bg-coral">Youth Program</div>
+            <h2 className="section-title mb-4">AIDA Youth Certification</h2>
+            <p className="section-desc mb-12">
+              Four progressive levels designed specifically for kids ages 6–15. Water safety first, freediving skills second.
+              Each level builds confidence, breath control, and ocean competence — never competition or max performance.
+            </p>
+          </Reveal>
+
+          <div className="grid sm:grid-cols-2 gap-4 mb-8">
+            {[
+              {
+                level: "Bronze Dolphin",
+                emoji: "🥉",
+                age: "Ages 6+",
+                maxDepth: "2m max",
+                description: "Water confidence and safety fundamentals. Survival strokes, floating, basic finning, recovery breathing, and collecting objects from the bottom. No prior swimming skills required beyond basic comfort.",
+                skills: ["Survival stroke & floating", "Mask, snorkel & fin basics", "Underwater swimming & direction changes", "Signal for help", "Recovery breathing"],
+              },
+              {
+                level: "Silver Dolphin",
+                emoji: "🥈",
+                age: "Ages 6+",
+                maxDepth: "Age-appropriate",
+                description: "Introduction to equalization, duck dives, and buddy awareness. Kids learn to dive pulling a rope with proper head position, equalize at least once, and take turns watching their dive partner.",
+                skills: ["Dry & wet equalization", "Duck dive from surface", "Rope diving with head position", "Partnering & buddy awareness", "Deeper object retrieval"],
+              },
+              {
+                level: "Gold Dolphin",
+                emoji: "🥇",
+                age: "Ages 6+",
+                maxDepth: "Age-appropriate",
+                description: "Repetitive equalization, finned diving with proper technique, and using positive buoyancy on ascent. Kids learn relaxation before dives and recovery breathing after — the full freedive cycle.",
+                skills: ["Repetitive equalization (2+ per dive)", "Finned diving with duck dive", "Positive buoyancy on ascent", "Pre-dive relaxation (45s+)", "Recovery breathing protocol"],
+              },
+              {
+                level: "AIDA Junior",
+                emoji: "🤿",
+                age: "Ages 12+",
+                maxDepth: "Age-appropriate",
+                description: "The bridge to adult certification. Open water sessions, weight belt skills, advanced equalization, and the foundation for an AIDA 2 crossover at age 16. Requires 50m swim with mask and snorkel.",
+                skills: ["Open water diving (4 sessions)", "Weight belt use & dump", "Advanced rope & fin diving", "2-min relaxed floating", "Pathway to AIDA 2 crossover at 16"],
+              },
+            ].map((course) => (
+              <div key={course.level} className="bg-salt rounded-2xl p-5 md:p-6">
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="text-lg">{course.emoji}</span>
+                  <h3 className="font-serif text-lg md:text-xl tracking-tight">{course.level}</h3>
+                </div>
+                <div className="flex gap-2 mb-3">
+                  <span className="px-2 py-0.5 bg-coral/10 text-coral rounded-full text-[10px] font-semibold">{course.age}</span>
+                  <span className="px-2 py-0.5 bg-teal/10 text-teal rounded-full text-[10px] font-semibold">{course.maxDepth}</span>
+                </div>
+                <p className="text-xs text-[#5a6a7a] leading-relaxed mb-3">{course.description}</p>
+                <ul className="space-y-1.5">
+                  {course.skills.map((skill) => (
+                    <li key={skill} className="flex gap-2 items-start text-xs text-[#2a2a2a]">
+                      <svg className="w-3.5 h-3.5 text-seafoam shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="20 6 9 17 4 12" /></svg>
+                      {skill}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+
+          <Reveal>
+            <div className="bg-gradient-to-br from-ocean to-deep rounded-2xl p-6 md:p-8">
+              <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                <div>
+                  <h3 className="font-serif text-xl text-white mb-1">Depth recommendations by age</h3>
+                  <p className="text-white/50 text-sm leading-relaxed max-w-[480px]">
+                    AIDA Youth guidelines set age-based depth limits. Progress happens naturally — kids are never pushed to go deeper, longer, or farther.
+                  </p>
+                </div>
+                <div className="grid grid-cols-2 gap-3 shrink-0">
+                  {[
+                    { age: "6–8", depth: "Age ÷ 4" },
+                    { age: "8–10", depth: "Age ÷ 2" },
+                    { age: "11–13", depth: "Age ÷ 2 + 2m" },
+                    { age: "14–15", depth: "= Age in meters" },
+                  ].map((r) => (
+                    <div key={r.age} className="bg-white/[0.08] rounded-lg px-3 py-2 text-center">
+                      <div className="text-white text-xs font-semibold">{r.age} yrs</div>
+                      <div className="text-seafoam text-[11px]">{r.depth}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="mt-5 pt-4 border-t border-white/10 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6">
+                <p className="text-white/40 text-xs">4:1 max in-water ratio · Parent knowledge objectives required · No competitive elements</p>
+                <Link href="/camp-garibaldi" className="inline-flex items-center gap-2 px-5 py-2 bg-coral text-white rounded-full font-medium text-sm no-underline hover:shadow-[0_8px_25px_rgba(199,91,58,0.4)] transition-all shrink-0">
+                  Camp Garibaldi →
+                </Link>
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
       {/* Other Programs */}
-      <section className="py-20 px-6 bg-white">
+      <section className="py-16 md:py-20 px-6 bg-salt">
         <div className="max-w-[900px] mx-auto">
           <Reveal>
             <div className="section-label">More ways to dive</div>
