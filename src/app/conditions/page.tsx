@@ -181,9 +181,6 @@ export default function ConditionsPage() {
               </div>
             </div>
           </div>
-
-          <WaterQualityCard />
-          <LocalIntel />
         </div>
       </section>
 
@@ -337,6 +334,14 @@ export default function ConditionsPage() {
             </div>
           </div>
         </Reveal>
+      </section>
+
+      {/* Water Quality & Local Intel */}
+      <section className="bg-white py-16 px-6">
+        <div className="max-w-[900px] mx-auto">
+          <WaterQualityCard />
+          <LocalIntel />
+        </div>
       </section>
     </>
   );
