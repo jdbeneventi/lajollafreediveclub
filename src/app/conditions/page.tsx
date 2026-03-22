@@ -113,6 +113,8 @@ export default function ConditionsPage() {
           <Reveal>
             <ConditionsWidget />
           </Reveal>
+          <WaterQualityCard />
+          <LocalIntel />
           <Reveal>
             <AlmanacWidget />
           </Reveal>
@@ -336,13 +338,6 @@ export default function ConditionsPage() {
         </Reveal>
       </section>
 
-      {/* Water Quality & Local Intel */}
-      <section className="bg-white py-16 px-6">
-        <div className="max-w-[900px] mx-auto">
-          <WaterQualityCard />
-          <LocalIntel />
-        </div>
-      </section>
     </>
   );
 }
