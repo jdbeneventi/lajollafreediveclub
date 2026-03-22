@@ -127,10 +127,10 @@ const otherPrograms = [
     id: "group",
     title: "Group Ocean Sessions",
     subtitle: "Weekly guided dives with your crew",
-    price: "Free with Ocean Flow / $25 drop-in",
-    priceNote: "Certified freedivers only · Own gear + lanyard required",
-    duration: "Every Saturday, 2–3 hours",
-    level: "AIDA 2 certified or equivalent",
+    price: "Free / $25",
+    priceNote: "Free with Ocean Flow · $25 drop-in · Own gear + lanyard",
+    duration: "Every Saturday",
+    level: "AIDA 2+ certified",
     gradient: "from-ocean to-[#14566a]",
     description:
       "The heart of the club. Every Saturday, we meet at one of La Jolla's best dive spots — the Cove, the Canyon, Shores, or beyond — based on conditions. Sessions include a warm-up, skills focus, free diving time, and full safety coverage. It's training, community, and ocean exploration in one morning.",
@@ -147,7 +147,7 @@ const otherPrograms = [
     subtitle: "Focused training for your specific goals",
     price: "$150 / session",
     priceNote: "2–3 hours · Certified freedivers only",
-    duration: "Flexible — single session or ongoing",
+    duration: "Flexible schedule",
     level: "Any level",
     gradient: "from-teal to-sun",
     description:
@@ -166,7 +166,7 @@ const otherPrograms = [
     subtitle: "Build your base on land",
     price: "Free / varies",
     priceNote: "Community events · Open to everyone",
-    duration: "Various — check schedule",
+    duration: "Various dates",
     level: "Everyone welcome",
     gradient: "from-coral to-sun",
     description:
