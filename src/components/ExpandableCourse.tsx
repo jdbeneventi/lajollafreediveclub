@@ -63,7 +63,7 @@ export function ExpandableCourse({ course, isAida }: { course: CourseData; isAid
       {/* Collapsed header — always visible */}
       <button
         onClick={() => setOpen(!open)}
-        className="w-full text-left p-6 md:p-8 cursor-pointer bg-transparent border-none flex flex-col md:flex-row md:items-center gap-4 md:gap-8 hover:bg-salt/50 transition-colors"
+        className="w-full text-left p-5 md:p-8 cursor-pointer bg-transparent border-none flex items-start md:items-center gap-4 md:gap-8 hover:bg-salt/50 transition-colors"
       >
         <div className="flex-1 min-w-0">
           <div className="flex flex-wrap gap-2 mb-2">
@@ -79,14 +79,14 @@ export function ExpandableCourse({ course, isAida }: { course: CourseData; isAid
               </span>
             )}
           </div>
-          <h2 className={`font-serif ${isAida ? "text-2xl md:text-3xl" : "text-xl md:text-2xl"} tracking-tight`}>{course.title}</h2>
+          <h2 className={`font-serif ${isAida ? "text-xl md:text-3xl" : "text-lg md:text-2xl"} tracking-tight`}>{course.title}</h2>
           <p className="text-[#5a6a7a] text-sm mt-1">{course.subtitle}</p>
         </div>
 
-        <div className="flex items-center gap-3 md:gap-4 shrink-0">
+        <div className="flex items-center gap-2 md:gap-4 shrink-0 mt-1 md:mt-0">
           <div className="text-right">
-            <div className="font-serif text-xl md:text-3xl text-deep tracking-tight">{course.price}</div>
-            <div className="text-[10px] text-[#5a6a7a] max-w-[140px] md:max-w-[180px]">{course.priceNote}</div>
+            <div className="font-serif text-lg md:text-3xl text-deep tracking-tight">{course.price}</div>
+            <div className="text-[10px] text-[#5a6a7a] max-w-[120px] md:max-w-[180px] hidden md:block">{course.priceNote}</div>
           </div>
           <ChevronDown open={open} />
         </div>
