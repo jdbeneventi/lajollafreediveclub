@@ -1034,6 +1034,122 @@ Round 8: Hold 1:30, Done</p>
 </ul>
     `,
   },
+  {
+    slug: "freediving-certification-agencies-compared",
+    title: "Freediving Certification Agencies Compared: AIDA, Molchanovs, PADI, SSI & FII",
+    description: "An honest comparison of the five major freediving certification agencies — AIDA, Molchanovs, PADI, SSI, and FII. Course structure, recognition, depth requirements, costs, and which one is right for you.",
+    category: "Education",
+    date: "March 21, 2026",
+    readTime: "12 min read",
+    gradient: "from-ocean to-teal",
+    content: `
+<p>One of the first questions people ask when they're ready to learn freediving is: <em>which certification should I get?</em></p>
+
+<p>It's a fair question. There are at least five major agencies certifying freedivers worldwide, each with its own philosophy, structure, and community. And unlike scuba — where PADI dominates so completely that the choice barely exists — freediving certification is genuinely competitive. The agencies differ in meaningful ways.</p>
+
+<p>I'm an AIDA instructor, so I'll be transparent about that bias up front. But I've trained under instructors from multiple systems, I dive regularly with people certified through all of them, and I think the honest answer is more nuanced than "mine is best."</p>
+
+<p>Here's the full picture.</p>
+
+<h2>The Five Major Agencies</h2>
+
+<p><strong><a href="https://www.aidainternational.org/" target="_blank" rel="noopener noreferrer">AIDA</a></strong> (Association Internationale pour le Développement de l'Apnée) — Founded in 1992. The oldest and largest freediving-specific agency in the world. Governs international competitions and world records. Over 4,000 instructors in 40+ countries and 180,000+ certified students. Headquarters in Zurich.</p>
+
+<p><strong><a href="https://www.molchanovs.com/" target="_blank" rel="noopener noreferrer">Molchanovs</a></strong> — Founded by Alexey Molchanov, son of the legendary Natalia Molchanova. The newest of the major agencies but growing fast, especially in the US. Known for a strong training methodology and active online community. Uses a "Wave" system (Wave 1, 2, 3, 4) instead of numbered levels.</p>
+
+<p><strong><a href="https://www.padi.com/courses/freediver" target="_blank" rel="noopener noreferrer">PADI</a></strong> (Professional Association of Diving Instructors) — The world's largest diving organization, primarily known for scuba. Expanded into freediving education more recently. Massive global instructor network, but freediving is a smaller part of their operation.</p>
+
+<p><strong><a href="https://www.divessi.com/freediving" target="_blank" rel="noopener noreferrer">SSI</a></strong> (Scuba Schools International) — Another major scuba agency that has built out a strong freediving program. Known for high-quality digital learning materials and a polished app. Courses tend to have rigorous depth and performance standards at each level.</p>
+
+<p><strong><a href="https://www.freedivinginstructors.com/" target="_blank" rel="noopener noreferrer">FII</a></strong> (Freediving Instructors International) — A smaller, US-focused agency founded by performance freedivers. Emphasizes personalized instruction, small class sizes, and instructor quality over scale.</p>
+
+<h2>How They Compare</h2>
+
+<h3>Beginner Course Depth Requirements</h3>
+
+<p>AIDA 2 requires a 16-meter (52 ft) constant weight dive. Molchanovs Wave 1 requires 12 meters (40 ft). PADI Freediver is 10-16 meters depending on the course. SSI Level 1 is 20 meters. FII Level 1 is 10-20 meters depending on the instructor.</p>
+
+<p>These numbers matter less than you think. A good instructor adjusts the pace to the student. But they tell you something about the philosophy — SSI pushes depth early, PADI keeps it accessible, AIDA and Molchanovs sit in the middle.</p>
+
+<h3>Beginner Course Breath-Hold Requirements</h3>
+
+<p>AIDA 2 requires a 2-minute static breath hold. Molchanovs Wave 1 requires 1:30. PADI Freediver requires 1:30. SSI Level 1 requires 2 minutes. FII Level 1 is flexible based on instructor assessment.</p>
+
+<h3>Course Duration</h3>
+
+<p>Most beginner courses across all agencies run 2-3 days, covering theory, pool sessions, and open water dives. Some schools stretch to 4 days for a more relaxed pace. The theory component is similar across agencies — physics of breath-holding, equalization techniques, safety protocols, buddy procedures, the mammalian dive reflex.</p>
+
+<h3>Global Recognition</h3>
+
+<p>AIDA is the most universally recognized freediving certification worldwide. If you show up at a dive shop in Thailand, Egypt, the Philippines, or Croatia with an AIDA card, they know exactly what it means. Molchanovs is catching up fast and is widely recognized in most freediving destinations. SSI benefits from its scuba infrastructure and is accepted everywhere SSI scuba is (which is almost everywhere). PADI has the strongest brand recognition overall due to scuba, but their freediving program is newer and less established in the freediving community. FII is primarily recognized in North America.</p>
+
+<h3>Instructor Standards</h3>
+
+<p>This is where the agencies diverge significantly. AIDA requires instructors to hold AIDA 4 (minimum 40m depth) and complete a dedicated instructor training program. Molchanovs has similar requirements — Wave 3 instructor candidates need 42m with bifins. PADI allows scuba instructors to cross over to freediving instruction with a 20m depth requirement, which is a point of criticism within the freediving community. SSI and FII both require substantial depth credentials for their instructors.</p>
+
+<p>The consensus across the freediving world is clear: <strong>the instructor matters more than the agency</strong>. A dedicated, safety-conscious PADI freediving instructor will give you a better education than a careless AIDA instructor. But the agency's minimum standards determine the floor — and some floors are higher than others.</p>
+
+<h2>What Each Agency Does Best</h2>
+
+<p><strong>AIDA</strong> excels at international recognition, competition pathways, and instructor independence. AIDA instructors can operate independently without affiliation to a dive center, which allows for more flexibility and often more personalized instruction. The competition structure means AIDA-certified athletes can pursue world records and compete at the highest levels. If you ever want to dive internationally or compete, AIDA is the standard.</p>
+
+<p><strong>Molchanovs</strong> excels at ongoing education and community. Their post-certification training programs are arguably the best in the industry — structured pool workouts, dry training plans, equalization programs, and an active online community. If you want a system that keeps you training between courses, Molchanovs delivers. Their gear (bifins, monofins) is also among the best available.</p>
+
+<p><strong>PADI</strong> excels at accessibility and global infrastructure. With the largest instructor network in diving, you can find a PADI course almost anywhere. The courses tend to be less intimidating for absolute beginners, with more flexibility in pacing and requirements. If you're transitioning from scuba, the PADI ecosystem is familiar.</p>
+
+<p><strong>SSI</strong> excels at digital learning and course materials. Their app is polished, the video content is high quality, and the learning experience feels professional. SSI also has rigorous performance standards at each level — their students tend to be well-trained. The Mares gear partnership is a bonus.</p>
+
+<p><strong>FII</strong> excels at personalized, small-group instruction. With fewer instructors and a quality-over-quantity philosophy, FII courses often feel more like private coaching than group classes. If you want intense, individual attention, FII delivers.</p>
+
+<h2>What Each Agency Could Do Better</h2>
+
+<p><strong>AIDA</strong> — The online learning materials are dated compared to Molchanovs and SSI. The post-certification training path is less structured. Once you finish your AIDA 2, you're somewhat on your own for continued development unless your instructor provides it.</p>
+
+<p><strong>Molchanovs</strong> — Still building global recognition. In some regions, dive operators may not immediately recognize a Molchanovs Wave 1 card the way they would an AIDA 2. The emphasis on technical skills from the start (including no-fins requirements at Wave 2) can feel intense for recreational divers who just want to enjoy the water.</p>
+
+<p><strong>PADI</strong> — The scuba instructor crossover pathway is the elephant in the room. Some PADI freediving instructors have deep freediving experience; others are primarily scuba instructors who added a freediving credential with minimal additional depth training. You need to vet your specific instructor more carefully with PADI than with freediving-specific agencies.</p>
+
+<p><strong>SSI</strong> — Similar to PADI in that it's a scuba-first organization, though SSI's freediving program is more developed. Still, the primary identity is scuba diving, and some freediving purists view it as a secondary offering.</p>
+
+<p><strong>FII</strong> — Limited availability. With fewer instructors, finding an FII course near you can be difficult. The agency is primarily US-focused and lacks the international reach of AIDA, Molchanovs, or SSI.</p>
+
+<h2>Can You Switch Between Agencies?</h2>
+
+<p>Yes. Most agencies accept crossovers — you can take AIDA 2 and then do Molchanovs Wave 2, or start with SSI Level 1 and continue with AIDA 3. The instructor may do an evaluation dive to confirm your skills match their agency's standards for the previous level, but switching is generally straightforward.</p>
+
+<p>This means your first certification doesn't lock you in. Start wherever works best — the right instructor, the right location, the right timing — and continue wherever makes sense.</p>
+
+<h2>So Which One Should You Choose?</h2>
+
+<p>Here's my honest framework:</p>
+
+<p>If you want the most globally recognized certification and a clear path to competition or international diving, choose <strong>AIDA</strong>.</p>
+
+<p>If you want the best post-course training system and an active community to keep developing your skills, choose <strong>Molchanovs</strong>.</p>
+
+<p>If you want the most accessible entry point with the widest instructor availability, choose <strong>PADI</strong> — but vet your specific instructor carefully.</p>
+
+<p>If you want rigorous standards and polished digital learning, choose <strong>SSI</strong>.</p>
+
+<p>If you want small-group, personalized instruction and you're in the US, choose <strong>FII</strong>.</p>
+
+<p>And here's the real answer: <strong>choose the best instructor available to you</strong>, regardless of agency. Talk to them. Ask about their depth experience, how many students they've trained, their approach to safety, and how they handle students who struggle with equalization or anxiety. A great instructor from any agency will give you a solid foundation.</p>
+
+<h2>Why LJFC Teaches AIDA</h2>
+
+<p>I chose AIDA for three reasons.</p>
+
+<p><strong>First, recognition.</strong> When my students travel — to Dahab, to Bali, to the Philippines, to the Canary Islands — their AIDA card is understood everywhere. No explanations needed.</p>
+
+<p><strong>Second, the instructor pathway.</strong> AIDA's requirement that instructors hold AIDA 4 (40m+) and complete a rigorous training program means the floor is high. I trained under <a href="https://www.instagram.com/khaledelgammal/" target="_blank" rel="noopener noreferrer">Khaled El Gammal</a> in Dahab for my AIDA 4 and instructor certification — the standard expected of me was demanding, and that's how it should be for anyone teaching people to hold their breath underwater.</p>
+
+<p><strong>Third, independence.</strong> AIDA allows me to operate as an independent instructor without affiliation to a dive center. That means I can build LJFC the way I believe it should be built — with small groups (max 4 students), at La Jolla's best sites, with the breath-first methodology that I think produces the safest, most confident freedivers.</p>
+
+<p>That said, I dive with Molchanovs-certified freedivers every Saturday. I respect what FII and SSI instructors do locally. The freediving community in San Diego is small enough that agency tribalism is pointless — we're all in the water together, watching each other's backs.</p>
+
+<p>The certification on your card matters less than what you can do in the water. Pick a great instructor. Learn the skills. Then <a href="/programs">come dive with us</a>.</p>
+    `,
+  },
 ];
 
 export function getPost(slug: string): BlogPost | undefined {
