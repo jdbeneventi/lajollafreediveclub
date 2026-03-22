@@ -258,6 +258,35 @@ export default function ConditionsPage() {
         </div>
       </section>
 
+      {/* Support */}
+      <section className="bg-salt py-12 px-6">
+        <div className="max-w-[500px] mx-auto">
+          <div className="bg-white rounded-2xl p-6 md:p-8 text-center">
+            <div className="text-2xl mb-3">☕</div>
+            <h3 className="font-serif text-xl mb-2">Support this tool</h3>
+            <p className="text-sm text-[#5a6a7a] leading-relaxed mb-5">
+              The conditions dashboard, daily emails, and ocean intel are free and always will be. If they help you plan better dives, consider supporting the project.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <a
+                href="https://buymeacoffee.com/lajollafreediveclub"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-teal text-white rounded-full font-semibold text-sm no-underline hover:-translate-y-0.5 hover:shadow-[0_8px_25px_rgba(27,107,107,0.4)] transition-all"
+              >
+                Buy me a coffee →
+              </a>
+              <a
+                href="mailto:joshuabeneventi@gmail.com?subject=Conditions%20Dashboard%20Feedback"
+                className="inline-flex items-center justify-center px-6 py-3 border border-deep/10 text-deep rounded-full font-semibold text-sm no-underline hover:bg-deep/5 transition-all"
+              >
+                Send feedback
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* CTA */}
       <section className="bg-salt py-16 px-6 text-center">
         <Reveal>
