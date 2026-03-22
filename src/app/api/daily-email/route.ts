@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { Resend } from "resend";
 import { getMoonPhase } from "@/lib/moon";
 import { getTopEvents, isGrunionNight } from "@/lib/seasonal";
+import { getLocalIntel, LocalAlert } from "@/lib/local-intel";
 
 const KIT_API_SECRET = process.env.KIT_API_SECRET;
 const KIT_API_KEY = process.env.KIT_API_KEY;
@@ -169,6 +170,7 @@ function buildEmailHtml(
   grunion: boolean,
   tideNote: string,
   waterQuality?: WaterQualityEmail,
+  localAlerts?: LocalAlert[],
 ): string {
   const now = new Date();
   const dateStr = now.toLocaleDateString("en-US", {
@@ -202,6 +204,22 @@ function buildEmailHtml(
   <div style="background:${waterQuality.color};border-radius:16px;padding:14px 20px;margin-bottom:16px;color:white;font-size:13px;">
     <strong>⚠️ Water Quality Alert</strong> — ${waterQuality.alertText}
     <a href="https://www.sdbeachinfo.com/" style="color:white;margin-left:4px;">Details →</a>
+  </div>
+  ` : ""}
+
+  ${localAlerts && localAlerts.length > 0 ? `
+  <!-- Local Intel -->
+  <div style="background:white;border-radius:16px;padding:16px 20px;margin-bottom:16px;">
+    <div style="font-size:11px;color:#5a6a7a;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px;">Local Intel</div>
+    ${localAlerts.map((a) => {
+      const bgColor = a.severity === "critical" ? "#C75B3A" : a.severity === "warning" ? "#D4A574" : "#f5f5f5";
+      const textColor = a.severity === "info" ? "#2a2a2a" : "white";
+      const icons: Record<string, string> = { road: "🚧", parking: "🅿️", water_quality: "🟡", weather: "🌊", event: "🎪", wildlife: "🦈", safety: "⚠️" };
+      const icon = icons[a.category] || "📌";
+      return `<div style="background:${bgColor};color:${textColor};border-radius:8px;padding:10px 14px;margin-bottom:6px;font-size:12px;">
+        ${icon} <strong>${a.title}</strong><br><span style="opacity:0.8;">${a.summary}</span>
+      </div>`;
+    }).join("")}
   </div>
   ` : ""}
 
@@ -311,11 +329,12 @@ export async function GET(request: Request) {
   }
 
   try {
-    const [buoyData, windData, tideNote, wqRes] = await Promise.all([
+    const [buoyData, windData, tideNote, wqRes, localIntel] = await Promise.all([
       fetchBuoyDirect(),
       fetchWindDirect(),
       fetchTideNote(),
       fetch("https://www.sdbeachinfo.com/", { headers: { "User-Agent": "LaJollaFreediveClub/1.0" } }).catch(() => null),
+      getLocalIntel().catch(() => null),
     ]);
 
     const conditions: ConditionsData = {
@@ -347,7 +366,7 @@ export async function GET(request: Request) {
       } catch {}
     }
 
-    const html = buildEmailHtml(conditions, grade, moon, events, grunion, tideNote, waterQuality);
+    const html = buildEmailHtml(conditions, grade, moon, events, grunion, tideNote, waterQuality, localIntel?.alerts);
 
     // Preview mode — just return the HTML
     if (preview) {

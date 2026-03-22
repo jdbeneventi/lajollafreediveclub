@@ -5,6 +5,7 @@ import { ConditionsWidget } from "./ConditionsWidget";
 import { AlmanacWidget } from "./AlmanacWidget";
 import { ConditionsEmailForm } from "./ConditionsEmailForm";
 import { WaterQualityCard } from "./WaterQualityCard";
+import { LocalIntel } from "./LocalIntel";
 
 
 export const metadata: Metadata = {
@@ -116,6 +117,7 @@ export default function ConditionsPage() {
             <AlmanacWidget />
           </Reveal>
           <WaterQualityCard />
+          <LocalIntel />
 
           {/* Kelp Status */}
           {(() => {
