@@ -128,7 +128,7 @@ const otherPrograms = [
     title: "Group Ocean Sessions",
     subtitle: "Weekly guided dives with your crew",
     price: "Free with Ocean Flow / $25 drop-in",
-    priceNote: "Certified freedivers only · Own gear + lanyard + dive computer required",
+    priceNote: "Certified freedivers only · Own gear + lanyard required",
     duration: "Every Saturday, 2–3 hours",
     level: "AIDA 2 certified or equivalent",
     gradient: "from-ocean to-[#14566a]",
@@ -137,7 +137,6 @@ const otherPrograms = [
     includes: [
       "Guided dives at La Jolla Cove, Canyon, Shores, and beyond",
       "Safety divers on every session",
-      "Skills coaching and technique feedback",
       "Buddy matching for new members",
       "Conditions briefing and site selection",
     ],
@@ -456,7 +455,7 @@ export default function ProgramsPage() {
                   <p className="text-xs text-[#5a6a7a] leading-relaxed mb-4">
                     Guided dive from our mooring line at the canyon edge. Safety divers,
                     structured training, and a crew that knows these waters. Certified freedivers only (any agency).
-                    Must bring own gear: wetsuit, fins, mask, snorkel, weight belt, lanyard, and dive computer.
+                    Must bring own gear: wetsuit, fins, mask, snorkel, weight belt, and lanyard.
                     <a href="/documents/ljfc-waiver.pdf" className="text-teal hover:underline ml-1">Signed waiver required →</a>
                   </p>
                   <Link href="/contact/courses" className="text-teal text-sm font-medium no-underline hover:underline">

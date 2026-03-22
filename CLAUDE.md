@@ -95,10 +95,11 @@ Competitor reference: JGW beginner $495, intermediate $550, private $1900 (for u
 
 ## Saturday Session Requirements
 - Valid freediving certification (any agency)
-- Must bring: wetsuit, fins, mask, snorkel, weight belt, lanyard, dive computer
+- Must bring: wetsuit, fins, mask, snorkel, weight belt, lanyard
 - LJFC provides: buoys, lines, session leadership
 - Signed waiver required (digital at /waiver)
-- Not a class — participants responsible for own safety and buddy's
+- Not a class — no coaching unless pre-arranged via private coaching signup
+- Participants responsible for own safety and buddy's
 
 ## Waiver System
 - Digital waiver at /waiver — 3-step form (personal info → medical questionnaire → review & sign)
