@@ -437,6 +437,101 @@ export const partners: Partner[] = [
       { src: "/images/photos/ljfc-crew-lunch.jpg", alt: "LJFC crew after a Saturday session", caption: "The community behind the program", position: "after-ideas" },
     ],
   },
+  {
+    slug: "outdoor-outreach",
+    name: "Outdoor Outreach",
+    heroHeadline: "You take kids climbing, surfing, kayaking.",
+    heroHeadlineEm: "We take them under the surface.",
+    heroSubtitle: "Outdoor Outreach runs 500+ outdoor programs a year \u2014 hiking, biking, climbing, surfing, SUP, camping. But you don't have freediving. Nobody does. LJFC would be the first freediving program for underserved youth in San Diego. Here's how we add a new dimension to what you already do brilliantly.",
+    heritageLabel: "Why This Matters to Me",
+    heritageQuote: "Sunny Chang on your team said it best \u2014 some of your kids have lived in San Diego their whole lives and never been to the ocean. I know that feeling from the other side. I grew up in Point Loma, four blocks from the water. I never thought about ocean access because I always had it. My grandfather freedived for abalone in La Jolla. I graduated from UCSD, trained as a freediving instructor around the world, and came home to build the program I wish existed for every kid in this city \u2014 not just the ones who grew up on the coast.",
+    heritageAttribution: "Joshua Beneventi \u2014 UCSD Alum, Founder of LJFC",
+    connectionLabel: "The Fit",
+    connectionTitle: "40+ outdoor activities.",
+    connectionTitleEm: "Zero below the surface.",
+    connectionCards: [
+      {
+        title: "What Outdoor Outreach has built",
+        content: [
+          "Since 1999, over 17,000 young people ages 9-24 have hiked, biked, kayaked, climbed, surfed, and camped with Outdoor Outreach. You operate 500+ programs a year across City Heights, El Cajon, and countywide. You've received $1.35 million in California Outdoor Equity Grants. San Diego Foundation funds your Opening the Outdoors work. You're part of the Thrive Outside coalition. Your Leadership Program graduates become your Field Instructors \u2014 you hire from within your own community.",
+          "You take kids rock climbing in Joshua Tree, surfing in Coronado, kayaking in Mission Bay. You show them what they're capable of above the water and on land. But you don't go underneath. That's the frontier we open.",
+        ],
+      },
+      {
+        title: "What freediving adds",
+        content: [
+          "Freediving is unlike any other outdoor activity. Every other sport lets you externalize stress \u2014 push harder, move faster, yell louder. Freediving requires the opposite. You slow down. You quiet your mind. You learn that the urge to panic is a signal, not a command. Then you go underwater and discover you can do something extraordinary.",
+          "For a kid who's never been in the ocean, holding their breath for a minute and diving to the bottom at La Jolla Shores is a defining moment. It rewires what they believe they're capable of \u2014 and that transfers to every hard thing they face afterward. That's character development through physiology, not lecture.",
+        ],
+      },
+    ],
+    researchTitle: "What a breath hold",
+    researchTitleEm: "actually teaches.",
+    researchSubtitle: "Every outdoor activity builds character. Freediving builds a specific kind \u2014 the kind that comes from sitting with discomfort and discovering you can handle it.",
+    researchCards: [
+      { id: "Composure", name: "Calm Under Pressure", detail: "The urge to breathe is driven by rising CO\u2082, not low oxygen. Learning to stay calm through that discomfort \u2014 to recognize it as a signal, not an emergency \u2014 is the core skill." },
+      { id: "Courage", name: "Incremental & Measurable", detail: "Yesterday you held your breath for 30 seconds. Today, 45. Tomorrow, a minute. Courage isn't abstract \u2014 it's a number you can see growing. Kids track their own progress in real time." },
+      { id: "Trust", name: "The Buddy System", detail: "In freediving, you never dive alone. Your buddy watches you, and you watch them. You literally trust another person with your safety. That's not a team-building exercise \u2014 it's the real thing." },
+      { id: "Self-Knowledge", name: "Reading Your Own Body", detail: "Kids learn to recognize their heart rate, their breathing pattern, their stress response. They learn what panic feels like \u2014 and that they can choose how to respond to it." },
+      { id: "Resilience", name: "Failure is Built In", detail: "Every freediver hits their limit multiple times per session. You come up, breathe, rest, try again. The practice of meeting your edge and returning to it is the practice of resilience." },
+      { id: "Wonder", name: "A World Below the Surface", detail: "Leopard sharks, garibaldi, sea lions, bat rays \u2014 all visible from a single breath hold at La Jolla Shores. The moment a kid sees a shark underwater for the first time, everything changes." },
+    ],
+    additionalSections: [
+      {
+        label: "What LJFC Brings",
+        title: "You handle recruitment and trust.",
+        titleEm: "We handle the water.",
+        cards: [
+          {
+            title: "Instruction & safety",
+            content: [
+              "San Diego's only AIDA-certified Youth Instructor. DAN professional liability insured. Red Cross First Aid/CPR/AED. 4:1 student-to-instructor ratio in the water. The methodology starts on land \u2014 breathing drills, composure exercises, understanding your body's stress response \u2014 before anyone enters the ocean. Designed specifically for kids with no prior ocean experience.",
+            ],
+          },
+          {
+            title: "Gear & location",
+            content: [
+              "Complete gear for every participant: wetsuits, masks, fins, snorkels. All sizes. No family needs to own or bring anything. We operate at La Jolla Shores \u2014 sandy bottom, gentle slope, warm shallow water, lifeguards on duty. The easiest and safest ocean entry in San Diego. Inside the Matlahuayl Marine Reserve, protected since 1929 \u2014 world-class wildlife within wading distance.",
+            ],
+          },
+        ],
+      },
+    ],
+    showCamp: false,
+    partnershipTitle: "Five ways to add freediving",
+    partnershipTitleEm: "to your menu.",
+    partnershipIdeas: [
+      { title: "Freediving as an Adventure Club Activity", description: "Outdoor Outreach runs weekend, summer, and after-school adventure clubs in City Heights and El Cajon. Freediving slots in alongside surfing, SUP, and kayaking \u2014 but with a completely different character. We run a half-day session at La Jolla Shores: breath training on the beach, shallow water confidence building, then guided snorkeling and freediving on the reef. All gear provided. One session is enough for kids to hold their breath for over a minute and see wildlife they'll never forget." },
+      { title: "Leadership Program \u2014 AIDA Certification", description: "Your Leadership Program graduates become Field Instructors \u2014 you hire from your own community. An AIDA freediving certification adds a tangible, internationally recognized credential to their development. It's rare, impressive on a resume, and directly applicable to marine science, conservation, and outdoor recreation careers. A certified freediver who started in your Leadership Program is a powerful story for both of our organizations." },
+      { title: "Pilot Session \u2014 One Group, One Saturday", description: "The simplest way to start. Bring one Outdoor Outreach group to La Jolla Shores on a Saturday morning. We handle everything: instruction, gear, safety, logistics. Your staff observes. Kids experience it. We debrief afterward and decide together whether this belongs in your program rotation. No cost, no commitment \u2014 just a test." },
+      { title: "Foster Care Youth \u2014 Ocean as Regulation", description: "Outdoor Outreach partners with Casey Family Programs to serve young adults in the foster care system. Freediving's emphasis on breath control, composure under stress, and nervous system regulation is especially relevant for youth who've experienced trauma. The mammalian dive reflex \u2014 the body's automatic calming response to water immersion \u2014 is measurable, immediate, and doesn't require talking about anything. It's embodied regulation, not therapy. For kids who've learned to be on guard, discovering they can be calm underwater is quietly transformative." },
+      { title: "Joint Grant Applications", description: "Outdoor Outreach already receives California Outdoor Equity Grants and San Diego Foundation Opening the Outdoors funding. \"Freediving for underserved youth\" adds a unique dimension to existing grant narratives \u2014 ocean access that goes literally below the surface. The ACA's Lilly Endowment Character at Camp initiative ($45.5M nationally) specifically funds programs building perseverance, responsibility, and willingness to try new things. A freediving module \u2014 with its measurable progression, buddy-system trust, and composure training \u2014 fits that framework perfectly. Your nonprofit status is the vehicle. Our program is the content." },
+    ],
+    credentials: [
+      { value: "UCSD", label: "Alumni\nCame home to build LJFC" },
+      { value: "AIDA", label: "Instructor + Youth Instructor\nSan Diego's only" },
+      { value: "4:1", label: "Student-to-instructor\nratio in the water" },
+      { value: "DAN", label: "Professional liability\nDivers Alert Network" },
+      { value: "ARC", label: "Red Cross First Aid\nCPR/AED certified" },
+      { value: "Gear", label: "All equipment provided\nZero barrier to entry" },
+    ],
+    ctaTitle: "Bring a group.",
+    ctaTitleEm: "We'll take them under.",
+    ctaDescription: "One Saturday at La Jolla Shores. We provide the gear, the instruction, the safety. Your staff watches. If the kids come out of the water talking about it for weeks \u2014 we build it into your rotation. That's the whole pitch.",
+    ctaButtonText: "Let's plan a pilot session",
+    ctaEmail: "joshuabeneventi@gmail.com",
+    ctaEmailSubject: "LJFC \u00D7 Outdoor Outreach \u2014 Freediving for Youth",
+    ctaSecondary: "Joshua Beneventi \u00B7 UCSD Alum \u00B7 joshuabeneventi@gmail.com",
+    ctaLinks: [
+      { label: "lajollafreediveclub.com/camp-garibaldi", url: "https://lajollafreediveclub.com/camp-garibaldi" },
+      { label: "lajollafreediveclub.com/map", url: "https://lajollafreediveclub.com/map" },
+    ],
+    images: [
+      { src: "/images/photos/joshua-teaching-kids.jpg", alt: "Joshua teaching kids freediving", caption: "Breath-first methodology \u2014 composure before capability", position: "after-heritage" },
+      { src: "/images/photos/joshua-kid-beach.jpg", alt: "Joshua with a young student at the beach", caption: "From never been in the ocean to confident underwater", position: "after-connection" },
+      { src: "/images/photos/ljfc-crew-lunch.jpg", alt: "LJFC crew after a Saturday session", caption: "The community behind the program", position: "after-ideas" },
+    ],
+  },
 ];
 
 export function getPartner(slug: string): Partner | undefined {
