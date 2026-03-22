@@ -42,6 +42,7 @@ export interface ScienceComm {
 export interface Partner {
   slug: string;
   name: string;
+  heroImage?: string;
   heroHeadline: string;
   heroHeadlineEm: string;
   heroSubtitle: string;
@@ -82,12 +83,14 @@ export interface Partner {
   ctaEmailSubject: string;
   ctaSecondary: string;
   ctaLinks?: { label: string; url: string }[];
+  images?: { src: string; alt: string; caption?: string; position: "after-heritage" | "after-connection" | "after-camp" | "after-ideas" }[];
 }
 
 export const partners: Partner[] = [
   {
     slug: "scripps",
     name: "Scripps Institution of Oceanography",
+    heroImage: "/images/partners/scripps-aerial.jpg",
     heroHeadline: "Your data,",
     heroHeadlineEm: "in the water.",
     heroSubtitle: "I'm a UCSD alum who came back to La Jolla to build a freediving community and an ocean conditions platform — powered entirely by Scripps instruments. We dive the canyon below your pier every week. Here's how we could work together.",
@@ -174,10 +177,15 @@ export const partners: Partner[] = [
     ctaEmail: "joshuabeneventi@gmail.com",
     ctaEmailSubject: "LJFC × Scripps — Community Data Partnership",
     ctaSecondary: "Joshua Beneventi · UCSD Alum · joshuabeneventi@gmail.com",
+    images: [
+      { src: "/images/partners/scripps-stairs.jpg", alt: "Stairs leading down to Scripps Pier with La Jolla coastline in background", position: "after-heritage" },
+      { src: "/images/partners/scripps-campus.jpg", alt: "Scripps Institution of Oceanography campus overlooking the Pacific", position: "after-connection" },
+    ],
   },
   {
     slug: "birch-aquarium",
     name: "Birch Aquarium at Scripps",
+    heroImage: "/images/partners/birch-kelp-kids.jpg",
     heroHeadline: "550,000 visitors a year.",
     heroHeadlineEm: "One mile from the wild ocean.",
     heroSubtitle: "La Jolla is one of the only places in the world where families can swim with leopard sharks, watch sea lions play, and spot garibaldi on a reef \u2014 all from shore, in waist-deep water. Birch Aquarium shows them why the ocean matters. We give them the experience of being in it. Together, we could build something neither of us can offer alone.",
@@ -292,6 +300,10 @@ export const partners: Partner[] = [
       { label: "lajollafreediveclub.com/camp-garibaldi", url: "https://lajollafreediveclub.com/camp-garibaldi" },
       { label: "lajollafreediveclub.com/conditions", url: "https://lajollafreediveclub.com/conditions" },
       { label: "lajollafreediveclub.com/map", url: "https://lajollafreediveclub.com/map" },
+    ],
+    images: [
+      { src: "/images/partners/birch-child-fish.jpg", alt: "Child pointing at fish in the Birch Aquarium reef exhibit", position: "after-heritage" },
+      { src: "/images/partners/birch-whales.jpg", alt: "Families at the Birch Aquarium whale fountain entrance", caption: "550,000 visitors a year — one mile from the wild ocean", position: "after-camp" },
     ],
   },
 ];

@@ -25,6 +25,23 @@ export default async function PartnerPage({ params }: Props) {
 
   const mailtoHref = `mailto:${partner.ctaEmail}?subject=${encodeURIComponent(partner.ctaEmailSubject)}&body=${encodeURIComponent(`Hi Joshua,\n\nI saw the partnership page and`)}`;
 
+  const renderImages = (position: string) => {
+    const imgs = partner.images?.filter((img) => img.position === position);
+    if (!imgs || imgs.length === 0) return null;
+    return (
+      <div className="max-w-[1000px] mx-auto px-6 md:px-8 py-4">
+        {imgs.map((img, i) => (
+          <div key={i} className="rounded-lg overflow-hidden">
+            <img src={img.src} alt={img.alt} className="w-full h-auto" />
+            {img.caption && (
+              <p className="text-center text-[0.8rem] text-salt/30 mt-3 italic">{img.caption}</p>
+            )}
+          </div>
+        ))}
+      </div>
+    );
+  };
+
   return (
     <div className="bg-deep text-salt font-sans font-light leading-relaxed overflow-x-hidden">
       {/* Grain overlay */}
@@ -37,13 +54,16 @@ export default async function PartnerPage({ params }: Props) {
 
       {/* ── Hero ── */}
       <section className="min-h-screen flex flex-col justify-end px-6 md:px-8 pt-12 pb-16 md:pb-24 relative overflow-hidden">
+        {partner.heroImage && (
+          <img src={partner.heroImage} alt="" className="absolute inset-0 w-full h-full object-cover z-0" />
+        )}
         <div
           className="absolute inset-0 z-[1]"
           style={{
             background: `
               radial-gradient(ellipse at 20% 80%, rgba(27, 107, 107, 0.15) 0%, transparent 60%),
               radial-gradient(ellipse at 80% 20%, rgba(22, 59, 78, 0.3) 0%, transparent 50%),
-              linear-gradient(180deg, rgba(11, 29, 44, 0.4) 0%, #0B1D2C 100%)
+              linear-gradient(180deg, rgba(11, 29, 44, 0.3) 0%, #0B1D2C 100%)
             `,
           }}
         />
@@ -73,6 +93,8 @@ export default async function PartnerPage({ params }: Props) {
         </div>
       </div>
 
+      {renderImages("after-heritage")}
+
       {/* ── Connection ── */}
       <section className="py-24 px-6 md:px-8 max-w-[1000px] mx-auto border-t border-seafoam/15">
         <div className="text-[11px] text-teal/60 font-medium tracking-[0.2em] uppercase mb-4">{partner.connectionLabel || "The Connection"}</div>
@@ -90,6 +112,8 @@ export default async function PartnerPage({ params }: Props) {
           ))}
         </div>
       </section>
+
+      {renderImages("after-connection")}
 
       {/* ── Pipeline ── */}
       {partner.pipeline && (
@@ -228,6 +252,8 @@ export default async function PartnerPage({ params }: Props) {
         </div>
       </section>
 
+      {renderImages("after-camp")}
+
       {/* ── Science Communication ── */}
       {partner.scienceComm && (
         <div className="bg-ocean/[0.12] border-t border-b border-seafoam/10 py-20 px-6 md:px-8">
@@ -265,6 +291,8 @@ export default async function PartnerPage({ params }: Props) {
           </div>
         </section>
       )}
+
+      {renderImages("after-ideas")}
 
       {/* ── Credentials ── */}
       <section className="py-24 px-6 md:px-8 max-w-[1000px] mx-auto border-t border-seafoam/15">
