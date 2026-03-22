@@ -229,14 +229,14 @@ export default function ProgramsPage() {
                 <h3 className="font-serif text-2xl mb-2 tracking-tight">Which course should I take?</h3>
                 <p className="text-sm text-[#5a6a7a] mb-8">A quick comparison of the three AIDA levels we offer.</p>
 
-                <div className="overflow-x-auto">
-                  <table className="w-full text-sm">
+                <div className="overflow-x-auto -mx-4 px-4">
+                  <table className="w-full text-sm min-w-[480px]">
                     <thead>
                       <tr className="border-b border-deep/10">
-                        <th className="text-left py-3 pr-4 font-semibold text-[#5a6a7a] text-xs uppercase tracking-wide"></th>
-                        <th className="text-left py-3 px-4 font-semibold text-xs uppercase tracking-wide text-teal">AIDA 1</th>
-                        <th className="text-left py-3 px-4 font-semibold text-xs uppercase tracking-wide text-teal">AIDA 2</th>
-                        <th className="text-left py-3 px-4 font-semibold text-xs uppercase tracking-wide text-teal">AIDA 3</th>
+                        <th className="text-left py-3 pr-4 font-semibold text-[#5a6a7a] text-xs uppercase tracking-wide w-[120px]"></th>
+                        <th className="text-left py-3 px-3 font-semibold text-xs uppercase tracking-wide text-teal">AIDA 1</th>
+                        <th className="text-left py-3 px-3 font-semibold text-xs uppercase tracking-wide text-teal">AIDA 2</th>
+                        <th className="text-left py-3 px-3 font-semibold text-xs uppercase tracking-wide text-teal">AIDA 3</th>
                       </tr>
                     </thead>
                     <tbody className="text-[#2a2a2a]">
@@ -244,18 +244,18 @@ export default function ProgramsPage() {
                         { label: "Price", a1: "$200", a2: "$575", a3: "$700" },
                         { label: "Duration", a1: "1 day", a2: "2.5 days", a3: "3 days" },
                         { label: "Max depth", a1: "10m", a2: "20m", a3: "30m" },
-                        { label: "STA requirement", a1: "None", a2: "2:00 min", a3: "2:45 min" },
-                        { label: "Dynamic requirement", a1: "None", a2: "40m", a3: "55m" },
-                        { label: "Depth requirement", a1: "None", a2: "12–20m", a3: "24m" },
+                        { label: "STA", a1: "None", a2: "2:00 min", a3: "2:45 min" },
+                        { label: "Dynamic", a1: "None", a2: "40m", a3: "55m" },
+                        { label: "Depth", a1: "None", a2: "12–20m", a3: "24m" },
                         { label: "Prerequisites", a1: "None", a2: "None", a3: "AIDA 2" },
                         { label: "Swim test", a1: "100m", a2: "200m", a3: "AIDA 2 cert" },
                         { label: "Best for", a1: "Curious beginners", a2: "Committed beginners", a3: "Depth-focused divers" },
                       ].map((row) => (
                         <tr key={row.label} className="border-b border-deep/[0.05]">
-                          <td className="py-3 pr-4 font-medium text-[#5a6a7a] text-xs uppercase tracking-wide">{row.label}</td>
-                          <td className="py-3 px-4">{row.a1}</td>
-                          <td className="py-3 px-4">{row.a2}</td>
-                          <td className="py-3 px-4">{row.a3}</td>
+                          <td className="py-3 pr-4 font-medium text-[#5a6a7a] text-xs uppercase tracking-wide whitespace-nowrap">{row.label}</td>
+                          <td className="py-3 px-3">{row.a1}</td>
+                          <td className="py-3 px-3">{row.a2}</td>
+                          <td className="py-3 px-3">{row.a3}</td>
                         </tr>
                       ))}
                     </tbody>

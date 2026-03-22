@@ -63,32 +63,62 @@ export function ExpandableCourse({ course, isAida }: { course: CourseData; isAid
       {/* Collapsed header — always visible */}
       <button
         onClick={() => setOpen(!open)}
-        className="w-full text-left p-5 md:p-8 cursor-pointer bg-transparent border-none flex items-start md:items-center gap-4 md:gap-8 hover:bg-salt/50 transition-colors"
+        className="w-full text-left p-5 md:p-8 cursor-pointer bg-transparent border-none hover:bg-salt/50 transition-colors"
       >
-        <div className="flex-1 min-w-0">
-          <div className="flex flex-wrap gap-2 mb-2">
-            <span className="px-2.5 py-0.5 bg-teal/10 text-teal rounded-full text-[10px] font-semibold">
-              {course.duration}
-            </span>
-            <span className="px-2.5 py-0.5 bg-deep/[0.06] text-[#5a6a7a] rounded-full text-[10px] font-semibold">
-              {course.level}
-            </span>
-            {course.maxDepth && (
-              <span className="px-2.5 py-0.5 bg-coral/10 text-coral rounded-full text-[10px] font-semibold">
-                Max depth: {course.maxDepth}
-              </span>
-            )}
+        {/* Mobile: stacked layout */}
+        <div className="md:hidden">
+          <div className="flex items-start justify-between gap-3">
+            <div className="flex-1 min-w-0">
+              <h2 className={`font-serif ${isAida ? "text-xl" : "text-lg"} tracking-tight`}>{course.title}</h2>
+              <p className="text-[#5a6a7a] text-sm mt-1">{course.subtitle}</p>
+            </div>
+            <ChevronDown open={open} />
           </div>
-          <h2 className={`font-serif ${isAida ? "text-xl md:text-3xl" : "text-lg md:text-2xl"} tracking-tight`}>{course.title}</h2>
-          <p className="text-[#5a6a7a] text-sm mt-1">{course.subtitle}</p>
+          <div className="flex items-center justify-between mt-3">
+            <div className="flex flex-wrap gap-1.5">
+              <span className="px-2 py-0.5 bg-teal/10 text-teal rounded-full text-[10px] font-semibold">
+                {course.duration}
+              </span>
+              <span className="px-2 py-0.5 bg-deep/[0.06] text-[#5a6a7a] rounded-full text-[10px] font-semibold">
+                {course.level}
+              </span>
+              {course.maxDepth && (
+                <span className="px-2 py-0.5 bg-coral/10 text-coral rounded-full text-[10px] font-semibold">
+                  {course.maxDepth}
+                </span>
+              )}
+            </div>
+            <div className="font-serif text-lg text-deep tracking-tight shrink-0">{course.price}</div>
+          </div>
         </div>
 
-        <div className="flex items-center gap-2 md:gap-4 shrink-0 mt-1 md:mt-0">
-          <div className="text-right">
-            <div className="font-serif text-lg md:text-3xl text-deep tracking-tight">{course.price}</div>
-            <div className="text-[10px] text-[#5a6a7a] max-w-[120px] md:max-w-[180px] hidden md:block">{course.priceNote}</div>
+        {/* Desktop: row layout */}
+        <div className="hidden md:flex md:items-center md:gap-8">
+          <div className="flex-1 min-w-0">
+            <div className="flex flex-wrap gap-2 mb-2">
+              <span className="px-2.5 py-0.5 bg-teal/10 text-teal rounded-full text-[10px] font-semibold">
+                {course.duration}
+              </span>
+              <span className="px-2.5 py-0.5 bg-deep/[0.06] text-[#5a6a7a] rounded-full text-[10px] font-semibold">
+                {course.level}
+              </span>
+              {course.maxDepth && (
+                <span className="px-2.5 py-0.5 bg-coral/10 text-coral rounded-full text-[10px] font-semibold">
+                  Max depth: {course.maxDepth}
+                </span>
+              )}
+            </div>
+            <h2 className={`font-serif ${isAida ? "text-3xl" : "text-2xl"} tracking-tight`}>{course.title}</h2>
+            <p className="text-[#5a6a7a] text-sm mt-1">{course.subtitle}</p>
           </div>
-          <ChevronDown open={open} />
+
+          <div className="flex items-center gap-4 shrink-0">
+            <div className="text-right">
+              <div className="font-serif text-3xl text-deep tracking-tight">{course.price}</div>
+              <div className="text-[10px] text-[#5a6a7a] max-w-[180px]">{course.priceNote}</div>
+            </div>
+            <ChevronDown open={open} />
+          </div>
         </div>
       </button>
 
