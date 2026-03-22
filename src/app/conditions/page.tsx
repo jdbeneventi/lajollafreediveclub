@@ -4,7 +4,7 @@ import { Reveal } from "@/components/Reveal";
 import { ConditionsWidget } from "./ConditionsWidget";
 import { AlmanacWidget } from "./AlmanacWidget";
 import { ConditionsEmailForm } from "./ConditionsEmailForm";
-import { OceanIntel } from "./OceanIntel";
+
 
 export const metadata: Metadata = {
   title: "La Jolla Dive Conditions Today — Live Ocean Data",
@@ -114,10 +114,6 @@ export default function ConditionsPage() {
           <Reveal>
             <AlmanacWidget />
           </Reveal>
-          <Reveal>
-            <OceanIntel />
-          </Reveal>
-
           {/* Subscribe + Support */}
           <div className="mt-8 grid sm:grid-cols-2 gap-4">
             <div className="bg-gradient-to-br from-ocean to-deep rounded-2xl p-6 text-center">
