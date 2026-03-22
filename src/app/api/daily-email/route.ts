@@ -199,30 +199,6 @@ function buildEmailHtml(
     <div style="font-size:14px;color:#5a6a7a;">${dateStr}</div>
   </div>
 
-  ${waterQuality?.hasAlert ? `
-  <!-- Water Quality Alert -->
-  <div style="background:${waterQuality.color};border-radius:16px;padding:14px 20px;margin-bottom:16px;color:white;font-size:13px;">
-    <strong>⚠️ Water Quality Alert</strong> — ${waterQuality.alertText}
-    <a href="https://www.sdbeachinfo.com/" style="color:white;margin-left:4px;">Details →</a>
-  </div>
-  ` : ""}
-
-  ${localAlerts && localAlerts.length > 0 ? `
-  <!-- Local Intel -->
-  <div style="background:white;border-radius:16px;padding:16px 20px;margin-bottom:16px;">
-    <div style="font-size:11px;color:#5a6a7a;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px;">Local Intel</div>
-    ${localAlerts.map((a) => {
-      const bgColor = a.severity === "critical" ? "#C75B3A" : a.severity === "warning" ? "#D4A574" : "#f5f5f5";
-      const textColor = a.severity === "info" ? "#2a2a2a" : "white";
-      const icons: Record<string, string> = { road: "🚧", parking: "🅿️", water_quality: "🟡", weather: "🌊", event: "🎪", wildlife: "🦈", safety: "⚠️" };
-      const icon = icons[a.category] || "📌";
-      return `<div style="background:${bgColor};color:${textColor};border-radius:8px;padding:10px 14px;margin-bottom:6px;font-size:12px;">
-        ${icon} <strong>${a.title}</strong><br><span style="opacity:0.8;">${a.summary}</span>
-      </div>`;
-    }).join("")}
-  </div>
-  ` : ""}
-
   <!-- Grade Card -->
   <div style="background:white;border-radius:16px;padding:24px;text-align:center;margin-bottom:16px;">
     <div style="font-size:48px;font-weight:bold;color:#1B6B6B;margin-bottom:8px;">${grade.grade}</div>
@@ -255,6 +231,30 @@ function buildEmailHtml(
       </tr>
     </table>
   </div>
+
+  ${waterQuality?.hasAlert ? `
+  <!-- Water Quality Alert -->
+  <div style="background:${waterQuality.color};border-radius:16px;padding:14px 20px;margin-bottom:16px;color:white;font-size:13px;">
+    <strong>⚠️ Water Quality Alert</strong> — ${waterQuality.alertText}
+    <a href="https://www.sdbeachinfo.com/" style="color:white;margin-left:4px;">Details →</a>
+  </div>
+  ` : ""}
+
+  ${localAlerts && localAlerts.length > 0 ? `
+  <!-- Local Intel -->
+  <div style="background:white;border-radius:16px;padding:16px 20px;margin-bottom:16px;">
+    <div style="font-size:11px;color:#5a6a7a;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px;">Local Intel</div>
+    ${localAlerts.map((a) => {
+      const bgColor = a.severity === "critical" ? "#C75B3A" : a.severity === "warning" ? "#D4A574" : "#f5f5f5";
+      const textColor = a.severity === "info" ? "#2a2a2a" : "white";
+      const icons: Record<string, string> = { road: "🚧", parking: "🅿️", water_quality: "🟡", weather: "🌊", event: "🎪", wildlife: "🦈", safety: "⚠️" };
+      const icon = icons[a.category] || "📌";
+      return `<div style="background:${bgColor};color:${textColor};border-radius:8px;padding:10px 14px;margin-bottom:6px;font-size:12px;">
+        ${icon} <strong>${a.title}</strong><br><span style="opacity:0.8;">${a.summary}</span>
+      </div>`;
+    }).join("")}
+  </div>
+  ` : ""}
 
   ${grunion ? `
   <!-- Grunion Alert -->
