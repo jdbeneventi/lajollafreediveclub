@@ -117,6 +117,40 @@ export default function ConditionsPage() {
           <Reveal>
             <OceanIntel />
           </Reveal>
+
+          {/* Subscribe + Support */}
+          <div className="mt-8 grid sm:grid-cols-2 gap-4">
+            <div className="bg-gradient-to-br from-ocean to-deep rounded-2xl p-6 text-center">
+              <h3 className="font-serif text-lg text-white mb-2">Get this in your inbox</h3>
+              <p className="text-white/50 text-xs leading-relaxed mb-4">
+                Daily conditions at 6am. Swell, wind, water temp, dive grade, and tides — before you even check the surf cam.
+              </p>
+              <ConditionsEmailForm />
+            </div>
+            <div className="bg-white rounded-2xl p-6 text-center">
+              <div className="text-2xl mb-2">☕</div>
+              <h3 className="font-serif text-lg mb-2">Support this tool</h3>
+              <p className="text-xs text-[#5a6a7a] leading-relaxed mb-4">
+                Free and always will be. If it helps you plan better dives, consider supporting the project.
+              </p>
+              <div className="flex flex-col gap-2">
+                <a
+                  href="https://buymeacoffee.com/lajollafreediveclub"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-teal text-white rounded-full font-semibold text-sm no-underline hover:-translate-y-0.5 hover:shadow-[0_8px_25px_rgba(27,107,107,0.4)] transition-all"
+                >
+                  Buy me a coffee →
+                </a>
+                <a
+                  href="mailto:joshuabeneventi@gmail.com?subject=Conditions%20Dashboard%20Feedback"
+                  className="text-xs text-[#5a6a7a] underline hover:text-teal transition-colors"
+                >
+                  Send feedback or suggestions
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -238,51 +272,6 @@ export default function ConditionsPage() {
                 </a>
               </Reveal>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Conditions Email CTA */}
-      <section className="bg-deep py-16 px-6">
-        <div className="max-w-[500px] mx-auto text-center">
-          <Reveal>
-            <h2 className="font-serif text-2xl text-white mb-3">
-              Stay in the loop
-            </h2>
-            <p className="text-white/50 text-sm mb-6 leading-relaxed">
-              Conditions alerts, seasonal species updates, upcoming courses, and
-              weekly dive schedules — delivered to your inbox.
-            </p>
-            <ConditionsEmailForm />
-          </Reveal>
-        </div>
-      </section>
-
-      {/* Support */}
-      <section className="bg-salt py-12 px-6">
-        <div className="max-w-[500px] mx-auto">
-          <div className="bg-white rounded-2xl p-6 md:p-8 text-center">
-            <div className="text-2xl mb-3">☕</div>
-            <h3 className="font-serif text-xl mb-2">Support this tool</h3>
-            <p className="text-sm text-[#5a6a7a] leading-relaxed mb-5">
-              The conditions dashboard, daily emails, and ocean intel are free and always will be. If they help you plan better dives, consider supporting the project.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-3 justify-center">
-              <a
-                href="https://buymeacoffee.com/lajollafreediveclub"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-teal text-white rounded-full font-semibold text-sm no-underline hover:-translate-y-0.5 hover:shadow-[0_8px_25px_rgba(27,107,107,0.4)] transition-all"
-              >
-                Buy me a coffee →
-              </a>
-              <a
-                href="mailto:joshuabeneventi@gmail.com?subject=Conditions%20Dashboard%20Feedback"
-                className="inline-flex items-center justify-center px-6 py-3 border border-deep/10 text-deep rounded-full font-semibold text-sm no-underline hover:bg-deep/5 transition-all"
-              >
-                Send feedback
-              </a>
-            </div>
           </div>
         </div>
       </section>
