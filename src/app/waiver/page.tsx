@@ -302,7 +302,7 @@ export default function WaiverPage() {
                   <input type="date" value={form.dob} onChange={(e) => update("dob", e.target.value)} className="w-full px-4 py-3 rounded-lg border border-deep/10 text-sm outline-none focus:border-teal transition-colors bg-salt" />
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-deep mb-1">Email *</label>
                     <input type="email" value={form.email} onChange={(e) => update("email", e.target.value)} className="w-full px-4 py-3 rounded-lg border border-deep/10 text-sm outline-none focus:border-teal transition-colors bg-salt" placeholder="you@email.com" />
@@ -322,7 +322,7 @@ export default function WaiverPage() {
                   <input type="text" value={form.emergencyName} onChange={(e) => update("emergencyName", e.target.value)} className="w-full px-4 py-3 rounded-lg border border-deep/10 text-sm outline-none focus:border-teal transition-colors bg-salt" />
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-deep mb-1">Contact Phone *</label>
                     <input type="tel" value={form.emergencyPhone} onChange={(e) => update("emergencyPhone", e.target.value)} className="w-full px-4 py-3 rounded-lg border border-deep/10 text-sm outline-none focus:border-teal transition-colors bg-salt" />
@@ -347,7 +347,7 @@ export default function WaiverPage() {
                 )}
               </div>
 
-              <button onClick={nextStep} className="w-full py-3.5 bg-coral text-white rounded-full font-semibold text-sm cursor-pointer border-none hover:shadow-[0_8px_25px_rgba(199,91,58,0.4)] transition-all">
+              <button onClick={nextStep} className="w-full py-3.5 bg-coral text-white rounded-full font-semibold text-sm cursor-pointer border-none hover:shadow-[0_8px_25px_rgba(199,91,58,0.4)] transition-all focus:outline-2 focus:outline-offset-2 focus:outline-teal">
                 Continue to Medical →
               </button>
             </div>
@@ -369,7 +369,7 @@ export default function WaiverPage() {
                       <div className="flex gap-3 shrink-0">
                         <button
                           onClick={() => updateMedical(i, "no")}
-                          className={`px-3 py-1 rounded-full text-xs font-semibold cursor-pointer border transition-colors ${
+                          className={`px-4 py-2.5 rounded-full text-xs font-semibold cursor-pointer border transition-colors focus:outline-2 focus:outline-offset-2 focus:outline-teal ${
                             form.medical[i] === "no" ? "bg-teal text-white border-teal" : "bg-transparent text-[#5a6a7a] border-deep/10 hover:border-teal"
                           }`}
                         >
@@ -377,7 +377,7 @@ export default function WaiverPage() {
                         </button>
                         <button
                           onClick={() => updateMedical(i, "yes")}
-                          className={`px-3 py-1 rounded-full text-xs font-semibold cursor-pointer border transition-colors ${
+                          className={`px-4 py-2.5 rounded-full text-xs font-semibold cursor-pointer border transition-colors focus:outline-2 focus:outline-offset-2 focus:outline-teal ${
                             form.medical[i] === "yes" ? "bg-coral text-white border-coral" : "bg-transparent text-[#5a6a7a] border-deep/10 hover:border-coral"
                           }`}
                         >
@@ -403,10 +403,10 @@ export default function WaiverPage() {
               </div>
 
               <div className="flex gap-3">
-                <button onClick={prevStep} className="flex-1 py-3.5 bg-white text-deep border border-deep/10 rounded-full font-semibold text-sm cursor-pointer hover:bg-deep/[0.03] transition-colors">
+                <button onClick={prevStep} className="flex-1 py-3.5 bg-white text-deep border border-deep/10 rounded-full font-semibold text-sm cursor-pointer hover:bg-deep/[0.03] transition-colors focus:outline-2 focus:outline-offset-2 focus:outline-teal">
                   ← Back
                 </button>
-                <button onClick={nextStep} className="flex-1 py-3.5 bg-coral text-white rounded-full font-semibold text-sm cursor-pointer border-none hover:shadow-[0_8px_25px_rgba(199,91,58,0.4)] transition-all">
+                <button onClick={nextStep} className="flex-1 py-3.5 bg-coral text-white rounded-full font-semibold text-sm cursor-pointer border-none hover:shadow-[0_8px_25px_rgba(199,91,58,0.4)] transition-all focus:outline-2 focus:outline-offset-2 focus:outline-teal">
                   Continue to Sign →
                 </button>
               </div>
@@ -465,7 +465,7 @@ export default function WaiverPage() {
               {/* Summary */}
               <div className="bg-white rounded-xl p-6 md:p-8">
                 <h3 className="text-sm font-semibold text-deep mb-3">Summary</h3>
-                <div className="grid grid-cols-2 gap-3 text-xs">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
                   <div><span className="text-[#5a6a7a]">Name:</span> <span className="text-deep font-medium">{form.fullName}</span></div>
                   <div><span className="text-[#5a6a7a]">DOB:</span> <span className="text-deep font-medium">{form.dob}</span></div>
                   <div><span className="text-[#5a6a7a]">Email:</span> <span className="text-deep font-medium">{form.email}</span></div>
@@ -486,13 +486,13 @@ export default function WaiverPage() {
                   <h3 className="text-sm font-semibold text-deep">
                     {form.isMinor ? "Parent/Guardian Signature *" : "Your Signature *"}
                   </h3>
-                  <button onClick={clearSig} className="text-xs text-[#5a6a7a] hover:text-coral cursor-pointer bg-transparent border-none">
+                  <button onClick={clearSig} className="text-xs text-[#5a6a7a] hover:text-coral cursor-pointer bg-transparent border-none focus:outline-2 focus:outline-offset-2 focus:outline-teal">
                     Clear
                   </button>
                 </div>
                 <canvas
                   ref={canvasRef}
-                  className="w-full h-[120px] border border-deep/10 rounded-lg bg-salt cursor-crosshair touch-none"
+                  className="w-full h-[150px] md:h-[120px] border border-deep/10 rounded-lg bg-salt cursor-crosshair touch-none"
                   onMouseDown={startDraw}
                   onMouseMove={draw}
                   onMouseUp={stopDraw}
@@ -507,13 +507,13 @@ export default function WaiverPage() {
               </div>
 
               <div className="flex gap-3">
-                <button onClick={prevStep} className="flex-1 py-3.5 bg-white text-deep border border-deep/10 rounded-full font-semibold text-sm cursor-pointer hover:bg-deep/[0.03] transition-colors">
+                <button onClick={prevStep} className="flex-1 py-3.5 bg-white text-deep border border-deep/10 rounded-full font-semibold text-sm cursor-pointer hover:bg-deep/[0.03] transition-colors focus:outline-2 focus:outline-offset-2 focus:outline-teal">
                   ← Back
                 </button>
                 <button
                   onClick={submit}
                   disabled={submitting}
-                  className="flex-1 py-3.5 bg-coral text-white rounded-full font-semibold text-sm cursor-pointer border-none hover:shadow-[0_8px_25px_rgba(199,91,58,0.4)] transition-all disabled:opacity-50"
+                  className="flex-1 py-3.5 bg-coral text-white rounded-full font-semibold text-sm cursor-pointer border-none hover:shadow-[0_8px_25px_rgba(199,91,58,0.4)] transition-all disabled:opacity-50 focus:outline-2 focus:outline-offset-2 focus:outline-teal"
                 >
                   {submitting ? "Submitting..." : "Sign & Submit Waiver"}
                 </button>

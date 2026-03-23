@@ -98,7 +98,7 @@ export function OceanIntel() {
               {s.image && (
                 <img
                   src={s.image}
-                  alt=""
+                  alt={s.title}
                   className="w-10 h-10 rounded-lg object-cover shrink-0"
                 />
               )}

@@ -63,6 +63,16 @@ export function Nav() {
           <button
             onClick={() => setLearnOpen(!learnOpen)}
             onMouseEnter={() => setLearnOpen(true)}
+            onKeyDown={(e) => {
+              if (e.key === "ArrowDown") {
+                e.preventDefault();
+                setLearnOpen(true);
+              } else if (e.key === "Escape") {
+                setLearnOpen(false);
+              }
+            }}
+            aria-expanded={learnOpen}
+            aria-haspopup="true"
             className="flex items-center gap-1 text-white/80 text-sm tracking-wide hover:text-seafoam transition-colors bg-transparent border-none cursor-pointer p-0"
           >
             Learn

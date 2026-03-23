@@ -442,6 +442,9 @@ export default function ProgramsPage() {
               <p className="section-desc max-w-[560px] mx-auto">
                 Dates fill up fast — inquire early to reserve your spot.
               </p>
+              <p className="text-xs text-[#5a6a7a] mt-3 max-w-[480px] mx-auto">
+                Sample dates shown below — schedule updates monthly. <Link href="/contact/courses" className="text-teal hover:underline">Inquire for current availability</Link>.
+              </p>
             </div>
           </Reveal>
 

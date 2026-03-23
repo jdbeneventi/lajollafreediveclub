@@ -105,7 +105,7 @@ export default async function BlogPostPage({ params }: Props) {
           <>
             <img
               src={post.heroImage}
-              alt=""
+              alt={post.title}
               className="absolute inset-0 w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-deep via-deep/60 to-deep/30" />

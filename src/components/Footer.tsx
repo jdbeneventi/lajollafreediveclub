@@ -97,19 +97,12 @@ export function Footer() {
       <div className="max-w-[1240px] mx-auto pt-8 border-t border-white/[0.08] flex flex-col md:flex-row justify-between items-center gap-4 text-xs">
         <span>&copy; {new Date().getFullYear()} La Jolla Freedive Club. All rights reserved.</span>
         <div className="flex gap-4">
-          {[
-            { label: "Ig", href: "https://instagram.com/lajollafreedive" },
-            { label: "Yt", href: "#" },
-            { label: "Tk", href: "#" },
-          ].map((s) => (
-            <a
-              key={s.label}
-              href={s.href}
-              className="w-9 h-9 rounded-full bg-white/[0.06] flex items-center justify-center text-white/50 text-xs hover:bg-teal hover:text-white transition-all no-underline"
-            >
-              {s.label}
-            </a>
-          ))}
+          <a
+            href="https://instagram.com/lajollafreedive"
+            className="w-9 h-9 rounded-full bg-white/[0.06] flex items-center justify-center text-white/50 text-xs hover:bg-teal hover:text-white transition-all no-underline"
+          >
+            Ig
+          </a>
         </div>
       </div>
     </footer>

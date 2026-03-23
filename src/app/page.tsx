@@ -380,7 +380,7 @@ export default function Home() {
                   <div className="aspect-[16/10] rounded-xl overflow-hidden mb-4">
                     <img
                       src={post.image}
-                      alt=""
+                      alt={post.title}
                       className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500"
                     />
                   </div>
