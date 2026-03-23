@@ -65,7 +65,14 @@ function CourseFormInner() {
         <div className="max-w-[640px] mx-auto">
           {submitted ? (
             <Reveal>
-              <SuccessState message="We'll be in touch within 24 hours with course details, upcoming dates, and pricing. Check your email!" />
+              <SuccessState
+                message="We'll be in touch within 24 hours with course details and available dates."
+                nextSteps={[
+                  { label: "Complete your waiver", href: "/waiver" },
+                  { label: "Check gear guide", href: "/gear" },
+                  { label: "Read the blog", href: "/blog" },
+                ]}
+              />
             </Reveal>
           ) : (
             <Reveal>

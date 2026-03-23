@@ -207,18 +207,33 @@ export default async function BlogPostPage({ params }: Props) {
           {/* CTA */}
           <div className="bg-gradient-to-br from-ocean to-teal rounded-2xl p-10 text-center">
             <h3 className="font-serif text-2xl text-white mb-3">
-              Ready to go deeper?
+              {post.category === "Training" || post.category === "Science"
+                ? "Ready to train?"
+                : post.category === "Beginner Guide" || post.category === "Local Guide"
+                ? "Ready to try it?"
+                : "Go deeper"}
             </h3>
             <p className="text-white/60 text-sm mb-6 leading-relaxed">
-              Join the LJFC community for courses, dive schedules, and weekly
-              ocean sessions.
+              {post.category === "Training" || post.category === "Science"
+                ? "Put this into practice. AIDA courses run year-round in La Jolla."
+                : post.category === "Beginner Guide"
+                ? "Start with a half-day AIDA 1 introduction — no experience needed."
+                : "Join the LJFC community for courses, ocean sessions, and weekly dives."}
             </p>
-            <Link
-              href="/contact"
-              className="inline-flex px-8 py-3 bg-coral text-white rounded-full font-semibold no-underline hover:-translate-y-0.5 hover:shadow-[0_8px_25px_rgba(232,115,74,0.4)] transition-all"
-            >
-              Get on the List &rarr;
-            </Link>
+            <div className="flex gap-3 justify-center flex-wrap">
+              <Link
+                href="/contact/courses"
+                className="inline-flex px-8 py-3 bg-coral text-white rounded-full font-semibold no-underline hover:-translate-y-0.5 hover:shadow-[0_8px_25px_rgba(232,115,74,0.4)] transition-all"
+              >
+                View Courses &rarr;
+              </Link>
+              <Link
+                href="/conditions"
+                className="inline-flex px-6 py-3 border border-white/20 text-white/80 rounded-full font-medium text-sm no-underline hover:bg-white/10 transition-all"
+              >
+                Check Conditions
+              </Link>
+            </div>
           </div>
         </div>
       </section>

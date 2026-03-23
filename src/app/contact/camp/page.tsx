@@ -38,7 +38,13 @@ export default function CampPage() {
         <div className="max-w-[640px] mx-auto">
           {submitted ? (
             <Reveal>
-              <SuccessState message="We'll be in touch within 24 hours with session dates, pricing, and everything you need to know to get your child ready. Check your email!" />
+              <SuccessState
+                message="We'll be in touch within 24 hours with session dates, pricing, and everything you need to get your camper ready."
+                nextSteps={[
+                  { label: "Read about Camp Garibaldi", href: "/camp-garibaldi" },
+                  { label: "Meet the instructor", href: "/about" },
+                ]}
+              />
             </Reveal>
           ) : (
             <Reveal>

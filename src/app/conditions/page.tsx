@@ -318,22 +318,33 @@ export default function ConditionsPage() {
       {/* CTA */}
       <section className="bg-salt py-16 px-6 text-center">
         <Reveal>
-          <div className="max-w-[500px] mx-auto">
-            <h2 className="font-serif text-2xl text-deep mb-4">
+          <div className="max-w-[600px] mx-auto">
+            <h2 className="font-serif text-[clamp(1.5rem,3vw,2rem)] tracking-tight mb-8 text-center">
               Conditions look good?
             </h2>
-            <p className="text-[#5a6a7a] text-sm mb-6 leading-relaxed">
-              Join our Saturday sessions — morning yoga with Lena at 7am,
-              group ocean dive at 8:30am. We check conditions every morning
-              and pick the best spot for the day.
-            </p>
+            <div className="grid md:grid-cols-2 gap-4 max-w-[600px] mx-auto mb-8">
+              <div className="bg-white rounded-2xl p-6 border border-deep/[0.06] text-center">
+                <div className="text-[11px] text-teal font-medium tracking-[0.15em] uppercase mb-2">Already certified</div>
+                <p className="text-sm text-[#5a6a7a] mb-4">Join our Saturday crew at La Jolla Shores.</p>
+                <Link
+                  href="/contact/courses?course=saturday"
+                  className="inline-flex px-5 py-2.5 bg-coral text-white rounded-full font-semibold text-sm no-underline hover:-translate-y-0.5 hover:shadow-[0_8px_25px_rgba(199,91,58,0.4)] transition-all"
+                >
+                  Join this Saturday &rarr;
+                </Link>
+              </div>
+              <div className="bg-white rounded-2xl p-6 border border-deep/[0.06] text-center">
+                <div className="text-[11px] text-seafoam font-medium tracking-[0.15em] uppercase mb-2">Not yet certified</div>
+                <p className="text-sm text-[#5a6a7a] mb-4">Start with a course — we&apos;ll get you in the water.</p>
+                <Link
+                  href="/contact/courses?course=aida2"
+                  className="inline-flex px-5 py-2.5 border border-deep/10 text-deep rounded-full font-semibold text-sm no-underline hover:bg-deep hover:text-white transition-all"
+                >
+                  Get certified &rarr;
+                </Link>
+              </div>
+            </div>
             <div className="flex gap-3 justify-center flex-wrap">
-              <Link
-                href="/contact/courses"
-                className="inline-flex px-6 py-3 bg-coral text-white rounded-full font-semibold text-sm no-underline hover:-translate-y-0.5 hover:shadow-[0_8px_25px_rgba(199,91,58,0.4)] transition-all"
-              >
-                Join the Saturday crew →
-              </Link>
               <Link
                 href="/map"
                 className="inline-flex px-6 py-3 border border-deep/10 text-deep rounded-full font-semibold text-sm no-underline hover:bg-deep/5 transition-all"

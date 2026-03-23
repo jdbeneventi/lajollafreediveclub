@@ -100,7 +100,13 @@ export default function ContactPage() {
 
           {submitted ? (
             <Reveal>
-              <SuccessState />
+              <SuccessState
+                message="Thanks for reaching out. We'll respond within 24 hours."
+                nextSteps={[
+                  { label: "Check conditions", href: "/conditions" },
+                  { label: "Browse the journal", href: "/blog" },
+                ]}
+              />
             </Reveal>
           ) : (
             <Reveal>

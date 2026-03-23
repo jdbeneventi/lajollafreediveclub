@@ -595,7 +595,7 @@ export default function ProgramsPage() {
                     Guided dive from our mooring line at the canyon edge. Safety divers,
                     structured training, and a crew that knows these waters. Certified freedivers only (any agency).
                     Must bring own gear: wetsuit, fins, mask, snorkel, weight belt, and lanyard.
-                    <a href="/documents/ljfc-waiver.pdf" className="text-teal hover:underline ml-1">Signed waiver required →</a>
+                    <a href="/waiver" className="text-teal hover:underline ml-1">Signed waiver required →</a>
                   </p>
                   <Link href="/contact/courses" className="text-teal text-sm font-medium no-underline hover:underline">
                     Get certified to join →

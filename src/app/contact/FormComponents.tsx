@@ -59,7 +59,7 @@ export function TextArea({
   );
 }
 
-export function SuccessState({ message }: { message?: string }) {
+export function SuccessState({ message, nextSteps }: { message?: string; nextSteps?: { label: string; href: string }[] }) {
   return (
     <div className="bg-white rounded-2xl p-8 md:p-12 text-center">
       <div className="w-16 h-16 rounded-full bg-teal/10 flex items-center justify-center mx-auto mb-6">
@@ -68,21 +68,25 @@ export function SuccessState({ message }: { message?: string }) {
         </svg>
       </div>
       <h2 className="font-serif text-3xl mb-4">You&apos;re on the list!</h2>
-      <p className="text-[#5a6a7a] leading-relaxed">
-        {message || "We'll be in touch within 24 hours. In the meantime, check out our "}
-        {!message && (
-          <>
-            <a href="/conditions" className="text-teal no-underline hover:underline">
-              live conditions
-            </a>
-            {" or "}
-            <a href="/blog" className="text-teal no-underline hover:underline">
-              journal
-            </a>
-            .
-          </>
-        )}
+      <p className="text-[#5a6a7a] leading-relaxed mb-6">
+        {message || "We'll be in touch within 24 hours. Check your email for confirmation."}
       </p>
+      {nextSteps && nextSteps.length > 0 && (
+        <div className="border-t border-deep/[0.06] pt-6 mt-6">
+          <p className="text-xs text-[#5a6a7a] uppercase tracking-wider font-semibold mb-4">While you wait</p>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            {nextSteps.map((step) => (
+              <a
+                key={step.href}
+                href={step.href}
+                className="px-5 py-2.5 rounded-full text-sm font-medium no-underline border border-deep/10 text-teal hover:bg-teal hover:text-white hover:border-teal transition-all"
+              >
+                {step.label}
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
