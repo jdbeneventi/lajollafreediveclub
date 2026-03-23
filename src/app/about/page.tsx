@@ -107,6 +107,10 @@ export default function AboutPage() {
                 La Jolla Freedive Club exists because that pull never went away.
               </p>
 
+              <div className="my-8 rounded-xl overflow-hidden">
+                <img src="/images/photos/scripps-underwater.jpg" alt="Underwater at Scripps" className="w-full h-auto" />
+              </div>
+
               <h2 className="font-serif text-2xl text-deep pt-6">Finding freediving</h2>
 
               <p>

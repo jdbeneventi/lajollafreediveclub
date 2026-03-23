@@ -52,6 +52,8 @@ export default function CampGaribaldiPage() {
 
       {/* Hero */}
       <section className="relative bg-gradient-to-b from-deep via-ocean to-coral/20 pt-20 pb-24 px-6 text-center overflow-hidden">
+        <img src="/images/photos/joshua-hank-youth.jpg" alt="Joshua with young student at the ocean" className="absolute inset-0 w-full h-full object-cover opacity-30" />
+        <div className="absolute inset-0 bg-gradient-to-b from-deep/60 via-ocean/70 to-coral/20" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_80%,rgba(232,115,74,0.2)_0%,transparent_70%)]" />
 
         <Reveal>

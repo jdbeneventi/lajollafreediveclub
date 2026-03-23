@@ -92,8 +92,12 @@ export default function ConditionsPage() {
   return (
     <>
       {/* Header */}
-      <section className="bg-gradient-to-b from-deep to-ocean pt-36 pb-20 px-6 text-center">
-        <Reveal>
+      <section className="bg-gradient-to-b from-deep to-ocean pt-36 pb-20 px-6 text-center relative overflow-hidden">
+        <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover opacity-20">
+          <source src="/videos/scripps-pier.mp4" type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-gradient-to-b from-deep/60 to-ocean/80" />
+        <Reveal className="relative z-10">
           <div className="section-label text-seafoam before:bg-seafoam justify-center">
             Dive Conditions
           </div>

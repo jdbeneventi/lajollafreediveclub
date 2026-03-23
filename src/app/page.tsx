@@ -285,7 +285,9 @@ export default function Home() {
         <div className="grid md:grid-cols-2 min-h-[600px]">
           {/* Image half */}
           <div className="relative h-[400px] md:h-auto">
-            <img src="/images/photos/joshua-teaching-kids.jpg" alt="Joshua teaching kids poolside" className="w-full h-full object-cover" />
+            <video autoPlay muted loop playsInline className="w-full h-full object-cover">
+              <source src="/videos/joshua-hank-rocks.mp4" type="video/mp4" />
+            </video>
             <div className="absolute inset-0 bg-gradient-to-r from-transparent to-deep/20 hidden md:block" />
           </div>
 
