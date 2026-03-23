@@ -332,10 +332,16 @@ export default function ConditionsPage() {
                 Join the Saturday crew →
               </Link>
               <Link
-                href="/contact/courses"
+                href="/map"
                 className="inline-flex px-6 py-3 border border-deep/10 text-deep rounded-full font-semibold text-sm no-underline hover:bg-deep/5 transition-all"
               >
-                View courses
+                Underwater Field Guide
+              </Link>
+              <Link
+                href="/tides"
+                className="inline-flex px-6 py-3 border border-deep/10 text-deep rounded-full font-semibold text-sm no-underline hover:bg-deep/5 transition-all"
+              >
+                Tide Calendar
               </Link>
             </div>
           </div>

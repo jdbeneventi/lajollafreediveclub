@@ -392,6 +392,23 @@ export default function AboutPage() {
         </Reveal>
       </section>
 
+      {/* Community link */}
+      <section className="bg-salt py-16 px-6">
+        <div className="max-w-[720px] mx-auto text-center">
+          <Reveal>
+            <p className="text-[#5a6a7a] text-sm mb-5 leading-relaxed">
+              LJFC is more than one instructor. Meet the partners, coaches, and organizations we work with.
+            </p>
+            <Link
+              href="/community"
+              className="inline-flex px-6 py-3 border border-deep/10 text-deep rounded-full font-semibold text-sm no-underline hover:bg-deep hover:text-white transition-all"
+            >
+              Our Community &rarr;
+            </Link>
+          </Reveal>
+        </div>
+      </section>
+
       {/* FAQ */}
       <section id="faq" className="bg-white py-24 px-6 scroll-mt-20">
         <div className="max-w-[720px] mx-auto">
