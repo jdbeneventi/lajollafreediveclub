@@ -13,6 +13,18 @@ export interface BlogPost {
 
 export const posts: BlogPost[] = [
   {
+    slug: "state-anchors",
+    title: "State Anchors: What Buddhist Monasteries Taught Me About Freediving",
+    description:
+      "The cognitive tool that turned 30 minutes of relaxation into 30 seconds. How ancient contemplative practices and modern neuroscience converge in freediving mental training.",
+    category: "Training",
+    date: "March 22, 2026",
+    isoDate: "2026-03-22",
+    readTime: "18 min read",
+    gradient: "from-deep to-ocean",
+    content: `<p>This is an interactive post. <a href="/blog/state-anchors">Read the full interactive version →</a></p>`,
+  },
+  {
     slug: "beginners-guide-freediving-la-jolla",
     title: "The Complete Beginner's Guide to Freediving in La Jolla",
     description:
