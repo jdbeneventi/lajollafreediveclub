@@ -12,7 +12,7 @@ export function SaturdayBanner() {
           </span>
         </div>
         <Link
-          href="/contact/courses?course=saturday"
+          href="/saturday-sessions"
           className="text-seafoam text-xs font-medium tracking-wide no-underline hover:text-white transition-colors shrink-0"
         >
           Join this week &rarr;

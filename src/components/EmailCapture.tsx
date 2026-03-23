@@ -11,7 +11,7 @@ export function EmailCapture({
   subtext,
 }: {
   variant?: "dark" | "light";
-  headline?: string;
+  headline?: React.ReactNode;
   subtext?: string;
 }) {
   const [email, setEmail] = useState("");
