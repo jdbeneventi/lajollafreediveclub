@@ -169,6 +169,9 @@ function buildGoEmailHtml(
         <td style="padding:8px 0;font-size:14px;color:#0B1D2C;">Group Dive</td>
       </tr>
     </table>
+    <div style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(11,29,44,0.06);font-size:12px;color:#1B6B6B;line-height:1.5;">
+      Join for Ocean Flow + ORIGIN Protocol and line diving is free. Drop-in for diving only is $25.
+    </div>
   </div>
 
   <!-- Meeting Spot -->
