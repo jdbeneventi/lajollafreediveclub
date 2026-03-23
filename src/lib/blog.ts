@@ -22,6 +22,7 @@ export const posts: BlogPost[] = [
     isoDate: "2026-03-22",
     readTime: "18 min read",
     gradient: "from-deep to-ocean",
+    heroImage: "/images/photos/joshua-presenting-dahab.jpg",
     content: `<p>This is an interactive post. <a href="/blog/state-anchors">Read the full interactive version →</a></p>`,
   },
   {
@@ -110,6 +111,8 @@ export const posts: BlogPost[] = [
 
 <h3>Step 3: Join the Community</h3>
 <p>Once you're certified, the real fun starts. Join weekly group dives, find regular dive buddies, and start exploring La Jolla's underwater world with experienced freedivers who know the best spots and conditions.</p>
+
+<video autoplay muted loop playsinline style="width:100%;border-radius:12px;margin:2.5rem 0"><source src="/videos/group-freedive-2.mp4" type="video/mp4" /></video><p style="font-size:12px;color:#5a6a7a;font-style:italic;text-align:center;margin-top:-1.5rem">Saturday group freedive at La Jolla Shores</p>
     `,
   },
   {
@@ -468,6 +471,8 @@ export const posts: BlogPost[] = [
 
 <p>Understanding this reflex won't just make you a better freediver. It'll change the way you think about what your body is capable of.</p>
 
+<img src="/images/photos/joshua-two-kids-pool.jpg" alt="Joshua teaching two kids at the pool" class="rounded-xl my-10" /><p style="font-size:12px;color:#5a6a7a;font-style:italic;text-align:center;margin-top:-1.5rem">Teaching the dive reflex — it starts young</p>
+
 <hr>
 <h2>The Four Components</h2>
 
@@ -558,6 +563,8 @@ export const posts: BlogPost[] = [
 <p>Understanding this distinction, and learning to train your CO2 tolerance, is the single biggest unlock in freediving.</p>
 
 <img src="/images/photos/joshua-brooke-kristina.jpg" alt="LJFC crew in wetsuits" class="rounded-xl my-10" />
+
+<video autoplay muted loop playsinline style="width:100%;border-radius:12px;margin:2.5rem 0"><source src="/videos/pool-training-clip.mp4" type="video/mp4" /></video><p style="font-size:12px;color:#5a6a7a;font-style:italic;text-align:center;margin-top:-1.5rem">Static and dynamic training in the pool</p>
 
 <hr>
 <h2>Why CO2 Drives the Urge to Breathe</h2>
@@ -669,6 +676,8 @@ Round 8: Hold 1:30, Done</p>
 <p>All of these can be trained on your couch.</p>
 
 <p>Here are seven dry training exercises we use with every student, from first-timers to competitive divers. No equipment needed.</p>
+
+<video autoplay muted loop playsinline style="width:100%;border-radius:12px;margin:2.5rem 0"><source src="/videos/pool-training-clip.mp4" type="video/mp4" /></video>
 
 <hr>
 <h2>1. Diaphragmatic Breathing (The Foundation)</h2>
@@ -846,11 +855,12 @@ Round 8: Hold 1:30, Done</p>
     isoDate: "2026-03-16",
     readTime: "10 min read",
     gradient: "from-deep to-ocean",
-    heroImage: "/images/photos/joshua-stella.jpg",
+    heroImage: "/images/blog/big-blue-still.jpg",
     content: `
 <p>If you've spent any time around freedivers, someone has mentioned The Big Blue. Luc Besson's 1988 film — released in France as <em>Le Grand Bleu</em> — didn't just depict freediving. It created a generation of freedivers. It sold nearly 10 million tickets in France alone, played in theaters for a full year, and French President Jacques Chirac later described Jacques Mayol as an enduring symbol for the "Big Blue generation."</p>
 
 <p>The film is a heavily fictionalized account of the real-life rivalry and friendship between two of the most important freedivers in history: Jacques Mayol and Enzo Maiorca. If you haven't seen it, watch it. If you have, watch it again. It hits differently once you've felt the pull of the deep yourself.</p>
+<img src="/images/blog/big-blue-cover.jpg" alt="The Big Blue DVD cover" style="max-width:200px;float:right;margin:0 0 1rem 1.5rem;border-radius:12px" />
 
 <img src="/images/photos/joshua-stella.jpg" alt="Joshua with Stella Abbas at the Blue Hole, Dahab" class="rounded-xl my-10" /><p class="text-xs text-center italic" style="color:#5a6a7a;margin-top:-1.5rem">With Stella Abbas at the Blue Hole, Dahab — where The Big Blue's spirit lives on</p>
 
@@ -1369,6 +1379,8 @@ Round 8: Hold 1:30, Done</p>
 <p>The research is still emerging, but the implication is striking: chanting doesn't just train your muscles for freediving — it may train your nervous system for it too.</p>
 
 <p>Bhramari pranayama (bee breath) — sustained humming with glottal and nasal resonance — is particularly interesting. The humming creates positive pressure in the nasopharynx, functionally similar to a gentle Frenzel maneuver. Regular practitioners may be training Eustachian tube opening without knowing it.</p>
+
+<video autoplay muted loop playsinline style="width:100%;border-radius:12px;margin:2.5rem 0"><source src="/videos/lena-surfacing-slow.mp4" type="video/mp4" /></video>
 
 <hr>
 <h2>The Didgeridoo Connection</h2>
