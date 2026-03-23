@@ -34,12 +34,13 @@ export const posts: BlogPost[] = [
     isoDate: "2026-03-14",
     readTime: "12 min read",
     gradient: "from-ocean to-teal",
-    heroImage: "/images/blog/freediver-underwater.jpg",
+    heroImage: "/images/photos/scripps-underwater.jpg",
     content: `
 <p>La Jolla might be the best place in California to learn freediving. The water is clear, the marine life is ridiculous, and the underwater topography — from the shallow reefs at the Cove to the deep walls of the Canyon — gives you a natural progression from beginner to advanced without ever leaving the same stretch of coast.</p>
 
 <p>But if you've never done it before, the idea of holding your breath and diving underwater on a single breath can feel intimidating. This guide covers everything you need to know to get started — no experience required.</p>
 
+<hr>
 <h2>What Is Freediving, Exactly?</h2>
 
 <p>Freediving is underwater diving on a single breath — no scuba tank, no regulator, just you and the ocean. It ranges from casual snorkeling-depth dives to competitive athletes reaching 100+ meters on one breath.</p>
@@ -48,6 +49,7 @@ export const posts: BlogPost[] = [
 
 <p>It's simpler than scuba (less gear, less setup time, more freedom of movement), but it requires specific training in breathing technique, equalization, and safety protocols.</p>
 
+<hr>
 <h2>Why La Jolla Is Perfect for Learning</h2>
 
 <p>La Jolla's coastline is uniquely suited for freediving at every level. The La Jolla Ecological Reserve — which includes the Cove, the underwater caves, and the Canyon — is a protected marine area with visibility that regularly hits 30+ feet and water temperatures that stay swimmable year-round with a proper wetsuit.</p>
@@ -56,6 +58,9 @@ export const posts: BlogPost[] = [
 
 <p>The marine life alone makes it worth it. Leopard sharks (seasonal), garibaldi, sea lions, bat rays, and dense kelp forests that look like underwater cathedrals when the light comes through.</p>
 
+<img src="/images/photos/joshua-lena-shores.jpg" alt="Joshua and Lena at La Jolla Shores" class="rounded-xl my-10" />
+
+<hr>
 <h2>What You Need to Get Started</h2>
 
 <h3>Gear Basics</h3>
@@ -74,6 +79,7 @@ export const posts: BlogPost[] = [
 
 <p>You don't need to be an elite athlete to freedive. You need to be a comfortable swimmer, able to tread water, and reasonably fit. The most important physical skill — and the one most people underestimate — is relaxation. The more relaxed you are in the water, the longer your breath hold and the more enjoyable your dives.</p>
 
+<hr>
 <h2>Your First Breath Hold: What to Expect</h2>
 
 <p>The biggest surprise for most beginners is how long they can actually hold their breath with proper technique. Most people walk in thinking they can hold for 30–45 seconds. With guided breathing preparation and relaxation technique, that same person typically hits 2–3 minutes on their first session.</p>
@@ -82,6 +88,7 @@ export const posts: BlogPost[] = [
 
 <blockquote>The first time you hold your breath for two minutes, you realize how much your mind was the limiting factor, not your lungs.</blockquote>
 
+<hr>
 <h2>Safety: The Non-Negotiable Part</h2>
 
 <p>Freediving is safe when done correctly. It's dangerous when done casually or alone. The single most important safety rule in freediving is simple: <strong>never dive alone.</strong></p>
@@ -90,7 +97,10 @@ export const posts: BlogPost[] = [
 
 <p>This is exactly why we emphasize taking a real course rather than just watching YouTube videos. The safety training alone is worth the investment.</p>
 
+<hr>
 <h2>How to Get Started in La Jolla</h2>
+
+<img src="/images/photos/joshua-teaching-kids.jpg" alt="Joshua teaching freediving" class="rounded-xl my-10" />
 
 <h3>Step 1: Take an AIDA 1 Course</h3>
 <p>A one-day introduction where you learn basic breathing technique, try your first breath holds in a pool, and get a feel for whether freediving clicks with you. You walk away with your first AIDA certification.</p>
@@ -118,6 +128,7 @@ export const posts: BlogPost[] = [
 
 <p>The difference isn't fitness. It's training. Specifically, it's the kind of breath hold and underwater composure training that freedivers do as a fundamental part of their sport — and that almost no surfers ever practice deliberately.</p>
 
+<hr>
 <h2>The Gap in Surf Training</h2>
 
 <p>Surfers train paddle fitness, wave selection, pop-ups, turns, barrels. But the one skill that matters most when things go wrong — the ability to stay calm and conserve oxygen underwater — almost nobody trains specifically.</p>
@@ -126,6 +137,7 @@ export const posts: BlogPost[] = [
 
 <p>The problem isn't that surfers can't physically hold their breath long enough. The problem is panic. When you're tumbling underwater, disoriented, your heart rate spikes and your oxygen consumption skyrockets.</p>
 
+<hr>
 <h2>What Freediving Training Actually Teaches You</h2>
 
 <h3>1. Diaphragmatic Breathing</h3>
@@ -140,6 +152,7 @@ export const posts: BlogPost[] = [
 <h3>4. Recovery Breathing</h3>
 <p>Freedivers use specific breathing patterns after surfacing to reoxygenate as quickly as possible. When you surface between waves in a set, knowing how to take maximally efficient breaths before the next wave hits is the difference between getting through the set and getting worked.</p>
 
+<hr>
 <h2>A Simple Training Protocol for Surfers</h2>
 
 <h3>Dry Training (15 min, 3x/week)</h3>
@@ -151,6 +164,7 @@ export const posts: BlogPost[] = [
 <h3>Ocean Integration</h3>
 <p>During surf sessions, practice deliberate breath work before paddling out. Take 10 deep diaphragmatic breaths. When you see a set coming, take one full breath and stay relaxed as you go under.</p>
 
+<hr>
 <h2>The Bottom Line</h2>
 
 <p>If you surf in any conditions beyond small, clean days, you owe it to yourself to train your breath. It's the fastest way to improve your confidence in bigger surf, and it might save your life one day.</p>
@@ -168,12 +182,13 @@ export const posts: BlogPost[] = [
     isoDate: "2026-03-14",
     readTime: "10 min read",
     gradient: "from-deep to-[#14566a]",
-    heroImage: "/images/blog/california-coast.jpg",
+    heroImage: "/images/photos/scripps-underwater.jpg",
     content: `
 <p>San Diego has some of the best freediving on the West Coast — clear water, diverse marine life, and underwater topography that ranges from shallow reef gardens to deep canyon walls. Here are the five best freediving locations in the area, ranked from beginner-friendly to advanced.</p>
 
 <p>One important note: <strong>always freedive with a buddy.</strong> Every spot on this list requires a competent dive partner for safety. If you need a buddy, that's literally what our club is for.</p>
 
+<hr>
 <h2>1. La Jolla Cove (Ecological Reserve)</h2>
 
 <p><strong>Depth:</strong> 5–30 ft · <strong>Level:</strong> Beginner–Intermediate</p>
@@ -182,6 +197,7 @@ export const posts: BlogPost[] = [
 
 <p><em>Pro tip: Go early morning on weekdays for the best visibility and fewest snorkelers.</em></p>
 
+<hr>
 <h2>2. La Jolla Shores (South End)</h2>
 
 <p><strong>Depth:</strong> 10–40 ft · <strong>Level:</strong> Beginner–Intermediate</p>
@@ -190,6 +206,7 @@ export const posts: BlogPost[] = [
 
 <p><em>Pro tip: Check conditions carefully. La Jolla Shores can get surge on south swells. Best on calm days.</em></p>
 
+<hr>
 <h2>3. La Jolla Canyon</h2>
 
 <p><strong>Depth:</strong> 30–80+ ft · <strong>Level:</strong> Intermediate–Advanced</p>
@@ -198,6 +215,7 @@ export const posts: BlogPost[] = [
 
 <p><em>Pro tip: Only dive the Canyon with experienced buddies and on good conditions days. Current can rip along the canyon rim.</em></p>
 
+<hr>
 <h2>4. Point Loma Kelp Beds</h2>
 
 <p><strong>Depth:</strong> 20–50 ft · <strong>Level:</strong> Intermediate</p>
@@ -206,6 +224,7 @@ export const posts: BlogPost[] = [
 
 <p><em>Pro tip: Kelp diving requires comfort with navigation and entanglement awareness. Always carry a knife.</em></p>
 
+<hr>
 <h2>5. Cardiff Reef (Seaside)</h2>
 
 <p><strong>Depth:</strong> 10–25 ft · <strong>Level:</strong> Beginner–Intermediate</p>
@@ -214,6 +233,7 @@ export const posts: BlogPost[] = [
 
 <p><em>Pro tip: Park at Seaside Market or Cardiff State Beach lot. Best visibility on incoming tide.</em></p>
 
+<hr>
 <h2>General Safety Notes</h2>
 
 <ul>
@@ -235,14 +255,18 @@ export const posts: BlogPost[] = [
     isoDate: "2026-03-14",
     readTime: "11 min read",
     gradient: "from-ocean to-teal",
-    heroImage: "/images/blog/diver-descending.jpg",
+    heroImage: "/images/photos/joshua-khaled.jpg",
     content: `
 <p>If you're looking into freediving certification, you've probably seen "AIDA" mentioned everywhere. It's the global standard — used in over 100 countries, recognized at every dive center on the planet, and the system we use at La Jolla Freedive Club. But the leveling system can be confusing from the outside. Here's a clear, data-driven breakdown of what each level actually involves.</p>
 
+<hr>
 <h2>What is AIDA?</h2>
 
 <p>AIDA stands for the International Association for the Development of Apnea. They've been the global authority in freediving education, safety standards, and competition since 1992. Unlike commercial dive agencies, AIDA is a nonprofit run by freedivers for freedivers. Their certification system is progressive — each level builds on the previous one in both technical skill and physiological understanding.</p>
 
+<img src="/images/photos/joshua-presenting-dahab.jpg" alt="Joshua presenting at AIDA Instructor Course in Dahab" class="rounded-xl my-10" /><p class="text-xs text-center italic" style="color:#5a6a7a;margin-top:-1.5rem">AIDA Instructor Course, Dahab, Egypt</p>
+
+<hr>
 <h2>AIDA 1 — Introduction to Freediving</h2>
 
 <p><strong>Duration:</strong> 1 day (3–6 hours) · <strong>Max depth:</strong> 10m · <strong>Prerequisites:</strong> Swim 100m non-stop</p>
@@ -253,6 +277,7 @@ export const posts: BlogPost[] = [
 
 <p><strong>Start with AIDA 1 if:</strong> You're completely new to freediving, you want a gentle one-day introduction, or you've never used fins, equalized, or practiced breathing drills.</p>
 
+<hr>
 <h2>AIDA 2 — Freediver Certification</h2>
 
 <p><strong>Duration:</strong> 2.5 days minimum · <strong>Max depth:</strong> 20m · <strong>Prerequisites:</strong> Swim 200m non-stop (or 300m with fins/snorkel)</p>
@@ -274,6 +299,7 @@ export const posts: BlogPost[] = [
 
 <p><strong>Start with AIDA 2 if:</strong> You're a strong swimmer, comfortable in open water, and want an internationally recognized certification. Prior snorkeling, diving, or breath-hold experience helps but isn't required.</p>
 
+<hr>
 <h2>AIDA 3 — Advanced Freediver</h2>
 
 <p><strong>Duration:</strong> 3 days minimum · <strong>Max depth:</strong> 30m · <strong>Prerequisites:</strong> AIDA 2 certification (or crossover from SSI, PADI, Molchanovs)</p>
@@ -295,12 +321,14 @@ export const posts: BlogPost[] = [
 
 <p><strong>Take AIDA 3 if:</strong> You're AIDA 2 certified and want to dive deeper, train smarter, or are considering the competition or instructor path.</p>
 
+<hr>
 <h2>AIDA 4 — Master Freediver</h2>
 
 <p><strong>Max depth:</strong> 38m+ · <strong>Prerequisites:</strong> AIDA 3 certification</p>
 
 <p>AIDA 4 is for experienced divers considering the instructor or competition track. It covers depth diving beyond 30m, mouthfill equalization, advanced physiology, and detailed risk mitigation. Not all schools offer AIDA 4 — it requires specific facilities and conditions. It's the prerequisite for the AIDA Instructor Course.</p>
 
+<hr>
 <h2>How the levels compare</h2>
 
 <p>Here's the full picture in numbers:</p>
@@ -314,10 +342,12 @@ export const posts: BlogPost[] = [
 
 <p>Each level roughly doubles the time investment and adds 10m of depth capability. The jump from AIDA 2 to AIDA 3 is the biggest in terms of physiological knowledge and technical skill.</p>
 
+<hr>
 <h2>What about crossovers?</h2>
 
 <p>If you hold a certification from another agency — SSI, PADI, Molchanovs, etc. — you can do a crossover evaluation instead of repeating the full course. This involves demonstrating that your existing skills meet AIDA standards at the equivalent level. We run crossover evaluations on a case-by-case basis.</p>
 
+<hr>
 <h2>Where to start in La Jolla</h2>
 
 <p>Most people who come through our door start with AIDA 2 — it's the sweet spot of commitment and payoff. You walk away with an internationally recognized certification, the skills to dive to 20m safely, and a community of divers to practice with every Saturday.</p>
@@ -335,10 +365,11 @@ export const posts: BlogPost[] = [
     isoDate: "2026-03-14",
     readTime: "9 min read",
     gradient: "from-deep to-ocean",
-    heroImage: "/images/blog/freediver-underwater.jpg",
+    heroImage: "/images/photos/joshua-khaled-hannah.jpg",
     content: `
 <p>Freediving has its own alphabet — STA, DYN, DNF, CWT, CWTB, CNF, FIM, VWT, NLT. If you're new to the sport, this looks like gibberish. But each abbreviation represents a specific discipline with its own rules, techniques, and training applications. Here's what they all mean and which ones matter for your training.</p>
 
+<hr>
 <h2>Pool disciplines</h2>
 
 <p>These are performed in a pool and focus on breath-hold duration or horizontal distance. They're the foundation of freediving training because they isolate specific skills without the complexity of depth, equalization, or ocean conditions.</p>
@@ -363,6 +394,7 @@ export const posts: BlogPost[] = [
 
 <p>DNF isn't part of AIDA recreational certification requirements, but it's a powerful training tool. If you can swim 50m DNF, your finning efficiency will be dramatically better because you've learned to minimize drag.</p>
 
+<hr>
 <h2>Depth disciplines</h2>
 
 <p>These are performed in open water using a vertical dive line and measure maximum depth achieved. This is where freediving becomes a three-dimensional sport — you're adding equalization, pressure changes, buoyancy shifts, and the psychological dimension of depth.</p>
@@ -389,6 +421,7 @@ export const posts: BlogPost[] = [
 
 <p>CNF isn't part of recreational AIDA courses, but it's a respected competitive discipline. If you see someone's CNF number, it tells you a lot about their overall freediving ability.</p>
 
+<hr>
 <h2>Specialized disciplines</h2>
 
 <h3>VWT — Variable Weight</h3>
@@ -399,6 +432,7 @@ export const posts: BlogPost[] = [
 
 <p>Descending with a weighted sled and ascending with a lift bag or other assistive device. NLT is the discipline that produces the deepest numbers — over 200m in some cases — but it's not part of AIDA recreational education. It's a specialized, high-risk discipline reserved for experienced athletes with extensive safety infrastructure.</p>
 
+<hr>
 <h2>Which disciplines will I learn?</h2>
 
 <p>In AIDA certification courses, you'll train these disciplines:</p>
@@ -411,6 +445,7 @@ export const posts: BlogPost[] = [
 
 <p>In our weekly group sessions, we practice a mix of all disciplines depending on whether we're in the pool or the ocean. CWT and FIM get the most ocean time. STA and DYN are the focus of pool sessions and dry training.</p>
 
+<hr>
 <h2>The bottom line</h2>
 
 <p>You don't need to memorize all these abbreviations before your first course — your instructor will teach each discipline as it comes up. But understanding the landscape helps you see where freediving can take you. Most people start with STA and CWTB in their AIDA 2 course and discover that each discipline develops a different aspect of their diving. STA builds mental composure. DYN builds efficiency. CWT builds depth confidence. FIM builds equalization skill. Together, they make a complete freediver.</p>
@@ -425,7 +460,7 @@ export const posts: BlogPost[] = [
     isoDate: "2026-03-16",
     readTime: "14 min read",
     gradient: "from-deep to-ocean",
-    heroImage: "/images/blog/ocean-calm.jpg",
+    heroImage: "/images/photos/joshua-red-sea.jpg",
     content: `
 <p>The moment your face touches water and you hold your breath, something extraordinary happens inside your body. Your heart rate drops. Blood retreats from your arms and legs. Your spleen contracts, squeezing extra red blood cells into circulation. Your lungs prepare to compress without collapsing.</p>
 
@@ -433,6 +468,7 @@ export const posts: BlogPost[] = [
 
 <p>Understanding this reflex won't just make you a better freediver. It'll change the way you think about what your body is capable of.</p>
 
+<hr>
 <h2>The Four Components</h2>
 
 <p>The dive reflex is an amalgam of four independent responses that work together to conserve oxygen and protect your vital organs during submersion. Each one is triggered by different stimuli, but together they form a coordinated survival system.</p>
@@ -473,6 +509,7 @@ export const posts: BlogPost[] = [
 
 <p>Interestingly, the spleen effect may explain why your later dives in a session often feel easier than your first few. The spleen doesn't fully contract immediately — it takes repeated apneas over 15-30 minutes for the full effect to kick in. This is one reason why proper warmup dives aren't just about equalization practice; they're priming your splenic response.</p>
 
+<hr>
 <h2>Training the Dive Reflex</h2>
 
 <p>The dive reflex is innate — every human has it from birth (infants actually have a stronger response than adults). But its intensity varies between individuals, and research suggests it can be enhanced through regular exposure.</p>
@@ -489,6 +526,7 @@ export const posts: BlogPost[] = [
 
 <p><strong>Regular diving.</strong> Perhaps the most intuitive finding: people who dive frequently develop stronger dive reflexes. The more you practice, the more efficiently your body learns to shift into diving mode.</p>
 
+<hr>
 <h2>What This Means for Your Freediving</h2>
 
 <p>Understanding the dive reflex changes how you approach a dive. That first uncomfortable minute where everything feels wrong? That's your body transitioning from terrestrial mode to diving mode. The bradycardia hasn't fully kicked in. The vasoconstriction is still ramping up. Your spleen is just beginning to contract.</p>
@@ -519,6 +557,9 @@ export const posts: BlogPost[] = [
 
 <p>Understanding this distinction, and learning to train your CO2 tolerance, is the single biggest unlock in freediving.</p>
 
+<img src="/images/photos/joshua-brooke-kristina.jpg" alt="LJFC crew in wetsuits" class="rounded-xl my-10" />
+
+<hr>
 <h2>Why CO2 Drives the Urge to Breathe</h2>
 
 <p>Carbon dioxide is a byproduct of cellular metabolism. Every cell in your body produces it as it burns oxygen for energy. Normally, you exhale CO2 with every breath and levels stay stable. When you hold your breath, CO2 accumulates in your blood, forming carbonic acid and lowering blood pH.</p>
@@ -527,6 +568,7 @@ export const posts: BlogPost[] = [
 
 <p>The key insight: this threshold is not fixed. It's a trigger point that can be recalibrated through training. A person who has never trained might feel the urge to breathe at 45 seconds. An experienced freediver might not feel contractions until 3 or 4 minutes. The oxygen in their blood at both time points might be similar — the difference is how much CO2 their body has learned to tolerate before sounding the alarm.</p>
 
+<hr>
 <h2>CO2 Tolerance vs. O2 Tolerance</h2>
 
 <p>Freediving training addresses two separate (but related) physiological challenges. Understanding the difference is important because they require different training approaches.</p>
@@ -537,6 +579,7 @@ export const posts: BlogPost[] = [
 
 <p>For most recreational freedivers, CO2 tolerance is the limiting factor. You'll run out of comfort long before you run out of oxygen. That's actually a good thing — your CO2 alarm system is a safety mechanism. The goal isn't to disable it. It's to recalibrate it so it fires at the appropriate time rather than prematurely.</p>
 
+<hr>
 <h2>How CO2 Tables Work</h2>
 
 <p>A CO2 training table is a series of breath holds with progressively shorter rest intervals. The hold time stays constant (typically 50-60% of your maximum), but the recovery time between holds decreases with each round. Because you have less time to recover, CO2 doesn't fully clear between holds, and it builds up progressively throughout the session.</p>
@@ -558,6 +601,7 @@ Round 8: Hold 1:30, Done</p>
 
 <p>Compare this to an O2 table, where rest time stays constant but hold time increases. O2 tables push you toward your maximum, which means they create oxygen debt. This is more dangerous and should be approached with more caution.</p>
 
+<hr>
 <h2>The No-Contraction Approach</h2>
 
 <p>Classical CO2 tables work, but there's a modern refinement that many coaches now prefer: the no-contraction table. The philosophy is simple — end each hold before contractions begin.</p>
@@ -568,6 +612,7 @@ Round 8: Hold 1:30, Done</p>
 
 <p>This approach takes longer to produce results than aggressive classical tables, but the results tend to be more sustainable, and it builds a healthy, relaxed relationship with breath-holding that translates better to actual diving.</p>
 
+<hr>
 <h2>A Practical Dry Training Program</h2>
 
 <p>You can train CO2 tolerance without water. In fact, dry training is safer and more accessible. Here's a weekly structure:</p>
@@ -598,6 +643,7 @@ Round 8: Hold 1:30, Done</p>
 
 <p><strong>Stop if you feel lightheaded, see stars, or feel tingling in your extremities.</strong> These are signs of hypoxia, not CO2 buildup, and they mean you've pushed too far.</p>
 
+<hr>
 <h2>What to Expect</h2>
 
 <p>In the first two weeks, you'll notice that your initial discomfort with breath-holding decreases. The urge to breathe will still come, but it won't feel as urgent. By week four, you should see measurable improvement in your static hold time — often 30-60 seconds longer than when you started.</p>
@@ -616,7 +662,7 @@ Round 8: Hold 1:30, Done</p>
     isoDate: "2026-03-16",
     readTime: "11 min read",
     gradient: "from-ocean to-teal",
-    heroImage: "/images/blog/ocean-sunrise.jpg",
+    heroImage: "/images/photos/joshua-brooke-kristina.jpg",
     content: `
 <p>The best freedivers in the world spend more time training on land than in the water. That sounds counterintuitive until you understand what actually limits your freediving: it's not swimming speed or lung size. It's the flexibility of your rib cage, the strength of your diaphragm, your body's CO2 tolerance, and your ability to stay relaxed under physiological stress.</p>
 
@@ -624,6 +670,7 @@ Round 8: Hold 1:30, Done</p>
 
 <p>Here are seven dry training exercises we use with every student, from first-timers to competitive divers. No equipment needed.</p>
 
+<hr>
 <h2>1. Diaphragmatic Breathing (The Foundation)</h2>
 
 <p><strong>What it does:</strong> Trains your primary breathing muscle — the diaphragm — to do its job properly. Most people breathe with their chest and shoulders, which is inefficient and activates the stress response. Diaphragmatic breathing is slower, deeper, and activates the parasympathetic nervous system.</p>
@@ -632,6 +679,7 @@ Round 8: Hold 1:30, Done</p>
 
 <p><strong>Why it matters:</strong> This is the single most important skill in freediving. Every breath-up before a dive uses diaphragmatic breathing. Every CO2 table starts here. Every recovery after a dive depends on it. If you only do one exercise from this list, do this one daily.</p>
 
+<hr>
 <h2>2. Intercostal Stretches (Rib Cage Mobility)</h2>
 
 <p><strong>What it does:</strong> Increases the flexibility of your intercostal muscles — the muscles between your ribs. More flexible intercostals mean your rib cage can expand more during inhalation and compress more at depth.</p>
@@ -640,6 +688,7 @@ Round 8: Hold 1:30, Done</p>
 
 <p><strong>Why it matters:</strong> At 30 meters, your lungs compress to about a quarter of their surface volume. Flexible intercostals allow this compression to happen smoothly without injury. On the surface, they let you take a bigger breath.</p>
 
+<hr>
 <h2>3. Uddiyana Bandha (Diaphragm Vacuum)</h2>
 
 <p><strong>What it does:</strong> Strengthens the diaphragm while dramatically increasing its range of motion.</p>
@@ -648,6 +697,7 @@ Round 8: Hold 1:30, Done</p>
 
 <p><strong>Why it matters:</strong> The diaphragm is both your primary breathing muscle and the muscle that produces contractions when CO2 rises. A strong, flexible diaphragm gives you more control over both functions. This exercise is practiced by virtually every competitive freediver.</p>
 
+<hr>
 <h2>4. CO2 Table (Breath Hold Intervals)</h2>
 
 <p><strong>What it does:</strong> Recalibrates your body's CO2 alarm system. See our full CO2 tolerance training guide for the complete protocol.</p>
@@ -656,6 +706,7 @@ Round 8: Hold 1:30, Done</p>
 
 <p><strong>Why it matters:</strong> The cornerstone of dry apnea training. Consistent CO2 table work produces measurable improvements within 2-4 weeks.</p>
 
+<hr>
 <h2>5. Apnea Walking</h2>
 
 <p><strong>What it does:</strong> Trains breath-holding while physically active, which is closer to actual diving than static holds.</p>
@@ -666,6 +717,7 @@ Round 8: Hold 1:30, Done</p>
 
 <p><strong>Why it matters:</strong> Bridges the gap between lying-on-the-couch training and actual diving. Teaches relaxation and efficiency while muscles are working.</p>
 
+<hr>
 <h2>6. Full Body Relaxation Scan</h2>
 
 <p><strong>What it does:</strong> Teaches you to identify and release unconscious muscle tension — one of the biggest oxygen consumers during a breath hold.</p>
@@ -674,6 +726,7 @@ Round 8: Hold 1:30, Done</p>
 
 <p><strong>Why it matters:</strong> A clenched jaw, tight shoulders, or squeezed fists during a dive burn oxygen for no benefit. Many beginners are shocked at how much tension they carry underwater without realizing it.</p>
 
+<hr>
 <h2>7. Thoracic Mobility Routine</h2>
 
 <p><strong>What it does:</strong> Increases flexibility of the chest, shoulders, and spine — all affecting breathing capacity and comfort at depth.</p>
@@ -682,6 +735,7 @@ Round 8: Hold 1:30, Done</p>
 
 <p><strong>Why it matters:</strong> Freediving asks your body to compress the chest, expand the ribs maximally, and move with full-body fluidity. A stiff thoracic spine limits how much air you can take in and how comfortably your lungs compress at depth.</p>
 
+<hr>
 <h2>A Weekly Schedule</h2>
 
 <p><strong>Monday:</strong> Diaphragmatic breathing + CO2 table + relaxation scan<br/>
@@ -704,12 +758,13 @@ Round 8: Hold 1:30, Done</p>
     isoDate: "2026-03-16",
     readTime: "13 min read",
     gradient: "from-deep to-teal",
-    heroImage: "/images/blog/diver-descending.jpg",
+    heroImage: "/images/photos/scripps-underwater.jpg",
     content: `
 <p>You're floating at the surface at La Jolla Shores, looking down into blue water. Your buddy gives you the okay sign. You take your final breath, tuck your chin, and begin your duck dive toward the canyon wall 40 feet below.</p>
 
 <p>In the next 90 seconds, your body will undergo more dramatic physiological changes than it experiences in an entire normal day. Here's what happens, moment by moment.</p>
 
+<hr>
 <h2>Pre-Dive: The Breathe-Up (2-3 minutes before)</h2>
 
 <p>Before your final breath, you spend 2-3 minutes doing slow, diaphragmatic breathing at the surface. This isn't just mental preparation — it's physiological priming.</p>
@@ -720,6 +775,7 @@ Round 8: Hold 1:30, Done</p>
 
 <p>Your final breath fills your lungs to about 85-90% capacity — a full, comfortable breath, not a maximum pack. Overfilling creates tension, raises heart rate, and wastes oxygen.</p>
 
+<hr>
 <h2>0-15 Seconds: The Duck Dive</h2>
 
 <p>You pike at the waist, drive your fins skyward, and begin descending head-first. This is the most energy-intensive moment of the entire dive — strong fin kicks are needed to overcome positive buoyancy.</p>
@@ -730,6 +786,7 @@ Round 8: Hold 1:30, Done</p>
 
 <p>Oxygen saturation is still near 100%. CO2 levels are minimal. You feel fine.</p>
 
+<hr>
 <h2>15-30 Seconds: Freefall</h2>
 
 <p>Between 30 and 40 feet, you become negatively buoyant. The compressed air in your lungs and wetsuit no longer keeps you afloat — you sink. You stop kicking entirely. This is freefall: silent, effortless descent.</p>
@@ -738,6 +795,7 @@ Round 8: Hold 1:30, Done</p>
 
 <p>CO2 is accumulating, but you haven't hit your threshold yet. Your body is efficiently burning oxygen at a reduced rate thanks to bradycardia and vasoconstriction.</p>
 
+<hr>
 <h2>30-60 Seconds: At Depth</h2>
 
 <p>You arrive at the canyon wall at 40 feet. Your lungs are compressed to roughly 60% of surface volume. The blood shift has filled your pulmonary vasculature, preventing chest collapse. Your spleen has contracted noticeably, boosting hemoglobin by 3-5%.</p>
@@ -748,6 +806,7 @@ Round 8: Hold 1:30, Done</p>
 
 <p>Around 45-60 seconds, you feel the first awareness that your body would like to breathe. Not contractions yet — just a subtle signal from your chemoreceptors. Trained freedivers note it and continue.</p>
 
+<hr>
 <h2>60-90 Seconds: The Ascent</h2>
 
 <p>You turn toward the surface and begin kicking. The first few kicks take effort — you're still negatively buoyant. But as you ascend and lungs re-expand, buoyancy increases. By 15-20 feet from surface, you're rising with minimal effort.</p>
@@ -758,6 +817,7 @@ Round 8: Hold 1:30, Done</p>
 
 <p>Your heart rate begins increasing as you approach the surface, anticipating the resumption of breathing.</p>
 
+<hr>
 <h2>The Surface: Recovery</h2>
 
 <p>You break the surface. Your first exhale is critical — blow out CO2-rich air forcefully, then inhale deep. Recovery breathing: exhale-inhale-hold 2 seconds, repeat. This clears CO2 and maintains positive lung pressure, helping prevent hypoxic blackout in the first 15-30 seconds after surfacing.</p>
@@ -766,6 +826,7 @@ Round 8: Hold 1:30, Done</p>
 
 <p>Within two minutes, you feel normal. The dive reflex recedes. Your body has returned to terrestrial mode.</p>
 
+<hr>
 <h2>What Changes with Training</h2>
 
 <p>Every human experiences this sequence. But trained freedivers experience it differently: more pronounced bradycardia, larger splenic contraction, higher CO2 threshold, calmer psychological response to contractions, and lower oxygen consumption from less tension and more efficient movement.</p>
@@ -785,18 +846,22 @@ Round 8: Hold 1:30, Done</p>
     isoDate: "2026-03-16",
     readTime: "10 min read",
     gradient: "from-deep to-ocean",
-    heroImage: "/images/blog/ocean-calm.jpg",
+    heroImage: "/images/photos/joshua-stella.jpg",
     content: `
 <p>If you've spent any time around freedivers, someone has mentioned The Big Blue. Luc Besson's 1988 film — released in France as <em>Le Grand Bleu</em> — didn't just depict freediving. It created a generation of freedivers. It sold nearly 10 million tickets in France alone, played in theaters for a full year, and French President Jacques Chirac later described Jacques Mayol as an enduring symbol for the "Big Blue generation."</p>
 
 <p>The film is a heavily fictionalized account of the real-life rivalry and friendship between two of the most important freedivers in history: Jacques Mayol and Enzo Maiorca. If you haven't seen it, watch it. If you have, watch it again. It hits differently once you've felt the pull of the deep yourself.</p>
 
+<img src="/images/photos/joshua-stella.jpg" alt="Joshua with Stella Abbas at the Blue Hole, Dahab" class="rounded-xl my-10" /><p class="text-xs text-center italic" style="color:#5a6a7a;margin-top:-1.5rem">With Stella Abbas at the Blue Hole, Dahab — where The Big Blue's spirit lives on</p>
+
+<hr>
 <h2>The Real Story</h2>
 
 <p>Jacques Mayol was born in 1927 in Shanghai and spent childhood summers diving in the seas around Japan, where he first encountered dolphins. That encounter shaped his entire life. He went on to become the first human to freedive past 100 meters — a no-limits dive off the coast of Elba, Italy, in 1976. During the dive, his heart rate dropped from 60 to 27 beats per minute, demonstrating the mammalian dive reflex in a way that stunned the scientific community. He later wrote <em>Homo Delphinus: The Dolphin Within Man</em>, exploring his theory that humans retain dormant aquatic capabilities from our evolutionary past.</p>
 
 <p>Enzo Maiorca, the Sicilian, was Mayol's counterpart — a record-breaking diver with a personality as big as his lungs. Both men pushed past 100 meters in the no-limits discipline, trading records back and forth across decades. In reality, they weren't direct competitors who faced off at the same events as the film portrays — their rivalry played out over years, through press coverage and word of mouth. But the competitive tension between them was real, and it drove both men deeper than anyone thought possible.</p>
 
+<hr>
 <h2>What Besson Got Right</h2>
 
 <p>Besson was a diver himself — the son of two dive instructors from Club Med. A diving accident forced him out of the water at 17, but the experience stayed with him. He first encountered Mayol through a French documentary and knew immediately he'd found the protagonist of a future film. Nearly a decade later, after the success of <em>Subway</em>, he began production. Mayol himself worked on the screenplay.</p>
@@ -805,12 +870,14 @@ Round 8: Hold 1:30, Done</p>
 
 <p>Jean-Marc Barr plays Mayol as someone who is more comfortable underwater than on land — someone who can't quite connect with the human world but who becomes completely alive in the ocean. It's a portrayal that every serious freediver recognizes. Not because we're all socially detached romantics, but because the film nails the feeling of being between two worlds — the one above the surface where you live, and the one below it where you feel most yourself.</p>
 
+<hr>
 <h2>Jean Reno's Enzo</h2>
 
 <p>If Barr's Jacques is the soul of the film, Jean Reno's Enzo is its heart. Reno plays Maiorca (renamed Molinari in the film — Maiorca objected to the portrayal for years) as a force of nature: loud, competitive, warm, fearless, and deeply loyal. Where Jacques is pulled to the deep by something mystical, Enzo is pulled by ego and love of the fight. He doesn't want to merge with the ocean — he wants to conquer it, to prove he's the greatest, and to do it alongside the one person who can match him.</p>
 
 <p>The real Maiorca resented the caricature for a long time. He only softened his stance after Mayol's death in 2001. But Reno's performance gave the film something essential: warmth. Without Enzo, the film would be beautiful but cold. With him, it has a beating heart — someone who reminds us that diving isn't just about inner peace. It's also about the thrill, the competitive fire, the simple human desire to go further than anyone has gone before.</p>
 
+<hr>
 <h2>The Dolphin Question</h2>
 
 <p>Mayol's real-life obsession with dolphins runs through the film like a current. As a child, he dove with dolphins in Japan. As an adult working at an aquarium in Miami, he formed a bond with a dolphin named Clown that transformed his understanding of what the human body could do underwater. He studied how dolphins breathed, moved, and regulated their physiology — then applied those principles to his own diving.</p>
@@ -819,6 +886,7 @@ Round 8: Hold 1:30, Done</p>
 
 <p>The film doesn't explain the science. It <em>shows</em> it — through dream sequences where water fills Jacques' bedroom, through the way he moves underwater with an ease that seems inhuman, through the dolphins that appear at the edges of the story like guides to another world.</p>
 
+<hr>
 <h2>The Ending</h2>
 
 <p>The European version of The Big Blue has one of the most haunting endings in cinema. After Enzo's death attempting to break Jacques' record, Jacques descends into the deep one final time, releases his safety harness, and follows a dolphin into the darkness — leaving a pregnant Johana on the surface.</p>
@@ -827,6 +895,7 @@ Round 8: Hold 1:30, Done</p>
 
 <p>This is one of the reasons safety is so central to everything we do at La Jolla Freedive Club. The romance of the deep is real — anyone who's felt freefall at 20 meters knows the pull. But the film shows where that romance leads without training, without buddies, without the discipline to surface when your body says go deeper. Freediving is extraordinary precisely because it requires you to override the call. To breathe. To come back up. To live on the surface so you can dive again tomorrow.</p>
 
+<hr>
 <h2>Why It Still Matters</h2>
 
 <p>The Big Blue was released in 1988, before freediving had any mainstream visibility. There were no AIDA courses, no Molchanovs education system, no Instagram reels of people diving to 100 meters. The film introduced millions of people to a world most had never imagined — that humans could go that deep on a single breath, that there was an entire subculture built around it, and that the ocean held something worth leaving the surface for.</p>
@@ -837,6 +906,7 @@ Round 8: Hold 1:30, Done</p>
 
 <p>Every freediver knows that feeling. Besson put it on screen.</p>
 
+<hr>
 <h2>Watch It</h2>
 
 <p>If you're thinking about learning to freedive, watch The Big Blue first. Not because it's accurate (it's not — neither Mayol nor Maiorca reached the 122 meters depicted in the film). Not because it teaches technique (it doesn't). But because it captures the <em>why</em>. The reason people keep going back to the water. The thing that makes you sign up for a course, drive to the coast at 6am on a Saturday, and swim 500 meters out to a mooring line to spend an hour going up and down a rope.</p>
@@ -855,7 +925,7 @@ Round 8: Hold 1:30, Done</p>
     isoDate: "2026-03-19",
     readTime: "16 min read",
     gradient: "from-teal to-deep",
-    heroImage: "/images/blog/freediver-underwater.jpg",
+    heroImage: "/images/photos/joshua-khaled-hannah.jpg",
     content: `
 <p>Every freediver hits the same wall. You've got the breath-hold. You've got the duck dive. You're relaxed, streamlined, sinking into the blue — and then your ears say no. That sharp pressure behind the eardrum that stops your descent cold. You pinch your nose harder, blow harder, and nothing happens. Or worse, something does and it hurts.</p>
 
@@ -863,6 +933,7 @@ Round 8: Hold 1:30, Done</p>
 
 <p>It's not. Here's everything you need to know.</p>
 
+<hr>
 <h2>Why You Need to Equalize</h2>
 
 <p>Your body has several rigid, air-filled cavities — the middle ear spaces on either side of your head, your sinuses, and the air space inside your mask. As you descend, water pressure increases. <a href="https://dan.org/alert-diver/" target="_blank" rel="noopener noreferrer">Boyle's Law</a> says that at constant temperature, the volume of a gas is inversely proportional to the pressure acting on it. For every 10 meters (33 feet) of seawater, pressure increases by one atmosphere.</p>
@@ -882,6 +953,7 @@ Round 8: Hold 1:30, Done</p>
 
 <p>You also need to equalize your mask. As the air space inside compresses, it creates suction against your face. A small exhale through your nose fixes this — but forget it and you'll surface with burst blood vessels around your eyes. It looks worse than it is, but it's entirely avoidable.</p>
 
+<hr>
 <h2>The Valsalva: Where Everyone Starts</h2>
 
 <p>Named for Antonio Maria Valsalva, the 17th-century Italian anatomist who originally described the technique for clearing pus from infected ears. Close your mouth, pinch your nose, gently blow. The increased pressure in your nasopharynx forces air up through the Eustachian tubes and into the middle ear spaces.</p>
@@ -900,6 +972,7 @@ Round 8: Hold 1:30, Done</p>
 
 <p>In <a href="https://www.aidainternational.org/" target="_blank" rel="noopener noreferrer">AIDA</a> courses, the Valsalva is introduced in AIDA 1 (Introduction to Freediving) as a starting point. By AIDA 2, students begin transitioning to Frenzel. The Valsalva is a stepping stone, not a long-term technique.</p>
 
+<hr>
 <h2>The Frenzel: The Gold Standard</h2>
 
 <p>Hermann Frenzel was a Luftwaffe commander during WWII who taught this technique to Stuka dive bomber pilots experiencing rapid pressure changes during steep aerial dives. The technique was documented in German military aviation medicine and eventually adopted by the diving world.</p>
@@ -941,6 +1014,7 @@ Round 8: Hold 1:30, Done</p>
 
 <p><a href="https://www.equalizationworkshop.com/" target="_blank" rel="noopener noreferrer">Adam Stern</a>, widely recognized as one of the leading equalization specialists in freediving, emphasizes breaking equalization into component skills — isolating and training glottis control, soft palate control, and tongue mobility independently before combining them. His structured approach has helped hundreds of freedivers break through equalization plateaus.</p>
 
+<hr>
 <h2>Mouthfill: Going Deep</h2>
 
 <p>At approximately 30-40 meters, depending on individual anatomy and technique, the air in your mouth and nasopharynx becomes so compressed that the Frenzel charge can't grab enough volume to create a meaningful pressure differential. This is the equalization "wall" that caps many freedivers' depth progression.</p>
@@ -958,6 +1032,7 @@ Round 8: Hold 1:30, Done</p>
 
 <p>Mouthfill is advanced territory — AIDA 3 and beyond. It requires solid Frenzel mastery first. The timing of the charge is critical: too early and you waste the air, too late and you've already hit the wall. Many athletes practice Mouthfill inverted on land — hanging head-down off a bed or inversion table — to develop the technique before taking it to depth.</p>
 
+<hr>
 <h2>BTV: The Rare One</h2>
 
 <p>Béance Tubaire Volontaire — Voluntary Tubary Beance, or simply hands-free equalization. This is the ability to voluntarily open the Eustachian tubes by contracting the tensor veli palatini and levator veli palatini muscles — the same muscles that normally open your tubes when you swallow or yawn.</p>
@@ -966,6 +1041,7 @@ Round 8: Hold 1:30, Done</p>
 
 <p>The reality: even freedivers who can do BTV often find it unreliable under the stress of a deep dive or in cold water. Most competitive athletes who have BTV capability still use Frenzel or Mouthfill as their primary technique, keeping BTV as a supplement. Some instructors believe BTV can be trained through specific jaw, swallowing, and soft palate exercises, but there's no consensus.</p>
 
+<hr>
 <h2>Common Problems and How to Fix Them</h2>
 
 <h3>The Depth Wall</h3>
@@ -984,6 +1060,7 @@ Round 8: Hold 1:30, Done</p>
 
 <p>The opposite problem: air expanding in the middle ear during ascent can't vent through swollen Eustachian tubes. Pressure builds behind the eardrum, pushing it outward. This causes sharp pain and sometimes vertigo. If it happens, slow your ascent. Swallow. Move your jaw. Do not Frenzel or Valsalva — that adds more pressure. DAN considers reverse blocks serious — rupture on ascent can allow cold water into the middle ear, causing caloric vertigo and disorientation underwater.</p>
 
+<hr>
 <h2>Drills You Can Do on Land</h2>
 
 <p>Equalization is one of the few freediving skills where dry training is directly transferable to the water. Here's a progression:</p>
@@ -1012,6 +1089,7 @@ Round 8: Hold 1:30, Done</p>
 
 <p>Equalization improves with consistent practice. A few minutes of Frenzel drills daily — while driving, at your desk, before bed — builds the muscle memory and fine motor control that translates directly to easier dives. <a href="https://www.immersionfreediving.com/" target="_blank" rel="noopener noreferrer">Ted Harty of Immersion Freediving</a> emphasizes that most students who believe they "can't equalize" actually have a technique issue, not an anatomical one. It's trainable.</p>
 
+<hr>
 <h2>The Progression</h2>
 
 <p>Think of equalization techniques as levels, and they map directly to the <a href="https://www.aidainternational.org/" target="_blank" rel="noopener noreferrer">AIDA certification</a> progression:</p>
@@ -1059,6 +1137,7 @@ Round 8: Hold 1:30, Done</p>
 
 <p>Equalization isn't a talent you either have or you don't. It's a skill you build. And like every skill in freediving, it responds to consistent, deliberate practice.</p>
 
+<hr>
 <h2>Further Reading</h2>
 
 <ul>
@@ -1079,7 +1158,7 @@ Round 8: Hold 1:30, Done</p>
     isoDate: "2026-03-21",
     readTime: "12 min read",
     gradient: "from-ocean to-teal",
-    heroImage: "/images/blog/kelp-forest.jpg",
+    heroImage: "/images/photos/joshua-presenting-dahab.jpg",
     content: `
 <p>One of the first questions people ask when they're ready to learn freediving is: <em>which certification should I get?</em></p>
 
@@ -1089,6 +1168,7 @@ Round 8: Hold 1:30, Done</p>
 
 <p>Here's the full picture.</p>
 
+<hr>
 <h2>The Five Major Agencies</h2>
 
 <p><strong><a href="https://www.aidainternational.org/" target="_blank" rel="noopener noreferrer">AIDA</a></strong> (Association Internationale pour le Développement de l'Apnée) — Founded in 1992. The oldest and largest freediving-specific agency in the world. Governs international competitions and world records. Over 4,000 instructors in 40+ countries and 180,000+ certified students. Headquarters in Zurich.</p>
@@ -1101,6 +1181,7 @@ Round 8: Hold 1:30, Done</p>
 
 <p><strong><a href="https://www.freedivinginstructors.com/" target="_blank" rel="noopener noreferrer">FII</a></strong> (Freediving Instructors International) — A smaller, US-focused agency founded by performance freedivers. Emphasizes personalized instruction, small class sizes, and instructor quality over scale.</p>
 
+<hr>
 <h2>How They Compare</h2>
 
 <h3>Beginner Course Depth Requirements</h3>
@@ -1127,6 +1208,7 @@ Round 8: Hold 1:30, Done</p>
 
 <p>The consensus across the freediving world is clear: <strong>the instructor matters more than the agency</strong>. A dedicated, safety-conscious PADI freediving instructor will give you a better education than a careless AIDA instructor. But the agency's minimum standards determine the floor — and some floors are higher than others.</p>
 
+<hr>
 <h2>What Each Agency Does Best</h2>
 
 <p><strong>AIDA</strong> excels at international recognition, competition pathways, and instructor independence. AIDA instructors can operate independently without affiliation to a dive center, which allows for more flexibility and often more personalized instruction. The competition structure means AIDA-certified athletes can pursue world records and compete at the highest levels. If you ever want to dive internationally or compete, AIDA is the standard.</p>
@@ -1139,6 +1221,7 @@ Round 8: Hold 1:30, Done</p>
 
 <p><strong>FII</strong> excels at personalized, small-group instruction. With fewer instructors and a quality-over-quantity philosophy, FII courses often feel more like private coaching than group classes. If you want intense, individual attention, FII delivers.</p>
 
+<hr>
 <h2>What Each Agency Could Do Better</h2>
 
 <p><strong>AIDA</strong> — The online learning materials are dated compared to Molchanovs and SSI. The post-certification training path is less structured. Once you finish your AIDA 2, you're somewhat on your own for continued development unless your instructor provides it.</p>
@@ -1151,12 +1234,14 @@ Round 8: Hold 1:30, Done</p>
 
 <p><strong>FII</strong> — Limited availability. With fewer instructors, finding an FII course near you can be difficult. The agency is primarily US-focused and lacks the international reach of AIDA, Molchanovs, or SSI.</p>
 
+<hr>
 <h2>Can You Switch Between Agencies?</h2>
 
 <p>Yes. Most agencies accept crossovers — you can take AIDA 2 and then do Molchanovs Wave 2, or start with SSI Level 1 and continue with AIDA 3. The instructor may do an evaluation dive to confirm your skills match their agency's standards for the previous level, but switching is generally straightforward.</p>
 
 <p>This means your first certification doesn't lock you in. Start wherever works best — the right instructor, the right location, the right timing — and continue wherever makes sense.</p>
 
+<hr>
 <h2>So Which One Should You Choose?</h2>
 
 <p>Here's my honest framework:</p>
@@ -1173,6 +1258,7 @@ Round 8: Hold 1:30, Done</p>
 
 <p>And here's the real answer: <strong>choose the best instructor available to you</strong>, regardless of agency. Talk to them. Ask about their depth experience, how many students they've trained, their approach to safety, and how they handle students who struggle with equalization or anxiety. A great instructor from any agency will give you a solid foundation.</p>
 
+<hr>
 <h2>Why LJFC Teaches AIDA</h2>
 
 <p>I chose AIDA for three reasons.</p>
@@ -1197,7 +1283,7 @@ Round 8: Hold 1:30, Done</p>
     isoDate: "2026-03-21",
     readTime: "11 min read",
     gradient: "from-deep to-teal",
-    heroImage: "/images/blog/ocean-calm.jpg",
+    heroImage: "/images/photos/joshua-lena-shores.jpg",
     content: `
 <p>Every freediving instructor has seen it happen. A new student walks into an AIDA 2 course, pinches their nose, and equalizes on the first try — clean Frenzel, no instruction needed. You ask them about it and they say something like: "I don't know, I just did it." Then you find out they sing in a choir, or they play trumpet, or they've been chanting Om in a yoga class for five years.</p>
 
@@ -1205,6 +1291,7 @@ Round 8: Hold 1:30, Done</p>
 
 <p>Here's the science behind why your voice already knows how to freedive.</p>
 
+<hr>
 <h2>The Soft Palate: Where Singing Meets Frenzel</h2>
 
 <p>The single most important connection between singing and freediving is the soft palate — the velum. It's the flexible tissue at the back of the roof of your mouth, and it's the gatekeeper between your oral and nasal cavities.</p>
@@ -1219,6 +1306,7 @@ Round 8: Hold 1:30, Done</p>
 
 <p>The "K-spot" used in Frenzel teaching — touching the back of the tongue to the soft palate at the position of a hard "K" sound — is functionally identical to singing a velar stop. If you can sing "kah-kah-kah" with clear articulation, you already have the motor pattern for a Frenzel charge.</p>
 
+<hr>
 <h2>The Glottal Lock: Throat Singers Have an Unfair Advantage</h2>
 
 <p>The second component of Frenzel is the glottal lock — closing the vocal cords to seal the airway and disconnect the mouth from the lungs. This is the "throat lock" that allows you to compress air with your tongue without it escaping downward.</p>
@@ -1231,6 +1319,7 @@ Round 8: Hold 1:30, Done</p>
 
 <p>If you can throat sing, you can almost certainly Frenzel. The motor control is already there.</p>
 
+<hr>
 <h2>The Diaphragm: Singing Through Contractions</h2>
 
 <p>Ask any competitive freediver what separates a 3-minute breath hold from a 5-minute one, and they'll say the same thing: the ability to stay relaxed through contractions. When CO2 rises and the diaphragm starts spasming, untrained divers panic. Trained divers keep the diaphragm low and let the contractions wash through them.</p>
@@ -1243,6 +1332,7 @@ Round 8: Hold 1:30, Done</p>
 
 <p>The parallel is almost exact. A freediver at 3:30 into a static hold, managing rhythmic diaphragmatic contractions while staying relaxed, is doing the same thing an opera singer does during a sustained fortissimo phrase — keeping the diaphragm low, letting the intercostals manage fine airflow adjustments, and not fighting the body's desire to move air.</p>
 
+<hr>
 <h2>CO2 Tolerance: Long Phrases as Breath-Hold Training</h2>
 
 <p>Every time a singer sustains a long phrase on a single breath, they're doing a mild form of <a href="/blog/co2-tolerance-training-guide">CO2 tolerance training</a>. The air runs low, CO2 rises, the urge to breathe intensifies — and the singer pushes through to the end of the phrase.</p>
@@ -1251,6 +1341,7 @@ Round 8: Hold 1:30, Done</p>
 
 <p>The mechanism is the same one that makes CO2 tables work in freediving: repeated exposure to elevated CO2 shifts the subjective breakpoint. Your body learns that the urge to breathe isn't an emergency — it's a signal you can acknowledge and manage.</p>
 
+<hr>
 <h2>Intercostal Strength: The Hidden Advantage</h2>
 
 <p>Singers rely heavily on the intercostal muscles — the small muscles between the ribs — to control lung volume during performance. Classical technique emphasizes maintaining rib cage expansion even as lung volume decreases, using the intercostals to resist the chest wall's elastic recoil.</p>
@@ -1268,6 +1359,7 @@ Round 8: Hold 1:30, Done</p>
 
 <p>Singers build all of this without ever setting foot in the water.</p>
 
+<hr>
 <h2>Chanting and the Dive Reflex</h2>
 
 <p>This is where it gets fascinating. A 2011 study by Kalyani et al. used fMRI to examine brain activation during Om chanting and found that it stimulated the vagus nerve — triggering parasympathetic activation. The vagus nerve is the same pathway that mediates the <a href="/blog/mammalian-dive-reflex-explained">mammalian dive reflex</a>: it's what slows your heart rate when your face hits cold water.</p>
@@ -1278,6 +1370,7 @@ Round 8: Hold 1:30, Done</p>
 
 <p>Bhramari pranayama (bee breath) — sustained humming with glottal and nasal resonance — is particularly interesting. The humming creates positive pressure in the nasopharynx, functionally similar to a gentle Frenzel maneuver. Regular practitioners may be training Eustachian tube opening without knowing it.</p>
 
+<hr>
 <h2>The Didgeridoo Connection</h2>
 
 <p>Circular breathing — the technique used to play the didgeridoo without pausing for breath — deserves special mention. It requires independent control of the soft palate, cheek muscles (buccinator), and airway that maps directly to mouthfill equalization.</p>
@@ -1286,6 +1379,7 @@ Round 8: Hold 1:30, Done</p>
 
 <p>The motor patterns aren't identical, but the body awareness is the same: independent control of the oral cavity as a pressure vessel, separate from the respiratory system. Some freediving coaches have specifically recommended didgeridoo playing as equalization training — and the anecdotal reports from the <a href="https://www.deeperblue.com/" target="_blank" rel="noopener noreferrer">DeeperBlue</a> forums suggest it works.</p>
 
+<hr>
 <h2>What This Means for You</h2>
 
 <p>If you sing, play a wind instrument, practice pranayama, or do any form of sustained vocalization — you likely have a head start on several of the hardest skills in freediving:</p>
