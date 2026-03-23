@@ -5,13 +5,39 @@ import Link from "next/link";
 import { Reveal } from "@/components/Reveal";
 import {
   Input,
-  Select,
   TextArea,
   SuccessState,
   FormShell,
 } from "./FormComponents";
 
 const FORMSPREE = "https://formspree.io/f/mojknqlk";
+
+const inquiryTypes = [
+  {
+    label: "I want to learn to freedive",
+    href: "/contact/courses",
+    desc: "AIDA 1, 2, 3 courses and private coaching",
+    color: "bg-teal",
+    textColor: "text-teal",
+    borderColor: "border-teal/20",
+  },
+  {
+    label: "Camp Garibaldi for my kid",
+    href: "/contact/camp",
+    desc: "Ages 8–16, week-long ocean camp",
+    color: "bg-coral",
+    textColor: "text-coral",
+    borderColor: "border-coral/20",
+  },
+  {
+    label: "Saturday ocean session",
+    href: "/contact/courses?course=saturday",
+    desc: "Weekly group dive, $25 drop-in",
+    color: "bg-ocean",
+    textColor: "text-ocean",
+    borderColor: "border-ocean/20",
+  },
+];
 
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
@@ -21,35 +47,56 @@ export default function ContactPage() {
       <section className="bg-gradient-to-b from-deep to-ocean pt-36 pb-20 px-6 text-center">
         <Reveal>
           <div className="section-label text-seafoam before:bg-seafoam justify-center">
-            Get in Touch
+            Get Started
           </div>
           <h1 className="font-serif text-[clamp(2.5rem,5vw,4rem)] text-white font-normal leading-tight tracking-tight mb-6">
-            Ready to go deeper?
+            What are you looking for?
           </h1>
           <p className="text-lg text-white/60 max-w-[520px] mx-auto leading-relaxed">
-            General questions, partnership inquiries, or just want to say hello.
-            For course bookings or Camp Garibaldi, use the specific forms below.
+            Pick the path that fits, or scroll down for general inquiries.
           </p>
         </Reveal>
       </section>
 
-      <section className="bg-salt py-24 px-6">
+      {/* Quick-route cards */}
+      <section className="bg-salt py-16 px-6">
+        <div className="max-w-[800px] mx-auto">
+          <Reveal>
+            <div className="grid md:grid-cols-3 gap-4 mb-6">
+              {inquiryTypes.map((t) => (
+                <Link
+                  key={t.label}
+                  href={t.href}
+                  className={`block bg-white rounded-2xl p-6 no-underline text-deep border ${t.borderColor} hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(10,22,40,0.08)] transition-all group`}
+                >
+                  <div className={`w-2 h-2 rounded-full ${t.color} mb-4`} />
+                  <div className={`font-semibold text-[0.95rem] mb-1.5 group-hover:${t.textColor} transition-colors`}>
+                    {t.label}
+                  </div>
+                  <div className="text-xs text-[#5a6a7a]">{t.desc}</div>
+                  <div className="text-teal text-sm font-medium mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                    Go &rarr;
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* General form */}
+      <section className="bg-white py-20 px-6">
         <div className="max-w-[640px] mx-auto">
-          {/* Quick links to specific forms */}
-          <div className="flex flex-wrap gap-3 mb-8 justify-center">
-            <Link
-              href="/contact/courses"
-              className="px-4 py-2 bg-white rounded-full text-sm text-teal font-medium no-underline hover:shadow-sm transition-shadow border border-deep/[0.06]"
-            >
-              Inquire about a course →
-            </Link>
-            <Link
-              href="/contact/camp"
-              className="px-4 py-2 bg-white rounded-full text-sm text-coral font-medium no-underline hover:shadow-sm transition-shadow border border-deep/[0.06]"
-            >
-              Camp Garibaldi inquiry →
-            </Link>
-          </div>
+          <Reveal>
+            <div className="text-center mb-10">
+              <h2 className="font-serif text-2xl tracking-tight mb-2">
+                Something else?
+              </h2>
+              <p className="text-sm text-[#5a6a7a]">
+                Partnerships, media, group events, or just want to connect.
+              </p>
+            </div>
+          </Reveal>
 
           {submitted ? (
             <Reveal>
@@ -59,31 +106,45 @@ export default function ContactPage() {
             <Reveal>
               <FormShell action={FORMSPREE} formType="general" onSuccess={() => setSubmitted(true)}>
                 <div className="grid md:grid-cols-2 gap-6">
-                  <Input label="First Name" name="firstName" required placeholder="Your first name" />
-                  <Input label="Last Name" name="lastName" required placeholder="Your last name" />
+                  <Input label="Name" name="name" required placeholder="Your name" />
+                  <Input label="Email" name="email" type="email" required placeholder="you@email.com" />
                 </div>
-                <Input label="Email" name="email" type="email" required placeholder="you@email.com" />
-                <Input label="Phone" name="phone" type="tel" placeholder="(optional)" />
-                <Select
-                  label="What brings you here?"
-                  name="topic"
-                  options={[
-                    "General question",
-                    "Partnership / collaboration",
-                    "Gear advice",
-                    "Group / corporate event",
-                    "Media / press",
-                    "Other",
-                  ]}
-                />
+                <Input label="Subject" name="subject" required placeholder="What's this about?" />
                 <TextArea
-                  label="Your message"
+                  label="Message"
                   name="message"
-                  placeholder="Tell us what's on your mind."
+                  required
+                  placeholder="Tell us what you're thinking."
                 />
               </FormShell>
             </Reveal>
           )}
+
+          {/* Direct contact fallback */}
+          <Reveal delay={60}>
+            <div className="mt-10 text-center">
+              <p className="text-sm text-[#5a6a7a] mb-2">
+                Prefer email? Reach Joshua directly:
+              </p>
+              <a
+                href="mailto:joshuabeneventi@gmail.com"
+                className="text-teal font-medium text-sm no-underline hover:underline"
+              >
+                joshuabeneventi@gmail.com
+              </a>
+              <p className="text-xs text-[#5a6a7a] mt-6">
+                Follow us{" "}
+                <a
+                  href="https://instagram.com/lajollafreedive"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-teal no-underline hover:underline"
+                >
+                  @lajollafreedive
+                </a>
+              </p>
+            </div>
+          </Reveal>
         </div>
       </section>
     </>

@@ -116,10 +116,10 @@ export function FormShell({
       if (res.ok) {
         onSuccess();
       } else {
-        alert("Something went wrong. Please try again or email us directly.");
+        alert("Something went wrong. Email joshuabeneventi@gmail.com directly.");
       }
     } catch {
-      alert("Something went wrong. Please try again or email us directly.");
+      alert("Something went wrong. Email joshuabeneventi@gmail.com directly.");
     } finally {
       setSubmitting(false);
     }
@@ -133,7 +133,7 @@ export function FormShell({
         disabled={submitting}
         className="btn btn-primary w-full justify-center text-center disabled:opacity-50"
       >
-        {submitting ? "Sending..." : "Send It →"}
+        {submitting ? "Sending..." : "Submit Inquiry →"}
       </button>
       <p className="text-xs text-center text-[#5a6a7a]">
         We&apos;ll respond within 24 hours. No spam, no pressure.
