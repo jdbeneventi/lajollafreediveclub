@@ -15,11 +15,12 @@ import {
 const FORMSPREE = "https://formspree.io/f/mojknqlk";
 
 const COURSES = [
-  "AIDA 1 — Introduction to Freediving",
-  "AIDA 2 — Open Water Certification",
-  "AIDA 3 — Advanced Freediver",
-  "Group Ocean Sessions",
-  "Private Coaching",
+  "AIDA 1 — Discover Freediving ($200, half day)",
+  "AIDA 2 — Open Water Certification ($575 group / $800 private)",
+  "AIDA 3 — Advanced Freediver ($700 group / $950 private)",
+  "Private Coaching ($150/session, 2–3 hrs)",
+  "Saturday Ocean Session ($25 drop-in)",
+  "Ocean Flow with Lena ($20 drop-in)",
   "Not sure — help me decide",
 ];
 
@@ -32,11 +33,12 @@ function CourseFormInner() {
     const course = searchParams.get("course");
     if (course) {
       const map: Record<string, string> = {
-        aida1: "AIDA 1 — Introduction to Freediving",
-        aida2: "AIDA 2 — Open Water Certification",
-        aida3: "AIDA 3 — Advanced Freediver",
-        group: "Group Ocean Sessions",
-        private: "Private Coaching",
+        aida1: "AIDA 1 — Discover Freediving ($200, half day)",
+        aida2: "AIDA 2 — Open Water Certification ($575 group / $800 private)",
+        aida3: "AIDA 3 — Advanced Freediver ($700 group / $950 private)",
+        private: "Private Coaching ($150/session, 2–3 hrs)",
+        saturday: "Saturday Ocean Session ($25 drop-in)",
+        oceanflow: "Ocean Flow with Lena ($20 drop-in)",
       };
       if (map[course]) setSelectedCourse(map[course]);
     }

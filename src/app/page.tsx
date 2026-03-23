@@ -26,9 +26,9 @@ const testimonials = [
 ];
 
 const blogPosts = [
-  { slug: "beginners-guide-freediving-la-jolla", title: "The Complete Beginner's Guide to Freediving in La Jolla", category: "Guide", image: "/images/photos/joshua-brooke-kristina.jpg" },
-  { slug: "mammalian-dive-reflex-explained", title: "The Mammalian Dive Reflex: Your Body's Built-In Superpower", category: "Science", image: "/images/photos/joshua-red-sea.jpg" },
-  { slug: "best-freediving-spots-san-diego", title: "5 Best Freediving Spots in San Diego", category: "Local", image: "/images/photos/joshua-lena-shores.jpg" },
+  { slug: "state-anchors", title: "State Anchors: What Buddhist Monasteries Taught Me About Freediving", category: "Training", image: "/images/photos/joshua-presenting-dahab.jpg" },
+  { slug: "beginners-guide-freediving-la-jolla", title: "The Complete Beginner's Guide to Freediving in La Jolla", category: "Guide", image: "/images/photos/scripps-underwater.jpg" },
+  { slug: "equalization-guide-freediving", title: "The Complete Guide to Equalization for Freediving", category: "Training", image: "/images/photos/joshua-khaled-hannah.jpg" },
 ];
 
 /* ─── Page ─── */
