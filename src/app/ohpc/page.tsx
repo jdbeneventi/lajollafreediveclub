@@ -62,8 +62,8 @@ export default function OHPCPage() {
             {
               label: "Institutional Proximity",
               items: [
-                "UCSD Lindholm Hyperbaric & Diving Medicine Research Lab — world's leading freediving physiology program",
-                "UCSD Hyperbaric Medicine Center — 24/7 dive emergency chamber, 15 min from site, run by Dr. Lindholm",
+                "UCSD Division of Hyperbaric Medicine — one of the nation's leading diving medicine research and clinical programs. Faculty: Dr. Ian Grover (Medical Director), Dr. Charlotte Sadler (Fellowship Director), Dr. Elaine Yu (freediving lung ultrasound). Funded by DAN.",
+                "UCSD Hyperbaric Medicine Center — 24/7 dive emergency chamber, 15 min from site, operated by the UCSD Division of Hyperbaric Medicine",
                 "Scripps Institution of Oceanography — 500 yards from the dive site",
                 "Naval Special Warfare Center — BUD/S training 15 minutes away",
                 "UCSD Medical Center — MRI, ultrasound, CT within minutes of actual dives",
@@ -161,8 +161,11 @@ export default function OHPCPage() {
         <h2 className="font-serif text-[clamp(1.8rem,3.5vw,2.5rem)] font-normal leading-[1.2] mb-4">
           The tightest emergency response chain <em className="italic text-sand">in world freediving.</em>
         </h2>
+        <p className="text-salt/45 max-w-[700px] mb-6">
+          Across the United States, hyperbaric chambers are increasingly turning away diving emergencies, with many of the nation&apos;s 1,500 facilities transitioning to wound care only. Divers in Florida, the country&apos;s most popular dive destination, sometimes face hour-long ambulance rides to reach an operational chamber.
+        </p>
         <p className="text-salt/45 max-w-[700px] mb-12">
-          Across the US, hyperbaric chambers are increasingly turning away divers — many of the 1,500 facilities have transitioned to wound care only. The OHPC sits next to what is arguably the best-resourced 24/7 dive emergency facility in the country.
+          This emergency infrastructure is not something that can be replicated at remote competition venues. At Dean&apos;s Blue Hole in the Bahamas, Vertical Blue operates on a small island with no hyperbaric chamber and limited hospital access. At international competition sites in Dahab, Egypt, or Dominica, emergency evacuation to a chamber can take hours. At the OHPC, the world&apos;s leading diving medicine research program and a 24/7 hyperbaric emergency facility are a single ambulance ride away — operated by the same team.
         </p>
 
         <div className="grid md:grid-cols-2 gap-6">
@@ -172,7 +175,7 @@ export default function OHPCPage() {
               {[
                 { step: "On-site", detail: "Emergency oxygen, ACLS-qualified medic, rescue boat — required by AIDA competition rules" },
                 { step: "15 minutes", detail: "UCSD Hillcrest Hyperbaric Medicine Center — 12-place multiplace chamber, 24/7 dive emergency, the only civilian 24-hour facility from Mexico to LA County" },
-                { step: "Same physician", detail: "The chamber is run by Dr. Peter Lindholm — the same researcher who chairs the diving medicine program and would lead OHPC research" },
+                { step: "Same division", detail: "The UCSD Division of Hyperbaric Medicine that conducts freediving research also operates the 24/7 emergency chamber — an integrated system of research and clinical care" },
               ].map((s) => (
                 <div key={s.step} className="flex gap-3 items-start">
                   <span className="shrink-0 w-2 h-2 rounded-full bg-seafoam mt-2" />
@@ -226,7 +229,7 @@ export default function OHPCPage() {
                   "Environmental data from Scripps for physiological correlation",
                   "SIPE, blackout, nitrogen narcosis investigation",
                 ],
-                partner: "Lindholm Hyperbaric & Diving Medicine Lab, UCSD",
+                partner: "UCSD Division of Hyperbaric Medicine, Dept. of Emergency Medicine",
               },
               {
                 num: "02",
@@ -275,7 +278,7 @@ export default function OHPCPage() {
       <section className="py-24 px-6 md:px-8 max-w-[1000px] mx-auto border-t border-seafoam/15">
         <div className="text-[11px] text-teal/60 font-medium tracking-[0.2em] uppercase mb-4">Pillar 1</div>
         <h2 className="font-serif text-[clamp(2rem,4vw,3rem)] font-normal leading-[1.2] mb-4">
-          Scientific Research — <em className="italic text-sand">the Lindholm Lab connection.</em>
+          Scientific Research — <em className="italic text-sand">the UCSD connection.</em>
         </h2>
         <p className="text-salt/50 max-w-[700px] mb-12">
           A 2025 review in the European Journal of Applied Physiology identified critical knowledge gaps across cardiovascular regulation, pulmonary injury, and neurological effects of deep apnea — concluding that meaningful progress requires study during actual dives, not simulated dry apnea. The OHPC eliminates this bottleneck entirely.
@@ -283,12 +286,14 @@ export default function OHPCPage() {
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {[
-            { id: "Lindholm Lab", name: "UCSD Dept. of Emergency Medicine", detail: "Gurnee Endowed Chair in Hyperbaric and Diving Medicine. Funded by DAN. Landmark SIPE studies on Navy SEAL candidates. 800+ citation foundational review paper." },
+            { id: "UCSD Division of Hyperbaric Medicine", name: "Dept. of Emergency Medicine", detail: "Faculty: Dr. Ian Grover (Medical Director), Dr. Charlotte Sadler (Fellowship Director, chair of hyperbaric medicine steering committee), Dr. Elaine Yu (wilderness medicine, freediving lung ultrasound). Funded by DAN. Landmark SIPE studies on Navy SEAL candidates. 800+ citation foundational review paper." },
             { id: "SIPE Research", name: "Swimming-Induced Pulmonary Edema", detail: "5% incidence in BUD/S candidates. Studied in collaboration with Naval Medical Center San Diego. The OHPC enables field replication with civilian and military populations." },
             { id: "Blackout Prevention", name: "Shallow Water Blackout Mechanisms", detail: "Investigation of hypoxic blackout, loss of motor control, and cerebral hypoperfusion during actual deep-water breath-holds — not dry lab simulations." },
             { id: "Imaging", name: "Pre/Post-Dive Assessment", detail: "UCSD Medical Center MRI, ultrasound, and CT available within minutes of actual 60-100m ocean dives. No other site offers this proximity." },
+            { id: "Lung Ultrasound", name: "Freediving-Induced Pulmonary Syndrome", detail: "Diagnosis via lung ultrasound — Dr. Elaine Yu's research on pulmonary barotrauma detection in breath-hold divers using point-of-care ultrasound in the field." },
+            { id: "DCI Research", name: "Decompression Illness in Breath-Hold Divers", detail: "Investigation of decompression-like symptoms in repetitive deep breath-hold diving — an emerging concern as competitive depths increase beyond 100m." },
             { id: "Longitudinal", name: "Weekly Cohort", detail: "Trained freedivers who dive at the same site every week, with logged environmental conditions. The controlled field population most researchers spend months recruiting." },
-            { id: "DAN Partnership", name: "Divers Alert Network", detail: "DAN funds the Lindholm Lab and insures LJFC. The same network that studies diving injuries worldwide provides the insurance and the research infrastructure." },
+            { id: "DAN Partnership", name: "Divers Alert Network", detail: "DAN funds the UCSD Division of Hyperbaric Medicine and insures LJFC. The same network that studies diving injuries worldwide provides the insurance and the research infrastructure." },
           ].map((src) => (
             <div key={src.id} className="p-6 bg-ocean/25 border border-seafoam/[0.08] rounded-sm">
               <div className="text-[11px] tracking-[0.15em] uppercase text-seafoam/60 mb-2">{src.id}</div>
@@ -381,7 +386,7 @@ export default function OHPCPage() {
           <h3 className="font-serif text-[1.3rem] font-normal text-seafoam mb-4">Institutional support sought</h3>
           <div className="grid sm:grid-cols-2 gap-4">
             {[
-              "Letter of support — UCSD Dept. of Emergency Medicine / Lindholm Lab",
+              "Letter of support — UCSD Division of Hyperbaric Medicine, Dept. of Emergency Medicine",
               "Letter of support — Naval Special Warfare medical research team",
               "Endorsement — Divers Alert Network",
               "Endorsement — US Freediving / AIDA International",
@@ -406,8 +411,8 @@ export default function OHPCPage() {
 
           <div className="space-y-0">
             {[
-              { phase: "Phase 1: Foundation", time: "Now — Summer 2026", items: ["Initiate regulatory conversations (USCG, Army Corps, State Lands, Coastal Commission, CDFW, City of SD)", "Contact Dr. Peter Lindholm at UCSD", "Connect with Fins and Foam Freediving for competition collaboration", "Establish SD Marine Safety relationship", "Formalize Scripps community partnership", "Run Camp Garibaldi first session — proof of concept"] },
-              { phase: "Phase 2: Proof of Concept", time: "Fall 2026", items: ["Host first AIDA depth competition using temporary boat-based platform", "Embed research — pre/post-dive lung ultrasound with Lindholm Lab", "Collect media coverage and institutional documentation", "File permanent buoy permit applications", "Secure letters of support from UCSD, DAN, US Freediving, Marine Safety"] },
+              { phase: "Phase 1: Foundation", time: "Now — Summer 2026", items: ["Initiate regulatory conversations (USCG, Army Corps, State Lands, Coastal Commission, CDFW, City of SD)", "Contact UCSD Division of Hyperbaric Medicine (Dr. Charlotte Sadler, Dr. Ian Grover) to explore research partnership", "Connect with Fins and Foam Freediving for competition collaboration", "Establish SD Marine Safety relationship", "Formalize Scripps community partnership", "Run Camp Garibaldi first session — proof of concept"] },
+              { phase: "Phase 2: Proof of Concept", time: "Fall 2026", items: ["Host first AIDA depth competition using temporary boat-based platform", "Embed research — pre/post-dive lung ultrasound with UCSD Division of Hyperbaric Medicine", "Collect media coverage and institutional documentation", "File permanent buoy permit applications", "Secure letters of support from UCSD, DAN, US Freediving, Marine Safety"] },
               { phase: "Phase 3: Establishment", time: "2027", items: ["Permanent buoy installation upon permit approval", "Annual AIDA depth competition established", "Formal research MOU with UCSD Dept. of Emergency Medicine", "Military training pilot program with NSW or Coast Guard", "Grant applications for Camp Garibaldi scholarships and adaptive freediving"] },
               { phase: "Phase 4: Growth", time: "2028+", items: ["International competition hosting (AIDA Continental/World Championship bid)", "Expanded multi-institution research program", "Military training integration as recognized supplemental program", "OHPC recognition as permanent La Jolla institution", "Documentary project — La Jolla as the birthplace and future of American freediving"] },
             ].map((phase) => (
