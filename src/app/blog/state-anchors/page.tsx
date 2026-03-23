@@ -690,6 +690,16 @@ export default function StateAnchorsPage() {
         <div className="max-w-[680px] mx-auto">
           <Fade>
             <div className="border-t border-deep/10 pt-10 mb-12">
+              <div className="rounded-xl overflow-hidden mb-6">
+                <img
+                  src="/images/photos/joshua-presenting-dahab.jpg"
+                  alt="Joshua presenting State Anchors at AIDA Instructor Course in Dahab, Egypt"
+                  className="w-full h-auto"
+                />
+                <p className="text-[10px] text-[#5a6a7a] mt-2 italic">
+                  Presenting State Anchors during the AIDA Instructor Course, Dahab, Egypt
+                </p>
+              </div>
               <p className="text-sm text-[#5a6a7a] leading-relaxed italic">
                 This post is adapted from &ldquo;State Anchors: Cognitive
                 Tools for Holistic Apnea Training,&rdquo; a presentation
