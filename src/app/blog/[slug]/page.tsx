@@ -5,8 +5,13 @@ import { getPost, getAllPosts } from "@/lib/blog";
 
 type Props = { params: Promise<{ slug: string }> };
 
+// Exclude posts that have dedicated interactive pages
+const CUSTOM_PAGES = new Set(["state-anchors"]);
+
 export async function generateStaticParams() {
-  return getAllPosts().map((p) => ({ slug: p.slug }));
+  return getAllPosts()
+    .filter((p) => !CUSTOM_PAGES.has(p.slug))
+    .map((p) => ({ slug: p.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
