@@ -41,9 +41,12 @@ export default function OHPCPage() {
       {/* ── Why La Jolla ── */}
       <section className="py-24 px-6 md:px-8 max-w-[1000px] mx-auto">
         <div className="text-[11px] text-teal/60 font-medium tracking-[0.2em] uppercase mb-4">Why La Jolla — and Why Nowhere Else</div>
-        <h2 className="font-serif text-[clamp(2rem,4vw,3rem)] font-normal leading-[1.2] mb-12">
-          No other location in North America <em className="italic text-sand">offers this convergence.</em>
+        <h2 className="font-serif text-[clamp(2rem,4vw,3rem)] font-normal leading-[1.2] mb-4">
+          No other location in North America — and arguably no location in the world — <em className="italic text-sand">offers this convergence.</em>
         </h2>
+        <p className="text-salt/45 max-w-[700px] mb-12">
+          Shore-accessible ocean depth exceeding 100 meters. The world&apos;s leading freediving research lab. The world&apos;s premier military special operations water-training facility. A major research hospital with 24/7 hyperbaric emergency capability. The world&apos;s most prestigious oceanographic institution. All within walking distance of each other.
+        </p>
 
         <div className="grid md:grid-cols-2 gap-8">
           {[
@@ -60,9 +63,10 @@ export default function OHPCPage() {
               label: "Institutional Proximity",
               items: [
                 "UCSD Lindholm Hyperbaric & Diving Medicine Research Lab — world's leading freediving physiology program",
+                "UCSD Hyperbaric Medicine Center — 24/7 dive emergency chamber, 15 min from site, run by Dr. Lindholm",
                 "Scripps Institution of Oceanography — 500 yards from the dive site",
                 "Naval Special Warfare Center — BUD/S training 15 minutes away",
-                "Birch Aquarium — 550,000+ annual visitors",
+                "UCSD Medical Center — MRI, ultrasound, CT within minutes of actual dives",
               ],
             },
             {
@@ -96,6 +100,109 @@ export default function OHPCPage() {
               </ul>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* ── Competitive Analysis ── */}
+      <div className="bg-ocean/15 border-t border-b border-seafoam/10 py-20 px-6 md:px-8">
+        <div className="max-w-[1000px] mx-auto">
+          <div className="text-[11px] text-teal/60 font-medium tracking-[0.2em] uppercase mb-4">Stress-Tested Against Every Alternative</div>
+          <h2 className="font-serif text-[clamp(2rem,4vw,3rem)] font-normal leading-[1.2] mb-4">
+            We checked. <em className="italic text-sand">Nobody else has this.</em>
+          </h2>
+          <p className="text-salt/45 max-w-[700px] mb-12">
+            Any single factor in this convergence can be found elsewhere. Deeper water exists. Warmer water exists. Research labs exist. Military bases exist. What cannot be found anywhere else is all of them at the same location.
+          </p>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {[
+              { site: "Monterey Canyon", has: "Depth (unlimited)", missing: "Water is 50-55°F year-round. Monastery Beach entry is deadly. No freediving research. No military. 350 miles from NSW." },
+              { site: "Hawaii (Big Island)", has: "Depth, warm water", missing: "No freediving physiology research program. No NSW (BUD/S is in Coronado). Rocky lava entries. Remote, expensive logistics." },
+              { site: "Dean's Blue Hole, Bahamas", has: "202m depth, competition venue", missing: "Zero research infrastructure. No university, hospital, or imaging. No military. Small island in the Bahamas." },
+              { site: "Lake Berryessa, CA", has: "Existing US competition venue", missing: "Freshwater lake. Max 69m. No ocean, no marine environment, no military, no research relevance." },
+              { site: "Redondo Canyon, LA", has: "Shore-accessible depth", missing: "Poor water quality. No diving medicine program. Minimal military presence. Urbanized site." },
+              { site: "Florida (Keys/SE Coast)", has: "Warm water, dive community", missing: "Gradual continental shelf — no shore-accessible depth. No submarine canyons. Duke hyperbaric is in North Carolina." },
+            ].map((comp) => (
+              <div key={comp.site} className="p-5 bg-deep/50 border border-seafoam/[0.06] rounded-sm">
+                <div className="font-serif text-[1rem] text-salt mb-1">{comp.site}</div>
+                <div className="text-seafoam/60 text-[0.8rem] mb-2">Has: {comp.has}</div>
+                <div className="text-salt/35 text-[0.8rem] leading-[1.6]">Missing: {comp.missing}</div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-12 p-8 bg-ocean/25 border border-seafoam/10 rounded-sm text-center">
+            <h3 className="font-serif text-[1.3rem] font-normal text-salt mb-4">The nine-factor convergence</h3>
+            <div className="grid grid-cols-3 sm:grid-cols-3 gap-3 max-w-[700px] mx-auto">
+              {[
+                "100m+ ocean depth from beach",
+                "World-leading dive medicine lab",
+                "Military SOF training (15 min)",
+                "24/7 hyperbaric chamber",
+                "Major research hospital",
+                "Premier oceanographic institution",
+                "Competition-grade conditions",
+                "Year-round lifeguard coverage",
+                "Birthplace of US freediving (1939)",
+              ].map((factor) => (
+                <div key={factor} className="px-3 py-2 bg-seafoam/[0.08] border border-seafoam/10 rounded text-[0.75rem] text-salt/50">
+                  {factor}
+                </div>
+              ))}
+            </div>
+            <p className="text-salt/30 text-[0.8rem] mt-6">No other site on Earth checks all nine.</p>
+          </div>
+        </div>
+      </div>
+
+      {/* ── Emergency Infrastructure ── */}
+      <section className="py-20 px-6 md:px-8 max-w-[1000px] mx-auto">
+        <div className="text-[11px] text-teal/60 font-medium tracking-[0.2em] uppercase mb-4">Safety Infrastructure</div>
+        <h2 className="font-serif text-[clamp(1.8rem,3.5vw,2.5rem)] font-normal leading-[1.2] mb-4">
+          The tightest emergency response chain <em className="italic text-sand">in world freediving.</em>
+        </h2>
+        <p className="text-salt/45 max-w-[700px] mb-12">
+          Across the US, hyperbaric chambers are increasingly turning away divers — many of the 1,500 facilities have transitioned to wound care only. The OHPC sits next to what is arguably the best-resourced 24/7 dive emergency facility in the country.
+        </p>
+
+        <div className="grid md:grid-cols-2 gap-6">
+          <div className="p-8 bg-ocean/25 border border-seafoam/10 rounded-sm">
+            <h3 className="font-serif text-[1.3rem] font-normal text-seafoam mb-4">Emergency response chain</h3>
+            <div className="space-y-4">
+              {[
+                { step: "On-site", detail: "Emergency oxygen, ACLS-qualified medic, rescue boat — required by AIDA competition rules" },
+                { step: "15 minutes", detail: "UCSD Hillcrest Hyperbaric Medicine Center — 12-place multiplace chamber, 24/7 dive emergency, the only civilian 24-hour facility from Mexico to LA County" },
+                { step: "Same physician", detail: "The chamber is run by Dr. Peter Lindholm — the same researcher who chairs the diving medicine program and would lead OHPC research" },
+              ].map((s) => (
+                <div key={s.step} className="flex gap-3 items-start">
+                  <span className="shrink-0 w-2 h-2 rounded-full bg-seafoam mt-2" />
+                  <div>
+                    <div className="text-salt/80 text-sm font-medium">{s.step}</div>
+                    <div className="text-salt/45 text-[0.85rem] leading-[1.6]">{s.detail}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="p-8 bg-ocean/25 border border-seafoam/10 rounded-sm">
+            <h3 className="font-serif text-[1.3rem] font-normal text-seafoam mb-4">Additional facilities</h3>
+            <div className="space-y-4">
+              {[
+                { name: "UCSD Encinitas", detail: "Hyperbaric Medicine & Wound Care Center — additional multiplace chamber north of the site" },
+                { name: "Sharp Grossmont", detail: "DAN-affiliated hyperbaric facility — additional chamber, prepared for decompression illness" },
+                { name: "Naval Medical Center SD", detail: "Military hyperbaric capabilities for NSW and military personnel" },
+                { name: "UCSD Diving Medicine Clinic", detail: "Fitness-to-dive evaluations for commercial, scientific, and sport divers — pre-competition medical clearance" },
+              ].map((f) => (
+                <div key={f.name} className="flex gap-3 items-start">
+                  <span className="shrink-0 w-2 h-2 rounded-full bg-sand/50 mt-2" />
+                  <div>
+                    <div className="text-salt/80 text-sm font-medium">{f.name}</div>
+                    <div className="text-salt/45 text-[0.85rem] leading-[1.6]">{f.detail}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
