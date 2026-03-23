@@ -98,6 +98,8 @@ export const posts: BlogPost[] = [
 
 <p>This is exactly why we emphasize taking a real course rather than just watching YouTube videos. The safety training alone is worth the investment.</p>
 
+<video autoplay muted loop playsinline style="width:100%;border-radius:12px;margin:2.5rem 0"><source src="/videos/joshua-safety.mp4" type="video/mp4" /></video><p style="font-size:12px;color:#5a6a7a;font-style:italic;text-align:center;margin-top:-1.5rem">Safety protocol — every dive, every diver</p>
+
 <hr>
 <h2>How to Get Started in La Jolla</h2>
 
@@ -268,6 +270,8 @@ export const posts: BlogPost[] = [
 <p>AIDA stands for the International Association for the Development of Apnea. They've been the global authority in freediving education, safety standards, and competition since 1992. Unlike commercial dive agencies, AIDA is a nonprofit run by freedivers for freedivers. Their certification system is progressive — each level builds on the previous one in both technical skill and physiological understanding.</p>
 
 <img src="/images/photos/joshua-presenting-dahab.jpg" alt="Joshua presenting at AIDA Instructor Course in Dahab" class="rounded-xl my-10" /><p class="text-xs text-center italic" style="color:#5a6a7a;margin-top:-1.5rem">AIDA Instructor Course, Dahab, Egypt</p>
+
+<video autoplay muted loop playsinline style="width:100%;border-radius:12px;margin:2.5rem 0"><source src="/videos/dahab-swimthrough.mp4" type="video/mp4" /></video><p style="font-size:12px;color:#5a6a7a;font-style:italic;text-align:center;margin-top:-1.5rem">Swimthrough training in Dahab</p>
 
 <hr>
 <h2>AIDA 1 — Introduction to Freediving</h2>
@@ -942,6 +946,8 @@ Round 8: Hold 1:30, Done</p>
 <p>Equalization is probably the most important technical skill in freediving. It's the thing that limits most divers' depth more than lung capacity, fitness, or mental game. And yet it's the skill that gets the least structured training. Most people learn to "pop their ears" on an airplane and assume that's enough for the ocean.</p>
 
 <p>It's not. Here's everything you need to know.</p>
+
+<video autoplay muted loop playsinline style="width:100%;border-radius:12px;margin:2.5rem 0"><source src="/videos/descending-line.mp4" type="video/mp4" /></video><p style="font-size:12px;color:#5a6a7a;font-style:italic;text-align:center;margin-top:-1.5rem">Descending on the line — equalization at every meter</p>
 
 <hr>
 <h2>Why You Need to Equalize</h2>

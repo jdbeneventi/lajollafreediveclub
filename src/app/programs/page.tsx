@@ -284,6 +284,22 @@ export default function ProgramsPage() {
         </div>
       </div>
 
+      {/* Safety strip */}
+      <div className="bg-ocean relative overflow-hidden">
+        <div className="max-w-[1200px] mx-auto grid md:grid-cols-2 items-center">
+          <video autoPlay muted loop playsInline className="w-full h-[250px] md:h-[300px] object-cover">
+            <source src="/videos/joshua-safety.mp4" type="video/mp4" />
+          </video>
+          <div className="px-8 py-10 md:py-0">
+            <div className="text-[11px] text-seafoam/60 font-medium tracking-[0.2em] uppercase mb-3">Safety first</div>
+            <h3 className="font-serif text-2xl text-white mb-3">Every dive, every diver</h3>
+            <p className="text-white/50 text-sm leading-relaxed">
+              Proper safety protocols are non-negotiable. One up, one down. Always a buddy. Always a plan.
+            </p>
+          </div>
+        </div>
+      </div>
+
       {/* Video analysis strip */}
       <div className="bg-deep relative overflow-hidden">
         <div className="max-w-[1200px] mx-auto grid md:grid-cols-2 items-center">

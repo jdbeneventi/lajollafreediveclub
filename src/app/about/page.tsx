@@ -148,6 +148,13 @@ export default function AboutPage() {
                 that freediving isn&apos;t just an activity. It&apos;s a practice.
               </p>
 
+              <div className="my-8 rounded-xl overflow-hidden">
+                <video autoPlay muted loop playsInline className="w-full h-auto rounded-xl">
+                  <source src="/videos/dahab-swimthrough.mp4" type="video/mp4" />
+                </video>
+                <p className="text-[10px] text-[#5a6a7a] mt-2 italic">Swimthrough training, Dahab</p>
+              </div>
+
               <p>
                 I came back to the States and trained with Harry Chamas at Freedive Passion
                 in La Ventana, Baja California — one of the top coaching facilities in the
