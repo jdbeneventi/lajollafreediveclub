@@ -48,6 +48,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
+/* Grain texture inline style */
+const grain = {
+  backgroundImage:
+    "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E\")",
+};
+
 export default async function BlogPostPage({ params }: Props) {
   const { slug } = await params;
   const post = getPost(slug);
@@ -77,6 +83,13 @@ export default async function BlogPostPage({ params }: Props) {
     wordCount: post.content.replace(/<[^>]+>/g, "").split(/\s+/).length,
   };
 
+  /* Extract first paragraph for the editorial lede */
+  const firstPMatch = post.content.match(/<p>([\s\S]*?)<\/p>/);
+  const firstParagraph = firstPMatch ? firstPMatch[1] : "";
+  const remainingContent = firstPMatch
+    ? post.content.replace(firstPMatch[0], "")
+    : post.content;
+
   return (
     <>
       <script
@@ -84,25 +97,38 @@ export default async function BlogPostPage({ params }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      {/* Header */}
-      <header className="relative pt-36 pb-16 px-6 text-center overflow-hidden">
-        {/* Background: hero image or gradient */}
+      {/* ── HERO ── */}
+      <header className="relative min-h-[70vh] flex items-end overflow-hidden">
+        {/* Background */}
         {post.heroImage ? (
           <>
-            <img src={post.heroImage} alt="" className="absolute inset-0 w-full h-full object-cover" />
-            <div className="absolute inset-0 bg-gradient-to-t from-deep via-deep/70 to-deep/40" />
+            <img
+              src={post.heroImage}
+              alt=""
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-deep via-deep/60 to-deep/30" />
           </>
         ) : (
-          <div className={`absolute inset-0 bg-gradient-to-b ${post.gradient}`} />
+          <div
+            className={`absolute inset-0 bg-gradient-to-b ${post.gradient}`}
+          />
         )}
+        <div className="absolute inset-0 opacity-[0.03]" style={grain} />
 
-        <div className="relative z-10">
-          <div className="text-sm text-white/40 mb-8">
-            <Link href="/" className="text-white/50 no-underline hover:text-seafoam">
+        <div className="relative z-10 w-full px-6 md:px-12 pb-16 md:pb-20 max-w-[1200px] mx-auto">
+          <div className="text-sm text-white/30 mb-8">
+            <Link
+              href="/"
+              className="text-white/40 no-underline hover:text-seafoam transition-colors"
+            >
               Home
             </Link>
             {" / "}
-            <Link href="/blog" className="text-white/50 no-underline hover:text-seafoam">
+            <Link
+              href="/blog"
+              className="text-white/40 no-underline hover:text-seafoam transition-colors"
+            >
               Journal
             </Link>
             {" / "}
@@ -113,39 +139,83 @@ export default async function BlogPostPage({ params }: Props) {
             {post.category}
           </span>
 
-          <h1 className="font-serif text-[clamp(2.2rem,5vw,3.5rem)] text-white font-normal leading-tight max-w-[740px] mx-auto mb-6">
+          <h1 className="font-serif text-[clamp(2.4rem,6vw,4.5rem)] text-white font-normal leading-[1.08] tracking-tight max-w-[800px] mb-6">
             {post.title}
           </h1>
 
-          <div className="flex justify-center gap-8 text-white/45 text-sm">
+          <div className="flex gap-8 text-white/35 text-sm">
             <span>{post.date}</span>
             <span>{post.readTime}</span>
           </div>
         </div>
       </header>
 
-      {/* Article body */}
-      <article className="max-w-[720px] mx-auto px-6 py-16">
-        <div
-          className="prose"
-          dangerouslySetInnerHTML={{ __html: post.content }}
-        />
+      {/* ── LEDE ── */}
+      {firstParagraph && (
+        <section className="bg-salt py-16 md:py-24 px-6 relative">
+          <div className="absolute inset-0 opacity-[0.02]" style={grain} />
+          <div className="max-w-[680px] mx-auto relative z-10">
+            <p
+              className="font-serif text-[clamp(1.15rem,2.5vw,1.45rem)] text-deep leading-[1.7]"
+              dangerouslySetInnerHTML={{ __html: firstParagraph }}
+            />
+          </div>
+        </section>
+      )}
 
-        {/* CTA */}
-        <div className="bg-gradient-to-br from-ocean to-teal rounded-2xl p-10 text-center mt-12">
-          <h3 className="font-serif text-2xl text-white mb-3">Ready to try it?</h3>
-          <p className="text-white/60 text-sm mb-6 leading-relaxed">
-            Join our email list for upcoming courses, dive schedules, and
-            community events.
-          </p>
-          <Link
-            href="/contact"
-            className="inline-flex px-8 py-3 bg-coral text-white rounded-full font-semibold no-underline hover:-translate-y-0.5 hover:shadow-[0_8px_25px_rgba(232,115,74,0.4)] transition-all"
-          >
-            Get on the List →
-          </Link>
+      {/* ── ARTICLE BODY ── */}
+      <article className="bg-white relative">
+        <div className="absolute inset-0 opacity-[0.015]" style={grain} />
+        <div className="max-w-[680px] mx-auto px-6 py-16 md:py-24 relative z-10">
+          <div
+            className="prose prose-editorial"
+            dangerouslySetInnerHTML={{ __html: remainingContent }}
+          />
         </div>
       </article>
+
+      {/* ── AUTHOR + CTA ── */}
+      <section className="bg-salt py-16 md:py-20 px-6 relative">
+        <div className="absolute inset-0 opacity-[0.02]" style={grain} />
+        <div className="max-w-[680px] mx-auto relative z-10">
+          {/* Author card */}
+          <div className="flex items-center gap-5 mb-12 pb-12 border-b border-deep/10">
+            <div className="w-14 h-14 rounded-full overflow-hidden bg-gradient-to-br from-ocean to-teal shrink-0">
+              <img
+                src="/images/photos/joshua-red-sea.jpg"
+                alt="Joshua Beneventi"
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div>
+              <div className="font-semibold text-deep text-sm">
+                Joshua Beneventi
+              </div>
+              <div className="text-xs text-[#5a6a7a] leading-relaxed mt-0.5">
+                AIDA Instructor &middot; AIDA Youth Instructor &middot; AIDA 4
+                Freediver
+              </div>
+            </div>
+          </div>
+
+          {/* CTA */}
+          <div className="bg-gradient-to-br from-ocean to-teal rounded-2xl p-10 text-center">
+            <h3 className="font-serif text-2xl text-white mb-3">
+              Ready to go deeper?
+            </h3>
+            <p className="text-white/60 text-sm mb-6 leading-relaxed">
+              Join the LJFC community for courses, dive schedules, and weekly
+              ocean sessions.
+            </p>
+            <Link
+              href="/contact"
+              className="inline-flex px-8 py-3 bg-coral text-white rounded-full font-semibold no-underline hover:-translate-y-0.5 hover:shadow-[0_8px_25px_rgba(232,115,74,0.4)] transition-all"
+            >
+              Get on the List &rarr;
+            </Link>
+          </div>
+        </div>
+      </section>
     </>
   );
 }
