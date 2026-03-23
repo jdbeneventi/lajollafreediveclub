@@ -124,10 +124,11 @@ export default function SaturdaySessionsPage() {
                   ORIGIN Protocol
                 </h3>
                 <p className="text-[#5a6a7a] text-[0.95rem] leading-relaxed mb-4">
-                  CO&#8322; tolerance training and state anchoring. The
-                  method behind everything LJFC teaches. Controlled breath
-                  holds prepare your nervous system for the water &mdash;
-                  opening a window of calm that carries into the dive.
+                  Dry training on the beach &mdash; CO&#8322; tolerance
+                  tables, controlled breath holds, and state anchoring.
+                  Builds composure, extends breath-hold capacity, and
+                  opens a neuroplastic window that carries into the water
+                  (or into the rest of your day, if you&apos;re not diving).
                 </p>
                 <div className="flex items-center gap-4 text-sm">
                   <span className="px-3 py-1.5 bg-seafoam/10 text-teal rounded-full font-medium text-xs">
@@ -189,7 +190,7 @@ export default function SaturdaySessionsPage() {
                 </h3>
                 <p className="text-[#5a6a7a] text-[0.95rem] leading-relaxed mb-4">
                   Group freedive at the LJFC mooring line. Canyon edge,
-                  ~35&ndash;40ft depth, ~500m offshore from Kellogg Park.
+                  ~50m depth, ~500m offshore from Kellogg Park.
                   One up, one down. Always a buddy. Always a plan.
                 </p>
                 <div className="flex items-center gap-4 text-sm">
@@ -209,14 +210,31 @@ export default function SaturdaySessionsPage() {
         <div className="absolute inset-0 opacity-[0.03]" style={grain} />
         <div className="max-w-[700px] mx-auto relative z-10">
           <Reveal>
-            <div className="grid md:grid-cols-2 gap-4">
-              <div className="bg-white/[0.04] border border-seafoam/15 rounded-2xl p-8 text-center">
+            <div className="grid md:grid-cols-3 gap-4">
+              <div className="bg-white/[0.04] border border-white/[0.06] rounded-2xl p-7 text-center">
+                <div className="text-[11px] text-white/40 font-medium tracking-[0.15em] uppercase mb-3">
+                  Beach only
+                </div>
+                <div className="font-serif text-3xl text-white mb-2">$20</div>
+                <p className="text-white/40 text-sm leading-relaxed">
+                  Ocean Flow + ORIGIN Protocol
+                </p>
+                <div className="mt-4 px-3 py-1.5 bg-white/[0.04] rounded-full inline-block">
+                  <span className="text-white/30 text-xs font-medium">
+                    No cert needed
+                  </span>
+                </div>
+              </div>
+              <div className="bg-white/[0.04] border border-seafoam/15 rounded-2xl p-7 text-center relative">
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-seafoam text-deep text-[10px] font-semibold tracking-wide uppercase rounded-full">
+                  Best value
+                </div>
                 <div className="text-[11px] text-seafoam font-medium tracking-[0.15em] uppercase mb-3">
                   Full morning
                 </div>
-                <div className="font-serif text-4xl text-white mb-2">$20</div>
+                <div className="font-serif text-3xl text-white mb-2">$20</div>
                 <p className="text-white/50 text-sm leading-relaxed">
-                  Ocean Flow + ORIGIN Protocol + Line Diving
+                  Ocean Flow + ORIGIN + Line Diving
                 </p>
                 <div className="mt-4 px-3 py-1.5 bg-seafoam/10 rounded-full inline-block">
                   <span className="text-seafoam text-xs font-medium">
@@ -224,21 +242,24 @@ export default function SaturdaySessionsPage() {
                   </span>
                 </div>
               </div>
-              <div className="bg-white/[0.04] border border-white/[0.06] rounded-2xl p-8 text-center">
+              <div className="bg-white/[0.04] border border-white/[0.06] rounded-2xl p-7 text-center">
                 <div className="text-[11px] text-white/40 font-medium tracking-[0.15em] uppercase mb-3">
                   Dive only
                 </div>
-                <div className="font-serif text-4xl text-white mb-2">$25</div>
-                <p className="text-white/50 text-sm leading-relaxed">
+                <div className="font-serif text-3xl text-white mb-2">$25</div>
+                <p className="text-white/40 text-sm leading-relaxed">
                   Line diving drop-in
                 </p>
                 <div className="mt-4 px-3 py-1.5 bg-white/[0.04] rounded-full inline-block">
                   <span className="text-white/30 text-xs font-medium">
-                    Certification required
+                    Cert required
                   </span>
                 </div>
               </div>
             </div>
+            <p className="text-white/25 text-xs text-center mt-6">
+              You don&apos;t need to dive to join. Ocean Flow and ORIGIN Protocol are a complete experience on their own.
+            </p>
           </Reveal>
         </div>
       </section>
