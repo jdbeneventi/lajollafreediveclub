@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 
 const KIT_API_SECRET = process.env.KIT_API_SECRET;
 const KIT_API_KEY = process.env.KIT_API_KEY;
-const SATURDAY_CREW_TAG_ID = "REPLACE_WITH_KIT_TAG_ID";
+const SATURDAY_CREW_TAG_ID = "17781468";
 
 interface ConditionsData {
   waveHeight?: string;
