@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ShareButtons } from "@/components/ShareButtons";
 import {
   Fade,
   AnimatedBar,
@@ -719,6 +720,15 @@ export default function StateAnchorsPage() {
                 monasteries in Thailand before finding freediving. He
                 teaches every Saturday at La Jolla Shores.
               </p>
+            </div>
+          </Fade>
+
+          <Fade delay={40}>
+            <div className="mb-12">
+              <ShareButtons
+                url="/blog/state-anchors"
+                title="State Anchors: What Buddhist Monasteries Taught Me About Freediving"
+              />
             </div>
           </Fade>
 

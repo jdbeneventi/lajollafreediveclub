@@ -16,6 +16,7 @@ const resourceLinks = [
   { href: "/tides", label: "Tide Calendar" },
   { href: "/gear", label: "Gear Guide" },
   { href: "/blog", label: "The Journal" },
+  { href: "/science", label: "The Science" },
 ];
 
 const infoLinks = [
@@ -97,7 +98,7 @@ export function Footer() {
         <span>&copy; {new Date().getFullYear()} La Jolla Freedive Club. All rights reserved.</span>
         <div className="flex gap-4">
           {[
-            { label: "In", href: "#" },
+            { label: "Ig", href: "https://instagram.com/lajollafreedive" },
             { label: "Yt", href: "#" },
             { label: "Tk", href: "#" },
           ].map((s) => (

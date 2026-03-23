@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getPost, getAllPosts } from "@/lib/blog";
+import { ShareButtons } from "@/components/ShareButtons";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -196,6 +197,11 @@ export default async function BlogPostPage({ params }: Props) {
                 Freediver
               </div>
             </div>
+          </div>
+
+          {/* Share */}
+          <div className="mb-12">
+            <ShareButtons url={`/blog/${post.slug}`} title={post.title} />
           </div>
 
           {/* CTA */}
