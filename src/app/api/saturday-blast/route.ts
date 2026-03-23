@@ -174,13 +174,13 @@ function buildGoEmailHtml(
   <!-- Meeting Spot -->
   <div style="background:#163B4E;border-radius:16px;padding:18px 20px;margin-bottom:16px;color:white;">
     <div style="font-size:11px;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;opacity:0.7;">Meeting Spot</div>
-    <div style="font-size:14px;font-weight:600;">La Jolla Shores — north end near lifeguard tower</div>
+    <div style="font-size:14px;font-weight:600;">Kellogg Park — near the picnic tables</div>
   </div>
 
   <!-- Parking Warning -->
   <div style="background:#C75B3A;border-radius:16px;padding:18px 20px;margin-bottom:16px;color:white;">
     <div style="font-size:13px;font-weight:700;margin-bottom:6px;">PARKING</div>
-    <div style="font-size:13px;line-height:1.5;">Summer parking fills by 7:30am. Arrive early or park on Camino del Oro / Vallecitos. Do NOT park in residential areas.</div>
+    <div style="font-size:13px;line-height:1.5;">Summer parking fills by 7:30am. Arrive early or park on Camino del Oro / Vallecitos.</div>
   </div>
 
   <!-- Gear Checklist -->
