@@ -268,6 +268,22 @@ export default function ProgramsPage() {
         </div>
       </section>
 
+      {/* Depth training strip */}
+      <div className="bg-ocean relative overflow-hidden">
+        <div className="max-w-[1200px] mx-auto grid md:grid-cols-2 items-center">
+          <div className="px-8 py-10 md:py-0 order-2 md:order-1">
+            <div className="text-[11px] text-seafoam/60 font-medium tracking-[0.2em] uppercase mb-3">Train with purpose</div>
+            <h3 className="font-serif text-2xl text-white mb-3">Built for depth</h3>
+            <p className="text-white/50 text-sm leading-relaxed">
+              From La Jolla&apos;s canyon to the Blue Hole in Dahab — LJFC&apos;s training methodology is forged in some of the world&apos;s best freediving environments. Monofin, bi-fins, free immersion — every discipline, every depth.
+            </p>
+          </div>
+          <video autoPlay muted loop playsInline className="w-full h-[300px] md:h-[400px] object-cover order-1 md:order-2">
+            <source src="/videos/joshua-blue-hole-monofin.mp4" type="video/mp4" />
+          </video>
+        </div>
+      </div>
+
       {/* Video analysis strip */}
       <div className="bg-deep relative overflow-hidden">
         <div className="max-w-[1200px] mx-auto grid md:grid-cols-2 items-center">

@@ -52,7 +52,7 @@ export default function AboutPage() {
         <Reveal>
           <div className="w-36 h-36 rounded-full overflow-hidden mx-auto mb-8 border-2 border-white/20">
             <video autoPlay muted loop playsInline className="w-full h-full object-cover">
-              <source src="/videos/joshua-surfacing.mp4" type="video/mp4" />
+              <source src="/videos/joshua-blue-hole-monofin.mp4" type="video/mp4" />
             </video>
           </div>
           <div className="section-label text-seafoam before:bg-seafoam justify-center">
