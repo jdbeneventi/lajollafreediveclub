@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Reveal } from "@/components/Reveal";
+import { SaturdayBanner } from "@/components/SaturdayBanner";
 import { ConditionsWidget } from "./ConditionsWidget";
 import { AlmanacWidget } from "./AlmanacWidget";
 import { ConditionsEmailForm } from "./ConditionsEmailForm";
@@ -110,6 +111,8 @@ export default function ConditionsPage() {
           </p>
         </Reveal>
       </section>
+
+      <SaturdayBanner />
 
       {/* Live Data Widget */}
       <section className="bg-salt py-16 px-6">
