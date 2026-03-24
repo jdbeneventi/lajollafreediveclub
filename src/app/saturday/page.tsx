@@ -210,6 +210,52 @@ export default function SaturdayAdmin() {
           </button>
         </div>
 
+        {/* Waiver Lookup */}
+        <div className="bg-ocean/30 border border-teal/15 rounded-2xl p-5 mb-6">
+          <div className="text-[11px] text-teal/60 font-medium tracking-[0.2em] uppercase mb-3">
+            Waiver Check
+          </div>
+          <div className="flex gap-2">
+            <input
+              type="text"
+              id="waiver-search"
+              placeholder="Search by name..."
+              className="flex-1 px-4 py-2.5 bg-ocean/30 border border-teal/15 rounded-lg text-salt placeholder:text-salt/30 focus:outline-none focus:border-teal/40 text-sm"
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  const input = document.getElementById("waiver-search") as HTMLInputElement;
+                  if (input.value.trim()) {
+                    window.open(
+                      `https://docs.google.com/spreadsheets/d/1B9-yB-kUS4qDrUFlyP_JrTvRxhFFDCVVx01RsV5GRyo/edit#gid=0&fvid=&q=${encodeURIComponent(input.value.trim())}`,
+                      "_blank"
+                    );
+                  }
+                }
+              }}
+            />
+            <a
+              href="https://docs.google.com/spreadsheets/d/1B9-yB-kUS4qDrUFlyP_JrTvRxhFFDCVVx01RsV5GRyo/edit"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-4 py-2.5 bg-teal/20 text-teal text-xs font-medium rounded-lg hover:bg-teal/30 transition-colors flex items-center no-underline"
+            >
+              Open Sheet
+            </a>
+          </div>
+          <p className="text-salt/25 text-[11px] mt-2">All signed waivers are logged automatically</p>
+        </div>
+
+        {/* Conditions Card */}
+        <div className="flex justify-center mb-6">
+          <a
+            href="/api/conditions-card"
+            target="_blank"
+            className="text-xs text-teal/50 hover:text-teal underline underline-offset-2"
+          >
+            Download conditions card for IG Story
+          </a>
+        </div>
+
         {/* Preview links */}
         <div className="flex justify-center gap-6 mb-6">
           <a

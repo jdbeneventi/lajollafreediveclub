@@ -5,6 +5,7 @@ import { Resend } from "resend";
 const FORMSPREE_URL = "https://formspree.io/f/mojknqlk";
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const OWNER_EMAIL = "joshuabeneventi@gmail.com";
+const GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbyzIW8O0y53GpOAdkCNecJ5tbjRXapVehCs6qWoL9yrK_WymozbsTa5YxpcQzdLzCUD/exec";
 
 interface WaiverData {
   fullName: string;
@@ -313,6 +314,27 @@ export async function POST(request: Request) {
       });
     } catch {
       // Formspree backup
+    }
+
+    // Log to Google Sheet for tracking
+    try {
+      const medicalStatus = data.medical.some(a => a === "yes")
+        ? "FLAGGED"
+        : "Clear";
+      await fetch(GOOGLE_SHEET_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: data.fullName,
+          email: data.email,
+          phone: data.phone || "",
+          dateSigned: signedAt,
+          emergencyContact: `${data.emergencyName} · ${data.emergencyPhone}`,
+          medicalFlags: medicalStatus + (data.medicalDetails ? ` — ${data.medicalDetails}` : ""),
+        }),
+      });
+    } catch {
+      // Sheet logging is non-critical
     }
 
     return NextResponse.json({
