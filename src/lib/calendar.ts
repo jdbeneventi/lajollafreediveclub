@@ -78,6 +78,16 @@ export const events: CalendarEvent[] = [
     href: "/contact/courses?course=aida2",
   },
   {
+    id: "big-blue-night-apr25",
+    title: "The Big Blue — Movie Night at the Beach",
+    category: "community",
+    date: "2026-04-25",
+    time: "6:30 PM – 10:00 PM",
+    description: "Free outdoor screening of The Big Blue (1988). Sunset Ocean Flow, ORIGIN Protocol, then the film that made a generation want to freedive. Blankets, layers, snacks. Open to everyone.",
+    price: "Free",
+    href: "/events/big-blue-night",
+  },
+  {
     id: "ocean-day-apr26",
     title: "Community Ocean Day — Spring Kelp",
     category: "community",
