@@ -21,7 +21,7 @@ const tools = [
 ];
 
 const testimonials = [
-  { text: "I came in terrified of deep water and left diving to 15 meters with a smile. The breathing work changed everything.", name: "Maria R.", role: "AIDA 2 Graduate" },
+  { text: "Joshua took me out diving the other day in La Jolla and I'm fairly new to free diving, but his instruction and patience made me feel comfortable out in the big blue. I look forward to growing in knowledge and experience in free diving with Joshua and anyone in the club!", name: "Carmelo T.", role: "Google Review · 5 stars" },
   { text: "The Saturday group dives are the highlight of my week. A crew that takes safety seriously but still makes it fun.", name: "David K.", role: "Club Member" },
   { text: "My son came back a different kid in the water. From nervous about waves to duck diving on his own.", name: "Jennifer T.", role: "Camp Garibaldi Parent" },
 ];
