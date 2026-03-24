@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { PasswordGate } from "@/components/PasswordGate";
 import {
   Fade,
   PullQuote,
@@ -15,7 +16,7 @@ const grain = {
 
 export default function SciencePage() {
   return (
-    <>
+    <PasswordGate>
       {/* ── HERO ── */}
       <section className="relative min-h-[80vh] flex items-end overflow-hidden">
         <div className="absolute inset-0 bg-deep" />
@@ -695,6 +696,6 @@ export default function SciencePage() {
           </Fade>
         </div>
       </section>
-    </>
+    </PasswordGate>
   );
 }
