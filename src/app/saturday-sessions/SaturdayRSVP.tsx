@@ -71,7 +71,7 @@ export function SaturdayRSVP() {
           </div>
           <div className="grid grid-cols-2 gap-2">
             {(firstTime
-              ? ["Towel", "Water", "Sunscreen", "Comfortable clothes"]
+              ? ["Towel", "Water", "Sunscreen", "Yoga mat", "Comfortable clothes"]
               : ["Wetsuit", "Mask + snorkel", "Fins", "Weight belt", "Lanyard", "Towel + water"]
             ).map((item) => (
               <div key={item} className="flex items-center gap-2 text-white/50 text-xs">
