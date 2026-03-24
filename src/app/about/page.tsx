@@ -70,9 +70,8 @@ export default function AboutPage() {
 
       {/* Story */}
       <section className="bg-white py-24 px-6">
-        <div className="max-w-[720px] mx-auto">
+        <div className="max-w-[720px] mx-auto space-y-6 text-[0.95rem] text-[#2a2a2a] leading-relaxed">
           <Reveal>
-            <div className="space-y-6 text-[0.95rem] text-[#2a2a2a] leading-relaxed">
               <p className="text-xs text-[#5a6a7a] uppercase tracking-wider font-semibold">
                 Joshua Beneventi · Founder &amp; Instructor ·{" "}
                 <a href="https://www.aidainternational.org/InstructorProfile/858dbbd9-9e54-4235-abf8-e0a035ccd077" target="_blank" rel="noopener noreferrer" className="text-teal no-underline hover:underline">
@@ -80,6 +79,8 @@ export default function AboutPage() {
                 </a>
               </p>
 
+          </Reveal>
+          <Reveal>
               <h2 className="font-serif text-2xl text-deep">Roots</h2>
 
               <p>
@@ -111,6 +112,8 @@ export default function AboutPage() {
                 <img src="/images/photos/scripps-underwater.jpg" alt="Underwater at Scripps" className="w-full h-auto" />
               </div>
 
+          </Reveal>
+          <Reveal>
               <h2 className="font-serif text-2xl text-deep pt-6">Finding freediving</h2>
 
               <p>
@@ -137,6 +140,8 @@ export default function AboutPage() {
                 <p className="text-[10px] text-[#5a6a7a] mt-2 italic">With Stella Abbas at the Blue Hole, Dahab — reunited after Tioman</p>
               </div>
 
+          </Reveal>
+          <Reveal>
               <h2 className="font-serif text-2xl text-deep pt-2">Dahab</h2>
 
               <p>
@@ -178,6 +183,8 @@ export default function AboutPage() {
                 </div>
               </div>
 
+          </Reveal>
+          <Reveal>
               <h2 className="font-serif text-2xl text-deep pt-2">Back home</h2>
 
               <p>
@@ -227,6 +234,8 @@ export default function AboutPage() {
                 </div>
               </div>
 
+          </Reveal>
+          <Reveal>
               <h2 className="font-serif text-2xl text-deep pt-2">The philosophy</h2>
 
               <p>
@@ -252,7 +261,6 @@ export default function AboutPage() {
                 </a>
                 {" "}— written during my instructor training in Dahab.
               </p>
-            </div>
           </Reveal>
         </div>
       </section>
