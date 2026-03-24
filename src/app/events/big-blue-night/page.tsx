@@ -12,17 +12,12 @@ export default function BigBlueNightPage() {
     <>
       {/* ── HERO ── */}
       <section className="relative min-h-[90vh] flex items-end overflow-hidden">
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
+        <img
+          src="/images/blog/big-blue-dream.jpg"
+          alt="The Big Blue — dream sequence"
           className="absolute inset-0 w-full h-full object-cover"
-        >
-          <source src="/videos/group-freedive.mp4" type="video/mp4" />
-        </video>
-        <div className="absolute inset-0 bg-gradient-to-t from-deep via-deep/70 to-deep/30" />
-        <div className="absolute inset-0 bg-deep/20" />
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-deep via-deep/60 to-deep/20" />
         <div className="absolute inset-0 opacity-[0.04]" style={grain} />
 
         <div className="relative z-10 w-full px-6 md:px-12 pb-16 md:pb-24 max-w-[1200px] mx-auto">
@@ -37,7 +32,7 @@ export default function BigBlueNightPage() {
               Movie night at the beach.
             </p>
             <p className="text-white/35 text-sm mt-5 tracking-wide">
-              Late April 2026 &middot; Kellogg Park &middot; La Jolla Shores
+              Friday, April 25 &middot; Kellogg Park &middot; La Jolla Shores
             </p>
           </Reveal>
         </div>
@@ -51,11 +46,11 @@ export default function BigBlueNightPage() {
         <div className="max-w-[960px] mx-auto relative z-10">
           <Reveal>
             <div className="grid md:grid-cols-[1.1fr_1fr] gap-10 md:gap-16 items-center">
-              <div className="rounded-2xl overflow-hidden aspect-[16/10] shadow-2xl shadow-black/40">
+              <div className="rounded-2xl overflow-hidden shadow-2xl shadow-black/40">
                 <img
-                  src="/images/blog/big-blue-still.jpg"
-                  alt="Still from The Big Blue (1988) by Luc Besson"
-                  className="w-full h-full object-cover"
+                  src="/images/blog/big-blue-poster.jpg"
+                  alt="The Big Blue (1988) movie poster"
+                  className="w-full h-auto"
                 />
               </div>
               <div>
