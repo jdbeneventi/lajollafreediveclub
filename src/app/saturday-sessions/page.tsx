@@ -391,6 +391,32 @@ export default function SaturdaySessionsPage() {
         subtext="We confirm Friday based on conditions and availability. Join the list and we'll let you know when we're on."
       />
 
+      {/* ── UPCOMING EVENT ── */}
+      <section className="bg-deep py-14 px-6 relative overflow-hidden">
+        <div className="absolute inset-0 opacity-[0.03]" style={grain} />
+        <div className="max-w-[680px] mx-auto relative z-10">
+          <Reveal>
+            <Link href="/events/big-blue-night" className="block no-underline group bg-white/[0.03] border border-white/[0.06] rounded-2xl p-6 md:p-8 hover:bg-white/[0.05] transition-all">
+              <div className="flex items-center gap-3 mb-3">
+                <span className="px-3 py-1 bg-seafoam/15 border border-seafoam/25 rounded-full text-seafoam text-[10px] font-medium tracking-[0.15em] uppercase">
+                  Free Event
+                </span>
+                <span className="text-white/25 text-xs">Friday, April 25</span>
+              </div>
+              <h3 className="font-serif text-xl text-white italic group-hover:text-seafoam transition-colors">
+                &ldquo;The Big Blue&rdquo; — Movie Night at the Beach
+              </h3>
+              <p className="text-white/40 text-sm mt-2 leading-relaxed">
+                Sunset session + the film that started it all. Kellogg Park.
+              </p>
+              <span className="inline-block text-seafoam text-xs font-medium mt-3 group-hover:text-white transition-colors">
+                RSVP &rarr;
+              </span>
+            </Link>
+          </Reveal>
+        </div>
+      </section>
+
       {/* ── FAQ ── */}
       <section className="bg-white py-20 md:py-28 px-6 relative">
         <div className="absolute inset-0 opacity-[0.015]" style={grain} />
