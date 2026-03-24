@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Reveal } from "@/components/Reveal";
-import { EmailCapture } from "@/components/EmailCapture";
+import { SaturdayRSVP } from "./SaturdayRSVP";
 
 const grain = {
   backgroundImage:
@@ -380,16 +380,13 @@ export default function SaturdaySessionsPage() {
         </div>
       </section>
 
-      {/* ── GET NOTIFIED ── */}
-      <EmailCapture
-        headline={
-          <>
-            Join the{" "}
-            <em className="italic text-seafoam">Saturday crew</em>
-          </>
-        }
-        subtext="We confirm Friday based on conditions and availability. Join the list and we'll let you know when we're on."
-      />
+      {/* ── RSVP ── */}
+      <section className="bg-gradient-to-br from-ocean to-teal py-16 md:py-24 px-6 relative overflow-hidden">
+        <div className="absolute inset-0 opacity-[0.03]" style={grain} />
+        <div className="max-w-[520px] mx-auto relative z-10">
+          <SaturdayRSVP />
+        </div>
+      </section>
 
       {/* ── UPCOMING EVENT ── */}
       <section className="bg-deep py-14 px-6 relative overflow-hidden">
