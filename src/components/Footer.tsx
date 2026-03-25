@@ -5,9 +5,9 @@ const programLinks = [
   { href: "/programs", label: "All Programs" },
   { href: "/contact/courses?course=aida2", label: "AIDA 2 Course" },
   { href: "/contact/courses?course=aida1", label: "AIDA 1 — Introduction" },
-  { href: "/contact/courses?course=group", label: "Group Sessions" },
+  { href: "/saturday-sessions", label: "Saturday Sessions" },
   { href: "/contact/courses?course=private", label: "Private Coaching" },
-  { href: "/education#camp-garibaldi", label: "Camp Garibaldi" },
+  { href: "/camp-garibaldi", label: "Camp Garibaldi" },
 ];
 
 const resourceLinks = [

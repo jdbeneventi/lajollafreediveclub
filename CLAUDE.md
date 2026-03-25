@@ -66,6 +66,15 @@ Competitor reference: JGW beginner $495, intermediate $550, private $1900 (for u
 /contact/courses — Course inquiry form (supports ?course= URL param)
 /contact/camp — Camp Garibaldi inquiry form
 /waiver — Digital waiver system (3-step: info → medical → review & sign with canvas signature)
+/saturday-sessions — Saturday Sessions landing page (Ocean Flow, ORIGIN, Line Diving)
+/science — ORIGIN Protocol (password gated, code: ljfc)
+/events/big-blue-night — Big Blue Movie Night event page
+/students — Student coaching portal (password gated, coach: ljfc-coach, student: ljfc)
+/saturday — Saturday blast admin dashboard (password gated)
+/ohpc/plan — OHPC action plan (password gated, code: ljfc)
+/community — Partner network page
+/calendar — Master calendar
+/offline — Offline fallback
 ```
 
 ## Key API Routes
@@ -79,6 +88,9 @@ Competitor reference: JGW beginner $495, intermediate $550, private $1900 (for u
 /api/daily-email — Daily conditions email (preview with ?preview=true&secret=ljfc-daily-2026)
 /api/ocean-intel — Aggregated sightings from iNaturalist + Reddit + CDFW HAB reports
 /api/waiver — Generates signed PDF, emails via Resend to owner + signer, sends to Formspree
+/api/saturday-blast — Go/No-Go Saturday email blast to Kit
+/api/students — Student portal CRUD (Google Sheet backend)
+/api/conditions-card — SVG conditions card for Instagram Stories
 ```
 
 ## Data Sources
@@ -147,7 +159,7 @@ Competitor reference: JGW beginner $495, intermediate $550, private $1900 (for u
 - **Lena** — RYT yoga teacher, freediver, artist. "Ocean Flow" Saturday 7am at La Jolla Shores.
 - **Brooke** — Apnea Collective / Molchanovs coach
 
-## Blog Posts (13 total)
+## Blog Posts (14 total: 13 + State Anchors interactive)
 1. Beginner's Guide to Freediving in La Jolla (Guide)
 2. Why Surfers Should Learn to Freedive (Crossover)
 3. 5 Best Freediving Spots in San Diego (Local Guide)
@@ -171,8 +183,13 @@ Competitor reference: JGW beginner $495, intermediate $550, private $1900 (for u
 - EmailCapture component submits to Kit form 9207242
 - Ocean intel filters to longitude < -117.245 (west of shoreline = ocean)
 - Program cards on homepage link to /programs (details first), not /contact (form)
-- Saturday sessions: free with Ocean Flow ($20), $25 drop-in without
+- Saturday sessions: free with Ocean Flow ($20), $25 drop-in diving only
 - Gear: not included in courses, students must bring or rent from local shops
+- Student portal uses Google Sheets backend with [FIELD:value] tag serialization
+- Saturday blast uses Kit tag 17781468 for "Saturday Crew"
+- Password gates: /science and /ohpc use "ljfc", /students coach uses "ljfc-coach"
+- Waiver logs to Google Sheet + sends PDF via Resend + Formspree backup
+- Google Analytics 4: G-X0ZXTHKTKK
 
 ## Workflow
 ```
@@ -193,8 +210,7 @@ Auto-deploys to Vercel within ~1 minute.
 
 ## Pending / Known Issues
 ### Bugs to Fix
-- **Resend waiver emails not sending** — RESEND_API_KEY added to Vercel, domain verified in Resend. Emails not appearing. Debug: submit waiver with browser Network tab open, check /api/waiver POST response for emailErrors field. Also check Resend dashboard Emails tab.
-- **Daily email creates drafts in Kit** — not auto-sending. Kit broadcast API creates drafts. May need to hit Kit send endpoint after creation.
+- **Waiver PDF archiving to Google Drive not fully working** — Sheet logging works, PDF upload fails on large payloads
 - **Vercel cron requires Pro plan** — verify billing or use free cron-job.org
 
 ### Next Features
@@ -215,5 +231,5 @@ Auto-deploys to Vercel within ~1 minute.
 - DAN Professional Liability Insurance — check if Regular covers teaching
 - Lawyer review of LJFC waiver
 - Google Business Profile optimization
-- Resubmit sitemap in Search Console
+- Google Search Console verified, sitemap submitted
 - Rotate exposed API keys (Kit, Resend)
