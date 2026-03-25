@@ -31,7 +31,7 @@ const inquiryTypes = [
   },
   {
     label: "Saturday ocean session",
-    href: "/contact/courses?course=saturday",
+    href: "/saturday-sessions",
     desc: "Weekly group dive, $25 drop-in",
     color: "bg-ocean",
     textColor: "text-ocean",

@@ -573,7 +573,7 @@ export default function ProgramsPage() {
                   <p className="text-xs text-[#5a6a7a] leading-relaxed mb-4">
                     Open to all levels — you don&apos;t need to be a freediver or a yogi. Just show up.
                   </p>
-                  <Link href="/contact" className="text-teal text-sm font-medium no-underline hover:underline">
+                  <Link href="/saturday-sessions" className="text-teal text-sm font-medium no-underline hover:underline">
                     Join the Saturday crew →
                   </Link>
                 </div>
@@ -597,8 +597,8 @@ export default function ProgramsPage() {
                     Must bring own gear: wetsuit, fins, mask, snorkel, weight belt, and lanyard.
                     <a href="/waiver" className="text-teal hover:underline ml-1">Signed waiver required →</a>
                   </p>
-                  <Link href="/contact/courses" className="text-teal text-sm font-medium no-underline hover:underline">
-                    Get certified to join →
+                  <Link href="/saturday-sessions" className="text-teal text-sm font-medium no-underline hover:underline">
+                    Saturday sessions →
                   </Link>
                 </div>
               </div>

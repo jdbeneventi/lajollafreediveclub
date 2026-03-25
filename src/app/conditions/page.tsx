@@ -327,7 +327,7 @@ export default function ConditionsPage() {
                 <div className="text-[11px] text-teal font-medium tracking-[0.15em] uppercase mb-2">Already certified</div>
                 <p className="text-sm text-[#5a6a7a] mb-4">Join our Saturday crew at La Jolla Shores.</p>
                 <Link
-                  href="/contact/courses?course=saturday"
+                  href="/saturday-sessions"
                   className="inline-flex px-5 py-2.5 bg-coral text-white rounded-full font-semibold text-sm no-underline hover:-translate-y-0.5 hover:shadow-[0_8px_25px_rgba(199,91,58,0.4)] transition-all"
                 >
                   Join this Saturday &rarr;
