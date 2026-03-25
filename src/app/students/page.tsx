@@ -964,6 +964,155 @@ export default function StudentPortal() {
           ))}
         </div>
 
+        {/* ─── Depth Progression ─── */}
+        {(() => {
+          // Extract depth data points with dates
+          const dataPoints: { date: string; depth: number; label: string }[] = [];
+          const reversedLogs = [...logs].reverse(); // chronological order
+          reversedLogs.forEach(e => {
+            if (e.type === "Profile") return;
+            const { fields } = parseStructuredNote(e.note);
+            let d = parseFloat(e.depth);
+            if (isNaN(d) && fields.TOP) d = parseFloat(fields.TOP);
+            if (isNaN(d) && fields.VALUE && e.type === "PB") d = parseFloat(fields.VALUE);
+            if (!isNaN(d) && d > 0) {
+              dataPoints.push({ date: e.date, depth: d, label: `${d}m` });
+            }
+          });
+
+          if (dataPoints.length < 2) return null;
+
+          const maxDepth = Math.max(...dataPoints.map(p => p.depth));
+          const chartHeight = 160;
+          const padding = 20;
+
+          return (
+            <div className="bg-white/[0.03] border border-white/[0.06] rounded-xl p-4 mb-4">
+              <div className="text-[10px] text-teal/50 uppercase tracking-wider font-medium mb-3">Depth Progression</div>
+              <div className="relative" style={{ height: chartHeight + padding }}>
+                {/* Y-axis labels */}
+                <div className="absolute left-0 top-0 bottom-0 w-8 flex flex-col justify-between text-[9px] text-white/15 pr-1 text-right" style={{ paddingBottom: padding }}>
+                  <span>0m</span>
+                  <span>{Math.round(maxDepth / 2)}m</span>
+                  <span>{Math.round(maxDepth)}m</span>
+                </div>
+
+                {/* Chart area */}
+                <div className="ml-10 relative" style={{ height: chartHeight }}>
+                  <svg width="100%" height={chartHeight} viewBox={`0 0 ${dataPoints.length * 60} ${chartHeight}`} preserveAspectRatio="none" className="overflow-visible">
+                    {/* Grid lines */}
+                    <line x1="0" y1={chartHeight * 0.5} x2={dataPoints.length * 60} y2={chartHeight * 0.5} stroke="rgba(255,255,255,0.04)" strokeWidth="1" />
+
+                    {/* Area fill */}
+                    <path
+                      d={`M 0 ${chartHeight} ${dataPoints.map((p, i) => `L ${i * 60 + 30} ${chartHeight - (p.depth / maxDepth) * (chartHeight - 10)}`).join(" ")} L ${(dataPoints.length - 1) * 60 + 30} ${chartHeight} Z`}
+                      fill="url(#depthGradient)"
+                    />
+
+                    {/* Line */}
+                    <path
+                      d={`M ${30} ${chartHeight - (dataPoints[0].depth / maxDepth) * (chartHeight - 10)} ${dataPoints.slice(1).map((p, i) => `L ${(i + 1) * 60 + 30} ${chartHeight - (p.depth / maxDepth) * (chartHeight - 10)}`).join(" ")}`}
+                      fill="none" stroke="#3db8a4" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                    />
+
+                    {/* Dots */}
+                    {dataPoints.map((p, i) => (
+                      <circle
+                        key={i}
+                        cx={i * 60 + 30}
+                        cy={chartHeight - (p.depth / maxDepth) * (chartHeight - 10)}
+                        r="4" fill="#0B1D2C" stroke="#3db8a4" strokeWidth="2"
+                      />
+                    ))}
+
+                    {/* Value labels on dots */}
+                    {dataPoints.map((p, i) => (
+                      <text
+                        key={`t${i}`}
+                        x={i * 60 + 30}
+                        y={chartHeight - (p.depth / maxDepth) * (chartHeight - 10) - 10}
+                        textAnchor="middle" fill="rgba(61,184,164,0.6)" fontSize="9" fontWeight="500"
+                      >
+                        {p.label}
+                      </text>
+                    ))}
+
+                    <defs>
+                      <linearGradient id="depthGradient" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor="#3db8a4" stopOpacity="0.15" />
+                        <stop offset="100%" stopColor="#3db8a4" stopOpacity="0" />
+                      </linearGradient>
+                    </defs>
+                  </svg>
+                </div>
+
+                {/* X-axis dates */}
+                <div className="ml-10 flex justify-between mt-1 overflow-hidden" style={{ height: padding }}>
+                  {dataPoints.length <= 8 ? dataPoints.map((p, i) => (
+                    <span key={i} className="text-[8px] text-white/15 whitespace-nowrap">{p.date.split(",")[0]}</span>
+                  )) : (
+                    <>
+                      <span className="text-[8px] text-white/15">{dataPoints[0].date.split(",")[0]}</span>
+                      <span className="text-[8px] text-white/15">{dataPoints[dataPoints.length - 1].date.split(",")[0]}</span>
+                    </>
+                  )}
+                </div>
+              </div>
+            </div>
+          );
+        })()}
+
+        {/* ─── BOLT Trend ─── */}
+        {(() => {
+          const boltPoints: { date: string; score: number }[] = [];
+          const reversedLogs = [...logs].reverse();
+          reversedLogs.forEach(e => {
+            if (e.type === "Profile") return;
+            const { fields } = parseStructuredNote(e.note);
+            let b = parseFloat(e.bolt);
+            if (isNaN(b) && fields.SCORE) b = parseFloat(fields.SCORE);
+            if (isNaN(b) && fields.BOLT_PRE) b = parseFloat(fields.BOLT_PRE);
+            if (!isNaN(b) && b > 0) {
+              boltPoints.push({ date: e.date, score: b });
+            }
+          });
+
+          if (boltPoints.length < 2) return null;
+
+          const maxBolt = Math.max(...boltPoints.map(p => p.score));
+          const chartHeight = 120;
+
+          return (
+            <div className="bg-white/[0.03] border border-white/[0.06] rounded-xl p-4 mb-4">
+              <div className="text-[10px] text-seafoam/50 uppercase tracking-wider font-medium mb-3">BOLT Score Trend</div>
+              <div className="relative ml-8" style={{ height: chartHeight }}>
+                <svg width="100%" height={chartHeight} viewBox={`0 0 ${boltPoints.length * 60} ${chartHeight}`} preserveAspectRatio="none" className="overflow-visible">
+                  <path
+                    d={`M 0 ${chartHeight} ${boltPoints.map((p, i) => `L ${i * 60 + 30} ${chartHeight - (p.score / maxBolt) * (chartHeight - 10)}`).join(" ")} L ${(boltPoints.length - 1) * 60 + 30} ${chartHeight} Z`}
+                    fill="url(#boltGradient)"
+                  />
+                  <path
+                    d={`M ${30} ${chartHeight - (boltPoints[0].score / maxBolt) * (chartHeight - 10)} ${boltPoints.slice(1).map((p, i) => `L ${(i + 1) * 60 + 30} ${chartHeight - (p.score / maxBolt) * (chartHeight - 10)}`).join(" ")}`}
+                    fill="none" stroke="#D4A574" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                  />
+                  {boltPoints.map((p, i) => (
+                    <g key={i}>
+                      <circle cx={i * 60 + 30} cy={chartHeight - (p.score / maxBolt) * (chartHeight - 10)} r="3" fill="#0B1D2C" stroke="#D4A574" strokeWidth="2" />
+                      <text x={i * 60 + 30} y={chartHeight - (p.score / maxBolt) * (chartHeight - 10) - 8} textAnchor="middle" fill="rgba(212,165,116,0.6)" fontSize="9" fontWeight="500">{p.score}s</text>
+                    </g>
+                  ))}
+                  <defs>
+                    <linearGradient id="boltGradient" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="#D4A574" stopOpacity="0.15" />
+                      <stop offset="100%" stopColor="#D4A574" stopOpacity="0" />
+                    </linearGradient>
+                  </defs>
+                </svg>
+              </div>
+            </div>
+          );
+        })()}
+
         {/* ─── Active Goals ─── */}
         {activeGoals.length > 0 && (
           <div className="mb-6">
