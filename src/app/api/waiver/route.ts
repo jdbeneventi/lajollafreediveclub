@@ -5,7 +5,7 @@ import { Resend } from "resend";
 const FORMSPREE_URL = "https://formspree.io/f/mojknqlk";
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const OWNER_EMAIL = "joshuabeneventi@gmail.com";
-const GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbyzIW8O0y53GpOAdkCNecJ5tbjRXapVehCs6qWoL9yrK_WymozbsTa5YxpcQzdLzCUD/exec";
+const GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbxwslRAmNpm86dh7F8bKvSAo2T0fUs5A02KkkbEzi4SnFTOOR-5sdwPsTYW1Urddvqs/exec";
 
 interface WaiverData {
   fullName: string;
@@ -331,6 +331,7 @@ export async function POST(request: Request) {
           dateSigned: signedAt,
           emergencyContact: `${data.emergencyName} · ${data.emergencyPhone}`,
           medicalFlags: medicalStatus + (data.medicalDetails ? ` — ${data.medicalDetails}` : ""),
+          pdfBase64,
         }),
       });
     } catch {
