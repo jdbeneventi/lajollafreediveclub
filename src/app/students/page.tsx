@@ -153,6 +153,22 @@ export default function StudentPortal() {
   const [loading, setLoading] = useState(false);
   const [allStudents, setAllStudents] = useState<string[]>([]);
 
+  // Conditions
+  const [conditions, setConditions] = useState<any>(null);
+  const [conditionsLoading, setConditionsLoading] = useState(false);
+
+  const fetchConditions = useCallback(async () => {
+    setConditionsLoading(true);
+    try {
+      const res = await fetch("/api/conditions");
+      if (res.ok) {
+        const data = await res.json();
+        setConditions(data);
+      }
+    } catch { /* silent */ }
+    setConditionsLoading(false);
+  }, []);
+
   // Entry form state
   const [entryType, setEntryType] = useState<"Session" | "PB" | "BOLT" | "Goal" | "Note">("Session");
   const [saving, setSaving] = useState(false);
@@ -251,8 +267,9 @@ export default function StudentPortal() {
   useEffect(() => {
     if (activeStudent) {
       fetchLogs(activeStudent);
+      fetchConditions();
     }
-  }, [activeStudent, fetchLogs]);
+  }, [activeStudent, fetchLogs, fetchConditions]);
 
   // Load profile data when logs change
   useEffect(() => {
@@ -385,6 +402,15 @@ export default function StudentPortal() {
         if (sessionBoltPost) parts.push(`[BOLT_POST:${sessionBoltPost}]`);
         if (sessionDisciplines.length > 0) parts.push(`[DISC:${sessionDisciplines.join(",")}]`);
         if (sessionSkills.length > 0) parts.push(`[SKILLS:${sessionSkills.join(",")}]`);
+        // Auto-attach conditions
+        if (conditions) {
+          const cParts: string[] = [];
+          if (conditions.waveHeight) cParts.push(`${(conditions.waveHeight * 3.281).toFixed(1)}ft`);
+          if (conditions.wavePeriod) cParts.push(`${conditions.wavePeriod.toFixed(0)}s`);
+          if (conditions.windSpeed) cParts.push(`wind ${conditions.windSpeed}`);
+          if (conditions.waterTemp) cParts.push(`${Math.round(conditions.waterTemp)}°F`);
+          if (cParts.length > 0) parts.push(`[CONDITIONS:${cParts.join(", ")}]`);
+        }
         if (sessionNotes) parts.push(sessionNotes);
         note = parts.join(" ");
         depth = sessionTopDepth;
@@ -1057,6 +1083,28 @@ export default function StudentPortal() {
               <div>
                 <label className="text-white/25 text-[10px] uppercase tracking-wider block mb-2">Skills Practiced</label>
                 <PillSelect options={SKILLS} selected={sessionSkills} onChange={setSessionSkills} color="teal" />
+              </div>
+
+              {/* Auto-attached conditions */}
+              <div className="bg-white/[0.02] border border-white/[0.04] rounded-lg px-3 py-2.5">
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-white/20 text-[10px] uppercase tracking-wider">Conditions (auto)</span>
+                  <button
+                    type="button" onClick={fetchConditions}
+                    className="text-white/15 text-[10px] bg-transparent border-none cursor-pointer hover:text-white/30"
+                  >
+                    {conditionsLoading ? "..." : "refresh"}
+                  </button>
+                </div>
+                {conditions ? (
+                  <div className="flex gap-3 flex-wrap text-xs">
+                    {conditions.waveHeight && <span className="text-seafoam/60">{(conditions.waveHeight * 3.281).toFixed(1)}ft @ {conditions.wavePeriod?.toFixed(0) || "—"}s</span>}
+                    {conditions.windSpeed && <span className="text-white/30">wind {conditions.windSpeed}</span>}
+                    {conditions.waterTemp && <span className="text-white/30">{Math.round(conditions.waterTemp)}°F</span>}
+                  </div>
+                ) : (
+                  <span className="text-white/15 text-xs">{conditionsLoading ? "Loading..." : "Unavailable"}</span>
+                )}
               </div>
 
               <div>
