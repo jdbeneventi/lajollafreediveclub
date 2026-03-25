@@ -321,21 +321,27 @@ export async function POST(request: Request) {
       const medicalStatus = data.medical.some(a => a === "yes")
         ? "FLAGGED"
         : "Clear";
-      await fetch(GOOGLE_SHEET_URL, {
+      const sheetPayload: Record<string, string> = {
+        name: data.fullName,
+        email: data.email,
+        phone: data.phone || "",
+        dateSigned: signedAt,
+        emergencyContact: `${data.emergencyName} · ${data.emergencyPhone}`,
+        medicalFlags: medicalStatus + (data.medicalDetails ? ` — ${data.medicalDetails}` : ""),
+      };
+      // Only include PDF if it's not too large (< 500KB base64)
+      if (pdfBase64 && pdfBase64.length < 500000) {
+        sheetPayload.pdfBase64 = pdfBase64;
+      }
+      const sheetRes = await fetch(GOOGLE_SHEET_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: data.fullName,
-          email: data.email,
-          phone: data.phone || "",
-          dateSigned: signedAt,
-          emergencyContact: `${data.emergencyName} · ${data.emergencyPhone}`,
-          medicalFlags: medicalStatus + (data.medicalDetails ? ` — ${data.medicalDetails}` : ""),
-          pdfBase64,
-        }),
+        body: JSON.stringify(sheetPayload),
+        redirect: "follow",
       });
-    } catch {
-      // Sheet logging is non-critical
+      console.log("Sheet response status:", sheetRes.status);
+    } catch (sheetErr) {
+      console.error("Sheet logging error:", sheetErr);
     }
 
     return NextResponse.json({
