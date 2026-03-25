@@ -213,25 +213,22 @@ export async function POST(request: Request) {
     const fileName = `LJFC-Waiver-${data.fullName.replace(/\s+/g, "-")}-${new Date().toISOString().split("T")[0]}.pdf`;
 
     // Log to Google Sheet FIRST (before emails which may timeout)
+    // PDF archiving skipped — too large for Apps Script payload
     try {
       const medicalStatus = data.medical.some(a => a === "yes")
         ? "FLAGGED"
         : "Clear";
-      const sheetPayload: Record<string, string> = {
-        name: data.fullName,
-        email: data.email,
-        phone: data.phone || "",
-        dateSigned: signedAt,
-        emergencyContact: `${data.emergencyName} · ${data.emergencyPhone}`,
-        medicalFlags: medicalStatus + (data.medicalDetails ? ` — ${data.medicalDetails}` : ""),
-      };
-      if (pdfBase64 && pdfBase64.length < 500000) {
-        sheetPayload.pdfBase64 = pdfBase64;
-      }
       await fetch(GOOGLE_SHEET_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(sheetPayload),
+        body: JSON.stringify({
+          name: data.fullName,
+          email: data.email,
+          phone: data.phone || "",
+          dateSigned: signedAt,
+          emergencyContact: `${data.emergencyName} · ${data.emergencyPhone}`,
+          medicalFlags: medicalStatus + (data.medicalDetails ? ` — ${data.medicalDetails}` : ""),
+        }),
         redirect: "follow",
       });
     } catch {
