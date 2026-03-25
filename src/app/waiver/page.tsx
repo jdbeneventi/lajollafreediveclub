@@ -292,9 +292,15 @@ export default function WaiverPage() {
                 <h2 className="font-serif text-xl mb-1">Personal Information</h2>
                 <p className="text-xs text-[#5a6a7a] mb-4">All fields required unless noted.</p>
 
-                <div>
-                  <label className="block text-sm font-medium text-deep mb-1">Full Name *</label>
-                  <input type="text" value={form.fullName} onChange={(e) => update("fullName", e.target.value)} className="w-full px-4 py-3 rounded-lg border border-deep/10 text-sm outline-none focus:border-teal transition-colors bg-salt" placeholder="Your full legal name" />
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-deep mb-1">First Name *</label>
+                    <input type="text" value={form.fullName.split(" ")[0] || ""} onChange={(e) => { const last = form.fullName.split(" ").slice(1).join(" "); update("fullName", `${e.target.value} ${last}`.trim()); }} className="w-full px-4 py-3 rounded-lg border border-deep/10 text-sm outline-none focus:border-teal transition-colors bg-salt" placeholder="First name" />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-deep mb-1">Last Name *</label>
+                    <input type="text" value={form.fullName.split(" ").slice(1).join(" ") || ""} onChange={(e) => { const first = form.fullName.split(" ")[0] || ""; update("fullName", `${first} ${e.target.value}`.trim()); }} className="w-full px-4 py-3 rounded-lg border border-deep/10 text-sm outline-none focus:border-teal transition-colors bg-salt" placeholder="Last name" />
+                  </div>
                 </div>
 
                 <div>

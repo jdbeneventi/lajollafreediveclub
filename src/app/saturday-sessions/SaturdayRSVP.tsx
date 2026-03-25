@@ -8,19 +8,22 @@ const KIT_URL = "https://app.kit.com/forms/9207242/subscriptions";
 export function SaturdayRSVP() {
   const [step, setStep] = useState<"form" | "confirmed">("form");
   const [firstTime, setFirstTime] = useState<boolean | null>(null);
-  const [name, setName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const name = `${firstName.trim()} ${lastName.trim()}`.trim();
     if (!email || !name) return;
     setSubmitting(true);
 
     try {
       const formData = new FormData();
       formData.append("email_address", email);
-      formData.append("fields[first_name]", name);
+      formData.append("fields[first_name]", firstName.trim());
+      formData.append("fields[last_name]", lastName.trim());
       await fetch(KIT_URL, { method: "POST", body: formData });
     } catch {
       // Kit often succeeds despite CORS
@@ -39,7 +42,7 @@ export function SaturdayRSVP() {
           </svg>
         </div>
         <h3 className="font-serif text-2xl text-white mb-2">
-          You&apos;re in, {name.split(" ")[0]}!
+          You&apos;re in, {firstName}!
         </h3>
         <p className="text-white/50 text-sm leading-relaxed mb-8 max-w-[400px] mx-auto">
           We&apos;ll confirm Friday based on conditions. Check your email for updates.
@@ -112,14 +115,24 @@ export function SaturdayRSVP() {
       </div>
 
       <form onSubmit={handleSubmit} className="max-w-[400px] mx-auto space-y-4">
-        <input
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="Your name"
-          required
-          className="w-full px-5 py-3.5 rounded-xl bg-white/[0.06] border border-white/10 text-white text-sm outline-none focus:border-seafoam transition-colors placeholder:text-white/25"
-        />
+        <div className="grid grid-cols-2 gap-3">
+          <input
+            type="text"
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+            placeholder="First name"
+            required
+            className="w-full px-5 py-3.5 rounded-xl bg-white/[0.06] border border-white/10 text-white text-sm outline-none focus:border-seafoam transition-colors placeholder:text-white/25"
+          />
+          <input
+            type="text"
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+            placeholder="Last name"
+            required
+            className="w-full px-5 py-3.5 rounded-xl bg-white/[0.06] border border-white/10 text-white text-sm outline-none focus:border-seafoam transition-colors placeholder:text-white/25"
+          />
+        </div>
         <input
           type="email"
           value={email}

@@ -147,6 +147,8 @@ export default function StudentPortal() {
   const [codeError, setCodeError] = useState(false);
   const [role, setRole] = useState<"coach" | "student">("coach");
   const [studentName, setStudentName] = useState("");
+  const [studentFirstName, setStudentFirstName] = useState("");
+  const [studentLastName, setStudentLastName] = useState("");
   const [activeStudent, setActiveStudent] = useState("");
   const [logs, setLogs] = useState<LogEntry[]>([]);
   const [allLogs, setAllLogs] = useState<LogEntry[]>([]);
@@ -289,9 +291,11 @@ export default function StudentPortal() {
     if (role === "coach" && c === COACH_CODE) {
       setAuthenticated(true);
       setCodeError(false);
-    } else if (role === "student" && c === STUDENT_CODE && studentName.trim()) {
+    } else if (role === "student" && c === STUDENT_CODE && studentFirstName.trim() && studentLastName.trim()) {
       setAuthenticated(true);
-      setActiveStudent(studentName.trim());
+      const fullName = `${studentFirstName.trim()} ${studentLastName.trim()}`;
+      setStudentName(fullName);
+      setActiveStudent(fullName);
       setCodeError(false);
     } else {
       setCodeError(true);
@@ -704,11 +708,18 @@ export default function StudentPortal() {
           </div>
 
           {role === "student" && (
-            <input
-              type="text" value={studentName} onChange={(e) => setStudentName(e.target.value)}
-              placeholder="Your full name"
-              className="w-full px-5 py-3 rounded-xl bg-white/[0.06] border border-white/10 text-white text-sm outline-none focus:border-seafoam transition-colors placeholder:text-white/20 mb-4"
-            />
+            <div className="grid grid-cols-2 gap-3 mb-4">
+              <input
+                type="text" value={studentFirstName} onChange={(e) => setStudentFirstName(e.target.value)}
+                placeholder="First name"
+                className="w-full px-5 py-3 rounded-xl bg-white/[0.06] border border-white/10 text-white text-sm outline-none focus:border-seafoam transition-colors placeholder:text-white/20"
+              />
+              <input
+                type="text" value={studentLastName} onChange={(e) => setStudentLastName(e.target.value)}
+                placeholder="Last name"
+                className="w-full px-5 py-3 rounded-xl bg-white/[0.06] border border-white/10 text-white text-sm outline-none focus:border-seafoam transition-colors placeholder:text-white/20"
+              />
+            </div>
           )}
 
           <input
