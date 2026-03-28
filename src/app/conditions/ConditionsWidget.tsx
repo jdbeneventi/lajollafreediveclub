@@ -290,7 +290,14 @@ export function ConditionsWidget() {
                 <div className="h-full rounded-full transition-all duration-700" style={{ width: `${factor.score}%`, background: factor.color }} />
               </div>
               <p className="text-xs text-[#5a6a7a] leading-relaxed">{factor.detail}</p>
-              <a href={factor.sourceUrl} target="_blank" rel="noopener noreferrer" className="text-[10px] text-teal/60 hover:text-teal no-underline mt-1 inline-block">Source: {factor.sourceLabel} ↗</a>
+              <a href={factor.sourceUrl} target="_blank" rel="noopener noreferrer" className="mt-2 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-deep/[0.04] hover:bg-deep/[0.08] transition-colors no-underline group">
+                <span className="flex items-center gap-1">
+                  <span className="w-1.5 h-1.5 rounded-full bg-seafoam animate-pulse" />
+                  <span className="text-[10px] font-semibold text-seafoam uppercase tracking-wider">Live</span>
+                </span>
+                <span className="text-[10px] text-[#5a6a7a] group-hover:text-deep transition-colors">{factor.sourceLabel}</span>
+                <svg width="10" height="10" viewBox="0 0 12 12" fill="none" className="text-teal/50 group-hover:text-teal transition-colors"><path d="M3 9L9 3M9 3H4.5M9 3V7.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              </a>
               {openTooltip === factor.name && (
                 <div className="mt-3 p-4 bg-deep text-white/80 rounded-xl text-xs leading-relaxed">
                   <div className="font-semibold text-white text-[11px] mb-1.5">How we measure this</div>
@@ -323,21 +330,36 @@ export function ConditionsWidget() {
               ))}
             </div>
             <p className="text-[10px] text-[#5a6a7a] mt-2">Incoming tide generally improves vis. Best diving is 1–2 hours into an incoming tide.</p>
-            <a href="https://tidesandcurrents.noaa.gov/stationhome.html?id=9410230" target="_blank" rel="noopener noreferrer" className="text-[10px] text-teal/60 hover:text-teal no-underline mt-1 inline-block">Source: NOAA Tides Station 9410230 ↗</a>
+            <a href="https://tidesandcurrents.noaa.gov/stationhome.html?id=9410230" target="_blank" rel="noopener noreferrer" className="mt-2 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-deep/[0.04] hover:bg-deep/[0.08] transition-colors no-underline group">
+              <span className="flex items-center gap-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-seafoam animate-pulse" />
+                <span className="text-[10px] font-semibold text-seafoam uppercase tracking-wider">Live</span>
+              </span>
+              <span className="text-[10px] text-[#5a6a7a] group-hover:text-deep transition-colors">NOAA Tides Station 9410230</span>
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none" className="text-teal/50 group-hover:text-teal transition-colors"><path d="M3 9L9 3M9 3H4.5M9 3V7.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            </a>
           </div>
         )}
 
-        {/* Quick links */}
-        <div className="px-8 py-4 bg-salt/50 flex flex-wrap gap-3">
-          {[
-            { label: "Underwater cam", url: "https://coollab.ucsd.edu/pierviz/" },
-            { label: "Surface cam", url: "https://scripps.ucsd.edu/piercam" },
-            { label: "Full buoy data", url: "https://www.ndbc.noaa.gov/station_page.php?station=ljpc1" },
-            { label: "Wave forecast", url: "https://cdip.ucsd.edu/themes/?d2=p70:s:073:st:1" },
-            { label: "Beach advisories", url: "https://www.sdbeachinfo.com/" },
-          ].map((link) => (
-            <a key={link.label} href={link.url} target="_blank" rel="noopener noreferrer" className="px-3 py-1.5 bg-white rounded-full text-xs text-teal font-medium no-underline hover:shadow-sm transition-shadow">{link.label} ↗</a>
-          ))}
+        {/* Quick links — live sources */}
+        <div className="px-8 py-5 bg-salt/50">
+          <div className="text-[10px] text-[#5a6a7a] uppercase tracking-wider font-semibold mb-3">Live Sources</div>
+          <div className="flex flex-wrap gap-2">
+            {[
+              { label: "Underwater Cam", url: "https://coollab.ucsd.edu/pierviz/", icon: "▶", live: true },
+              { label: "Surface Cam", url: "https://scripps.ucsd.edu/piercam", icon: "▶", live: true },
+              { label: "Buoy Data", url: "https://www.ndbc.noaa.gov/station_page.php?station=ljpc1", icon: "◉", live: true },
+              { label: "Wave Forecast", url: "https://cdip.ucsd.edu/themes/?d2=p70:s:073:st:1", icon: "◉", live: false },
+              { label: "Beach Advisories", url: "https://www.sdbeachinfo.com/", icon: "◉", live: false },
+            ].map((link) => (
+              <a key={link.label} href={link.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full no-underline hover:shadow-md hover:-translate-y-0.5 transition-all group border border-deep/[0.06]">
+                {link.live && <span className="w-1.5 h-1.5 rounded-full bg-seafoam animate-pulse" />}
+                <span className="text-deep/40 text-[10px]">{link.icon}</span>
+                <span className="text-xs text-deep font-medium group-hover:text-teal transition-colors">{link.label}</span>
+                <svg width="10" height="10" viewBox="0 0 12 12" fill="none" className="text-deep/20 group-hover:text-teal transition-colors"><path d="M3 9L9 3M9 3H4.5M9 3V7.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              </a>
+            ))}
+          </div>
         </div>
       </div>
 
@@ -349,7 +371,14 @@ export function ConditionsWidget() {
               <h3 className="font-serif text-lg">Week ahead</h3>
               <p className="text-[10px] text-[#5a6a7a] mt-0.5">Based on NWS marine forecast for San Diego coastal waters</p>
             </div>
-            <a href="https://forecast.weather.gov/shmrn.php?mz=pzz750&syn=pzz700" target="_blank" rel="noopener noreferrer" className="text-[10px] text-teal/60 hover:text-teal no-underline">Source: NWS PZZ750 ↗</a>
+            <a href="https://forecast.weather.gov/shmrn.php?mz=pzz750&syn=pzz700" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-deep/[0.04] hover:bg-deep/[0.08] transition-colors no-underline group">
+              <span className="flex items-center gap-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-seafoam animate-pulse" />
+                <span className="text-[10px] font-semibold text-seafoam uppercase tracking-wider">Live</span>
+              </span>
+              <span className="text-[10px] text-[#5a6a7a] group-hover:text-deep transition-colors">NWS Marine Forecast</span>
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none" className="text-teal/50 group-hover:text-teal transition-colors"><path d="M3 9L9 3M9 3H4.5M9 3V7.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            </a>
           </div>
           <div className="grid grid-cols-3 md:grid-cols-5 lg:grid-cols-7">
             {forecast.slice(0, 7).map((day, i) => (
