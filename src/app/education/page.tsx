@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Reveal } from "@/components/Reveal";
 import { EmailCapture } from "@/components/EmailCapture";
+import { PasswordGate } from "@/components/PasswordGate";
 import { getAllPrograms, getSeasonalThemes, getMonthlyEvents } from "@/lib/education";
 
 export const metadata: Metadata = {
@@ -95,7 +96,7 @@ export default function EducationPage() {
   const _monthlyEvents = getMonthlyEvents();
 
   return (
-    <>
+    <PasswordGate>
       {/* ── Hero ── */}
       <section className="bg-gradient-to-b from-deep to-ocean pt-36 pb-24 px-6 text-center">
         <Reveal>
@@ -467,6 +468,6 @@ export default function EducationPage() {
       </section>
 
       <EmailCapture />
-    </>
+    </PasswordGate>
   );
 }
