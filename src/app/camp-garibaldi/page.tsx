@@ -184,6 +184,106 @@ export default function CampGaribaldiPage() {
         </div>
       </section>
 
+      {/* Summer 2026 Dates */}
+      <section className="bg-gradient-to-b from-salt to-white py-24 px-6">
+        <div className="max-w-[900px] mx-auto">
+          <Reveal>
+            <div className="section-label text-coral before:bg-coral">Summer 2026</div>
+            <h2 className="section-title mb-4">Camp Dates</h2>
+            <p className="section-desc mb-12">
+              Three sessions this summer. Spots are limited — we keep groups small so every kid gets real attention.
+            </p>
+          </Reveal>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            {[
+              {
+                session: "Session I",
+                dates: "June 15–17",
+                days: "3 days",
+                note: "Sun–Tue",
+                status: "Open",
+              },
+              {
+                session: "Session II",
+                dates: "July 13–17",
+                days: "5 days",
+                note: "Sun–Thu",
+                status: "Open",
+                featured: true,
+              },
+              {
+                session: "Session III",
+                dates: "August 10–12",
+                days: "3 days",
+                note: "Sun–Tue",
+                status: "Open",
+              },
+            ].map((s) => (
+              <Reveal key={s.session}>
+                <div
+                  className={`relative rounded-2xl p-8 text-center flex flex-col items-center ${
+                    s.featured
+                      ? "bg-deep text-white ring-2 ring-coral/30"
+                      : "bg-white border border-deep/10"
+                  }`}
+                >
+                  {s.featured && (
+                    <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-coral text-white text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full">
+                      Full Week
+                    </span>
+                  )}
+                  <div
+                    className={`text-xs font-semibold uppercase tracking-wide mb-3 ${
+                      s.featured ? "text-coral" : "text-teal"
+                    }`}
+                  >
+                    {s.session}
+                  </div>
+                  <div
+                    className={`font-serif text-3xl mb-1 ${
+                      s.featured ? "text-white" : "text-deep"
+                    }`}
+                  >
+                    {s.dates}
+                  </div>
+                  <div
+                    className={`text-sm mb-1 ${
+                      s.featured ? "text-white/50" : "text-[#5a6a7a]"
+                    }`}
+                  >
+                    {s.days} · {s.note}
+                  </div>
+                  <div
+                    className={`text-xs font-semibold uppercase tracking-wide mt-4 ${
+                      s.featured ? "text-seafoam" : "text-teal"
+                    }`}
+                  >
+                    {s.status}
+                  </div>
+                  <Link
+                    href="/contact/camp"
+                    className={`mt-4 inline-block text-sm font-semibold no-underline px-6 py-2.5 rounded-full transition-all ${
+                      s.featured
+                        ? "bg-coral text-white hover:bg-coral/90"
+                        : "bg-deep text-white hover:bg-deep/90"
+                    }`}
+                  >
+                    Reserve a Spot →
+                  </Link>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+
+          <Reveal>
+            <p className="text-center text-sm text-[#5a6a7a] mt-8">
+              All sessions run 9am–3pm daily. Gear provided. Ages 8–16.
+            </p>
+          </Reveal>
+        </div>
+      </section>
+
       {/* Parent Testimonial */}
       <section className="bg-deep py-20 px-6">
         <div className="max-w-[700px] mx-auto text-center">
