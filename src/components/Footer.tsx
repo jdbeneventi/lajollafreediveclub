@@ -23,7 +23,7 @@ const infoLinks = [
   { href: "/about", label: "Our Story" },
   { href: "/contact", label: "Contact" },
   { href: "/contact/courses", label: "Course Inquiry" },
-  { href: "/contact/camp", label: "Camp Inquiry" },
+  { href: "/camp-garibaldi/register", label: "Camp Registration" },
   { href: "/about#faq", label: "FAQ" },
 ];
 

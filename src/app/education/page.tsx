@@ -451,7 +451,7 @@ export default function EducationPage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
-                href="/contact/camp"
+                href="/camp-garibaldi/register"
                 className="inline-block bg-coral text-white px-8 py-4 rounded-full font-medium text-[0.95rem] no-underline hover:-translate-y-0.5 hover:shadow-[0_8px_25px_rgba(199,91,58,0.4)] transition-all"
               >
                 Enroll in Camp Garibaldi

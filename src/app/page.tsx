@@ -319,7 +319,7 @@ export default function Home() {
                   ))}
                 </div>
 
-                <Link href="/contact/camp" className="group inline-flex items-center gap-3 px-7 py-3.5 bg-coral text-white rounded-full font-medium text-[0.9rem] no-underline hover:shadow-[0_8px_30px_rgba(199,91,58,0.5)] transition-all">
+                <Link href="/camp-garibaldi/register" className="group inline-flex items-center gap-3 px-7 py-3.5 bg-coral text-white rounded-full font-medium text-[0.9rem] no-underline hover:shadow-[0_8px_30px_rgba(199,91,58,0.5)] transition-all">
                   Reserve a Spot
                   <span className="group-hover:translate-x-1 transition-transform">→</span>
                 </Link>

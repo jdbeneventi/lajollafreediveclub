@@ -100,7 +100,7 @@ export default function CampGaribaldiPage() {
               ocean confidence — through breath-first training.
             </p>
             <div className="flex gap-4 justify-center flex-wrap">
-              <Link href="/contact/camp" className="btn btn-primary no-underline">
+              <Link href="/camp-garibaldi/register" className="btn btn-primary no-underline">
                 Reserve a Spot →
               </Link>
               <a href="#schedule" className="btn btn-ghost no-underline">
@@ -339,7 +339,7 @@ export default function CampGaribaldiPage() {
                     {s.status}
                   </div>
                   <Link
-                    href="/contact/camp"
+                    href="/camp-garibaldi/register"
                     className={`mt-4 inline-block text-sm font-semibold no-underline px-6 py-2.5 rounded-full transition-all ${
                       s.featured
                         ? "bg-coral text-white hover:bg-coral/90"
