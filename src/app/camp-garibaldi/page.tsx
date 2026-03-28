@@ -11,29 +11,47 @@ export const metadata: Metadata = {
 
 const weekSchedule = [
   {
-    day: "Monday",
+    day: "Day 1",
     title: "Foundations",
     desc: "Morning warmup, breathing drills, pool session — static holds, underwater swimming, basic equalization.",
   },
   {
-    day: "Tuesday",
+    day: "Day 2",
     title: "Ocean Entry",
     desc: "Beach safety, wave dynamics, controlled ocean swims, snorkel skills, and first open water breath holds.",
   },
   {
-    day: "Wednesday",
+    day: "Day 3",
     title: "Surf Survival",
     desc: "Hold-down simulation, underwater navigation, rescue awareness, buddy protocols, and confidence building.",
   },
   {
-    day: "Thursday",
+    day: "Day 4",
     title: "Freediving Skills",
     desc: "Duck dives, depth progression, marine life ID, and guided freedives at La Jolla Cove (depth appropriate to age/skill).",
   },
   {
-    day: "Friday",
+    day: "Day 5",
     title: "Challenge Day",
     desc: "Skills showcase, personal bests, ocean exploration, awards ceremony, and graduation with families.",
+  },
+];
+
+const threeDay = [
+  {
+    day: "Day 1",
+    title: "Foundations & Ocean Entry",
+    desc: "Breathing drills and composure training on land, followed by beach safety, controlled ocean swims, snorkel skills, and first open water breath holds.",
+  },
+  {
+    day: "Day 2",
+    title: "Surf Survival & Freediving",
+    desc: "Hold-down simulation, underwater navigation, buddy protocols, duck dives, depth progression, and guided freedives at La Jolla Cove.",
+  },
+  {
+    day: "Day 3",
+    title: "Challenge Day",
+    desc: "Marine life ID, skills showcase, personal bests, ocean exploration, and graduation with families.",
   },
 ];
 
@@ -130,20 +148,54 @@ export default function CampGaribaldiPage() {
         </div>
       </section>
 
-      {/* Week Schedule */}
+      {/* Schedule */}
       <section id="schedule" className="bg-salt py-24 px-6 scroll-mt-20">
         <div className="max-w-[900px] mx-auto">
+          {/* 5-Day Schedule */}
           <Reveal>
-            <div className="section-label">The Week</div>
-            <h2 className="section-title mb-12">Five days, one transformation</h2>
+            <div className="section-label">Full Week (5 Days)</div>
+            <h2 className="section-title mb-4">The complete experience</h2>
+            <p className="section-desc mb-12">
+              Five days of progressive skill building — from breathing drills on land to freediving at the Cove. This is Session II (July 13–17).
+            </p>
           </Reveal>
 
-          <div className="space-y-4">
+          <div className="space-y-4 mb-20">
             {weekSchedule.map((day, i) => (
               <Reveal key={day.day} delay={i * 60}>
                 <div className="bg-white rounded-xl p-6 md:p-8 flex flex-col md:flex-row gap-4 md:gap-8 items-start">
                   <div className="flex items-center gap-4 md:w-48 shrink-0">
                     <span className="w-10 h-10 rounded-full bg-gradient-to-br from-coral to-sun flex items-center justify-center text-white font-bold text-sm">
+                      {i + 1}
+                    </span>
+                    <div>
+                      <div className="text-xs text-[#5a6a7a] uppercase tracking-wide">
+                        {day.day}
+                      </div>
+                      <div className="font-semibold">{day.title}</div>
+                    </div>
+                  </div>
+                  <p className="text-sm text-[#5a6a7a] leading-relaxed">{day.desc}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+
+          {/* 3-Day Schedule */}
+          <Reveal>
+            <div className="section-label">Intensive (3 Days)</div>
+            <h2 className="section-title mb-4">Same skills, compressed</h2>
+            <p className="section-desc mb-12">
+              The core curriculum distilled into three focused days. Sessions I (June 15–17) and III (Aug 10–12).
+            </p>
+          </Reveal>
+
+          <div className="space-y-4">
+            {threeDay.map((day, i) => (
+              <Reveal key={day.day} delay={i * 60}>
+                <div className="bg-white rounded-xl p-6 md:p-8 flex flex-col md:flex-row gap-4 md:gap-8 items-start">
+                  <div className="flex items-center gap-4 md:w-48 shrink-0">
+                    <span className="w-10 h-10 rounded-full bg-gradient-to-br from-teal to-seafoam flex items-center justify-center text-white font-bold text-sm">
                       {i + 1}
                     </span>
                     <div>
@@ -168,8 +220,8 @@ export default function CampGaribaldiPage() {
             <div className="grid md:grid-cols-3 gap-8">
               {[
                 { label: "Ages", value: "8–16", detail: "Grouped by age and ability" },
-                { label: "Ratio", value: "8:1", detail: "Campers to instructor" },
-                { label: "Duration", value: "5 days", detail: "Monday–Friday, 9am–3pm" },
+                { label: "Ratio", value: "4:1", detail: "Max 4 campers per instructor" },
+                { label: "Sessions", value: "3 or 5", detail: "3-day or full-week, 9am–3pm" },
               ].map((stat) => (
                 <div key={stat.label} className="text-center p-8 bg-salt rounded-2xl">
                   <div className="text-xs text-teal font-semibold uppercase tracking-wide mb-2">
@@ -202,6 +254,7 @@ export default function CampGaribaldiPage() {
                 dates: "June 15–17",
                 days: "3 days",
                 note: "Sun–Tue",
+                price: "$450",
                 status: "Open",
               },
               {
@@ -209,6 +262,7 @@ export default function CampGaribaldiPage() {
                 dates: "July 13–17",
                 days: "5 days",
                 note: "Sun–Thu",
+                price: "$750",
                 status: "Open",
                 featured: true,
               },
@@ -217,6 +271,7 @@ export default function CampGaribaldiPage() {
                 dates: "August 10–12",
                 days: "3 days",
                 note: "Sun–Tue",
+                price: "$450",
                 status: "Open",
               },
             ].map((s) => (
@@ -255,7 +310,14 @@ export default function CampGaribaldiPage() {
                     {s.days} · {s.note}
                   </div>
                   <div
-                    className={`text-xs font-semibold uppercase tracking-wide mt-4 ${
+                    className={`font-serif text-2xl mt-3 ${
+                      s.featured ? "text-coral" : "text-deep"
+                    }`}
+                  >
+                    {s.price}
+                  </div>
+                  <div
+                    className={`text-xs font-semibold uppercase tracking-wide mt-2 ${
                       s.featured ? "text-seafoam" : "text-teal"
                     }`}
                   >
@@ -284,18 +346,40 @@ export default function CampGaribaldiPage() {
         </div>
       </section>
 
-      {/* Parent Testimonial */}
+      {/* Why Camp Garibaldi */}
       <section className="bg-deep py-20 px-6">
         <div className="max-w-[700px] mx-auto text-center">
           <Reveal>
-            <span className="font-serif text-6xl text-white/10">&ldquo;</span>
-            <p className="text-xl text-white/80 leading-relaxed mb-8 font-light">
-              My son did Camp Garibaldi last summer and came back a different kid in
-              the water. He went from nervous about waves to body surfing and holding
-              his breath underwater for fun. Worth every penny.
-            </p>
-            <div className="text-white/50 text-sm">
-              <span className="font-semibold text-white/70">Jennifer T.</span> · Camp Garibaldi Parent
+            <div className="section-label text-seafoam before:bg-seafoam justify-center">
+              Why This Camp
+            </div>
+            <h2 className="font-serif text-3xl text-white font-normal mb-8">
+              What makes this different
+            </h2>
+            <div className="grid sm:grid-cols-2 gap-6 text-left">
+              {[
+                {
+                  title: "AIDA-Certified Instruction",
+                  desc: "Taught by San Diego's only AIDA-certified youth instructor. Real credentials, not just lifeguard training.",
+                },
+                {
+                  title: "4:1 Ratio",
+                  desc: "Max four kids per instructor. Every child gets individual attention in and out of the water.",
+                },
+                {
+                  title: "Breath-First Methodology",
+                  desc: "Kids learn composure and breath control before entering the ocean — so they arrive in the water already equipped.",
+                },
+                {
+                  title: "La Jolla Marine Reserve",
+                  desc: "We train in Matlahuayl SMR — one of the most biodiverse marine protected areas in Southern California.",
+                },
+              ].map((item) => (
+                <div key={item.title} className="bg-white/[0.04] border border-white/[0.06] rounded-xl p-6">
+                  <h4 className="text-white font-semibold text-sm mb-2">{item.title}</h4>
+                  <p className="text-white/50 text-sm leading-relaxed">{item.desc}</p>
+                </div>
+              ))}
             </div>
           </Reveal>
         </div>
