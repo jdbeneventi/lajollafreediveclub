@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Reveal } from "@/components/Reveal";
 import { EmailCapture } from "@/components/EmailCapture";
+import { getMonthlyEvents } from "@/lib/education";
 
 export const metadata: Metadata = {
   title: "Camp Garibaldi — Kids Ocean Camp",
@@ -56,6 +57,17 @@ const threeDay = [
 ];
 
 export default function CampGaribaldiPage() {
+  const monthlyEvents = getMonthlyEvents();
+
+  // Season color mapping
+  const seasonColor = (month: string) => {
+    const m = month.toLowerCase();
+    if (["june", "july", "august"].includes(m)) return "from-coral to-sun";
+    if (["september", "october", "november"].includes(m)) return "from-teal to-seafoam";
+    if (["december", "january", "february"].includes(m)) return "from-ocean to-deep";
+    return "from-seafoam to-teal";
+  };
+
   return (
     <>
       {/* Education Banner */}
@@ -380,6 +392,59 @@ export default function CampGaribaldiPage() {
                   <p className="text-white/50 text-sm leading-relaxed">{item.desc}</p>
                 </div>
               ))}
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* Year-Round Ocean Calendar */}
+      <section className="bg-salt py-24 px-6">
+        <div className="max-w-[900px] mx-auto">
+          <Reveal>
+            <div className="section-label text-teal before:bg-teal">Beyond Camp</div>
+            <h2 className="section-title mb-4">The ocean changes every month. So do we.</h2>
+            <p className="section-desc mb-12">
+              Camp is the beginning, not the end. Our year-round Community Ocean Days give families a reason to stay connected to the water — with a different theme, a different guest educator, and a different ocean every month.
+            </p>
+          </Reveal>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+            {monthlyEvents.map((event, i) => (
+              <Reveal key={event.month} delay={i * 40}>
+                <div className="bg-white rounded-xl p-5 h-full flex flex-col">
+                  <div className="flex items-center gap-3 mb-3">
+                    <span className={`w-8 h-8 rounded-full bg-gradient-to-br ${seasonColor(event.month)} flex items-center justify-center text-white font-bold text-[10px]`}>
+                      {event.month.slice(0, 3).toUpperCase()}
+                    </span>
+                    <div className="text-xs text-teal font-semibold uppercase tracking-wide">
+                      {event.month}
+                    </div>
+                  </div>
+                  <h4 className="font-semibold text-sm text-deep mb-1 leading-snug">
+                    {event.theme}
+                  </h4>
+                  <p className="text-xs text-[#5a6a7a] leading-relaxed flex-1">
+                    {event.description}
+                  </p>
+                  <div className="text-[10px] text-teal/60 mt-3 pt-2 border-t border-deep/5">
+                    w/ {event.guestOrg}
+                  </div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+
+          <Reveal>
+            <div className="text-center mt-12">
+              <p className="text-sm text-[#5a6a7a] mb-4">
+                $35/person per event · $25 for subscribers · All gear provided
+              </p>
+              <Link
+                href="/contact"
+                className="btn btn-primary no-underline inline-block"
+              >
+                Join the Year-Round Community →
+              </Link>
             </div>
           </Reveal>
         </div>
