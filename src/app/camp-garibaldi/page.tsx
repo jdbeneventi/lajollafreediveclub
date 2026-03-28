@@ -111,6 +111,19 @@ export default function CampGaribaldiPage() {
         </Reveal>
       </section>
 
+      {/* Photo strip */}
+      <div className="grid grid-cols-3 h-48 md:h-64">
+        <div className="relative overflow-hidden">
+          <img src="/images/photos/joshua-kid-pool.jpg" alt="Joshua with young student at the pool" className="absolute inset-0 w-full h-full object-cover" />
+        </div>
+        <div className="relative overflow-hidden">
+          <img src="/images/photos/joshua-kid-beach.jpg" alt="Joshua with student at the beach in wetsuits" className="absolute inset-0 w-full h-full object-cover" />
+        </div>
+        <div className="relative overflow-hidden">
+          <img src="/images/photos/joshua-hank-youth.jpg" alt="Joshua with young freediver poolside" className="absolute inset-0 w-full h-full object-cover" />
+        </div>
+      </div>
+
       {/* Philosophy */}
       <section className="bg-white py-24 px-6">
         <div className="max-w-[900px] mx-auto">
@@ -224,6 +237,12 @@ export default function CampGaribaldiPage() {
           </div>
         </div>
       </section>
+
+      {/* Photo — beach ready */}
+      <div className="relative h-64 md:h-80 overflow-hidden">
+        <img src="/images/photos/joshua-kid-beach.jpg" alt="Joshua and student in wetsuits ready for the ocean" className="absolute inset-0 w-full h-full object-cover object-top" />
+        <div className="absolute inset-0 bg-gradient-to-b from-salt/80 via-transparent to-white/80" />
+      </div>
 
       {/* Details */}
       <section className="bg-white py-24 px-6">
@@ -396,6 +415,12 @@ export default function CampGaribaldiPage() {
           </Reveal>
         </div>
       </section>
+
+      {/* Photo — poolside teaching */}
+      <div className="relative h-64 md:h-80 overflow-hidden">
+        <img src="/images/photos/joshua-two-kids-pool.jpg" alt="Joshua teaching two kids poolside" className="absolute inset-0 w-full h-full object-cover object-center" />
+        <div className="absolute inset-0 bg-gradient-to-b from-deep/60 via-transparent to-salt/80" />
+      </div>
 
       {/* Year-Round Ocean Calendar */}
       <section className="bg-salt py-24 px-6">
