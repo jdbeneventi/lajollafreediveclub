@@ -4,7 +4,7 @@ import { useState, useMemo, useEffect, useCallback } from "react";
 
 // ─── CONSTANTS ─────────────────────────────────────────────────────
 
-const SECRET = "ljfc-curriculum";
+const SECRET = "ljfc";
 
 const MONTHS = [
   "January", "February", "March", "April", "May", "June",

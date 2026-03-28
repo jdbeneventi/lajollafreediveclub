@@ -3,7 +3,7 @@
 import { useState } from "react";
 import type { PartnerCategory, PartnerPriority } from "@/lib/partner-network";
 
-const SECRET = "ljfc-partners-2026";
+const SECRET = "ljfc";
 const FORMSPREE_URL = "https://formspree.io/f/mojknqlk";
 
 const categories: PartnerCategory[] = [

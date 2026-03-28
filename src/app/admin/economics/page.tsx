@@ -4,7 +4,7 @@ import { useState, useMemo, useEffect } from "react";
 
 // ─── CONSTANTS ─────────────────────────────────────────────────────
 
-const SECRET = "ljfc-economics";
+const SECRET = "ljfc";
 
 interface SessionConfig {
   label: string;

@@ -13,7 +13,7 @@ import {
   type PartnerStatus,
 } from "@/lib/partner-network";
 
-const SECRET = "ljfc-partners-2026";
+const SECRET = "ljfc";
 
 const statusColors: Record<PartnerStatus, string> = {
   not_started: "#3A4A56",
