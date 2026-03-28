@@ -381,17 +381,29 @@ export function ConditionsWidget() {
             </a>
           </div>
           <div className="grid grid-cols-3 md:grid-cols-5 lg:grid-cols-7">
-            {forecast.slice(0, 7).map((day, i) => (
-              <div key={day.day} className={`p-4 text-center ${i < forecast.length - 1 ? "border-r border-deep/[0.04]" : ""}`}>
-                <div className="text-[10px] text-[#5a6a7a] uppercase tracking-wider">{day.day}</div>
-                <div className="text-[10px] text-[#5a6a7a] mb-2">{day.date}</div>
-                <div className="w-10 h-10 rounded-full flex items-center justify-center mx-auto mb-2" style={{ background: day.color + "15" }}>
-                  <span className="font-serif text-lg" style={{ color: day.color }}>{day.grade}</span>
+            {forecast.slice(0, 7).map((day, i) => {
+              // Replace today's forecast with live measured data
+              const isToday = i === 0;
+              const displayGrade = isToday ? overall.grade : day.grade;
+              const displayColor = isToday ? overall.color : day.color;
+              const displaySeas = isToday && conditions?.waveHeight ? `${conditions.waveHeight}ft swell` : `${day.seaHeight}ft seas`;
+              const displayWind = isToday && conditions?.windSpeed ? `${conditions.windSpeed}kt wind` : `${day.windSpeed}kt wind`;
+
+              return (
+                <div key={day.day} className={`p-4 text-center ${i < forecast.length - 1 ? "border-r border-deep/[0.04]" : ""} ${isToday ? "bg-deep/[0.03]" : ""}`}>
+                  <div className="text-[10px] uppercase tracking-wider flex items-center justify-center gap-1">
+                    {isToday && <span className="w-1.5 h-1.5 rounded-full bg-seafoam animate-pulse" />}
+                    <span className={isToday ? "text-deep font-semibold" : "text-[#5a6a7a]"}>{isToday ? "Today" : day.day}</span>
+                  </div>
+                  <div className="text-[10px] text-[#5a6a7a] mb-2">{isToday ? "Live" : day.date}</div>
+                  <div className="w-10 h-10 rounded-full flex items-center justify-center mx-auto mb-2" style={{ background: displayColor + "15" }}>
+                    <span className="font-serif text-lg" style={{ color: displayColor }}>{displayGrade}</span>
+                  </div>
+                  <div className="text-[10px] text-[#5a6a7a]">{displaySeas}</div>
+                  <div className="text-[10px] text-[#5a6a7a]">{displayWind}</div>
                 </div>
-                <div className="text-[10px] text-[#5a6a7a]">{day.seaHeight}ft seas</div>
-                <div className="text-[10px] text-[#5a6a7a]">{day.windSpeed}kt wind</div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       )}
