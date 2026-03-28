@@ -6,7 +6,7 @@ import { EmailCapture } from "@/components/EmailCapture";
 export const metadata: Metadata = {
   title: "Camp Garibaldi — Kids Ocean Camp",
   description:
-    "Week-long ocean camp for kids ages 8–16 in La Jolla. Freediving, surf survival, and water confidence through breath-first training. The ocean camp that starts from the inside out.",
+    "Week-long ocean camp for kids ages 8–14 in La Jolla. Freediving, surf survival, and water confidence through breath-first training. The ocean camp that starts from the inside out.",
 };
 
 const weekSchedule = [
@@ -219,7 +219,7 @@ export default function CampGaribaldiPage() {
           <Reveal>
             <div className="grid md:grid-cols-3 gap-8">
               {[
-                { label: "Ages", value: "8–16", detail: "Grouped by age and ability" },
+                { label: "Ages", value: "8–14", detail: "Grouped by age and ability" },
                 { label: "Ratio", value: "4:1", detail: "Max 4 campers per instructor" },
                 { label: "Sessions", value: "3 or 5", detail: "3-day or full-week, 9am–3pm" },
               ].map((stat) => (
@@ -340,7 +340,7 @@ export default function CampGaribaldiPage() {
 
           <Reveal>
             <p className="text-center text-sm text-[#5a6a7a] mt-8">
-              All sessions run 9am–3pm daily. Gear provided. Ages 8–16.
+              All sessions run 9am–3pm daily. Gear provided. Ages 8–14.
             </p>
           </Reveal>
         </div>
