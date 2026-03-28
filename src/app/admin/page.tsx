@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 
@@ -70,7 +70,7 @@ const GATED_PAGES = [
   },
 ];
 
-export default function AdminDashboard() {
+function AdminContent() {
   const params = useSearchParams();
   const [authed, setAuthed] = useState(false);
   const [password, setPassword] = useState("");
@@ -195,5 +195,13 @@ export default function AdminDashboard() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function AdminDashboard() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-deep" />}>
+      <AdminContent />
+    </Suspense>
   );
 }
