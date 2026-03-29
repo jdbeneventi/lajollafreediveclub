@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Reveal } from "@/components/Reveal";
 import { EmailCapture } from "@/components/EmailCapture";
+import { PasswordGate } from "@/components/PasswordGate";
 
 export const metadata: Metadata = {
   title: "Charter School Funding — Camp Garibaldi",
@@ -85,7 +86,7 @@ const provisions = [
 
 export default function CharterFundingPage() {
   return (
-    <>
+    <PasswordGate>
       {/* Hero */}
       <section className="bg-deep pt-36 pb-20 px-6">
         <div className="max-w-[700px] mx-auto text-center">
@@ -328,6 +329,6 @@ export default function CharterFundingPage() {
       </section>
 
       <EmailCapture />
-    </>
+    </PasswordGate>
   );
 }
