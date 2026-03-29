@@ -1,16 +1,15 @@
-export function GaribaldiFish({ size = 120, className = "" }: { size?: number; className?: string }) {
+export function GaribaldiFish({ size = 100, className = "" }: { size?: number; className?: string }) {
   const h = Math.round(size * 0.8);
   return (
-    <svg width={size} height={h} viewBox="0 0 120 96" fill="none" className={className}>
-      <ellipse cx="56" cy="48" rx="38" ry="30" fill="#E8682A" />
-      <ellipse cx="56" cy="48" rx="32" ry="24" fill="#F4894D" />
-      <path d="M94 48 L118 22 L118 74 Z" fill="#E8682A" />
-      <path d="M94 48 L110 28 L110 68 Z" fill="#C4521C" opacity="0.35" />
-      <circle cx="34" cy="40" r="7" fill="#0B1D2C" />
-      <circle cx="32" cy="38" r="2.5" fill="white" opacity="0.7" />
-      <path d="M24 54 Q34 62 44 58" stroke="#C4521C" strokeWidth="2" fill="none" opacity="0.5" />
-      <ellipse cx="50" cy="60" rx="8" ry="3" fill="#C4521C" opacity="0.2" />
-      <path d="M40 20 C50 10 68 14 64 30" fill="#C4521C" opacity="0.4" />
+    <svg width={size} height={h} viewBox="0 0 100 80" fill="none" className={className}>
+      <ellipse cx="45" cy="40" rx="35" ry="28" fill="#F97316" />
+      <ellipse cx="45" cy="40" rx="30" ry="23" fill="#FB923C" />
+      <circle cx="25" cy="35" r="5" fill="#1E293B" />
+      <circle cx="24" cy="34" r="2" fill="white" />
+      <path d="M75 40 Q95 25 85 40 Q95 55 75 40" fill="#F97316" />
+      <path d="M45 15 Q55 5 50 20 Q60 10 55 22 Q65 15 58 25" fill="#F97316" />
+      <path d="M30 65 Q35 75 40 65" fill="#F97316" />
+      <path d="M50 65 Q55 72 60 65" fill="#F97316" />
     </svg>
   );
 }

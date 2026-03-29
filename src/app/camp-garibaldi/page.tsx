@@ -5,6 +5,7 @@ import { EmailCapture } from "@/components/EmailCapture";
 import { GaribaldiFish } from "./GaribaldiFish";
 import CampScheduleTabs from "./CampScheduleTabs";
 import CharterAccordion from "./CharterAccordion";
+import FloatingFish from "./FloatingFish";
 import "./camp-styles.css";
 
 export const metadata: Metadata = {
@@ -419,6 +420,9 @@ export default function CampGaribaldiPage() {
       </section>
 
       <EmailCapture />
+
+      {/* Floating fish contact button */}
+      <FloatingFish />
     </>
   );
 }
