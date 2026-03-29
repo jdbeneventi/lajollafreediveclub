@@ -17,52 +17,32 @@ export const metadata: Metadata = {
 export default function CampGaribaldiPage() {
   return (
     <>
-      {/* ─── HERO ─── */}
-      <section className="relative min-h-screen flex flex-col justify-end pb-20 sm:pb-28 overflow-hidden bg-deep">
-        {/* Atmospheric bg */}
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background:
-              "radial-gradient(ellipse 70% 60% at 75% 30%, rgba(232,104,42,0.07) 0%, transparent 60%), radial-gradient(ellipse 50% 50% at 20% 70%, rgba(61,184,164,0.06) 0%, transparent 50%), linear-gradient(180deg, #0B1D2C 0%, #0d2235 100%)",
-          }}
+      {/* ─── HERO — photo-based ─── */}
+      <section className="relative min-h-[80vh] flex items-end overflow-hidden bg-deep">
+        <img
+          src="/images/photos/joshua-teaching-kids.jpg"
+          alt="Joshua teaching two kids poolside in wetsuits"
+          className="absolute inset-0 w-full h-full object-cover object-center opacity-40"
         />
+        <div className="absolute inset-0 bg-gradient-to-t from-deep via-deep/70 to-transparent" />
 
-        {/* Water lines */}
-        <div className="absolute bottom-0 left-0 right-0 h-[200px] overflow-hidden pointer-events-none">
-          <svg viewBox="0 0 1440 200" preserveAspectRatio="none" className="w-full h-full">
-            <path d="M0,140 C240,100 480,160 720,130 C960,100 1200,150 1440,120 L1440,200 L0,200 Z" fill="rgba(22,59,78,0.3)" />
-            <path d="M0,160 C360,130 720,180 1080,150 C1260,140 1380,160 1440,150 L1440,200 L0,200 Z" fill="rgba(22,59,78,0.2)" />
-          </svg>
+        {/* Animated fish — top right */}
+        <div className="absolute top-[20%] right-[6%] camp-fish-swim hidden md:block" style={{ filter: "drop-shadow(0 0 24px rgba(249,115,22,0.35))" }}>
+          <GaribaldiFish size={100} />
         </div>
 
-        {/* Animated fish */}
-        <div className="absolute top-[25%] right-[8%] camp-fish-swim hidden md:block" style={{ filter: "drop-shadow(0 0 32px rgba(232,104,42,0.35))" }}>
-          <GaribaldiFish size={120} />
-        </div>
-
-        {/* Bubbles */}
-        <div className="absolute right-[12%] top-[42%] hidden md:block">
-          <div className="camp-bubble" />
-          <div className="camp-bubble" />
-          <div className="camp-bubble" />
-        </div>
-
-        {/* Content */}
-        <div className="relative z-10 max-w-[1100px] mx-auto w-full px-6 sm:px-8">
+        <div className="relative z-10 w-full max-w-[900px] mx-auto px-6 pb-16 md:pb-24">
           <Reveal>
-            <div className="section-label text-[#E8682A]/60 before:bg-[#E8682A]/60">
-              La Jolla Shores · Ages 8–14 · Summer 2026
-            </div>
+            <div className="section-label text-coral before:bg-coral">Ages 8–14 · La Jolla Shores · Summer 2026</div>
           </Reveal>
           <Reveal delay={100}>
-            <h1 className="font-serif text-[clamp(2.5rem,7vw,5rem)] text-white font-normal leading-[1.05] tracking-tight mb-6 max-w-[800px]">
+            <h1 className="font-serif text-[clamp(2.5rem,6vw,4.5rem)] text-white font-normal leading-[1.08] tracking-tight mb-6 max-w-[700px]">
               The ocean camp that starts from the <em className="italic text-[#E8682A]">inside out.</em>
             </h1>
           </Reveal>
           <Reveal delay={200}>
-            <p className="text-[1.05rem] text-white/50 max-w-[500px] leading-[1.8] mb-8">
-              Real water skills — freediving, surf survival, and ocean confidence — through breath-first training in La Jolla&apos;s marine reserve.
+            <p className="text-[1.05rem] text-white/55 max-w-[500px] leading-[1.8] mb-8">
+              The ocean is 20 minutes from every neighborhood in San Diego. Camp Garibaldi exists because being near it isn&apos;t the same as belonging to it.
             </p>
           </Reveal>
           <Reveal delay={300}>
@@ -70,25 +50,11 @@ export default function CampGaribaldiPage() {
               <Link href="/camp-garibaldi/register" className="inline-block px-7 py-3.5 bg-[#E8682A] text-white rounded-full font-medium text-[0.88rem] no-underline hover:bg-[#F4894D] hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(232,104,42,0.3)] transition-all camp-glow">
                 Reserve a Spot →
               </Link>
-              <a href="#the-week" className="text-white/50 text-[0.85rem] no-underline border-b border-white/20 pb-px hover:text-white hover:border-white/50 transition-colors">
-                See the week
+              <a href="#how-it-works" className="text-white/50 text-[0.85rem] no-underline border-b border-white/20 pb-px hover:text-white hover:border-white/50 transition-colors">
+                How It Works
               </a>
             </div>
           </Reveal>
-        </div>
-
-        {/* Corner stats */}
-        <div className="absolute bottom-8 right-8 hidden lg:flex flex-col gap-2 text-right z-10">
-          {[
-            { num: "4:1", label: "Student to instructor" },
-            { num: "50+", label: "Species in the reserve" },
-            { num: "35ft", label: "Canyon depth reached" },
-          ].map((s) => (
-            <div key={s.label}>
-              <div className="font-serif text-xl text-[#E8682A]">{s.num}</div>
-              <div className="text-[9px] uppercase tracking-[0.15em] text-white/25 font-medium">{s.label}</div>
-            </div>
-          ))}
         </div>
       </section>
 
@@ -107,29 +73,39 @@ export default function CampGaribaldiPage() {
       </section>
 
       {/* ─── METHODOLOGY ─── */}
-      <section className="bg-deep py-20 sm:py-28 px-6">
-        <div className="max-w-[1100px] mx-auto">
+      <section id="how-it-works" className="bg-white py-20 sm:py-28 px-6 scroll-mt-20">
+        <div className="max-w-[900px] mx-auto">
           <Reveal>
-            <div className="section-label">Our Approach</div>
-            <h2 className="font-serif text-[clamp(1.6rem,3vw,2.4rem)] text-white leading-[1.2] max-w-[600px] mb-2">
-              Skills that build from the <em className="italic text-[#E8682A]">inside out.</em>
-            </h2>
-            <p className="text-[0.88rem] text-white/35 max-w-[560px] leading-[1.8] mb-10">
-              Most camps start in the water and hope kids figure out how to stay calm. We flip that. By the time Camp Garibaldi students enter the ocean, they already have the internal tools to handle it.
-            </p>
+            <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-center mb-16">
+              <div>
+                <div className="section-label">Our Approach</div>
+                <h2 className="section-title">
+                  We start every session on land
+                </h2>
+                <p className="section-desc">
+                  Breathing drills. Dive reflex experiments. Conditions briefings from real Scripps instruments. By the time kids enter the water, they&apos;re already equipped with the internal tools to handle whatever they find there.
+                </p>
+              </div>
+              <div className="relative rounded-2xl overflow-hidden aspect-[3/4]">
+                <img src="/images/photos/joshua-kid-beach.jpg" alt="Student in full gear ready for the ocean" className="absolute inset-0 w-full h-full object-cover" />
+              </div>
+            </div>
           </Reveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-seafoam/[0.06] border border-seafoam/[0.06]">
+          <div className="space-y-6">
             {[
-              { num: "01", title: "Breath Control", body: "Diaphragmatic breathing, CO₂ tolerance, the mammalian dive reflex. Students measure their own heart rate response before they ever enter the ocean — and learn exactly why calm is faster than panic." },
-              { num: "02", title: "Water Confidence", body: "Progressive exposure — from breathing drills on land, to shallow snorkeling, to open-water freedives at the canyon rim. Every step builds on demonstrated competence, not just courage." },
-              { num: "03", title: "Practical Skills", body: "Freediving technique, equalization, surf survival, ocean conditions literacy, marine species identification. Skills built on physiology and knowledge — not supervision. They carry for life." },
+              { num: "01", title: "Breath & composure first", body: "Diaphragmatic breathing, CO₂ tolerance, the mammalian dive reflex. Kids learn to manage their nervous system before they're asked to trust the ocean." },
+              { num: "02", title: "Progressive ocean entry", body: "Pool to shallows to open water. Every step builds on demonstrated competence, not just courage. No one gets pushed past their edge." },
+              { num: "03", title: "Read the ocean like a local", body: "Students pull live buoy data from Scripps every morning. Wave height, period, tide, temperature. They make the go/no-go call — not the instructor." },
+              { num: "04", title: "Know what lives there", body: "15+ species identified by direct observation. Leopard sharks, garibaldi, bat rays. Logged to iNaturalist with GPS coordinates." },
             ].map((m) => (
               <Reveal key={m.num}>
-                <div className="bg-deep p-8 sm:p-10">
-                  <div className="font-serif text-5xl text-[#E8682A]/15 leading-none mb-4">{m.num}</div>
-                  <h3 className="font-serif text-lg text-white mb-3">{m.title}</h3>
-                  <p className="text-[0.85rem] text-white/40 leading-[1.85]">{m.body}</p>
+                <div className="flex gap-5">
+                  <span className="font-serif text-2xl text-teal/30 shrink-0">{m.num}</span>
+                  <div>
+                    <h4 className="font-semibold text-sm mb-1">{m.title}</h4>
+                    <p className="text-sm text-[#5a6a7a] leading-relaxed">{m.body}</p>
+                  </div>
                 </div>
               </Reveal>
             ))}
