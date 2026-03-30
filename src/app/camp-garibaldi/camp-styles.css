@@ -1,17 +1,51 @@
-/* Camp Garibaldi — custom styles */
+/* Camp Garibaldi — Light editorial theme */
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&display=swap');
 
-:root {
-  --garibaldi: #E8682A;
-  --garibaldi-light: #F4894D;
-  --garibaldi-deep: #C4521C;
+.camp-page {
+  --ocean-deep:   #0B4F6C;
+  --ocean:        #1A7FA8;
+  --ocean-light:  #E8F4FA;
+  --ocean-pale:   #F0F8FC;
+  --garibaldi:    #E8682A;
+  --garibaldi-lt: #F4894D;
+  --garibaldi-dk: #C4521C;
+  --sand:         #F5E6C8;
+  --sand-dark:    #D4A574;
+  --cream:        #FDFAF5;
+  --ink:          #1A2E3B;
+  --ink-mid:      #3A5060;
+  --ink-light:    #6A8090;
+  --ink-faint:    #A0B4BE;
+  --teal:         #2AA89A;
+  --teal-light:   #E0F5F2;
+
+  background: var(--cream);
+  color: var(--ink);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  line-height: 1.7;
 }
 
-/* Animations */
+.camp-page h1, .camp-page h2, .camp-page h3 {
+  font-family: 'Fraunces', serif;
+  font-weight: 400;
+}
+
+.camp-page .eyebrow {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--garibaldi);
+  display: block;
+  margin-bottom: 0.6rem;
+}
+
+/* ─── ANIMATIONS ──────────────────────────── */
 @keyframes fish-swim {
-  0%, 100% { transform: translateY(0) rotate(-2deg); }
-  25% { transform: translateY(-12px) rotate(1deg); }
-  50% { transform: translateY(-8px) rotate(-1deg); }
-  75% { transform: translateY(-16px) rotate(2deg); }
+  0%,100% { transform: translateY(0) rotate(-3deg); }
+  30%     { transform: translateY(-12px) rotate(1deg); }
+  60%     { transform: translateY(-6px) rotate(-2deg); }
 }
 
 @keyframes fish-bob {
@@ -19,9 +53,9 @@
   50% { transform: translateY(-8px) rotate(3deg); }
 }
 
-@keyframes bubble-rise {
-  0% { transform: translateY(0) scale(1); opacity: 0.6; }
-  100% { transform: translateY(-60px) scale(1.3); opacity: 0; }
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes glow-pulse {
@@ -29,17 +63,571 @@
   50% { box-shadow: 0 0 40px 8px rgba(232, 104, 42, 0.12); }
 }
 
-.camp-fish-swim { animation: fish-swim 6s ease-in-out infinite; }
+.camp-fish-swim { animation: fish-swim 5s ease-in-out infinite; }
 .camp-fish-bob { animation: fish-bob 4s ease-in-out infinite; }
 .camp-glow { animation: glow-pulse 4s ease-in-out infinite; }
+.camp-fade-1 { animation: fade-up 0.6s 0.05s ease both; }
+.camp-fade-2 { animation: fade-up 0.6s 0.15s ease both; }
+.camp-fade-3 { animation: fade-up 0.6s 0.28s ease both; }
+.camp-fade-4 { animation: fade-up 0.6s 0.4s ease both; }
 
-.camp-bubble {
-  width: 5px; height: 5px;
-  border-radius: 50%;
-  background: rgba(61,184,164,0.3);
-  position: absolute;
-  animation: bubble-rise 3s ease-in infinite;
+/* ─── NAV ─────────────────────────────────── */
+.camp-nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 0.85rem 2rem;
+  display: flex; align-items: center; justify-content: space-between;
+  background: rgba(253,250,245,0.94);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(26,127,168,0.08);
 }
-.camp-bubble:nth-child(1) { left: 0; animation-delay: 0s; }
-.camp-bubble:nth-child(2) { left: 10px; animation-delay: 1s; width: 4px; height: 4px; }
-.camp-bubble:nth-child(3) { left: -8px; animation-delay: 2s; width: 3px; height: 3px; }
+
+.camp-nav-brand {
+  display: flex; align-items: center; gap: 10px;
+  text-decoration: none;
+}
+
+.camp-nav-title {
+  font-family: 'Fraunces', serif;
+  font-size: 1.05rem; color: var(--ink); line-height: 1.1;
+}
+
+.camp-nav-title span {
+  display: block;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 8.5px; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--ink-light);
+  font-weight: 400; margin-top: 1px;
+}
+
+.camp-nav-cta {
+  background: var(--garibaldi); color: white; text-decoration: none;
+  padding: 0.5rem 1.3rem; border-radius: 99px;
+  font-size: 0.8rem; font-weight: 500;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+}
+.camp-nav-cta:hover {
+  background: var(--garibaldi-lt); transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(232,104,42,0.25);
+}
+
+/* ─── HERO ────────────────────────────────── */
+.camp-hero {
+  min-height: 92vh;
+  background: linear-gradient(160deg, #EBF6FB 0%, #F5EFE3 55%, #FDF8F0 100%);
+  display: flex; flex-direction: column; justify-content: center;
+  position: relative; overflow: hidden; padding-top: 70px;
+}
+
+.camp-hero-fish {
+  position: absolute; top: 18%; right: 6%;
+  filter: drop-shadow(0 8px 20px rgba(232,104,42,0.18));
+}
+
+.camp-hero-content {
+  position: relative; z-index: 2;
+  padding: 2rem 2rem 3rem;
+  max-width: 1100px; margin: 0 auto; width: 100%;
+}
+
+.camp-hero h1 {
+  font-size: clamp(2.6rem, 6vw, 4.6rem);
+  line-height: 1.05; color: var(--ink);
+  max-width: 680px; margin-bottom: 1.25rem;
+}
+.camp-hero h1 em { font-style: italic; color: var(--garibaldi); }
+
+.camp-hero-sub {
+  font-size: 1rem; color: var(--ink-mid);
+  max-width: 460px; margin-bottom: 2rem; line-height: 1.8;
+}
+
+.camp-pills {
+  display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem;
+}
+.camp-pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 0.3rem 0.8rem; background: white;
+  border: 1px solid rgba(26,127,168,0.14); border-radius: 99px;
+  font-size: 0.76rem; color: var(--ink-mid);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+.camp-pill-dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--garibaldi); flex-shrink: 0;
+}
+
+.camp-hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
+
+/* ─── BUTTONS ─────────────────────────────── */
+.camp-btn-primary {
+  background: var(--garibaldi); color: white; text-decoration: none;
+  padding: 0.85rem 2rem; border-radius: 99px;
+  font-size: 0.9rem; font-weight: 500;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+  display: inline-block;
+}
+.camp-btn-primary:hover {
+  background: var(--garibaldi-lt); transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(232,104,42,0.3);
+}
+
+.camp-btn-ghost {
+  color: var(--ink-mid); text-decoration: none; font-size: 0.85rem;
+  border-bottom: 1px solid rgba(26,79,108,0.2); padding-bottom: 1px;
+  transition: color 0.2s;
+}
+.camp-btn-ghost:hover { color: var(--ocean); }
+
+/* ─── TRUST STRIP ─────────────────────────── */
+.camp-trust {
+  background: white;
+  border-top: 1px solid rgba(26,127,168,0.06);
+  border-bottom: 1px solid rgba(26,127,168,0.06);
+  padding: 1.25rem 0;
+}
+
+.camp-trust-items {
+  display: flex; justify-content: center; flex-wrap: wrap;
+  gap: 1.5rem 2.5rem;
+  max-width: 1100px; margin: 0 auto; padding: 0 2rem;
+}
+
+.camp-trust-item {
+  font-size: 0.72rem; color: var(--ink-light);
+  letter-spacing: 0.06em; text-transform: uppercase; font-weight: 500;
+  display: flex; align-items: center; gap: 6px;
+}
+
+.camp-trust-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--teal); flex-shrink: 0;
+}
+
+/* ─── CONTAINER ───────────────────────────── */
+.camp-container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+.camp-container-narrow { max-width: 760px; margin: 0 auto; padding: 0 2rem; }
+.camp-section { padding: 4.5rem 0; }
+
+/* ─── GAP SECTION ─────────────────────────── */
+.camp-gap {
+  background: var(--ocean-deep); color: white;
+  padding: 4rem 0;
+}
+
+.camp-gap-grid {
+  display: grid; grid-template-columns: 1.2fr 1fr;
+  gap: 3rem; align-items: center;
+}
+
+.camp-gap-statement {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  line-height: 1.3; color: white;
+}
+.camp-gap-statement em { font-style: italic; color: #7DD8F0; }
+
+.camp-gap-sub {
+  font-size: 0.92rem; color: rgba(255,255,255,0.55);
+  line-height: 1.85;
+}
+.camp-gap-sub strong { color: rgba(255,255,255,0.82); font-weight: 500; }
+
+.camp-gap-stats { display: flex; gap: 1.5rem; margin-top: 1.5rem; }
+
+.camp-gap-stat { text-align: center; }
+
+.camp-gap-stat-num {
+  font-family: 'Fraunces', serif;
+  font-size: 1.8rem; line-height: 1; margin-bottom: 0.2rem;
+}
+
+.camp-gap-stat-label {
+  font-size: 0.68rem; color: rgba(255,255,255,0.35);
+  text-transform: uppercase; letter-spacing: 0.08em; font-weight: 500;
+  line-height: 1.4;
+}
+
+/* ─── PHOTO GRID ──────────────────────────── */
+.camp-photos { background: var(--cream); padding: 3rem 0; }
+
+.camp-photo-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  grid-template-rows: 200px 200px;
+  gap: 0.75rem;
+}
+
+.camp-photo-cell {
+  border-radius: 12px;
+  position: relative; overflow: hidden;
+}
+.camp-photo-cell:first-child { grid-row: span 2; }
+.camp-photo-cell img {
+  width: 100%; height: 100%; object-fit: cover;
+  display: block;
+}
+
+/* ─── METHOD ──────────────────────────────── */
+.camp-method { background: white; }
+
+.camp-method-header { max-width: 540px; margin-bottom: 2.5rem; }
+
+.camp-method-header h2 {
+  font-size: clamp(1.6rem, 2.8vw, 2.2rem);
+  line-height: 1.2; color: var(--ink); margin-bottom: 0.6rem;
+}
+.camp-method-header h2 em { font-style: italic; color: var(--garibaldi); }
+
+.camp-method-header p {
+  font-size: 0.9rem; color: var(--ink-mid); line-height: 1.8;
+}
+
+.camp-method-cards {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem;
+}
+
+.camp-method-card {
+  background: var(--cream);
+  border: 1px solid rgba(26,127,168,0.1);
+  border-radius: 14px; padding: 1.75rem 1.5rem;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.camp-method-card:hover {
+  box-shadow: 0 6px 24px rgba(26,79,108,0.07);
+  transform: translateY(-2px);
+}
+
+.camp-method-num {
+  font-family: 'Fraunces', serif;
+  font-size: 2.5rem; color: rgba(232,104,42,0.1);
+  line-height: 1; margin-bottom: 0.6rem;
+}
+
+.camp-method-card h3 {
+  font-size: 1rem; color: var(--ink); margin-bottom: 0.5rem;
+}
+
+.camp-method-card p {
+  font-size: 0.82rem; color: var(--ink-mid); line-height: 1.75;
+}
+
+/* ─── SESSIONS / PRICING ──────────────────── */
+.camp-sessions { background: var(--ocean-pale); }
+
+.camp-sessions-header {
+  text-align: center; max-width: 540px; margin: 0 auto 2.5rem;
+}
+.camp-sessions-header h2 {
+  font-size: clamp(1.6rem, 2.8vw, 2.4rem);
+  color: var(--ink); margin-bottom: 0.5rem;
+}
+.camp-sessions-header p { font-size: 0.9rem; color: var(--ink-light); }
+
+.camp-sessions-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem; margin-bottom: 2rem;
+}
+
+.camp-session-card {
+  background: white;
+  border: 1.5px solid rgba(26,127,168,0.1);
+  border-radius: 16px; padding: 1.75rem 1.5rem;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.camp-session-card:hover {
+  box-shadow: 0 6px 24px rgba(26,79,108,0.08);
+  transform: translateY(-2px);
+}
+.camp-session-card.featured {
+  border-color: var(--garibaldi);
+  box-shadow: 0 4px 20px rgba(232,104,42,0.1);
+}
+
+.camp-session-tag {
+  font-size: 9px; text-transform: uppercase;
+  letter-spacing: 0.16em; font-weight: 500;
+  color: var(--garibaldi); margin-bottom: 0.6rem;
+}
+
+.camp-session-date {
+  font-family: 'Fraunces', serif; font-size: 1.4rem;
+  color: var(--ink); margin-bottom: 0.15rem;
+}
+
+.camp-session-type {
+  font-size: 0.78rem; color: var(--ink-light);
+  margin-bottom: 1rem; font-style: italic;
+}
+
+.camp-session-price {
+  font-family: 'Fraunces', serif; font-size: 2rem;
+  color: var(--ink); line-height: 1; margin-bottom: 0.4rem;
+}
+
+.camp-session-cta {
+  display: block; text-align: center; padding: 0.65rem;
+  background: var(--garibaldi); color: white; text-decoration: none;
+  font-size: 0.83rem; font-weight: 500; border-radius: 99px;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+.camp-session-cta:hover {
+  background: var(--garibaldi-lt);
+  box-shadow: 0 4px 14px rgba(232,104,42,0.25);
+}
+.camp-session-cta.outline {
+  background: transparent;
+  border: 1.5px solid rgba(232,104,42,0.4);
+  color: var(--garibaldi-dk);
+}
+.camp-session-cta.outline:hover { background: rgba(232,104,42,0.04); }
+
+/* ─── WEEK TABS (light version) ───────────── */
+.camp-week { background: var(--cream); }
+
+.camp-week-tabs {
+  display: flex; gap: 0.4rem; margin-bottom: 1.5rem;
+  background: white; border: 1px solid rgba(26,127,168,0.12);
+  border-radius: 99px; padding: 3px; width: fit-content;
+}
+
+.camp-week-tab {
+  padding: 0.45rem 1.1rem; font-size: 0.78rem; font-weight: 500;
+  color: var(--ink-light); cursor: pointer; border-radius: 99px;
+  border: none; background: none; font-family: 'DM Sans', sans-serif;
+  transition: background 0.2s, color 0.2s;
+}
+.camp-week-tab.active { background: var(--garibaldi); color: white; }
+.camp-week-tab:hover:not(.active) { color: var(--ink); }
+
+.camp-day-card {
+  background: white; border-radius: 12px;
+  padding: 1.25rem 1.1rem;
+  border: 1px solid rgba(26,127,168,0.08);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.025);
+}
+
+.camp-day-tag {
+  font-size: 8.5px; text-transform: uppercase;
+  letter-spacing: 0.14em; color: var(--ink-faint);
+  font-weight: 500; margin-bottom: 0.2rem;
+}
+
+.camp-day-name {
+  font-family: 'Fraunces', serif; font-size: 0.95rem;
+  color: var(--ink); margin-bottom: 0.15rem;
+}
+
+.camp-day-theme {
+  font-size: 0.72rem; color: var(--garibaldi); font-style: italic;
+  font-family: 'Fraunces', serif; margin-bottom: 0.8rem; opacity: 0.8;
+}
+
+.camp-day-list {
+  list-style: none; display: flex; flex-direction: column; gap: 0.35rem;
+}
+.camp-day-list li {
+  font-size: 0.72rem; color: var(--ink-mid); line-height: 1.4;
+  padding-left: 0.8rem; position: relative;
+}
+.camp-day-list li::before {
+  content: ''; position: absolute; left: 0; top: 0.45em;
+  width: 3.5px; height: 3.5px; border-radius: 50%;
+  background: rgba(232,104,42,0.35);
+}
+
+/* ─── SAFETY ──────────────────────────────── */
+.camp-safety { background: var(--ink); color: white; }
+
+.camp-safety-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 3.5rem; align-items: center;
+}
+
+.camp-safety h2 {
+  font-size: clamp(1.5rem, 2.5vw, 2.2rem);
+  line-height: 1.2; color: white; margin-bottom: 1rem;
+}
+.camp-safety h2 em { font-style: italic; color: #7DD8F0; }
+
+.camp-safety p {
+  font-size: 0.88rem; color: rgba(255,255,255,0.5);
+  line-height: 1.85; margin-bottom: 0.85rem;
+}
+
+.camp-creds {
+  display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1.25rem;
+}
+.camp-cred {
+  padding: 0.3rem 0.75rem;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 99px; font-size: 0.72rem;
+  color: rgba(255,255,255,0.5);
+}
+
+.camp-safety-cards {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem;
+}
+
+.camp-safety-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 12px; padding: 1.5rem 1.25rem; text-align: center;
+}
+
+.camp-safety-card .val {
+  font-family: 'Fraunces', serif;
+  font-size: 1rem; line-height: 1.35;
+  color: var(--garibaldi-lt); margin-bottom: 0.35rem;
+}
+
+.camp-safety-card .lbl {
+  font-size: 0.72rem; color: rgba(255,255,255,0.3);
+  line-height: 1.45;
+}
+
+/* ─── INSTRUCTOR ──────────────────────────── */
+.camp-instructor { background: var(--sand); padding: 4rem 0; }
+
+.camp-instructor-card {
+  display: grid; grid-template-columns: auto 1fr;
+  gap: 2.5rem; align-items: start;
+  max-width: 760px; margin: 0 auto; padding: 0 2rem;
+}
+
+.camp-instructor-avatar {
+  width: 90px; height: 90px; border-radius: 50%;
+  border: 3px solid rgba(232,104,42,0.18);
+  flex-shrink: 0; box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  overflow: hidden;
+}
+.camp-instructor-avatar img {
+  width: 100%; height: 100%; object-fit: cover;
+}
+
+.camp-instructor-name {
+  font-family: 'Fraunces', serif;
+  font-size: 1.4rem; color: var(--ink); margin-bottom: 0.15rem;
+}
+
+.camp-instructor-roles {
+  font-size: 0.75rem; color: var(--ink-light);
+  margin-bottom: 1rem; letter-spacing: 0.02em;
+}
+
+.camp-instructor-body {
+  font-size: 0.88rem; color: var(--ink-mid);
+  line-height: 1.85; margin-bottom: 0.75rem;
+}
+
+/* ─── COMMUNITY ───────────────────────────── */
+.camp-community { background: white; padding: 4rem 0; }
+
+.camp-community-header { max-width: 540px; margin-bottom: 2rem; }
+
+.camp-community-header h2 {
+  font-size: clamp(1.4rem, 2.2vw, 1.9rem);
+  color: var(--ink); margin-bottom: 0.5rem; line-height: 1.25;
+}
+.camp-community-header h2 em { font-style: italic; color: var(--garibaldi); }
+
+.camp-community-header p {
+  font-size: 0.88rem; color: var(--ink-mid); line-height: 1.8;
+}
+
+.camp-community-strip {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem;
+}
+
+.camp-community-item {
+  background: var(--cream); border-radius: 12px;
+  padding: 1.25rem; border: 1px solid rgba(26,127,168,0.08);
+}
+.camp-community-item h3 {
+  font-family: 'Fraunces', serif;
+  font-size: 0.88rem; color: var(--ink); margin-bottom: 0.35rem;
+}
+.camp-community-item p {
+  font-size: 0.76rem; color: var(--ink-mid); line-height: 1.65;
+}
+
+.camp-community-teaser {
+  margin-top: 2rem; padding: 1.25rem 1.5rem;
+  background: var(--ocean-pale); border-radius: 12px;
+  border: 1px solid rgba(26,127,168,0.1);
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 1rem;
+}
+.camp-community-teaser p { font-size: 0.85rem; color: var(--ink-mid); }
+.camp-community-teaser strong { color: var(--ink); font-weight: 500; }
+.camp-community-teaser a {
+  font-size: 0.8rem; color: var(--ocean);
+  text-decoration: none; border-bottom: 1px solid rgba(26,127,168,0.25);
+  padding-bottom: 1px;
+}
+
+/* ─── FOOTER CTA ──────────────────────────── */
+.camp-footer-cta {
+  background: linear-gradient(160deg, #F5E6C8 0%, #FDF8F0 100%);
+  padding: 5rem 0 4.5rem; text-align: center;
+}
+
+.camp-footer-cta h2 {
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  color: var(--ink); margin-bottom: 0.85rem;
+}
+.camp-footer-cta h2 em { color: var(--garibaldi); }
+
+.camp-footer-cta p {
+  font-size: 0.92rem; color: var(--ink-mid);
+  max-width: 400px; margin: 0 auto 2rem; line-height: 1.8;
+}
+
+/* ─── FOOTER ──────────────────────────────── */
+.camp-footer {
+  background: var(--ink); padding: 1.75rem 0;
+}
+
+.camp-footer-inner {
+  display: flex; justify-content: space-between;
+  align-items: center; flex-wrap: wrap; gap: 0.75rem;
+  font-size: 0.72rem; color: rgba(255,255,255,0.22);
+  max-width: 1100px; margin: 0 auto; padding: 0 2rem;
+}
+.camp-footer-inner a {
+  color: rgba(255,255,255,0.32); text-decoration: none;
+  transition: color 0.2s;
+}
+.camp-footer-inner a:hover { color: rgba(255,255,255,0.6); }
+
+.camp-footer-links { display: flex; gap: 1.25rem; }
+
+/* ─── RESPONSIVE ──────────────────────────── */
+@media (max-width: 900px) {
+  .camp-gap-grid,
+  .camp-safety-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .camp-method-cards { grid-template-columns: 1fr; }
+  .camp-sessions-grid { grid-template-columns: 1fr; }
+  .camp-community-strip { grid-template-columns: 1fr 1fr; }
+  .camp-safety-cards { grid-template-columns: 1fr 1fr; }
+  .camp-photo-grid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 180px 180px;
+  }
+  .camp-photo-cell:first-child { grid-row: span 1; }
+  .camp-hero-fish { top: 12%; right: 3%; }
+  .camp-hero-fish svg { width: 90px; height: 72px; }
+  .camp-week .camp-day-card { min-width: 0; }
+}
+
+@media (max-width: 600px) {
+  .camp-community-strip { grid-template-columns: 1fr; }
+  .camp-safety-cards { grid-template-columns: 1fr; }
+  .camp-instructor-card { grid-template-columns: 1fr; }
+  .camp-footer-links { display: none; }
+  .camp-gap-stats { flex-direction: column; gap: 1rem; }
+  .camp-photo-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(4, 160px);
+  }
+}
