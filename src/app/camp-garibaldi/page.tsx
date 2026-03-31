@@ -23,8 +23,8 @@ export default function CampGaribaldiPage() {
 
       {/* ─── HERO ─── */}
       <section className="camp-hero">
-        <div className="camp-hero-fish camp-fish-swim">
-          <img src="/images/camp/gary-fancy.png" alt="Gary the Garibaldi" width={140} height={140} />
+        <div className="camp-hero-fish camp-fish-swim" aria-hidden="true">
+          <img src="/images/camp/gary-fancy.png" alt="" width={140} height={140} style={{ display: "block" }} />
         </div>
         <div className="camp-hero-content">
           <span className="eyebrow camp-fade-1">Ages 8–14 · La Jolla Shores · Summer 2026</span>

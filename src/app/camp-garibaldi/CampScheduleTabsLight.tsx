@@ -37,13 +37,7 @@ export default function CampScheduleTabsLight() {
         </button>
       </div>
 
-      <div style={{
-        display: "grid",
-        gridTemplateColumns: tab === "5day"
-          ? "repeat(5, 1fr)"
-          : "repeat(3, 1fr)",
-        gap: "0.85rem",
-      }}>
+      <div className="camp-schedule-grid" data-cols={tab === "5day" ? "5" : "3"}>
         {schedule.map((d) => (
           <div key={d.day + d.name} className="camp-day-card">
             <div className="camp-day-tag">{d.day}</div>

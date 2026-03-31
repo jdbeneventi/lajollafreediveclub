@@ -113,6 +113,7 @@
 .camp-hero-fish {
   position: absolute; top: 18%; right: 6%;
   filter: drop-shadow(0 8px 20px rgba(232,104,42,0.18));
+  z-index: 1;
 }
 
 .camp-hero-content {
@@ -427,6 +428,22 @@
   background: rgba(232,104,42,0.35);
 }
 
+.camp-schedule-grid {
+  display: grid;
+  gap: 0.85rem;
+}
+.camp-schedule-grid[data-cols="5"] { grid-template-columns: repeat(5, 1fr); }
+.camp-schedule-grid[data-cols="3"] { grid-template-columns: repeat(3, 1fr); }
+
+@media (max-width: 900px) {
+  .camp-schedule-grid[data-cols="5"] { grid-template-columns: repeat(2, 1fr); }
+  .camp-schedule-grid[data-cols="3"] { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 480px) {
+  .camp-schedule-grid[data-cols="5"],
+  .camp-schedule-grid[data-cols="3"] { grid-template-columns: 1fr; }
+}
+
 /* ─── SAFETY ──────────────────────────────── */
 .camp-safety { background: var(--ink); color: white; }
 
@@ -607,19 +624,106 @@
     grid-template-rows: 180px 180px;
   }
   .camp-photo-cell:first-child { grid-row: span 1; }
-  .camp-hero-fish { top: 12%; right: 3%; }
-  .camp-hero-fish svg { width: 90px; height: 72px; }
   .camp-week .camp-day-card { min-width: 0; }
 }
 
 @media (max-width: 600px) {
-  .camp-community-strip { grid-template-columns: 1fr; }
-  .camp-safety-cards { grid-template-columns: 1fr; }
-  .camp-instructor-card { grid-template-columns: 1fr; }
-  .camp-footer-links { display: none; }
-  .camp-gap-stats { flex-direction: column; gap: 1rem; }
-  .camp-photo-grid {
-    grid-template-columns: 1fr;
-    grid-template-rows: repeat(4, 160px);
+  /* Hero: fish above text, not overlapping */
+  .camp-hero {
+    min-height: auto;
+    padding-top: 80px;
+    padding-bottom: 0;
   }
+  .camp-hero-fish {
+    position: relative;
+    top: auto; right: auto;
+    text-align: center;
+    margin: 1.5rem auto 0;
+  }
+  .camp-hero-fish img {
+    width: 90px; height: 90px;
+  }
+  .camp-hero-content {
+    padding: 1.5rem 1.5rem 2.5rem;
+  }
+  .camp-hero h1 {
+    font-size: 2.2rem;
+  }
+  .camp-hero-sub {
+    font-size: 0.9rem;
+  }
+
+  /* Nav */
+  .camp-nav {
+    padding: 0.65rem 1rem;
+  }
+  .camp-nav-logo {
+    height: 28px;
+  }
+
+  /* Sections — tighter padding */
+  .camp-section { padding: 3rem 0; }
+  .camp-container { padding: 0 1.25rem; }
+  .camp-container-narrow { padding: 0 1.25rem; }
+
+  /* Gap */
+  .camp-gap { padding: 2.5rem 0; }
+  .camp-gap-statement { font-size: 1.3rem; }
+  .camp-gap-stats { flex-direction: row; gap: 1rem; }
+  .camp-gap-stat-num { font-size: 1.4rem; }
+
+  /* Photos */
+  .camp-photo-grid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 140px 140px;
+  }
+  .camp-photo-cell:first-child { grid-row: span 1; }
+  .camp-photos { padding: 2rem 0; }
+
+  /* Method cards */
+  .camp-method-header h2 { font-size: 1.4rem; }
+
+  /* Sessions */
+  .camp-sessions-grid { grid-template-columns: 1fr; }
+  .camp-sessions-header h2 { font-size: 1.5rem; }
+
+  /* Week tabs — scroll horizontally on 5-day */
+  .camp-week-tabs {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Safety */
+  .camp-safety-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .camp-safety-cards { grid-template-columns: 1fr; }
+  .camp-safety h2 { font-size: 1.3rem; }
+
+  /* Instructor */
+  .camp-instructor { padding: 2.5rem 0; }
+  .camp-instructor-card {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 0 1.25rem;
+  }
+  .camp-instructor-avatar {
+    width: 70px; height: 70px;
+  }
+
+  /* Community */
+  .camp-community { padding: 3rem 0; }
+  .camp-community-strip { grid-template-columns: 1fr; }
+  .camp-community-teaser {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  /* Footer CTA */
+  .camp-footer-cta {
+    padding: 3.5rem 0 3rem;
+  }
+  .camp-footer-cta h2 { font-size: 1.6rem; }
+
+  /* Footer */
+  .camp-footer-links { display: none; }
+  .camp-footer-inner { justify-content: center; text-align: center; }
 }
