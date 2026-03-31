@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { GaribaldiFish, GaribaldiFishSmall } from "./GaribaldiFish";
 import CampScheduleTabsLight from "./CampScheduleTabsLight";
 import FloatingFish from "./FloatingFish";
 import "./camp-styles.css";
@@ -16,12 +15,8 @@ export default function CampGaribaldiPage() {
     <div className="camp-page">
       {/* ─── NAV ─── */}
       <nav className="camp-nav">
-        <Link href="/" className="camp-nav-brand">
-          <div><GaribaldiFishSmall /></div>
-          <div className="camp-nav-title">
-            Camp Garibaldi
-            <span>La Jolla Freedive Club</span>
-          </div>
+        <Link href="/camp-garibaldi" className="camp-nav-brand">
+          <img src="/images/camp/cg-logo.svg" alt="Camp Garibaldi" className="camp-nav-logo" />
         </Link>
         <a href="#sessions" className="camp-nav-cta">Reserve a Spot</a>
       </nav>
@@ -29,7 +24,7 @@ export default function CampGaribaldiPage() {
       {/* ─── HERO ─── */}
       <section className="camp-hero">
         <div className="camp-hero-fish camp-fish-swim">
-          <GaribaldiFish size={120} />
+          <img src="/images/camp/gary-fancy.png" alt="Gary the Garibaldi" width={140} height={140} />
         </div>
         <div className="camp-hero-content">
           <span className="eyebrow camp-fade-1">Ages 8–14 · La Jolla Shores · Summer 2026</span>
@@ -305,7 +300,7 @@ export default function CampGaribaldiPage() {
       <section className="camp-footer-cta">
         <div className="camp-container-narrow">
           <div className="camp-fish-swim" style={{ display: "inline-block", marginBottom: "1.25rem", filter: "drop-shadow(0 4px 10px rgba(232,104,42,0.18))" }}>
-            <GaribaldiFish size={80} />
+            <img src="/images/camp/gary-fancy.png" alt="Gary the Garibaldi" width={80} height={80} />
           </div>
           <h2>Ready to go <em>deeper?</em></h2>
           <p>Small groups fill quickly. Reserve your student&apos;s spot — or reach out with questions.</p>

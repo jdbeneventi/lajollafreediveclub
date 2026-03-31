@@ -86,17 +86,9 @@
   text-decoration: none;
 }
 
-.camp-nav-title {
-  font-family: 'Fraunces', serif;
-  font-size: 1.05rem; color: var(--ink); line-height: 1.1;
-}
-
-.camp-nav-title span {
-  display: block;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 8.5px; letter-spacing: 0.14em;
-  text-transform: uppercase; color: var(--ink-light);
-  font-weight: 400; margin-top: 1px;
+.camp-nav-logo {
+  height: 36px;
+  width: auto;
 }
 
 .camp-nav-cta {

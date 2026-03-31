@@ -42,20 +42,11 @@ export default function FloatingFish() {
         aria-label={open ? "Close contact menu" : "Contact us"}
         style={{ filter: "drop-shadow(0 4px 12px rgba(249,115,22,0.4))" }}
       >
-        <svg
-          viewBox="0 0 100 80"
-          fill="none"
-          className={`w-14 h-11 transition-transform duration-300 ${open ? "scale-110 rotate-12" : "camp-fish-bob"}`}
-        >
-          <ellipse cx="45" cy="40" rx="35" ry="28" fill="#F97316" />
-          <ellipse cx="45" cy="40" rx="30" ry="23" fill="#FB923C" />
-          <circle cx="25" cy="35" r="5" fill="#1E293B" />
-          <circle cx="24" cy="34" r="2" fill="white" />
-          <path d="M75 40 Q95 25 85 40 Q95 55 75 40" fill="#F97316" />
-          <path d="M45 15 Q55 5 50 20 Q60 10 55 22 Q65 15 58 25" fill="#F97316" />
-          <path d="M30 65 Q35 75 40 65" fill="#F97316" />
-          <path d="M50 65 Q55 72 60 65" fill="#F97316" />
-        </svg>
+        <img
+          src="/images/camp/cg-chat-icon.svg"
+          alt="Contact"
+          className={`w-14 h-14 transition-transform duration-300 ${open ? "scale-110 rotate-12" : "camp-fish-bob"}`}
+        />
       </button>
     </div>
   );
