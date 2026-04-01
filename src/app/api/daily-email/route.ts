@@ -19,6 +19,13 @@ interface ConditionsData {
   waterTemp?: number;
 }
 
+interface VisData {
+  visibility_ft_low: number | null;
+  visibility_ft_high: number | null;
+  grade: string;
+  summary: string;
+}
+
 // ─── Fetch directly from NDBC 46254 realtime text file ───
 async function fetchBuoyDirect(): Promise<Partial<ConditionsData>> {
   const data: Partial<ConditionsData> = {};
@@ -83,17 +90,48 @@ async function fetchWindDirect(): Promise<Partial<ConditionsData>> {
   return data;
 }
 
+// ─── Fetch visibility from AI analysis ───
+async function fetchVisibility(): Promise<VisData | null> {
+  try {
+    const base = process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : "https://lajollafreediveclub.com";
+    const res = await fetch(`${base}/api/visibility`, {
+      headers: { "User-Agent": "LaJollaFreediveClub/1.0" },
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    return data;
+  } catch {
+    return null;
+  }
+}
+
 // ─── Fetch tide predictions from NOAA ───
-async function fetchTideNote(): Promise<string> {
+async function fetchTideData(): Promise<{ note: string; state: string }> {
   try {
     const now = new Date();
     const dateStr = now.toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
     const res = await fetch(
       `https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?begin_date=${dateStr.replace(/-/g, "")}&range=24&station=9410230&product=predictions&datum=MLLW&time_zone=lst_ldt&interval=hilo&units=english&format=json`
     );
-    if (!res.ok) return "Check tides page";
+    if (!res.ok) return { note: "Check tides page", state: "unknown" };
     const data = await res.json();
-    if (!data.predictions || data.predictions.length === 0) return "Check tides page";
+    if (!data.predictions || data.predictions.length === 0) return { note: "Check tides page", state: "unknown" };
+
+    // Determine current tide state
+    const nowHour = new Date().toLocaleString("en-US", { timeZone: "America/Los_Angeles", hour: "numeric", hour12: false });
+    const currentHour = parseInt(nowHour);
+    let tideState = "unknown";
+
+    for (let i = 0; i < data.predictions.length - 1; i++) {
+      const thisTime = parseInt(data.predictions[i].t.split(" ")[1].split(":")[0]);
+      const nextTime = parseInt(data.predictions[i + 1].t.split(" ")[1].split(":")[0]);
+      if (currentHour >= thisTime && currentHour < nextTime) {
+        tideState = data.predictions[i].type === "L" ? "incoming" : "outgoing";
+        break;
+      }
+    }
 
     const lows = data.predictions
       .filter((p: { type: string }) => p.type === "L")
@@ -110,49 +148,163 @@ async function fetchTideNote(): Promise<string> {
         return `${fmt(startH)}–${fmt(endH)}`;
       });
 
-    return lows.length > 0 ? `Best window: ${lows[0]}` : "Check tides page";
+    return {
+      note: lows.length > 0 ? `Best window: ${lows[0]}` : "Check tides page",
+      state: tideState,
+    };
   } catch {
-    return "Check tides page";
+    return { note: "Check tides page", state: "unknown" };
   }
 }
 
-// ─── Scoring ───
-function getOverallGrade(data: ConditionsData): { grade: string; score: number; summary: string } {
-  let score = 50;
+// ─── Check for recent rain ───
+async function checkRecentRain(): Promise<boolean> {
+  try {
+    const res = await fetch("https://www.sdbeachinfo.com/", {
+      headers: { "User-Agent": "LaJollaFreediveClub/1.0" },
+    });
+    if (!res.ok) return false;
+    const html = await res.text();
+    const am = html.match(/Advisories\s*\((\d+)\)/i);
+    const cm = html.match(/Closures\s*\((\d+)\)/i);
+    const ac = am ? parseInt(am[1]) : 0;
+    const cc = cm ? parseInt(cm[1]) : 0;
+    return (ac + cc) > 0;
+  } catch {
+    return false;
+  }
+}
 
-  if (data.waveHeight) {
-    const h = parseFloat(data.waveHeight);
-    if (h <= 1) score += 20;
-    else if (h <= 2) score += 12;
-    else if (h <= 3) score += 0;
-    else if (h <= 5) score -= 15;
-    else score -= 25;
+// ─── Predictive visibility (same as ConditionsWidget) ───
+function predictVisibility(conditions: ConditionsData, tideState: string): { low: number; high: number } {
+  let baseVis = 14;
+
+  const ht = conditions.waveHeight ? parseFloat(conditions.waveHeight) : 0;
+  if (ht <= 1) baseVis += 5;
+  else if (ht <= 2) baseVis += 2;
+  else if (ht <= 3) baseVis -= 2;
+  else if (ht <= 5) baseVis -= 5;
+  else baseVis -= 8;
+
+  const pd = conditions.wavePeriod ? parseFloat(conditions.wavePeriod) : 8;
+  if (pd >= 14) baseVis += 3;
+  else if (pd >= 10) baseVis += 1;
+  else if (pd < 6) baseVis -= 3;
+
+  const ws = parseFloat(conditions.windSpeed || "0");
+  const wd = conditions.windDir || "";
+  if (ws <= 5) baseVis += 2;
+  else if (ws > 12) baseVis -= 3;
+  if (wd.includes("E") && !wd.includes("SE") && ws > 3) baseVis += 2;
+  if (wd.includes("W") && ws > 8) baseVis -= 2;
+
+  if (tideState === "incoming") baseVis += 2;
+  else if (tideState === "outgoing") baseVis -= 1;
+
+  if (conditions.waterTemp) {
+    if (conditions.waterTemp >= 68) baseVis += 2;
+    else if (conditions.waterTemp <= 57) baseVis += 1;
   }
 
-  if (data.windSpeed) {
-    const w = parseFloat(data.windSpeed);
-    if (w <= 3) score += 15;
-    else if (w <= 7) score += 8;
-    else if (w <= 12) score -= 5;
-    else score -= 15;
+  const month = new Date().getMonth();
+  if (month >= 7 && month <= 9) baseVis += 3;
+  else if (month >= 0 && month <= 2) baseVis -= 2;
+
+  baseVis = Math.max(4, Math.min(35, baseVis));
+  return { low: Math.max(3, baseVis - 3), high: baseVis + 3 };
+}
+
+// ─── Weighted scoring (matches ConditionsWidget exactly) ───
+function scoreConditions(
+  conditions: ConditionsData,
+  vis: VisData | null,
+  tideState: string,
+  recentRain: boolean,
+): { grade: string; score: number; summary: string; visLabel: string } {
+
+  // Water safety — overrides everything if rain advisory
+  if (recentRain) {
+    return { grade: "F", score: 10, summary: "Water quality advisory. Stay out of the water until 72 hours post-rain.", visLabel: "Rain advisory" };
   }
 
-  if (data.waterTemp) {
-    if (data.waterTemp >= 65) score += 5;
-    else if (data.waterTemp < 58) score -= 5;
+  // Visibility score (weight: 30)
+  let visScore: number;
+  let visLabel: string;
+  if (vis && vis.visibility_ft_low !== null) {
+    const avg = ((vis.visibility_ft_low || 0) + (vis.visibility_ft_high || 0)) / 2;
+    if (avg >= 25) { visScore = 95; visLabel = `${vis.visibility_ft_low}–${vis.visibility_ft_high}ft · Exceptional`; }
+    else if (avg >= 20) { visScore = 85; visLabel = `${vis.visibility_ft_low}–${vis.visibility_ft_high}ft · Excellent`; }
+    else if (avg >= 15) { visScore = 70; visLabel = `${vis.visibility_ft_low}–${vis.visibility_ft_high}ft · Good`; }
+    else if (avg >= 10) { visScore = 55; visLabel = `${vis.visibility_ft_low}–${vis.visibility_ft_high}ft · Fair`; }
+    else if (avg >= 6) { visScore = 35; visLabel = `${vis.visibility_ft_low}–${vis.visibility_ft_high}ft · Poor`; }
+    else { visScore = 15; visLabel = `${vis.visibility_ft_low}–${vis.visibility_ft_high}ft · Very poor`; }
+  } else {
+    const pred = predictVisibility(conditions, tideState);
+    const avg = (pred.low + pred.high) / 2;
+    if (avg >= 25) { visScore = 90; visLabel = `~${pred.low}–${pred.high}ft · Likely excellent`; }
+    else if (avg >= 20) { visScore = 80; visLabel = `~${pred.low}–${pred.high}ft · Likely very good`; }
+    else if (avg >= 15) { visScore = 65; visLabel = `~${pred.low}–${pred.high}ft · Likely good`; }
+    else if (avg >= 10) { visScore = 50; visLabel = `~${pred.low}–${pred.high}ft · Likely fair`; }
+    else if (avg >= 6) { visScore = 30; visLabel = `~${pred.low}–${pred.high}ft · Likely poor`; }
+    else { visScore = 15; visLabel = `~${pred.low}–${pred.high}ft · Likely very poor`; }
   }
 
-  score = Math.max(0, Math.min(100, score));
+  // Swell score (weight: 25)
+  let swellScore = 50;
+  if (conditions.waveHeight) {
+    const h = parseFloat(conditions.waveHeight);
+    const p = conditions.wavePeriod ? parseFloat(conditions.wavePeriod) : 0;
+    if (h <= 1 && p >= 10) swellScore = 95;
+    else if (h <= 2) swellScore = 80;
+    else if (h <= 3) swellScore = 60;
+    else if (h <= 5) swellScore = 35;
+    else swellScore = 15;
+    if (p >= 12) swellScore = Math.min(100, swellScore + 10);
+    else if (p < 6) swellScore = Math.max(0, swellScore - 15);
+  }
+
+  // Wind score (weight: 20)
+  let windScore = 50;
+  if (conditions.windSpeed) {
+    const w = parseFloat(conditions.windSpeed);
+    const dir = conditions.windDir || "";
+    if (w <= 3) windScore = 95;
+    else if (w <= 7) windScore = 75;
+    else if (w <= 12) windScore = 50;
+    else if (w <= 18) windScore = 25;
+    else windScore = 10;
+    if (dir.includes("E") && !dir.includes("SE")) windScore = Math.min(100, windScore + 10);
+    if (dir.includes("W") && w > 8) windScore = Math.max(0, windScore - 10);
+  }
+
+  // Temp score (weight: 10)
+  let tempScore = 60;
+  if (conditions.waterTemp) {
+    const t = conditions.waterTemp;
+    if (t >= 72) tempScore = 90;
+    else if (t >= 68) tempScore = 80;
+    else if (t >= 63) tempScore = 65;
+    else if (t >= 58) tempScore = 40;
+    else tempScore = 20;
+  }
+
+  // Safety score (weight: 15)
+  const safetyScore = 90; // Already checked rain above
+
+  // Weighted average
+  const weighted =
+    (visScore * 30 + swellScore * 25 + windScore * 20 + tempScore * 10 + safetyScore * 15) / 100;
 
   let grade: string, summary: string;
-  if (score >= 85) { grade = "A"; summary = "Epic conditions — get in the water."; }
-  else if (score >= 75) { grade = "B+"; summary = "Very good conditions. Great day for a dive."; }
-  else if (score >= 65) { grade = "B"; summary = "Good conditions. Solid diving at protected spots."; }
-  else if (score >= 55) { grade = "C+"; summary = "Fair conditions. Pick your spot carefully."; }
-  else if (score >= 40) { grade = "C"; summary = "Below average. Consider a pool session."; }
-  else { grade = "D"; summary = "Poor conditions. Dry training day."; }
+  if (weighted >= 88) { grade = "A"; summary = "Epic conditions. This is what you wait for — get in the water."; }
+  else if (weighted >= 78) { grade = "B+"; summary = "Very good conditions. Great day for a dive."; }
+  else if (weighted >= 68) { grade = "B"; summary = "Good conditions. Solid diving at protected spots."; }
+  else if (weighted >= 58) { grade = "C+"; summary = "Fair conditions. Diveable but pick your spot."; }
+  else if (weighted >= 45) { grade = "C"; summary = "Below average. Consider a pool session."; }
+  else if (weighted >= 30) { grade = "D"; summary = "Poor conditions. Dry training day."; }
+  else { grade = "F"; summary = "Not recommended today."; }
 
-  return { grade, score, summary };
+  return { grade, score: Math.round(weighted), summary, visLabel };
 }
 
 // ─── Email HTML ───
@@ -164,7 +316,7 @@ interface WaterQualityEmail {
 
 function buildEmailHtml(
   conditions: ConditionsData,
-  grade: { grade: string; score: number; summary: string },
+  grade: { grade: string; score: number; summary: string; visLabel: string },
   moon: ReturnType<typeof getMoonPhase>,
   events: ReturnType<typeof getTopEvents>,
   grunion: boolean,
@@ -209,6 +361,10 @@ function buildEmailHtml(
   <!-- Quick Stats -->
   <div style="background:white;border-radius:16px;padding:20px;margin-bottom:16px;">
     <table style="width:100%;border-collapse:collapse;">
+      <tr>
+        <td style="padding:6px 0;font-size:12px;color:#5a6a7a;">Visibility</td>
+        <td style="padding:6px 0;font-size:13px;color:#0B1D2C;text-align:right;font-weight:500;">${grade.visLabel}</td>
+      </tr>
       <tr>
         <td style="padding:6px 0;font-size:12px;color:#5a6a7a;">Swell</td>
         <td style="padding:6px 0;font-size:13px;color:#0B1D2C;text-align:right;font-weight:500;">${conditions.waveHeight || "—"} @ ${conditions.wavePeriod || "—"}</td>
@@ -322,18 +478,18 @@ export async function GET(request: Request) {
   const preview = searchParams.get("preview") === "true";
   const testMode = searchParams.get("test") === "true";
 
-  // Allow access with the hardcoded secret or the env CRON_SECRET
   const validSecret = secret === "ljfc-daily-2026" || (process.env.CRON_SECRET && secret === process.env.CRON_SECRET);
   if (!validSecret) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   try {
-    const [buoyData, windData, tideNote, wqRes, localIntel] = await Promise.all([
+    const [buoyData, windData, tideData, vis, recentRain, localIntel] = await Promise.all([
       fetchBuoyDirect(),
       fetchWindDirect(),
-      fetchTideNote(),
-      fetch("https://www.sdbeachinfo.com/", { headers: { "User-Agent": "LaJollaFreediveClub/1.0" } }).catch(() => null),
+      fetchTideData(),
+      fetchVisibility(),
+      checkRecentRain(),
       getLocalIntel().catch(() => null),
     ]);
 
@@ -342,33 +498,24 @@ export async function GET(request: Request) {
       ...windData,
     };
 
-    const grade = getOverallGrade(conditions);
+    const grade = scoreConditions(conditions, vis, tideData.state, recentRain);
     const moon = getMoonPhase();
     const events = getTopEvents(new Date(), 4);
     const grunion = isGrunionNight(new Date(), moon.age);
 
-    // Parse water quality for email alert
+    // Water quality alert for email display
     let waterQuality: WaterQualityEmail | undefined;
-    if (wqRes && wqRes.ok) {
-      try {
-        const wqHtml = await wqRes.text();
-        const am = wqHtml.match(/Advisories\s*\((\d+)\)/i);
-        const cm = wqHtml.match(/Closures\s*\((\d+)\)/i);
-        const ac = am ? parseInt(am[1]) : 0;
-        const cc = cm ? parseInt(cm[1]) : 0;
-        if (ac > 0 || cc > 0) {
-          waterQuality = {
-            hasAlert: true,
-            alertText: `${ac} advisories${cc > 0 ? `, ${cc} closures` : ""} active across San Diego County. Check sdbeachinfo.com for La Jolla status.`,
-            color: cc > 0 ? "#C75B3A" : "#D4A574",
-          };
-        }
-      } catch {}
+    if (recentRain) {
+      waterQuality = {
+        hasAlert: true,
+        alertText: "Active advisories across San Diego County. Avoid ocean contact for 72 hours after rain.",
+        color: "#C75B3A",
+      };
     }
 
-    const html = buildEmailHtml(conditions, grade, moon, events, grunion, tideNote, waterQuality, localIntel?.alerts);
+    const html = buildEmailHtml(conditions, grade, moon, events, grunion, tideData.note, waterQuality, localIntel?.alerts);
 
-    // Preview mode — just return the HTML
+    // Preview mode
     if (preview) {
       return new NextResponse(html, {
         headers: { "Content-Type": "text/html" },
@@ -395,6 +542,7 @@ export async function GET(request: Request) {
         grade: grade.grade,
         score: grade.score,
         summary: grade.summary,
+        visibility: grade.visLabel,
       });
     }
 
@@ -423,7 +571,6 @@ export async function GET(request: Request) {
         return NextResponse.json({ status: "error", message: "No broadcast ID returned", detail: JSON.stringify(createData) }, { status: 502 });
       }
 
-      // Step 2: Set tag filter first
       const filterRes = await fetch(`https://api.kit.com/v4/broadcasts/${broadcastId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json", "X-Kit-Api-Key": KIT_API_KEY },
@@ -437,7 +584,6 @@ export async function GET(request: Request) {
         return NextResponse.json({ status: "error", message: "Failed to set tag filter", broadcast_id: broadcastId, detail: err }, { status: 502 });
       }
 
-      // Step 3: Now schedule to send
       const sendAt = new Date(Date.now() + 60_000).toISOString();
       const updateRes = await fetch(`https://api.kit.com/v4/broadcasts/${broadcastId}`, {
         method: "PUT",
@@ -461,21 +607,13 @@ export async function GET(request: Request) {
         grade: grade.grade,
         score: grade.score,
         summary: grade.summary,
+        visibility: grade.visLabel,
         data: { swell: conditions.waveHeight, wind: conditions.windSpeed, temp: conditions.waterTemp },
       });
     }
 
-    // Fallback to V3 (no tag targeting — warns in response)
+    // Fallback to V3
     if (KIT_API_SECRET) {
-      const now = new Date();
-      const dateStr = now.toLocaleDateString("en-US", {
-        timeZone: "America/Los_Angeles",
-        weekday: "short",
-        month: "short",
-        day: "numeric",
-      });
-
-      // Step 1: Create the broadcast as a draft
       const createRes = await fetch("https://api.convertkit.com/v3/broadcasts", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -489,28 +627,17 @@ export async function GET(request: Request) {
 
       if (!createRes.ok) {
         const err = await createRes.text();
-        return NextResponse.json({
-          status: "error",
-          message: "Failed to create Kit broadcast",
-          detail: err,
-        }, { status: 502 });
+        return NextResponse.json({ status: "error", message: "Failed to create Kit broadcast", detail: err }, { status: 502 });
       }
 
       const createData = await createRes.json();
       const broadcastId = createData.broadcast?.id;
 
       if (!broadcastId) {
-        return NextResponse.json({
-          status: "error",
-          message: "No broadcast ID returned",
-          detail: JSON.stringify(createData),
-        }, { status: 502 });
+        return NextResponse.json({ status: "error", message: "No broadcast ID returned", detail: JSON.stringify(createData) }, { status: 502 });
       }
 
-      // Step 2: Schedule the broadcast to send now
-      // Kit v3 requires send_at to actually send — without it, it stays as a draft
-      const sendAt = new Date(Date.now() + 60_000).toISOString(); // 1 minute from now
-
+      const sendAt = new Date(Date.now() + 60_000).toISOString();
       const updateRes = await fetch(`https://api.convertkit.com/v3/broadcasts/${broadcastId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -523,12 +650,7 @@ export async function GET(request: Request) {
 
       if (!updateRes.ok) {
         const err = await updateRes.text();
-        return NextResponse.json({
-          status: "error",
-          message: "Broadcast created but failed to schedule send",
-          broadcast_id: broadcastId,
-          detail: err,
-        }, { status: 502 });
+        return NextResponse.json({ status: "error", message: "Broadcast created but failed to schedule send", broadcast_id: broadcastId, detail: err }, { status: 502 });
       }
 
       return NextResponse.json({
@@ -538,18 +660,12 @@ export async function GET(request: Request) {
         grade: grade.grade,
         score: grade.score,
         summary: grade.summary,
-        data: {
-          swell: conditions.waveHeight,
-          wind: conditions.windSpeed,
-          temp: conditions.waterTemp,
-        },
+        visibility: grade.visLabel,
+        data: { swell: conditions.waveHeight, wind: conditions.windSpeed, temp: conditions.waterTemp },
       });
     }
 
-    // No Kit configured — return HTML
-    return new NextResponse(html, {
-      headers: { "Content-Type": "text/html" },
-    });
+    return new NextResponse(html, { headers: { "Content-Type": "text/html" } });
 
   } catch (error) {
     return NextResponse.json({
