@@ -10,7 +10,7 @@ const grain = {
 const faqs = [
   {
     q: "Do I need to be certified?",
-    a: "Only for line diving. Ocean Flow and ORIGIN Protocol are open to everyone — no experience needed.",
+    a: "Only for line diving. Ocean Flow and ORIGIN Protocol are open to everyone — no experience needed. For line diving, advanced divers (AIDA 3+, Molchanovs W3+, or equivalent) dive free. AIDA 1–2 and equivalent pay $25 drop-in.",
   },
   {
     q: "What if conditions are bad?",
@@ -193,9 +193,12 @@ export default function SaturdaySessionsPage() {
                   ~50m depth, ~500m offshore from Kellogg Park.
                   One up, one down. Always a buddy. Always a plan.
                 </p>
-                <div className="flex items-center gap-4 text-sm">
+                <div className="flex items-center gap-4 text-sm flex-wrap">
                   <span className="px-3 py-1.5 bg-coral/10 text-coral rounded-full font-medium text-xs">
                     Certification required
+                  </span>
+                  <span className="px-3 py-1.5 bg-seafoam/10 text-teal rounded-full font-medium text-xs">
+                    Free for AIDA 3+
                   </span>
                   <span className="text-[#5a6a7a]">Own gear required</span>
                 </div>
@@ -210,55 +213,59 @@ export default function SaturdaySessionsPage() {
         <div className="absolute inset-0 opacity-[0.03]" style={grain} />
         <div className="max-w-[700px] mx-auto relative z-10">
           <Reveal>
-            <div className="grid md:grid-cols-3 gap-4">
-              <div className="bg-white/[0.04] border border-white/[0.06] rounded-2xl p-7 text-center">
-                <div className="text-[11px] text-white/40 font-medium tracking-[0.15em] uppercase mb-3">
-                  Beach only
-                </div>
-                <div className="font-serif text-3xl text-white mb-2">$20</div>
-                <p className="text-white/40 text-sm leading-relaxed">
-                  Ocean Flow + ORIGIN Protocol
-                </p>
-                <div className="mt-4 px-3 py-1.5 bg-white/[0.04] rounded-full inline-block">
-                  <span className="text-white/30 text-xs font-medium">
-                    No cert needed
-                  </span>
-                </div>
-              </div>
-              <div className="bg-white/[0.04] border border-seafoam/15 rounded-2xl p-7 text-center relative">
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-seafoam text-deep text-[10px] font-semibold tracking-wide uppercase rounded-full">
-                  Best value
+            <div className="grid md:grid-cols-2 gap-4 mb-6">
+              {/* Advanced divers */}
+              <div className="bg-white/[0.04] border border-seafoam/15 rounded-2xl p-7 relative">
+                <div className="absolute -top-3 left-6 px-3 py-1 bg-seafoam text-deep text-[10px] font-semibold tracking-wide uppercase rounded-full">
+                  Advanced
                 </div>
                 <div className="text-[11px] text-seafoam font-medium tracking-[0.15em] uppercase mb-3">
-                  Full morning
+                  AIDA 3+ / Molchanovs W3+ / Equivalent
                 </div>
-                <div className="font-serif text-3xl text-white mb-2">$20</div>
-                <p className="text-white/50 text-sm leading-relaxed">
-                  Ocean Flow + ORIGIN + Line Diving
+                <div className="font-serif text-3xl text-white mb-2">Free</div>
+                <p className="text-white/50 text-sm leading-relaxed mb-4">
+                  Line diving — no charge. You&apos;re the backbone of this community.
                 </p>
-                <div className="mt-4 px-3 py-1.5 bg-seafoam/10 rounded-full inline-block">
-                  <span className="text-seafoam text-xs font-medium">
-                    Line diving FREE
-                  </span>
+                <div className="border-t border-white/[0.06] pt-4 mt-2">
+                  <p className="text-white/35 text-xs leading-relaxed">
+                    Want Ocean Flow + ORIGIN too? <span className="text-seafoam font-medium">$15</span> — discounted from $20.
+                  </p>
                 </div>
               </div>
-              <div className="bg-white/[0.04] border border-white/[0.06] rounded-2xl p-7 text-center">
+
+              {/* Beginners / Intermediate */}
+              <div className="bg-white/[0.04] border border-white/[0.06] rounded-2xl p-7 relative">
+                <div className="absolute -top-3 left-6 px-3 py-1 bg-coral text-white text-[10px] font-semibold tracking-wide uppercase rounded-full">
+                  Beginner / Intermediate
+                </div>
                 <div className="text-[11px] text-white/40 font-medium tracking-[0.15em] uppercase mb-3">
-                  Dive only
+                  AIDA 1–2 / Molchanovs W1–2 / Equivalent
                 </div>
                 <div className="font-serif text-3xl text-white mb-2">$25</div>
-                <p className="text-white/40 text-sm leading-relaxed">
-                  Line diving drop-in
+                <p className="text-white/40 text-sm leading-relaxed mb-4">
+                  Line diving drop-in. Group experience with experienced divers around you.
                 </p>
-                <div className="mt-4 px-3 py-1.5 bg-white/[0.04] rounded-full inline-block">
-                  <span className="text-white/30 text-xs font-medium">
-                    Cert required
-                  </span>
+                <div className="border-t border-white/[0.06] pt-4 mt-2">
+                  <p className="text-white/35 text-xs leading-relaxed">
+                    Add Ocean Flow + ORIGIN: <span className="text-white/60 font-medium">$20</span> for the beach session.
+                  </p>
                 </div>
               </div>
             </div>
+
+            {/* Beach only */}
+            <div className="bg-white/[0.04] border border-white/[0.06] rounded-2xl p-6 text-center">
+              <div className="text-[11px] text-white/40 font-medium tracking-[0.15em] uppercase mb-2">
+                Beach only — no diving
+              </div>
+              <div className="font-serif text-2xl text-white mb-1">$20</div>
+              <p className="text-white/40 text-sm">
+                Ocean Flow + ORIGIN Protocol. Open to everyone — no cert needed.
+              </p>
+            </div>
+
             <p className="text-white/25 text-xs text-center mt-6">
-              You don&apos;t need to dive to join. Ocean Flow and ORIGIN Protocol are a complete experience on their own.
+              Not sure which tier you fall into? Bring your cert card — we&apos;ll sort it out at the beach.
             </p>
           </Reveal>
         </div>
@@ -310,6 +317,14 @@ export default function SaturdaySessionsPage() {
                   Certified divers only
                 </h3>
                 <ul className="space-y-3 text-sm text-[#5a6a7a]">
+                  <li className="flex gap-2">
+                    <span className="text-seafoam shrink-0">&bull;</span>
+                    <span><strong className="text-deep">AIDA 3+ / Molchanovs W3+:</strong> Free</span>
+                  </li>
+                  <li className="flex gap-2">
+                    <span className="text-coral shrink-0">&bull;</span>
+                    <span><strong className="text-deep">AIDA 1–2 / equivalent:</strong> $25 drop-in</span>
+                  </li>
                   <li className="flex gap-2">
                     <span className="text-coral shrink-0">&bull;</span>
                     Valid freediving cert (any agency)

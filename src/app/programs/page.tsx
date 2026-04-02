@@ -129,7 +129,7 @@ const otherPrograms = [
     title: "Group Ocean Sessions",
     subtitle: "Weekly guided dives with your crew",
     price: "Free / $25",
-    priceNote: "Free with Ocean Flow · $25 drop-in · Own gear + lanyard",
+    priceNote: "Free for AIDA 3+ · $25 drop-in for AIDA 1–2 · Own gear + lanyard",
     duration: "Every Saturday",
     level: "AIDA 2+ certified",
     gradient: "from-ocean to-[#14566a]",
@@ -590,10 +590,10 @@ export default function ProgramsPage() {
                 <div className="p-6">
                   <div className="text-[10px] text-[#5a6a7a] uppercase tracking-wider font-semibold mb-1">Saturdays · 8:30 AM</div>
                   <h3 className="font-serif text-xl mb-1">Group ocean session</h3>
-                  <div className="font-serif text-lg text-teal mb-2">Free with Ocean Flow <span className="text-xs text-[#5a6a7a] font-sans">/ $25 drop-in</span></div>
+                  <div className="font-serif text-lg text-teal mb-2">Free for AIDA 3+ <span className="text-xs text-[#5a6a7a] font-sans">/ $25 for AIDA 1–2</span></div>
                   <p className="text-xs text-[#5a6a7a] leading-relaxed mb-4">
-                    Guided dive from our mooring line at the canyon edge. Safety divers,
-                    structured training, and a crew that knows these waters. Certified freedivers only (any agency).
+                    Line diving at the canyon edge. Advanced divers (AIDA 3+, Molchanovs W3+, or equivalent) dive free — you&apos;re the community backbone.
+                    Beginner/intermediate divers (AIDA 1–2) pay $25 drop-in for the group experience.
                     Must bring own gear: wetsuit, fins, mask, snorkel, weight belt, and lanyard.
                     <a href="/waiver" className="text-teal hover:underline ml-1">Signed waiver required →</a>
                   </p>
