@@ -86,7 +86,7 @@ export default function SaturdaySessionsPage() {
                     1
                   </span>
                   <span className="text-[11px] text-teal font-medium tracking-[0.15em] uppercase">
-                    7:00 AM
+                    7:00 – 7:30 AM
                   </span>
                 </div>
                 <h3 className="font-serif text-[clamp(1.5rem,3vw,2.2rem)] tracking-tight mb-3">
@@ -117,7 +117,7 @@ export default function SaturdaySessionsPage() {
                     2
                   </span>
                   <span className="text-[11px] text-teal font-medium tracking-[0.15em] uppercase">
-                    7:30 AM
+                    7:30 – 8:15 AM
                   </span>
                 </div>
                 <h3 className="font-serif text-[clamp(1.5rem,3vw,2.2rem)] tracking-tight mb-3">
@@ -182,7 +182,7 @@ export default function SaturdaySessionsPage() {
                     3
                   </span>
                   <span className="text-[11px] text-teal font-medium tracking-[0.15em] uppercase">
-                    8:30 AM
+                    8:30 – 10:00 AM
                   </span>
                 </div>
                 <h3 className="font-serif text-[clamp(1.5rem,3vw,2.2rem)] tracking-tight mb-3">

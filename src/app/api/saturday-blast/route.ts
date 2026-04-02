@@ -157,20 +157,20 @@ function buildGoEmailHtml(
     <div style="font-size:11px;color:#5a6a7a;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:12px;">Schedule</div>
     <table style="width:100%;border-collapse:collapse;">
       <tr>
-        <td style="padding:8px 0;font-size:14px;font-weight:600;color:#1B6B6B;width:70px;">7:00 AM</td>
+        <td style="padding:8px 0;font-size:14px;font-weight:600;color:#1B6B6B;width:100px;">7:00–7:30</td>
         <td style="padding:8px 0;font-size:14px;color:#0B1D2C;">Ocean Flow with Lena</td>
       </tr>
       <tr>
-        <td style="padding:8px 0;font-size:14px;font-weight:600;color:#1B6B6B;">7:30 AM</td>
-        <td style="padding:8px 0;font-size:14px;color:#0B1D2C;">ORIGIN Protocol</td>
+        <td style="padding:8px 0;font-size:14px;font-weight:600;color:#1B6B6B;">7:30–8:15</td>
+        <td style="padding:8px 0;font-size:14px;color:#0B1D2C;">Dry Training — breathing drills + CO₂ work</td>
       </tr>
       <tr>
-        <td style="padding:8px 0;font-size:14px;font-weight:600;color:#1B6B6B;">8:30 AM</td>
-        <td style="padding:8px 0;font-size:14px;color:#0B1D2C;">Group Dive</td>
+        <td style="padding:8px 0;font-size:14px;font-weight:600;color:#1B6B6B;">8:30–10:00</td>
+        <td style="padding:8px 0;font-size:14px;color:#0B1D2C;">Line Diving</td>
       </tr>
     </table>
     <div style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(11,29,44,0.06);font-size:12px;color:#1B6B6B;line-height:1.5;">
-      Join for Ocean Flow + ORIGIN Protocol and line diving is free. Drop-in for diving only is $25.
+      AIDA 3+ — full morning free. AIDA 1–2 — $30 full morning or $25 dive-only.
     </div>
   </div>
 

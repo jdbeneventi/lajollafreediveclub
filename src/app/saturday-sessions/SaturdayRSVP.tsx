@@ -21,6 +21,7 @@ export function SaturdayRSVP() {
     if (!email || !name) return;
     setSubmitting(true);
 
+    // Send to Kit for email list
     try {
       const formData = new FormData();
       formData.append("email_address", email);
@@ -32,6 +33,24 @@ export function SaturdayRSVP() {
       await fetch(KIT_URL, { method: "POST", body: formData });
     } catch {
       // Kit often succeeds despite CORS
+    }
+
+    // Send confirmation email + notify Joshua
+    try {
+      await fetch("/api/saturday-rsvp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          firstName: firstName.trim(),
+          lastName: lastName.trim(),
+          email,
+          lineDiving,
+          certLevel: certLevel || null,
+          firstTime,
+        }),
+      });
+    } catch {
+      // Non-critical
     }
 
     setSubmitting(false);

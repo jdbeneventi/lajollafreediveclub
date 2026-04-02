@@ -8,14 +8,14 @@ export function SaturdayBanner() {
           <span className="w-1.5 h-1.5 rounded-full bg-seafoam animate-pulse-slow" />
           <span className="text-white/60 text-sm">
             <strong className="text-white/80 font-medium">Every Saturday</strong>
-            {" "}&middot; Ocean Flow 7am &middot; Group Dive 8:30am &middot; La Jolla Shores
+            {" "}&middot; Flow + Dry Training 7–8:15am &middot; Line Diving 8:30–10am &middot; La Jolla Shores
           </span>
         </div>
         <Link
           href="/saturday-sessions"
           className="text-seafoam text-xs font-medium tracking-wide no-underline hover:text-white transition-colors shrink-0"
         >
-          Join this week &rarr;
+          Register this week &rarr;
         </Link>
       </div>
     </div>
