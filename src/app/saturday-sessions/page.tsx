@@ -193,6 +193,9 @@ export default function SaturdaySessionsPage() {
                   ~50m depth, ~500m offshore from Kellogg Park.
                   One up, one down. Always a buddy. Always a plan.
                 </p>
+                <p className="text-coral/80 text-[0.82rem] leading-relaxed mb-4 font-medium">
+                  Registration required — we need a headcount to plan safety coverage.
+                </p>
                 <div className="flex items-center gap-4 text-sm flex-wrap">
                   <span className="px-3 py-1.5 bg-coral/10 text-coral rounded-full font-medium text-xs">
                     Certification required

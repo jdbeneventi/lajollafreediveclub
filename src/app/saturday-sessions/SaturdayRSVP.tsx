@@ -8,6 +8,8 @@ const KIT_URL = "https://app.kit.com/forms/9207242/subscriptions";
 export function SaturdayRSVP() {
   const [step, setStep] = useState<"form" | "confirmed">("form");
   const [firstTime, setFirstTime] = useState<boolean | null>(null);
+  const [lineDiving, setLineDiving] = useState<boolean | null>(null);
+  const [certLevel, setCertLevel] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -24,6 +26,9 @@ export function SaturdayRSVP() {
       formData.append("email_address", email);
       formData.append("fields[first_name]", firstName.trim());
       formData.append("fields[last_name]", lastName.trim());
+      formData.append("fields[line_diving]", lineDiving ? "yes" : "no");
+      formData.append("fields[cert_level]", certLevel || "none");
+      formData.append("fields[first_time]", firstTime ? "yes" : "no");
       await fetch(KIT_URL, { method: "POST", body: formData });
     } catch {
       // Kit often succeeds despite CORS
@@ -46,6 +51,7 @@ export function SaturdayRSVP() {
         </h3>
         <p className="text-white/50 text-sm leading-relaxed mb-8 max-w-[400px] mx-auto">
           We&apos;ll confirm Friday based on conditions. Check your email for updates.
+          {lineDiving && " We've got you on the dive headcount."}
         </p>
 
         {firstTime && (
@@ -73,9 +79,9 @@ export function SaturdayRSVP() {
             What to bring
           </div>
           <div className="grid grid-cols-2 gap-2">
-            {(firstTime
-              ? ["Towel", "Water", "Sunscreen", "Yoga mat", "Comfortable clothes"]
-              : ["Wetsuit", "Mask + snorkel", "Fins", "Weight belt", "Lanyard", "Towel + water"]
+            {(lineDiving
+              ? ["Wetsuit", "Mask + snorkel", "Fins", "Weight belt", "Lanyard", "Towel + water"]
+              : ["Towel", "Water", "Sunscreen", "Yoga mat", "Comfortable clothes"]
             ).map((item) => (
               <div key={item} className="flex items-center gap-2 text-white/50 text-xs">
                 <span className="text-seafoam/50">&bull;</span>
@@ -107,10 +113,10 @@ export function SaturdayRSVP() {
     <div className="bg-deep rounded-2xl p-8 md:p-12">
       <div className="text-center mb-8">
         <h3 className="font-serif text-2xl text-white mb-2">
-          I&apos;m in this Saturday
+          Register for this Saturday
         </h3>
-        <p className="text-white/40 text-sm">
-          We confirm Friday based on conditions. You&apos;ll get an email.
+        <p className="text-white/40 text-sm leading-relaxed">
+          We need a headcount — especially for line diving. Register so we can plan safety coverage and confirm conditions Friday.
         </p>
       </div>
 
@@ -142,6 +148,59 @@ export function SaturdayRSVP() {
           className="w-full px-5 py-3.5 rounded-xl bg-white/[0.06] border border-white/10 text-white text-sm outline-none focus:border-seafoam transition-colors placeholder:text-white/25"
         />
 
+        {/* Line diving? */}
+        <div className="pt-2">
+          <div className="text-white/40 text-xs mb-3">Will you be line diving?</div>
+          <div className="flex gap-3">
+            <button
+              type="button"
+              onClick={() => setLineDiving(true)}
+              className={`flex-1 py-2.5 rounded-lg text-sm font-medium border transition-all cursor-pointer ${
+                lineDiving === true
+                  ? "bg-seafoam/15 border-seafoam/30 text-seafoam"
+                  : "bg-transparent border-white/10 text-white/40 hover:border-white/20"
+              }`}
+            >
+              Yes, I&apos;m diving
+            </button>
+            <button
+              type="button"
+              onClick={() => { setLineDiving(false); setCertLevel(""); }}
+              className={`flex-1 py-2.5 rounded-lg text-sm font-medium border transition-all cursor-pointer ${
+                lineDiving === false
+                  ? "bg-seafoam/15 border-seafoam/30 text-seafoam"
+                  : "bg-transparent border-white/10 text-white/40 hover:border-white/20"
+              }`}
+            >
+              Beach only
+            </button>
+          </div>
+        </div>
+
+        {/* Cert level — only if diving */}
+        {lineDiving && (
+          <div>
+            <div className="text-white/40 text-xs mb-3">Certification level</div>
+            <div className="flex gap-2 flex-wrap">
+              {["AIDA 1–2", "AIDA 3+", "Molchanovs W1–2", "Molchanovs W3+", "Other agency"].map((level) => (
+                <button
+                  key={level}
+                  type="button"
+                  onClick={() => setCertLevel(level)}
+                  className={`px-3.5 py-2 rounded-lg text-xs font-medium border transition-all cursor-pointer ${
+                    certLevel === level
+                      ? "bg-seafoam/15 border-seafoam/30 text-seafoam"
+                      : "bg-transparent border-white/10 text-white/40 hover:border-white/20"
+                  }`}
+                >
+                  {level}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* First time? */}
         <div className="pt-2">
           <div className="text-white/40 text-xs mb-3">Is this your first Saturday?</div>
           <div className="flex gap-3">
@@ -172,14 +231,14 @@ export function SaturdayRSVP() {
 
         <button
           type="submit"
-          disabled={submitting || firstTime === null}
+          disabled={submitting || firstTime === null || lineDiving === null || (lineDiving && !certLevel)}
           className="w-full py-3.5 rounded-full bg-coral text-white font-semibold text-sm cursor-pointer border-none hover:-translate-y-0.5 hover:shadow-[0_8px_25px_rgba(199,91,58,0.4)] transition-all disabled:opacity-40 disabled:cursor-not-allowed mt-2"
         >
-          {submitting ? "Signing up..." : "Count me in →"}
+          {submitting ? "Registering..." : "Register for Saturday →"}
         </button>
 
         <p className="text-white/20 text-[11px] text-center pt-1">
-          Free with Ocean Flow ($20) · Drop-in diving $25
+          Registration helps us plan safety coverage and confirm the session.
         </p>
       </form>
     </div>
