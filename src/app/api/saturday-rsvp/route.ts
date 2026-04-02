@@ -40,8 +40,12 @@ export async function POST(request: Request) {
               <h2 style="color:#0B1D2C;margin-bottom:8px;">You're in, ${firstName}!</h2>
               <p style="color:#5a6a7a;font-size:14px;line-height:1.6;">
                 You're registered for this Saturday at La Jolla Shores.
-                We'll send a go/no-go confirmation Friday based on conditions.
               </p>
+
+              <div style="background:#163B4E;border-radius:12px;padding:16px;margin:16px 0;color:white;">
+                <p style="font-size:14px;font-weight:600;margin:0 0 4px 0;">Final confirmation comes Friday morning.</p>
+                <p style="font-size:13px;opacity:0.7;margin:0;">We check conditions (swell, wind, visibility) and send a go/no-go email Friday. If conditions are unsafe, the session is called off and you'll be notified.</p>
+              </div>
 
               <div style="background:#FAF3EC;border-radius:12px;padding:16px;margin:16px 0;">
                 <table style="width:100%;font-size:14px;border-collapse:collapse;">

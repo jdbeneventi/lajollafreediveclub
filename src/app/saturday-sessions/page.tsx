@@ -86,7 +86,7 @@ export default function SaturdaySessionsPage() {
                     1
                   </span>
                   <span className="text-[11px] text-teal font-medium tracking-[0.15em] uppercase">
-                    7:00 – 7:30 AM
+                    7:00 – 7:45 AM
                   </span>
                 </div>
                 <h3 className="font-serif text-[clamp(1.5rem,3vw,2.2rem)] tracking-tight mb-3">
@@ -102,7 +102,7 @@ export default function SaturdaySessionsPage() {
                   <span className="px-3 py-1.5 bg-seafoam/10 text-teal rounded-full font-medium text-xs">
                     Open to all
                   </span>
-                  <span className="text-[#5a6a7a]">$20 drop-in</span>
+                  <span className="text-[#5a6a7a]">$15 drop-in</span>
                 </div>
               </div>
             </div>
@@ -117,7 +117,7 @@ export default function SaturdaySessionsPage() {
                     2
                   </span>
                   <span className="text-[11px] text-teal font-medium tracking-[0.15em] uppercase">
-                    7:30 – 8:15 AM
+                    7:45 – 8:15 AM
                   </span>
                 </div>
                 <h3 className="font-serif text-[clamp(1.5rem,3vw,2.2rem)] tracking-tight mb-3">
@@ -218,32 +218,37 @@ export default function SaturdaySessionsPage() {
           <Reveal>
             {/* Drop-in pricing */}
             <div className="text-[11px] text-white/30 font-medium tracking-[0.15em] uppercase text-center mb-5">Drop-in</div>
-            <div className="grid md:grid-cols-3 gap-4 mb-10">
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
               {/* Advanced — full morning free */}
               <div className="bg-white/[0.04] border border-seafoam/15 rounded-2xl p-7 text-center relative">
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-seafoam text-deep text-[10px] font-semibold tracking-wide uppercase rounded-full whitespace-nowrap">
-                  AIDA 3+ / Molchanovs W3+
+                  AIDA 3+ / W3+
                 </div>
                 <div className="font-serif text-3xl text-white mt-2 mb-2">Free</div>
-                <p className="text-white/50 text-sm leading-relaxed mb-3">
-                  Full morning — Ocean Flow, Dry Training, and line diving. Everything.
-                </p>
-                <p className="text-seafoam/60 text-xs leading-relaxed">
-                  You&apos;re the backbone of this community. Show up, dive, set the standard.
+                <p className="text-white/50 text-sm leading-relaxed">
+                  Full morning — yoga, dry training, and line diving.
                 </p>
               </div>
 
               {/* Beginner — full morning bundle */}
               <div className="bg-white/[0.04] border border-coral/20 rounded-2xl p-7 text-center relative">
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-coral text-white text-[10px] font-semibold tracking-wide uppercase rounded-full whitespace-nowrap">
-                  AIDA 1–2 · Full morning
+                  AIDA 1–2 · Full AM
                 </div>
                 <div className="font-serif text-3xl text-white mt-2 mb-2">$30</div>
-                <p className="text-white/50 text-sm leading-relaxed mb-3">
-                  Ocean Flow + Dry Training + line diving. The complete Saturday.
+                <p className="text-white/50 text-sm leading-relaxed">
+                  Yoga + dry training + line diving.
                 </p>
-                <p className="text-white/30 text-xs leading-relaxed">
-                  <span className="line-through">$45 if bought separately</span>
+              </div>
+
+              {/* Dive only */}
+              <div className="bg-white/[0.04] border border-white/[0.06] rounded-2xl p-7 text-center relative">
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-white/10 text-white/60 text-[10px] font-semibold tracking-wide uppercase rounded-full whitespace-nowrap">
+                  AIDA 1–2 · Dive only
+                </div>
+                <div className="font-serif text-3xl text-white mt-2 mb-2">$25</div>
+                <p className="text-white/50 text-sm leading-relaxed">
+                  Line diving only. Show up at 8:30.
                 </p>
               </div>
 
@@ -252,12 +257,9 @@ export default function SaturdaySessionsPage() {
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-white/10 text-white/60 text-[10px] font-semibold tracking-wide uppercase rounded-full whitespace-nowrap">
                   No cert needed
                 </div>
-                <div className="font-serif text-3xl text-white mt-2 mb-2">$20</div>
-                <p className="text-white/50 text-sm leading-relaxed mb-3">
-                  Ocean Flow + Dry Training. Beach only — no diving.
-                </p>
-                <p className="text-white/30 text-xs leading-relaxed">
-                  Open to everyone. The perfect intro.
+                <div className="font-serif text-3xl text-white mt-2 mb-2">$15</div>
+                <p className="text-white/50 text-sm leading-relaxed">
+                  Ocean Flow + dry training. Beach only.
                 </p>
               </div>
             </div>
@@ -269,14 +271,14 @@ export default function SaturdaySessionsPage() {
                 <div className="font-serif text-3xl text-white mb-1">$80<span className="text-lg text-white/30">/mo</span></div>
                 <p className="text-white/50 text-sm mb-2">Full morning pass</p>
                 <p className="text-white/30 text-xs leading-relaxed">
-                  Ocean Flow + Dry Training + line diving, every Saturday. ~$20/session.
+                  Yoga + dry training + line diving, every Saturday. ~$20/session.
                 </p>
               </div>
               <div className="bg-white/[0.04] border border-white/[0.06] rounded-2xl p-6 text-center">
-                <div className="font-serif text-3xl text-white mb-1">$60<span className="text-lg text-white/30">/mo</span></div>
+                <div className="font-serif text-3xl text-white mb-1">$50<span className="text-lg text-white/30">/mo</span></div>
                 <p className="text-white/50 text-sm mb-2">Beach pass</p>
                 <p className="text-white/30 text-xs leading-relaxed">
-                  Ocean Flow + Dry Training every Saturday. ~$15/session.
+                  Yoga + dry training every Saturday. ~$12/session.
                 </p>
               </div>
             </div>
@@ -285,13 +287,9 @@ export default function SaturdaySessionsPage() {
             <div className="bg-seafoam/[0.08] border border-seafoam/15 rounded-xl p-5 text-center">
               <p className="text-seafoam text-sm font-medium mb-1">Get your AIDA 3 — dive free forever.</p>
               <p className="text-white/35 text-xs leading-relaxed">
-                Advanced certification means free access to every Saturday line session. <Link href="/contact/courses?course=aida3" className="text-seafoam/80 underline">AIDA 3 courses →</Link>
+                Advanced certification means free access to every Saturday morning. <Link href="/contact/courses?course=aida3" className="text-seafoam/80 underline">AIDA 3 courses →</Link>
               </p>
             </div>
-
-            <p className="text-white/20 text-xs text-center mt-6">
-              Dive-only drop-in (AIDA 1–2, no beach session): $25. Bring your cert card.
-            </p>
           </Reveal>
         </div>
       </section>
@@ -415,6 +413,24 @@ export default function SaturdaySessionsPage() {
               >
                 Check today&apos;s conditions before you come &rarr;
               </Link>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ── FRIDAY CONFIRMATION ── */}
+      <section className="bg-deep border-t border-white/[0.06] py-10 px-6">
+        <div className="max-w-[600px] mx-auto text-center">
+          <Reveal>
+            <div className="bg-ocean/30 border border-seafoam/10 rounded-2xl p-8">
+              <div className="text-[11px] text-seafoam/60 font-medium tracking-[0.15em] uppercase mb-3">How it works</div>
+              <h3 className="font-serif text-xl text-white mb-3">Final confirmation comes Friday morning.</h3>
+              <p className="text-white/40 text-sm leading-relaxed">
+                We check conditions every Friday — swell, wind, visibility, water quality.
+                If it&apos;s a go, you&apos;ll get an email with live conditions and a reminder.
+                If conditions are unsafe, the session is called off and you&apos;ll be notified.
+                Register below so we have a headcount for safety planning.
+              </p>
             </div>
           </Reveal>
         </div>

@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Saturday Sessions — La Jolla Freedive Club",
   description:
-    "Every Saturday morning at La Jolla Shores. Ocean Flow + dry training 7–8:15am, line diving 8:30–10am. Open to all levels.",
+    "Every Saturday morning at La Jolla Shores. Ocean Flow 7–7:45am, dry training 7:45–8:15am, line diving 8:30–10am. Open to all levels.",
   keywords: [
     "Saturday freediving La Jolla",
     "La Jolla Shores yoga",

@@ -8,7 +8,7 @@ export function SaturdayBanner() {
           <span className="w-1.5 h-1.5 rounded-full bg-seafoam animate-pulse-slow" />
           <span className="text-white/60 text-sm">
             <strong className="text-white/80 font-medium">Every Saturday</strong>
-            {" "}&middot; Flow + Dry Training 7–8:15am &middot; Line Diving 8:30–10am &middot; La Jolla Shores
+            {" "}&middot; Yoga + Dry Training 7–8:15am &middot; Line Diving 8:30–10am &middot; La Jolla Shores
           </span>
         </div>
         <Link

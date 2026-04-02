@@ -157,11 +157,11 @@ function buildGoEmailHtml(
     <div style="font-size:11px;color:#5a6a7a;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:12px;">Schedule</div>
     <table style="width:100%;border-collapse:collapse;">
       <tr>
-        <td style="padding:8px 0;font-size:14px;font-weight:600;color:#1B6B6B;width:100px;">7:00–7:30</td>
+        <td style="padding:8px 0;font-size:14px;font-weight:600;color:#1B6B6B;width:100px;">7:00–7:45</td>
         <td style="padding:8px 0;font-size:14px;color:#0B1D2C;">Ocean Flow with Lena</td>
       </tr>
       <tr>
-        <td style="padding:8px 0;font-size:14px;font-weight:600;color:#1B6B6B;">7:30–8:15</td>
+        <td style="padding:8px 0;font-size:14px;font-weight:600;color:#1B6B6B;">7:45–8:15</td>
         <td style="padding:8px 0;font-size:14px;color:#0B1D2C;">Dry Training — breathing drills + CO₂ work</td>
       </tr>
       <tr>

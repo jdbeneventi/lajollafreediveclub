@@ -563,7 +563,7 @@ export default function ProgramsPage() {
                 <div className="p-6">
                   <div className="text-[10px] text-[#5a6a7a] uppercase tracking-wider font-semibold mb-1">Saturdays · 7:00 AM · La Jolla Shores</div>
                   <h3 className="font-serif text-xl mb-1">Ocean Flow — yoga for freedivers</h3>
-                  <div className="font-serif text-lg text-teal mb-2">$20 <span className="text-xs text-[#5a6a7a] font-sans">drop-in · free for AIDA 3+ · $60/mo pass</span></div>
+                  <div className="font-serif text-lg text-teal mb-2">$15 <span className="text-xs text-[#5a6a7a] font-sans">drop-in · free for AIDA 3+ · $50/mo pass</span></div>
                   <p className="text-xs text-[#5a6a7a] leading-relaxed mb-3">
                     A pre-dive flow designed specifically for ocean people. Led by Lena — RYT yoga
                     teacher, freediver, and artist — this session blends gentle mobility, intercostal

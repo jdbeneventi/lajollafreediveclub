@@ -68,10 +68,14 @@ export function SaturdayRSVP() {
         <h3 className="font-serif text-2xl text-white mb-2">
           You&apos;re in, {firstName}!
         </h3>
-        <p className="text-white/50 text-sm leading-relaxed mb-8 max-w-[400px] mx-auto">
-          We&apos;ll confirm Friday based on conditions. Check your email for updates.
-          {lineDiving && " We've got you on the dive headcount."}
+        <p className="text-white/50 text-sm leading-relaxed mb-4 max-w-[400px] mx-auto">
+          Check your email for a confirmation with schedule and gear info.
+          {lineDiving && " You're on the dive headcount."}
         </p>
+        <div className="bg-seafoam/10 border border-seafoam/20 rounded-xl p-4 mb-8 max-w-[400px] mx-auto">
+          <p className="text-seafoam text-sm font-medium mb-1">Final go/no-go comes Friday morning.</p>
+          <p className="text-white/40 text-xs">We&apos;ll check conditions and email you a confirmation or cancellation.</p>
+        </div>
 
         {firstTime && (
           <div className="bg-coral/10 border border-coral/20 rounded-xl p-6 mb-8 text-left max-w-[400px] mx-auto">
