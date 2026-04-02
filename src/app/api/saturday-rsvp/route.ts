@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
+import { supabase } from "@/lib/supabase";
+import { getNextSaturday } from "@/lib/saturday";
 
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const OWNER_EMAIL = "joshuabeneventi@gmail.com";
@@ -16,6 +18,38 @@ export async function POST(request: Request) {
     const name = `${firstName} ${lastName}`.trim();
     const isDiving = lineDiving === true || lineDiving === "yes";
     const isFirst = firstTime === true || firstTime === "yes";
+    const saturdayDate = getNextSaturday();
+
+    // Upsert member
+    let memberId: string | null = null;
+    try {
+      const { data: member } = await supabase
+        .from("saturday_members")
+        .upsert({
+          first_name: firstName,
+          last_name: lastName || "",
+          email,
+          cert_level: certLevel || null,
+          first_time: isFirst,
+        }, { onConflict: "email", ignoreDuplicates: false })
+        .select("id")
+        .single();
+      memberId = member?.id || null;
+    } catch {}
+
+    // Upsert RSVP for this Saturday
+    try {
+      await supabase
+        .from("saturday_rsvps")
+        .upsert({
+          member_id: memberId,
+          email,
+          saturday_date: saturdayDate,
+          line_diving: isDiving,
+          cert_level: certLevel || null,
+          first_time: isFirst,
+        }, { onConflict: "email,saturday_date" });
+    } catch {}
 
     // Send confirmation email to user
     if (RESEND_API_KEY) {

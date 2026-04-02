@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { jsPDF } from "jspdf";
 import { Resend } from "resend";
+import { supabase } from "@/lib/supabase";
 
 const FORMSPREE_URL = "https://formspree.io/f/mojknqlk";
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
@@ -233,6 +234,25 @@ export async function POST(request: Request) {
       });
     } catch {
       // Sheet logging is non-critical
+    }
+
+    // Mark waiver signed in Saturday members
+    try {
+      const nameParts = data.fullName.trim().split(" ");
+      const waiverFirst = nameParts[0] || "";
+      const waiverLast = nameParts.slice(1).join(" ") || "";
+      await supabase
+        .from("saturday_members")
+        .upsert({
+          first_name: waiverFirst,
+          last_name: waiverLast,
+          email: data.email,
+          phone: data.phone || null,
+          waiver_signed: true,
+          waiver_signed_at: new Date().toISOString(),
+        }, { onConflict: "email", ignoreDuplicates: false });
+    } catch {
+      // Non-critical
     }
 
     // Send emails via Resend
