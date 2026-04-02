@@ -10,7 +10,7 @@ const grain = {
 const faqs = [
   {
     q: "Do I need to be certified?",
-    a: "Only for line diving. Ocean Flow and ORIGIN are open to everyone. For diving: AIDA 3+ get the full morning free. AIDA 1–2 pay $30 for the full morning (Flow + ORIGIN + diving) or $25 dive-only. Monthly passes available.",
+    a: "Only for line diving. Ocean Flow and Dry Training are open to everyone. For diving: AIDA 3+ get the full morning free. AIDA 1–2 pay $30 for the full morning (Flow + Dry Training + diving) or $25 dive-only. Monthly passes available.",
   },
   {
     q: "What if conditions are bad?",
@@ -53,7 +53,7 @@ export default function SaturdaySessionsPage() {
               <em className="italic text-seafoam">the Shores</em>
             </h1>
             <p className="text-white/45 text-lg mt-4 max-w-[520px] leading-relaxed">
-              Ocean Flow. ORIGIN Protocol. Line Diving.
+              Ocean Flow. Breathing drills. Line diving.
               <br />
               Three phases. One morning. La Jolla Shores.
             </p>
@@ -121,14 +121,14 @@ export default function SaturdaySessionsPage() {
                   </span>
                 </div>
                 <h3 className="font-serif text-[clamp(1.5rem,3vw,2.2rem)] tracking-tight mb-3">
-                  ORIGIN Protocol
+                  Dry Training
                 </h3>
                 <p className="text-[#5a6a7a] text-[0.95rem] leading-relaxed mb-4">
-                  Dry training on the beach &mdash; CO&#8322; tolerance
-                  tables, controlled breath holds, and state anchoring.
-                  Builds composure, extends breath-hold capacity, and
-                  opens a neuroplastic window that carries into the water
-                  (or into the rest of your day, if you&apos;re not diving).
+                  Breathing exercises and CO&#8322; tolerance drills on the
+                  beach. Controlled breath holds, diaphragmatic work, and
+                  composure training. Extends your capacity and settles your
+                  nervous system before you touch the water (or carries into
+                  the rest of your day, if you&apos;re not diving).
                 </p>
                 <div className="flex items-center gap-4 text-sm">
                   <span className="px-3 py-1.5 bg-seafoam/10 text-teal rounded-full font-medium text-xs">
@@ -223,7 +223,7 @@ export default function SaturdaySessionsPage() {
                 </div>
                 <div className="font-serif text-3xl text-white mt-2 mb-2">Free</div>
                 <p className="text-white/50 text-sm leading-relaxed mb-3">
-                  Full morning — Ocean Flow, ORIGIN, and line diving. Everything.
+                  Full morning — Ocean Flow, Dry Training, and line diving. Everything.
                 </p>
                 <p className="text-seafoam/60 text-xs leading-relaxed">
                   You&apos;re the backbone of this community. Show up, dive, set the standard.
@@ -237,7 +237,7 @@ export default function SaturdaySessionsPage() {
                 </div>
                 <div className="font-serif text-3xl text-white mt-2 mb-2">$30</div>
                 <p className="text-white/50 text-sm leading-relaxed mb-3">
-                  Ocean Flow + ORIGIN + line diving. The complete Saturday.
+                  Ocean Flow + Dry Training + line diving. The complete Saturday.
                 </p>
                 <p className="text-white/30 text-xs leading-relaxed">
                   <span className="line-through">$45 if bought separately</span>
@@ -251,7 +251,7 @@ export default function SaturdaySessionsPage() {
                 </div>
                 <div className="font-serif text-3xl text-white mt-2 mb-2">$20</div>
                 <p className="text-white/50 text-sm leading-relaxed mb-3">
-                  Ocean Flow + ORIGIN Protocol. Beach only — no diving.
+                  Ocean Flow + Dry Training. Beach only — no diving.
                 </p>
                 <p className="text-white/30 text-xs leading-relaxed">
                   Open to everyone. The perfect intro.
@@ -266,14 +266,14 @@ export default function SaturdaySessionsPage() {
                 <div className="font-serif text-3xl text-white mb-1">$80<span className="text-lg text-white/30">/mo</span></div>
                 <p className="text-white/50 text-sm mb-2">Full morning pass</p>
                 <p className="text-white/30 text-xs leading-relaxed">
-                  Ocean Flow + ORIGIN + line diving, every Saturday. ~$20/session.
+                  Ocean Flow + Dry Training + line diving, every Saturday. ~$20/session.
                 </p>
               </div>
               <div className="bg-white/[0.04] border border-white/[0.06] rounded-2xl p-6 text-center">
                 <div className="font-serif text-3xl text-white mb-1">$60<span className="text-lg text-white/30">/mo</span></div>
                 <p className="text-white/50 text-sm mb-2">Beach pass</p>
                 <p className="text-white/30 text-xs leading-relaxed">
-                  Ocean Flow + ORIGIN every Saturday. ~$15/session.
+                  Ocean Flow + Dry Training every Saturday. ~$15/session.
                 </p>
               </div>
             </div>
@@ -306,7 +306,7 @@ export default function SaturdaySessionsPage() {
             <div className="grid md:grid-cols-2 gap-6">
               <div className="bg-salt rounded-2xl p-8">
                 <div className="text-[11px] text-seafoam font-medium tracking-[0.15em] uppercase mb-4">
-                  Ocean Flow + ORIGIN
+                  Ocean Flow + Dry Training
                 </div>
                 <h3 className="font-serif text-xl tracking-tight mb-4">
                   Open to everyone

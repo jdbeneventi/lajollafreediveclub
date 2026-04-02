@@ -592,7 +592,7 @@ export default function ProgramsPage() {
                   <h3 className="font-serif text-xl mb-1">Group ocean session</h3>
                   <div className="font-serif text-lg text-teal mb-2">Free for AIDA 3+ <span className="text-xs text-[#5a6a7a] font-sans">/ $30 full morning (AIDA 1–2) / $80/mo</span></div>
                   <p className="text-xs text-[#5a6a7a] leading-relaxed mb-4">
-                    Line diving at the canyon edge. Advanced divers (AIDA 3+, Molchanovs W3+) get the full morning free — Ocean Flow, ORIGIN, and diving.
+                    Line diving at the canyon edge. Advanced divers (AIDA 3+, Molchanovs W3+) get the full morning free — Ocean Flow, dry training, and diving.
                     Beginner/intermediate divers get a $30 full morning bundle or $80/mo pass.
                     Must bring own gear: wetsuit, fins, mask, snorkel, weight belt, and lanyard.
                     <a href="/waiver" className="text-teal hover:underline ml-1">Signed waiver required →</a>

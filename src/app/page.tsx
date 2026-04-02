@@ -419,7 +419,7 @@ export default function Home() {
                     &ldquo;The Big Blue&rdquo; — Movie Night at the Beach
                   </h3>
                   <p className="text-white/40 text-sm mt-2 leading-relaxed max-w-[500px]">
-                    Sunset Ocean Flow, ORIGIN Protocol, then the film that made a generation want to freedive. Kellogg Park, La Jolla Shores.
+                    Sunset Ocean Flow, breathing drills, then the film that made a generation want to freedive. Kellogg Park, La Jolla Shores.
                   </p>
                   <span className="inline-block text-seafoam text-xs font-medium mt-4 group-hover:text-white transition-colors">
                     RSVP &amp; Details &rarr;
