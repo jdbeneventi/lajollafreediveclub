@@ -170,7 +170,7 @@ function buildGoEmailHtml(
       </tr>
     </table>
     <div style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(11,29,44,0.06);font-size:12px;color:#1B6B6B;line-height:1.5;">
-      AIDA 3+ — full morning free. AIDA 1–2 — $30 full morning or $25 dive-only.
+      AIDA 3+ — full morning free. AIDA 1–2 — $30 full morning or $20 dive-only. Payment at the beach.
     </div>
   </div>
 
@@ -224,6 +224,15 @@ function buildGoEmailHtml(
     <div style="font-size:14px;color:#0B1D2C;line-height:1.6;">${note}</div>
   </div>
   ` : ""}
+
+  <!-- Confirm -->
+  <div style="background:#1B6B6B;border-radius:16px;padding:20px;margin-bottom:16px;text-align:center;">
+    <div style="font-size:16px;color:white;font-weight:600;margin-bottom:8px;">Are you coming tomorrow?</div>
+    <div style="font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:16px;">We need a final headcount for safety coverage.</div>
+    <a href="https://lajollafreediveclub.com/saturday-sessions/confirm" style="display:inline-block;background:white;color:#1B6B6B;padding:12px 28px;border-radius:50px;text-decoration:none;font-weight:600;font-size:14px;">
+      Confirm I&rsquo;m coming &rarr;
+    </a>
+  </div>
 
   <!-- CTA -->
   <div style="text-align:center;margin-bottom:24px;">

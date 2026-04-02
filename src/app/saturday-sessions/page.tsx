@@ -10,7 +10,7 @@ const grain = {
 const faqs = [
   {
     q: "Do I need to be certified?",
-    a: "Only for line diving. Ocean Flow and Dry Training are open to everyone. For diving: AIDA 3+ get the full morning free. AIDA 1–2 pay $30 for the full morning (Flow + Dry Training + diving) or $25 dive-only. Monthly passes available.",
+    a: "Only for line diving. Ocean Flow and dry training are open to everyone. For diving: AIDA 3+ get the full morning free. AIDA 1–2 pay $30 for the full morning or $20 dive-only. Monthly passes available.",
   },
   {
     q: "What if conditions are bad?",
@@ -246,7 +246,7 @@ export default function SaturdaySessionsPage() {
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-white/10 text-white/60 text-[10px] font-semibold tracking-wide uppercase rounded-full whitespace-nowrap">
                   AIDA 1–2 · Dive only
                 </div>
-                <div className="font-serif text-3xl text-white mt-2 mb-2">$25</div>
+                <div className="font-serif text-3xl text-white mt-2 mb-2">$20</div>
                 <p className="text-white/50 text-sm leading-relaxed">
                   Line diving only. Show up at 8:30.
                 </p>
@@ -346,7 +346,7 @@ export default function SaturdaySessionsPage() {
                   </li>
                   <li className="flex gap-2">
                     <span className="text-coral shrink-0">&bull;</span>
-                    <span><strong className="text-deep">AIDA 1–2:</strong> $30 full morning / $25 dive-only</span>
+                    <span><strong className="text-deep">AIDA 1–2:</strong> $30 full morning / $20 dive-only</span>
                   </li>
                   <li className="flex gap-2">
                     <span className="text-coral shrink-0">&bull;</span>
