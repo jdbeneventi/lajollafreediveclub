@@ -205,7 +205,7 @@ export function SaturdayRSVP() {
           <div>
             <div className="text-white/40 text-xs mb-3">Certification level</div>
             <div className="flex gap-2 flex-wrap">
-              {["AIDA 1–2", "AIDA 3+", "Molchanovs W1–2", "Molchanovs W3+", "Other agency"].map((level) => (
+              {["AIDA 1–2", "AIDA 3+", "Molchanovs W1–2", "Molchanovs W3+", "FII Level 1", "FII Level 2+", "SSI", "PADI", "Other"].map((level) => (
                 <button
                   key={level}
                   type="button"

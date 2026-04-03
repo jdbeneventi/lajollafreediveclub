@@ -592,7 +592,7 @@ export default function ProgramsPage() {
                   <h3 className="font-serif text-xl mb-1">Group ocean session</h3>
                   <div className="font-serif text-lg text-teal mb-2">Drop-in <span className="text-xs text-[#5a6a7a] font-sans">· certified divers (any agency) · register for headcount</span></div>
                   <p className="text-xs text-[#5a6a7a] leading-relaxed mb-4">
-                    Line diving at the canyon edge. Open to all certified freedivers — AIDA, Molchanovs, SSI, or equivalent.
+                    Line diving at the canyon edge. Open to all certified freedivers — AIDA, Molchanovs, FII, SSI, PADI, or equivalent.
                     Must bring own gear: wetsuit, fins, mask, snorkel, weight belt, and lanyard.
                     <a href="/waiver" className="text-teal hover:underline ml-1">Signed waiver required →</a>
                   </p>

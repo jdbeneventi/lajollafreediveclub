@@ -209,7 +209,7 @@ export default function SaturdaySessionsPage() {
                     Certification required
                   </span>
                   <span className="px-3 py-1.5 bg-seafoam/10 text-teal rounded-full font-medium text-xs">
-                    Free for AIDA 3+
+                    All agencies welcome
                   </span>
                   <span className="text-[#5a6a7a]">Own gear required</span>
                 </div>
@@ -229,14 +229,14 @@ export default function SaturdaySessionsPage() {
                 <div className="text-seafoam text-2xl mb-3">🤿</div>
                 <h3 className="font-serif text-lg text-white mb-2">Advanced Divers</h3>
                 <p className="text-white/40 text-sm leading-relaxed">
-                  AIDA 3+, Molchanovs W3+, or equivalent. Full morning — yoga, dry training, and line diving.
+                  AIDA 3+, Molchanovs W3+, FII Level 2+, or equivalent. Full morning — yoga, dry training, and line diving.
                 </p>
               </div>
               <div className="bg-white/[0.04] border border-coral/20 rounded-2xl p-7 text-center">
                 <div className="text-coral text-2xl mb-3">🏊</div>
                 <h3 className="font-serif text-lg text-white mb-2">Newer Divers</h3>
                 <p className="text-white/40 text-sm leading-relaxed">
-                  AIDA 1–2 or equivalent. Join for the full morning or just line diving. Group experience with experienced divers around you.
+                  AIDA 1–2, Molchanovs W1–2, FII Level 1, SSI, PADI, or equivalent. Join for the full morning or just line diving.
                 </p>
               </div>
               <div className="bg-white/[0.04] border border-white/[0.06] rounded-2xl p-7 text-center">
@@ -313,11 +313,7 @@ export default function SaturdaySessionsPage() {
                 <ul className="space-y-3 text-sm text-[#5a6a7a]">
                   <li className="flex gap-2">
                     <span className="text-seafoam shrink-0">&bull;</span>
-                    <span><strong className="text-deep">AIDA 3+ / Molchanovs W3+</strong> or equivalent</span>
-                  </li>
-                  <li className="flex gap-2">
-                    <span className="text-coral shrink-0">&bull;</span>
-                    <span><strong className="text-deep">AIDA 1–2 / equivalent</strong> — welcome</span>
+                    <span>AIDA, Molchanovs, FII, SSI, PADI, or equivalent</span>
                   </li>
                   <li className="flex gap-2">
                     <span className="text-coral shrink-0">&bull;</span>
