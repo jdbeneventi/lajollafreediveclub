@@ -11,7 +11,7 @@ export default function SaturdaySessionsPage() {
   return (
     <>
       {/* ── HERO ── */}
-      <section className="relative min-h-[70vh] flex items-end overflow-hidden">
+      <section className="relative min-h-[50vh] md:min-h-[60vh] flex items-end overflow-hidden">
         <video
           autoPlay
           muted
@@ -24,7 +24,7 @@ export default function SaturdaySessionsPage() {
         <div className="absolute inset-0 bg-gradient-to-t from-deep via-deep/60 to-deep/20" />
         <div className="absolute inset-0 opacity-[0.03]" style={grain} />
 
-        <div className="relative z-10 w-full px-6 md:px-12 pb-16 md:pb-24 max-w-[1200px] mx-auto">
+        <div className="relative z-10 w-full px-6 md:px-12 pb-10 md:pb-20 max-w-[1200px] mx-auto">
           <Reveal>
             <div className="text-[11px] text-seafoam/60 font-medium tracking-[0.2em] uppercase mb-4">
               Every Saturday · La Jolla Shores · 7:00–10:00 AM
