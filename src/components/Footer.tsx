@@ -3,6 +3,7 @@ import { Logo } from "./Logo";
 
 const programLinks = [
   { href: "/programs", label: "All Programs" },
+  { href: "/calendar", label: "Course Calendar" },
   { href: "/contact/courses?course=aida2", label: "AIDA 2 Course" },
   { href: "/contact/courses?course=aida1", label: "AIDA 1 — Introduction" },
   { href: "/saturday-sessions", label: "Saturday Sessions" },

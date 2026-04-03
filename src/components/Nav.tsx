@@ -6,6 +6,7 @@ import { Logo } from "./Logo";
 
 const learnLinks = [
   { href: "/programs", label: "Programs & Courses" },
+  { href: "/calendar", label: "Course Calendar" },
   { href: "/education", label: "Education" },
   { href: "/camp-garibaldi", label: "Camp Garibaldi" },
 ];
