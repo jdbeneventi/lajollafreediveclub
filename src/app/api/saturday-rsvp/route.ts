@@ -51,6 +51,17 @@ export async function POST(request: Request) {
         }, { onConflict: "email,saturday_date" });
     } catch {}
 
+    // Check waiver status
+    let waiverSigned = false;
+    try {
+      const { data: memberCheck } = await supabase
+        .from("saturday_members")
+        .select("waiver_signed")
+        .eq("email", email)
+        .single();
+      waiverSigned = memberCheck?.waiver_signed || false;
+    } catch {}
+
     // Send confirmation email to user
     if (RESEND_API_KEY) {
       const resend = new Resend(RESEND_API_KEY);
@@ -89,13 +100,17 @@ export async function POST(request: Request) {
                 </table>
               </div>
 
-              ${isFirst ? `
+              ${!waiverSigned ? `
               <div style="background:#FFF3EE;border:1px solid rgba(199,91,58,0.2);border-radius:12px;padding:16px;margin:16px 0;">
-                <p style="font-size:14px;font-weight:600;color:#C75B3A;margin:0 0 8px 0;">First time? Sign your waiver</p>
-                <p style="font-size:13px;color:#5a6a7a;margin:0 0 8px 0;">Required before your first session. Takes 2 minutes.</p>
+                <p style="font-size:14px;font-weight:600;color:#C75B3A;margin:0 0 8px 0;">Sign your waiver</p>
+                <p style="font-size:13px;color:#5a6a7a;margin:0 0 8px 0;">Required before your first session. Takes 2 minutes. You only need to do this once.</p>
                 <a href="${waiverLink}" style="display:inline-block;padding:8px 20px;background:#C75B3A;color:white;border-radius:50px;text-decoration:none;font-weight:600;font-size:13px;">Sign waiver →</a>
               </div>
-              ` : ""}
+              ` : `
+              <div style="background:#E0F5F2;border:1px solid rgba(42,168,154,0.2);border-radius:12px;padding:12px 16px;margin:16px 0;">
+                <p style="font-size:13px;color:#1B6B6B;margin:0;">✓ Waiver on file — you're all set.</p>
+              </div>
+              `}
 
               <div style="margin:16px 0;">
                 <p style="font-size:13px;font-weight:600;color:#0B1D2C;margin:0 0 6px 0;">What to bring</p>
@@ -143,7 +158,7 @@ export async function POST(request: Request) {
       }
     }
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true, waiverSigned });
   } catch (error) {
     return NextResponse.json(
       { error: error instanceof Error ? error.message : "Failed" },

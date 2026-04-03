@@ -14,6 +14,7 @@ export function SaturdayRSVP() {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [waiverSigned, setWaiverSigned] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -35,9 +36,9 @@ export function SaturdayRSVP() {
       // Kit often succeeds despite CORS
     }
 
-    // Send confirmation email + notify Joshua
+    // Send confirmation email + notify Joshua + check waiver
     try {
-      await fetch("/api/saturday-rsvp", {
+      const res = await fetch("/api/saturday-rsvp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -49,6 +50,8 @@ export function SaturdayRSVP() {
           firstTime,
         }),
       });
+      const data = await res.json();
+      if (data.waiverSigned) setWaiverSigned(true);
     } catch {
       // Non-critical
     }
@@ -57,54 +60,59 @@ export function SaturdayRSVP() {
     setStep("confirmed");
   };
 
+  // ─── Confirmation screen (the smart post-registration experience) ───
   if (step === "confirmed") {
     return (
-      <div className="bg-deep rounded-2xl p-8 md:p-12 text-center">
-        <div className="w-14 h-14 rounded-full bg-seafoam/15 flex items-center justify-center mx-auto mb-5">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#3db8a4" strokeWidth="2">
-            <polyline points="20 6 9 17 4 12" />
-          </svg>
-        </div>
-        <h3 className="font-serif text-2xl text-white mb-2">
-          You&apos;re in, {firstName}!
-        </h3>
-        <p className="text-white/50 text-sm leading-relaxed mb-4 max-w-[400px] mx-auto">
-          Check your email for a confirmation with schedule and gear info.
-          {lineDiving && " You're on the dive headcount."}
-        </p>
-        <div className="bg-seafoam/10 border border-seafoam/20 rounded-xl p-4 mb-8 max-w-[400px] mx-auto">
-          <p className="text-seafoam text-sm font-medium mb-1">Final go/no-go comes Friday morning.</p>
-          <p className="text-white/40 text-xs">We&apos;ll check conditions and email you a confirmation or cancellation.</p>
+      <div className="bg-deep rounded-2xl p-8 md:p-12">
+        {/* Header */}
+        <div className="text-center mb-8">
+          <div className="w-14 h-14 rounded-full bg-seafoam/15 flex items-center justify-center mx-auto mb-5">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#3db8a4" strokeWidth="2">
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+          </div>
+          <h3 className="font-serif text-2xl text-white mb-2">
+            You&apos;re registered, {firstName}!
+          </h3>
+          <p className="text-white/50 text-sm">Check your email for a confirmation.</p>
         </div>
 
-        {firstTime && (
-          <div className="bg-coral/10 border border-coral/20 rounded-xl p-6 mb-8 text-left max-w-[400px] mx-auto">
-            <div className="text-[11px] text-coral font-medium tracking-[0.15em] uppercase mb-3">
-              First time? Do this before Saturday
-            </div>
-            <div className="space-y-3">
-              <Link
-                href="/waiver"
-                className="flex items-center justify-between bg-white/[0.06] rounded-lg px-4 py-3 no-underline hover:bg-white/[0.1] transition-colors group"
-              >
-                <span className="text-white/80 text-sm font-medium">Sign your waiver</span>
-                <span className="text-coral text-xs group-hover:text-white transition-colors">&rarr;</span>
-              </Link>
-              <div className="text-white/30 text-xs leading-relaxed px-1">
-                Required before your first session. Takes 2 minutes.
-              </div>
-            </div>
+        {/* Friday confirmation notice */}
+        <div className="bg-seafoam/10 border border-seafoam/20 rounded-xl p-5 mb-5">
+          <div className="text-seafoam text-sm font-medium mb-1">Look for the Friday email</div>
+          <p className="text-white/40 text-xs leading-relaxed">
+            We check conditions every Friday morning and send a final go/no-go. If conditions are unsafe, the session is called off and you&apos;ll be notified.
+          </p>
+        </div>
+
+        {/* Waiver status */}
+        {waiverSigned ? (
+          <div className="bg-seafoam/10 border border-seafoam/20 rounded-xl p-4 mb-5 flex items-center gap-3">
+            <span className="text-seafoam text-lg">✓</span>
+            <p className="text-seafoam text-sm font-medium">Waiver on file — you&apos;re all set.</p>
           </div>
+        ) : (
+          <Link
+            href="/waiver"
+            className="flex items-center justify-between bg-coral/10 border border-coral/20 rounded-xl px-5 py-4 mb-5 no-underline hover:bg-coral/15 transition-colors group"
+          >
+            <div>
+              <div className="text-coral text-sm font-medium">Sign your waiver</div>
+              <div className="text-white/30 text-xs mt-0.5">Required before your first session. Takes 2 min. One time only.</div>
+            </div>
+            <span className="text-coral text-sm group-hover:text-white transition-colors">→</span>
+          </Link>
         )}
 
-        <div className="bg-white/[0.04] border border-white/[0.06] rounded-xl p-6 text-left max-w-[400px] mx-auto">
+        {/* What to bring */}
+        <div className="bg-white/[0.04] border border-white/[0.06] rounded-xl p-5 mb-5">
           <div className="text-[11px] text-seafoam/60 font-medium tracking-[0.15em] uppercase mb-3">
             What to bring
           </div>
           <div className="grid grid-cols-2 gap-2">
             {(lineDiving
               ? ["Wetsuit", "Mask + snorkel", "Fins", "Weight belt", "Lanyard", "Towel + water"]
-              : ["Towel", "Water", "Sunscreen", "Yoga mat", "Comfortable clothes"]
+              : ["Towel", "Water", "Sunscreen", "Yoga mat or towel", "Comfortable clothes"]
             ).map((item) => (
               <div key={item} className="flex items-center gap-2 text-white/50 text-xs">
                 <span className="text-seafoam/50">&bull;</span>
@@ -114,12 +122,28 @@ export function SaturdayRSVP() {
           </div>
         </div>
 
-        <div className="mt-8 flex gap-3 justify-center flex-wrap">
+        {/* Meeting spot + parking */}
+        <div className="bg-white/[0.04] border border-white/[0.06] rounded-xl p-5 mb-5">
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <div className="text-[11px] text-seafoam/60 font-medium tracking-[0.15em] uppercase mb-1">Where</div>
+              <div className="text-white/70 text-sm font-medium">Kellogg Park</div>
+              <div className="text-white/30 text-xs">La Jolla Shores, near the picnic tables</div>
+            </div>
+            <div>
+              <div className="text-[11px] text-white/30 font-medium tracking-[0.15em] uppercase mb-1">Parking</div>
+              <div className="text-white/30 text-xs leading-relaxed">Summer lot fills by 7:30am. Park on Camino del Oro or Vallecitos.</div>
+            </div>
+          </div>
+        </div>
+
+        {/* Links */}
+        <div className="flex gap-3 justify-center flex-wrap">
           <Link
             href="/conditions"
             className="text-seafoam text-xs font-medium no-underline hover:text-white transition-colors border border-seafoam/15 rounded-full px-4 py-2 hover:border-seafoam/30"
           >
-            Check conditions &rarr;
+            Check conditions →
           </Link>
           <Link
             href="/gear"
@@ -132,6 +156,7 @@ export function SaturdayRSVP() {
     );
   }
 
+  // ─── Registration form ───
   return (
     <div className="bg-deep rounded-2xl p-8 md:p-12">
       <div className="text-center mb-8">
@@ -139,7 +164,7 @@ export function SaturdayRSVP() {
           Register for this Saturday
         </h3>
         <p className="text-white/40 text-sm leading-relaxed">
-          We need a headcount — especially for line diving. Register so we can plan safety coverage and confirm conditions Friday.
+          We need a headcount for safety coverage. You&apos;ll get a confirmation email and a go/no-go on Friday.
         </p>
       </div>
 
@@ -259,10 +284,6 @@ export function SaturdayRSVP() {
         >
           {submitting ? "Registering..." : "Register for Saturday →"}
         </button>
-
-        <p className="text-white/20 text-[11px] text-center pt-1">
-          Registration helps us plan safety coverage and confirm the session.
-        </p>
       </form>
     </div>
   );
