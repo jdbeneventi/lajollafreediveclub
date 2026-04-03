@@ -57,6 +57,14 @@ export default function SaturdaySessionsPage() {
               <br />
               Three phases. One morning. La Jolla Shores.
             </p>
+            <div className="flex gap-4 flex-wrap items-center mt-6">
+              <a href="#register" className="inline-flex px-8 py-3.5 bg-coral text-white rounded-full font-semibold no-underline hover:-translate-y-0.5 hover:shadow-[0_8px_25px_rgba(199,91,58,0.4)] transition-all">
+                Register for Saturday →
+              </a>
+              <a href="#pricing" className="text-white/50 text-sm no-underline border-b border-white/20 pb-px hover:text-white transition-colors">
+                See pricing
+              </a>
+            </div>
           </Reveal>
         </div>
       </section>
@@ -212,7 +220,7 @@ export default function SaturdaySessionsPage() {
       </section>
 
       {/* ── PRICING ── */}
-      <section className="bg-deep py-16 md:py-24 px-6 relative overflow-hidden">
+      <section id="pricing" className="bg-deep py-16 md:py-24 px-6 relative overflow-hidden scroll-mt-20">
         <div className="absolute inset-0 opacity-[0.03]" style={grain} />
         <div className="max-w-[700px] mx-auto relative z-10">
           <Reveal>
@@ -292,6 +300,14 @@ export default function SaturdaySessionsPage() {
             </div>
           </Reveal>
         </div>
+      </section>
+
+      {/* ── REGISTER CTA (mid-page) ── */}
+      <section className="bg-salt py-10 px-6 text-center">
+        <a href="#register" className="inline-flex px-10 py-4 bg-coral text-white rounded-full font-semibold text-base no-underline hover:-translate-y-0.5 hover:shadow-[0_8px_25px_rgba(199,91,58,0.4)] transition-all">
+          Register for this Saturday →
+        </a>
+        <p className="text-[#5a6a7a] text-xs mt-3">We need a headcount — especially for line diving.</p>
       </section>
 
       {/* ── REQUIREMENTS ── */}
@@ -437,7 +453,7 @@ export default function SaturdaySessionsPage() {
       </section>
 
       {/* ── RSVP ── */}
-      <section className="bg-gradient-to-br from-ocean to-teal py-16 md:py-24 px-6 relative overflow-hidden">
+      <section id="register" className="bg-gradient-to-br from-ocean to-teal py-16 md:py-24 px-6 relative overflow-hidden scroll-mt-20">
         <div className="absolute inset-0 opacity-[0.03]" style={grain} />
         <div className="max-w-[520px] mx-auto relative z-10">
           <SaturdayRSVP />
