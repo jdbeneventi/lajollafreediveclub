@@ -77,7 +77,7 @@ export default function CalendarPage() {
       <section className="bg-deep py-16 px-6">
         <div className="max-w-[900px] mx-auto">
           <Reveal>
-            <div className="text-[11px] text-teal/60 font-medium tracking-[0.2em] uppercase mb-4">Every Saturday</div>
+            <div className="text-[11px] text-teal/60 font-medium tracking-[0.2em] uppercase mb-4">Every Week</div>
             <h2 className="font-serif text-2xl text-white mb-8">The weekly rhythm</h2>
           </Reveal>
           <div className="grid md:grid-cols-2 gap-4">
