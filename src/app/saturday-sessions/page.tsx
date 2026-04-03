@@ -42,7 +42,7 @@ export default function SaturdaySessionsPage() {
               <a href="#register" className="inline-flex px-8 py-3.5 bg-coral text-white rounded-full font-semibold no-underline hover:-translate-y-0.5 hover:shadow-[0_8px_25px_rgba(199,91,58,0.4)] transition-all">
                 Register for Saturday →
               </a>
-              <a href="#options" className="text-white/50 text-sm no-underline border-b border-white/20 pb-px hover:text-white transition-colors">
+              <a href="#the-morning" className="text-white/50 text-sm no-underline border-b border-white/20 pb-px hover:text-white transition-colors">
                 See the morning
               </a>
             </div>
@@ -50,8 +50,111 @@ export default function SaturdaySessionsPage() {
         </div>
       </section>
 
+      {/* ── THREE PHASES ── */}
+      <section id="the-morning" className="bg-salt py-20 md:py-28 px-6 relative scroll-mt-20">
+        <div className="absolute inset-0 opacity-[0.02]" style={grain} />
+        <div className="max-w-[900px] mx-auto relative z-10">
+          <Reveal>
+            <div className="section-label">The Morning</div>
+            <h2 className="section-title mb-16">Three phases, one flow</h2>
+          </Reveal>
+
+          {/* Phase 1 */}
+          <Reveal>
+            <div className="grid md:grid-cols-[1fr_1.2fr] gap-8 md:gap-12 items-center mb-20 md:mb-28">
+              <div className="rounded-2xl overflow-hidden aspect-[4/3]">
+                <img
+                  src="/images/photos/joshua-lena-shores.jpg"
+                  alt="Joshua and Lena at La Jolla Shores"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div>
+                <div className="flex items-baseline gap-3 mb-3">
+                  <span className="font-serif text-3xl md:text-4xl text-teal/30">1</span>
+                  <span className="text-[11px] text-teal font-medium tracking-[0.15em] uppercase">7:00 – 7:45 AM</span>
+                </div>
+                <h3 className="font-serif text-[clamp(1.5rem,3vw,2.2rem)] tracking-tight mb-3">
+                  Ocean Flow with Lena
+                </h3>
+                <p className="text-[#5a6a7a] text-[0.95rem] leading-relaxed mb-4">
+                  Pre-dive stretching and breathing exercises on the beach.
+                  Guided by Lena &mdash; RYT yoga teacher and freediver.
+                  Prepares the body and calms the mind before you touch the water.
+                </p>
+                <span className="px-3 py-1.5 bg-seafoam/10 text-teal rounded-full font-medium text-xs">
+                  Open to all
+                </span>
+              </div>
+            </div>
+          </Reveal>
+
+          {/* Phase 2 */}
+          <Reveal>
+            <div className="grid md:grid-cols-[1.2fr_1fr] gap-8 md:gap-12 items-center mb-20 md:mb-28">
+              <div className="order-2 md:order-1">
+                <div className="flex items-baseline gap-3 mb-3">
+                  <span className="font-serif text-3xl md:text-4xl text-teal/30">2</span>
+                  <span className="text-[11px] text-teal font-medium tracking-[0.15em] uppercase">7:45 – 8:15 AM</span>
+                </div>
+                <h3 className="font-serif text-[clamp(1.5rem,3vw,2.2rem)] tracking-tight mb-3">
+                  Dry Training
+                </h3>
+                <p className="text-[#5a6a7a] text-[0.95rem] leading-relaxed mb-4">
+                  Breathing exercises and CO&#8322; tolerance drills on the
+                  beach. Controlled breath holds, diaphragmatic work, and
+                  composure training. Extends your capacity and settles your
+                  nervous system before you touch the water.
+                </p>
+                <span className="px-3 py-1.5 bg-seafoam/10 text-teal rounded-full font-medium text-xs">
+                  Open to all
+                </span>
+              </div>
+              <div className="rounded-2xl overflow-hidden aspect-[4/3] order-1 md:order-2">
+                <video autoPlay muted loop playsInline className="w-full h-full object-cover">
+                  <source src="/videos/descending-line.mp4" type="video/mp4" />
+                </video>
+              </div>
+            </div>
+          </Reveal>
+
+          {/* Phase 3 */}
+          <Reveal>
+            <div className="grid md:grid-cols-[1fr_1.2fr] gap-8 md:gap-12 items-center">
+              <div className="rounded-2xl overflow-hidden aspect-[4/3]">
+                <video autoPlay muted loop playsInline className="w-full h-full object-cover">
+                  <source src="/videos/joshua-blue-hole-monofin.mp4" type="video/mp4" />
+                </video>
+              </div>
+              <div>
+                <div className="flex items-baseline gap-3 mb-3">
+                  <span className="font-serif text-3xl md:text-4xl text-teal/30">3</span>
+                  <span className="text-[11px] text-teal font-medium tracking-[0.15em] uppercase">8:30 – 10:00 AM</span>
+                </div>
+                <h3 className="font-serif text-[clamp(1.5rem,3vw,2.2rem)] tracking-tight mb-3">
+                  Line Diving
+                </h3>
+                <p className="text-[#5a6a7a] text-[0.95rem] leading-relaxed mb-4">
+                  Group freedive at the LJFC mooring line. Canyon edge,
+                  ~50m depth, ~500m offshore from Kellogg Park.
+                  One up, one down. Always a buddy. Always a plan.
+                </p>
+                <div className="flex items-center gap-3 text-sm flex-wrap">
+                  <span className="px-3 py-1.5 bg-coral/10 text-coral rounded-full font-medium text-xs">
+                    Certification required
+                  </span>
+                  <span className="px-3 py-1.5 bg-seafoam/10 text-teal rounded-full font-medium text-xs">
+                    All agencies welcome
+                  </span>
+                </div>
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
       {/* ── THREE OPTIONS ── */}
-      <section id="options" className="bg-deep py-16 md:py-20 px-6 relative overflow-hidden scroll-mt-20">
+      <section className="bg-deep py-16 md:py-20 px-6 relative overflow-hidden">
         <div className="absolute inset-0 opacity-[0.03]" style={grain} />
         <div className="max-w-[900px] mx-auto relative z-10">
           <Reveal>
@@ -60,67 +163,34 @@ export default function SaturdaySessionsPage() {
             </div>
 
             <div className="grid md:grid-cols-3 gap-5 mb-6">
-              {/* Full Morning */}
               <div className="bg-white/[0.04] border border-seafoam/15 rounded-2xl p-7 text-center relative">
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-seafoam text-deep text-[10px] font-semibold tracking-wide uppercase rounded-full whitespace-nowrap">
-                  The Complete Morning
-                </div>
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-seafoam text-deep text-[10px] font-semibold tracking-wide uppercase rounded-full whitespace-nowrap">The Complete Morning</div>
                 <h3 className="font-serif text-xl text-white mt-3 mb-4">Everything</h3>
                 <div className="space-y-3 text-left">
-                  <div className="flex gap-3 items-start">
-                    <span className="text-seafoam/60 text-xs mt-0.5 shrink-0">7:00</span>
-                    <span className="text-white/60 text-sm">Ocean Flow — yoga on the beach</span>
-                  </div>
-                  <div className="flex gap-3 items-start">
-                    <span className="text-seafoam/60 text-xs mt-0.5 shrink-0">7:45</span>
-                    <span className="text-white/60 text-sm">Dry Training — breathing drills + CO₂ work</span>
-                  </div>
-                  <div className="flex gap-3 items-start">
-                    <span className="text-seafoam/60 text-xs mt-0.5 shrink-0">8:30</span>
-                    <span className="text-white/60 text-sm">Line Diving — canyon edge, buddied</span>
-                  </div>
+                  <div className="flex gap-3 items-start"><span className="text-seafoam/60 text-xs mt-0.5 shrink-0">7:00</span><span className="text-white/60 text-sm">Ocean Flow — yoga on the beach</span></div>
+                  <div className="flex gap-3 items-start"><span className="text-seafoam/60 text-xs mt-0.5 shrink-0">7:45</span><span className="text-white/60 text-sm">Dry Training — breathing drills + CO₂ work</span></div>
+                  <div className="flex gap-3 items-start"><span className="text-seafoam/60 text-xs mt-0.5 shrink-0">8:30</span><span className="text-white/60 text-sm">Line Diving — canyon edge, buddied</span></div>
                 </div>
-                <div className="mt-5 pt-4 border-t border-white/[0.06]">
-                  <p className="text-white/30 text-xs">Cert required for diving (any agency)</p>
-                </div>
+                <div className="mt-5 pt-4 border-t border-white/[0.06]"><p className="text-white/30 text-xs">Cert required for diving (any agency)</p></div>
               </div>
 
-              {/* Just Dive */}
               <div className="bg-white/[0.04] border border-white/[0.08] rounded-2xl p-7 text-center relative">
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-white/10 text-white/60 text-[10px] font-semibold tracking-wide uppercase rounded-full whitespace-nowrap">
-                  Skip the beach session
-                </div>
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-white/10 text-white/60 text-[10px] font-semibold tracking-wide uppercase rounded-full whitespace-nowrap">Skip the beach session</div>
                 <h3 className="font-serif text-xl text-white mt-3 mb-4">Just Dive</h3>
                 <div className="space-y-3 text-left">
-                  <div className="flex gap-3 items-start">
-                    <span className="text-white/30 text-xs mt-0.5 shrink-0">8:30</span>
-                    <span className="text-white/60 text-sm">Line Diving — show up at Kellogg Park ready to go</span>
-                  </div>
+                  <div className="flex gap-3 items-start"><span className="text-white/30 text-xs mt-0.5 shrink-0">8:30</span><span className="text-white/60 text-sm">Line Diving — show up at Kellogg Park ready to go</span></div>
                 </div>
-                <div className="mt-5 pt-4 border-t border-white/[0.06]">
-                  <p className="text-white/30 text-xs">Cert required · own gear + lanyard</p>
-                </div>
+                <div className="mt-5 pt-4 border-t border-white/[0.06]"><p className="text-white/30 text-xs">Cert required · own gear + lanyard</p></div>
               </div>
 
-              {/* Just Beach */}
               <div className="bg-white/[0.04] border border-white/[0.08] rounded-2xl p-7 text-center relative">
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-white/10 text-white/60 text-[10px] font-semibold tracking-wide uppercase rounded-full whitespace-nowrap">
-                  No cert needed
-                </div>
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-white/10 text-white/60 text-[10px] font-semibold tracking-wide uppercase rounded-full whitespace-nowrap">No cert needed</div>
                 <h3 className="font-serif text-xl text-white mt-3 mb-4">Just Beach</h3>
                 <div className="space-y-3 text-left">
-                  <div className="flex gap-3 items-start">
-                    <span className="text-white/30 text-xs mt-0.5 shrink-0">7:00</span>
-                    <span className="text-white/60 text-sm">Ocean Flow — yoga on the beach</span>
-                  </div>
-                  <div className="flex gap-3 items-start">
-                    <span className="text-white/30 text-xs mt-0.5 shrink-0">7:45</span>
-                    <span className="text-white/60 text-sm">Dry Training — breathing drills + CO₂ work</span>
-                  </div>
+                  <div className="flex gap-3 items-start"><span className="text-white/30 text-xs mt-0.5 shrink-0">7:00</span><span className="text-white/60 text-sm">Ocean Flow — yoga on the beach</span></div>
+                  <div className="flex gap-3 items-start"><span className="text-white/30 text-xs mt-0.5 shrink-0">7:45</span><span className="text-white/60 text-sm">Dry Training — breathing drills + CO₂ work</span></div>
                 </div>
-                <div className="mt-5 pt-4 border-t border-white/[0.06]">
-                  <p className="text-white/30 text-xs">Open to everyone · bring a towel + water</p>
-                </div>
+                <div className="mt-5 pt-4 border-t border-white/[0.06]"><p className="text-white/30 text-xs">Open to everyone · bring a towel + water</p></div>
               </div>
             </div>
 
@@ -134,37 +204,31 @@ export default function SaturdaySessionsPage() {
         </div>
       </section>
 
+      {/* ── LOCATION ── */}
+      <section className="bg-ocean py-12 md:py-16 px-6 relative overflow-hidden">
+        <div className="absolute inset-0 opacity-[0.03]" style={grain} />
+        <div className="max-w-[700px] mx-auto relative z-10">
+          <Reveal>
+            <div className="grid md:grid-cols-2 gap-8 items-center">
+              <div>
+                <div className="text-[11px] text-seafoam/60 font-medium tracking-[0.2em] uppercase mb-3">Meeting Spot</div>
+                <h3 className="font-serif text-2xl text-white mb-2">Kellogg Park</h3>
+                <p className="text-white/50 text-sm leading-relaxed">Near the picnic tables. La Jolla Shores.</p>
+              </div>
+              <div>
+                <div className="text-[11px] text-sand/60 font-medium tracking-[0.2em] uppercase mb-3">Parking</div>
+                <p className="text-white/50 text-sm leading-relaxed">Summer lot fills by 7:30am. Arrive early or park on Camino del Oro / Vallecitos.</p>
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
       {/* ── REGISTER ── */}
       <section id="register" className="bg-gradient-to-br from-ocean to-teal py-16 md:py-24 px-6 relative overflow-hidden scroll-mt-20">
         <div className="absolute inset-0 opacity-[0.03]" style={grain} />
         <div className="max-w-[520px] mx-auto relative z-10">
           <SaturdayRSVP />
-        </div>
-      </section>
-
-      {/* ── UPCOMING EVENT ── */}
-      <section className="bg-deep py-14 px-6 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-[0.03]" style={grain} />
-        <div className="max-w-[680px] mx-auto relative z-10">
-          <Reveal>
-            <Link href="/events/big-blue-night" className="block no-underline group bg-white/[0.03] border border-white/[0.06] rounded-2xl p-6 md:p-8 hover:bg-white/[0.05] transition-all">
-              <div className="flex items-center gap-3 mb-3">
-                <span className="px-3 py-1 bg-seafoam/15 border border-seafoam/25 rounded-full text-seafoam text-[10px] font-medium tracking-[0.15em] uppercase">
-                  Free Event
-                </span>
-                <span className="text-white/25 text-xs">Friday, April 25</span>
-              </div>
-              <h3 className="font-serif text-xl text-white italic group-hover:text-seafoam transition-colors">
-                &ldquo;The Big Blue&rdquo; — Movie Night at the Beach
-              </h3>
-              <p className="text-white/40 text-sm mt-2 leading-relaxed">
-                Sunset session + the film that started it all. Kellogg Park.
-              </p>
-              <span className="inline-block text-seafoam text-xs font-medium mt-3 group-hover:text-white transition-colors">
-                RSVP &rarr;
-              </span>
-            </Link>
-          </Reveal>
         </div>
       </section>
     </>
