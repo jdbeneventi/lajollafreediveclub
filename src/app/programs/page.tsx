@@ -454,12 +454,9 @@ export default function ProgramsPage() {
           <Reveal>
             <div className="text-center mb-16">
               <div className="section-label justify-center">Schedule</div>
-              <h2 className="section-title">Upcoming courses &amp; events</h2>
+              <h2 className="section-title">Upcoming courses</h2>
               <p className="section-desc max-w-[560px] mx-auto">
                 Dates fill up fast — inquire early to reserve your spot.
-              </p>
-              <p className="text-xs text-[#5a6a7a] mt-3 max-w-[480px] mx-auto">
-                Sample dates shown below — schedule updates monthly. <Link href="/contact/courses" className="text-teal hover:underline">Inquire for current availability</Link>.
               </p>
             </div>
           </Reveal>
@@ -467,44 +464,44 @@ export default function ProgramsPage() {
           <div className="space-y-4">
             {[
               {
-                date: "Apr 5–6",
-                day: "Sat–Sun",
-                title: "AIDA 2 Certification",
-                detail: "2-day course. Theory, pool session, open water dives at La Jolla Shores.",
-                spots: "4 spots",
-                href: "/contact/courses?course=aida2",
-              },
-              {
-                date: "Apr 12",
-                day: "Saturday",
-                title: "AIDA 1 — Introduction",
-                detail: "One-day intro to freediving fundamentals. No experience needed.",
+                date: "Apr 15",
+                day: "Wed",
+                title: "AIDA 1 — Discover Freediving",
+                detail: "Half-day introduction. Theory, pool session, first breath-hold. No experience needed.",
                 spots: "6 spots",
                 href: "/contact/courses?course=aida1",
               },
               {
-                date: "Apr 19–20",
-                day: "Sat–Sun",
-                title: "AIDA 2 Certification",
-                detail: "2-day course. Theory, pool session, open water dives at La Jolla Shores.",
-                spots: "4 spots",
-                href: "/contact/courses?course=aida2",
-              },
-              {
-                date: "Apr 26",
-                day: "Saturday",
-                title: "AIDA 1 — Introduction",
-                detail: "One-day intro to freediving fundamentals. No experience needed.",
+                date: "Apr 29",
+                day: "Wed",
+                title: "AIDA 1 — Discover Freediving",
+                detail: "Half-day introduction. No experience needed.",
                 spots: "6 spots",
                 href: "/contact/courses?course=aida1",
               },
               {
-                date: "May 3–4",
-                day: "Sat–Sun",
-                title: "AIDA 3 — Advanced",
-                detail: "Advanced certification. Must hold AIDA 2. Deep training in the canyon.",
-                spots: "3 spots",
-                href: "/contact/courses?course=aida3",
+                date: "May 29–31",
+                day: "Thu–Sat",
+                title: "AIDA 2 Certification",
+                detail: "3-day course. Theory, pool session, open water dives at La Jolla Shores.",
+                spots: "4 spots",
+                href: "/contact/courses?course=aida2",
+              },
+              {
+                date: "Jun 19–21",
+                day: "Fri–Sun",
+                title: "AIDA 2 Certification",
+                detail: "3-day course. Theory, pool session, open water dives at La Jolla Shores.",
+                spots: "4 spots",
+                href: "/contact/courses?course=aida2",
+              },
+              {
+                date: "Jul 10–12",
+                day: "Fri–Sun",
+                title: "AIDA 2 Certification",
+                detail: "3-day course. Theory, pool session, open water dives at La Jolla Shores.",
+                spots: "4 spots",
+                href: "/contact/courses?course=aida2",
               },
             ].map((event, i) => (
               <Reveal key={i} delay={i * 40}>
@@ -512,7 +509,7 @@ export default function ProgramsPage() {
                   href={event.href}
                   className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6 bg-salt rounded-xl p-4 sm:p-5 no-underline text-deep hover:-translate-y-0.5 hover:shadow-md transition-all group"
                 >
-                  <div className="flex items-center gap-3 sm:block sm:text-center shrink-0 sm:w-16">
+                  <div className="flex items-center gap-3 sm:block sm:text-center shrink-0 sm:w-20">
                     <div className="font-serif text-lg text-deep leading-tight">{event.date}</div>
                     <div className="text-[10px] text-[#5a6a7a]">{event.day}</div>
                   </div>
@@ -533,10 +530,15 @@ export default function ProgramsPage() {
 
           <Reveal>
             <div className="text-center mt-8">
-              <p className="text-xs text-[#5a6a7a] mb-4">Don&apos;t see a date that works? We run courses on demand for groups of 2+.</p>
-              <Link href="/contact/courses" className="btn btn-outline no-underline">
-                Request custom dates →
-              </Link>
+              <div className="flex gap-4 justify-center flex-wrap">
+                <Link href="/calendar" className="btn btn-primary no-underline">
+                  Full calendar →
+                </Link>
+                <Link href="/contact/courses" className="btn btn-outline no-underline">
+                  Request custom dates →
+                </Link>
+              </div>
+              <p className="text-xs text-[#5a6a7a] mt-4">AIDA 1 runs every Wednesday. We also run courses on demand for groups of 2+.</p>
             </div>
           </Reveal>
         </div>
