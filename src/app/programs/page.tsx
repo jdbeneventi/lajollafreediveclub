@@ -128,8 +128,8 @@ const otherPrograms = [
     id: "group",
     title: "Group Ocean Sessions",
     subtitle: "Weekly guided dives with your crew",
-    price: "Free / $20–30",
-    priceNote: "Free for AIDA 3+ · $30 full morning · $20 dive-only · $80/mo pass",
+    price: "Drop-in",
+    priceNote: "Open to all certified divers · Register weekly for headcount",
     duration: "Every Saturday",
     level: "AIDA 2+ certified",
     gradient: "from-ocean to-[#14566a]",
@@ -563,7 +563,7 @@ export default function ProgramsPage() {
                 <div className="p-6">
                   <div className="text-[10px] text-[#5a6a7a] uppercase tracking-wider font-semibold mb-1">Saturdays · 7:00 AM · La Jolla Shores</div>
                   <h3 className="font-serif text-xl mb-1">Ocean Flow — yoga for freedivers</h3>
-                  <div className="font-serif text-lg text-teal mb-2">$15 <span className="text-xs text-[#5a6a7a] font-sans">drop-in · free for AIDA 3+ · $50/mo pass</span></div>
+                  <div className="font-serif text-lg text-teal mb-2">Drop-in <span className="text-xs text-[#5a6a7a] font-sans">· open to everyone · no cert needed</span></div>
                   <p className="text-xs text-[#5a6a7a] leading-relaxed mb-3">
                     A pre-dive flow designed specifically for ocean people. Led by Lena — RYT yoga
                     teacher, freediver, and artist — this session blends gentle mobility, intercostal
@@ -590,10 +590,9 @@ export default function ProgramsPage() {
                 <div className="p-6">
                   <div className="text-[10px] text-[#5a6a7a] uppercase tracking-wider font-semibold mb-1">Saturdays · 8:30 AM</div>
                   <h3 className="font-serif text-xl mb-1">Group ocean session</h3>
-                  <div className="font-serif text-lg text-teal mb-2">Free for AIDA 3+ <span className="text-xs text-[#5a6a7a] font-sans">/ $30 full morning (AIDA 1–2) / $80/mo</span></div>
+                  <div className="font-serif text-lg text-teal mb-2">Drop-in <span className="text-xs text-[#5a6a7a] font-sans">· certified divers (any agency) · register for headcount</span></div>
                   <p className="text-xs text-[#5a6a7a] leading-relaxed mb-4">
-                    Line diving at the canyon edge. Advanced divers (AIDA 3+, Molchanovs W3+) get the full morning free — Ocean Flow, dry training, and diving.
-                    Beginner/intermediate divers: $30 full morning, $20 dive-only, or $80/mo pass.
+                    Line diving at the canyon edge. Open to all certified freedivers — AIDA, Molchanovs, SSI, or equivalent.
                     Must bring own gear: wetsuit, fins, mask, snorkel, weight belt, and lanyard.
                     <a href="/waiver" className="text-teal hover:underline ml-1">Signed waiver required →</a>
                   </p>

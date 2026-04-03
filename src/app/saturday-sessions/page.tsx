@@ -10,7 +10,7 @@ const grain = {
 const faqs = [
   {
     q: "Do I need to be certified?",
-    a: "Only for line diving. Ocean Flow and dry training are open to everyone. For diving: AIDA 3+ get the full morning free. AIDA 1–2 pay $30 for the full morning or $20 dive-only. Monthly passes available.",
+    a: "Only for line diving. Ocean Flow and dry training are open to everyone — no experience needed. For line diving, you need a valid freediving certification from any agency.",
   },
   {
     q: "What if conditions are bad?",
@@ -62,7 +62,7 @@ export default function SaturdaySessionsPage() {
                 Register for Saturday →
               </a>
               <a href="#pricing" className="text-white/50 text-sm no-underline border-b border-white/20 pb-px hover:text-white transition-colors">
-                See pricing
+                Who it&apos;s for
               </a>
             </div>
           </Reveal>
@@ -110,7 +110,7 @@ export default function SaturdaySessionsPage() {
                   <span className="px-3 py-1.5 bg-seafoam/10 text-teal rounded-full font-medium text-xs">
                     Open to all
                   </span>
-                  <span className="text-[#5a6a7a]">$15 drop-in</span>
+                  <span className="text-[#5a6a7a]">Drop-in welcome</span>
                 </div>
               </div>
             </div>
@@ -219,83 +219,38 @@ export default function SaturdaySessionsPage() {
         </div>
       </section>
 
-      {/* ── PRICING ── */}
+      {/* ── WHO IT'S FOR ── */}
       <section id="pricing" className="bg-deep py-16 md:py-24 px-6 relative overflow-hidden scroll-mt-20">
         <div className="absolute inset-0 opacity-[0.03]" style={grain} />
         <div className="max-w-[700px] mx-auto relative z-10">
           <Reveal>
-            {/* Drop-in pricing */}
-            <div className="text-[11px] text-white/30 font-medium tracking-[0.15em] uppercase text-center mb-5">Drop-in</div>
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
-              {/* Advanced — full morning free */}
-              <div className="bg-white/[0.04] border border-seafoam/15 rounded-2xl p-7 text-center relative">
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-seafoam text-deep text-[10px] font-semibold tracking-wide uppercase rounded-full whitespace-nowrap">
-                  AIDA 3+ / W3+
-                </div>
-                <div className="font-serif text-3xl text-white mt-2 mb-2">Free</div>
-                <p className="text-white/50 text-sm leading-relaxed">
-                  Full morning — yoga, dry training, and line diving.
+            <div className="grid md:grid-cols-3 gap-4 mb-6">
+              <div className="bg-white/[0.04] border border-seafoam/15 rounded-2xl p-7 text-center">
+                <div className="text-seafoam text-2xl mb-3">🤿</div>
+                <h3 className="font-serif text-lg text-white mb-2">Advanced Divers</h3>
+                <p className="text-white/40 text-sm leading-relaxed">
+                  AIDA 3+, Molchanovs W3+, or equivalent. Full morning — yoga, dry training, and line diving.
                 </p>
               </div>
-
-              {/* Beginner — full morning bundle */}
-              <div className="bg-white/[0.04] border border-coral/20 rounded-2xl p-7 text-center relative">
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-coral text-white text-[10px] font-semibold tracking-wide uppercase rounded-full whitespace-nowrap">
-                  AIDA 1–2 · Full AM
-                </div>
-                <div className="font-serif text-3xl text-white mt-2 mb-2">$30</div>
-                <p className="text-white/50 text-sm leading-relaxed">
-                  Yoga + dry training + line diving.
+              <div className="bg-white/[0.04] border border-coral/20 rounded-2xl p-7 text-center">
+                <div className="text-coral text-2xl mb-3">🏊</div>
+                <h3 className="font-serif text-lg text-white mb-2">Newer Divers</h3>
+                <p className="text-white/40 text-sm leading-relaxed">
+                  AIDA 1–2 or equivalent. Join for the full morning or just line diving. Group experience with experienced divers around you.
                 </p>
               </div>
-
-              {/* Dive only */}
-              <div className="bg-white/[0.04] border border-white/[0.06] rounded-2xl p-7 text-center relative">
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-white/10 text-white/60 text-[10px] font-semibold tracking-wide uppercase rounded-full whitespace-nowrap">
-                  AIDA 1–2 · Dive only
-                </div>
-                <div className="font-serif text-3xl text-white mt-2 mb-2">$20</div>
-                <p className="text-white/50 text-sm leading-relaxed">
-                  Line diving only. Show up at 8:30.
-                </p>
-              </div>
-
-              {/* Beach only */}
-              <div className="bg-white/[0.04] border border-white/[0.06] rounded-2xl p-7 text-center relative">
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-white/10 text-white/60 text-[10px] font-semibold tracking-wide uppercase rounded-full whitespace-nowrap">
-                  No cert needed
-                </div>
-                <div className="font-serif text-3xl text-white mt-2 mb-2">$15</div>
-                <p className="text-white/50 text-sm leading-relaxed">
-                  Ocean Flow + dry training. Beach only.
+              <div className="bg-white/[0.04] border border-white/[0.06] rounded-2xl p-7 text-center">
+                <div className="text-white/40 text-2xl mb-3">🧘</div>
+                <h3 className="font-serif text-lg text-white mb-2">Beach Only</h3>
+                <p className="text-white/40 text-sm leading-relaxed">
+                  No certification needed. Ocean Flow + dry training on the beach. The perfect introduction.
                 </p>
               </div>
             </div>
-
-            {/* Monthly passes */}
-            <div className="text-[11px] text-white/30 font-medium tracking-[0.15em] uppercase text-center mb-5">Monthly Pass</div>
-            <div className="grid md:grid-cols-2 gap-4 mb-6">
-              <div className="bg-white/[0.04] border border-seafoam/15 rounded-2xl p-6 text-center">
-                <div className="font-serif text-3xl text-white mb-1">$80<span className="text-lg text-white/30">/mo</span></div>
-                <p className="text-white/50 text-sm mb-2">Full morning pass</p>
-                <p className="text-white/30 text-xs leading-relaxed">
-                  Yoga + dry training + line diving, every Saturday. ~$20/session.
-                </p>
-              </div>
-              <div className="bg-white/[0.04] border border-white/[0.06] rounded-2xl p-6 text-center">
-                <div className="font-serif text-3xl text-white mb-1">$50<span className="text-lg text-white/30">/mo</span></div>
-                <p className="text-white/50 text-sm mb-2">Beach pass</p>
-                <p className="text-white/30 text-xs leading-relaxed">
-                  Yoga + dry training every Saturday. ~$12/session.
-                </p>
-              </div>
-            </div>
-
-            {/* Incentive callout */}
             <div className="bg-seafoam/[0.08] border border-seafoam/15 rounded-xl p-5 text-center">
-              <p className="text-seafoam text-sm font-medium mb-1">Get your AIDA 3 — dive free forever.</p>
+              <p className="text-seafoam text-sm font-medium mb-1">Not certified yet?</p>
               <p className="text-white/35 text-xs leading-relaxed">
-                Advanced certification means free access to every Saturday morning. <Link href="/contact/courses?course=aida3" className="text-seafoam/80 underline">AIDA 3 courses →</Link>
+                Start with a course and join us on Saturdays. <Link href="/contact/courses?course=aida2" className="text-seafoam/80 underline">View courses →</Link>
               </p>
             </div>
           </Reveal>
@@ -358,11 +313,11 @@ export default function SaturdaySessionsPage() {
                 <ul className="space-y-3 text-sm text-[#5a6a7a]">
                   <li className="flex gap-2">
                     <span className="text-seafoam shrink-0">&bull;</span>
-                    <span><strong className="text-deep">AIDA 3+:</strong> Full morning free</span>
+                    <span><strong className="text-deep">AIDA 3+ / Molchanovs W3+</strong> or equivalent</span>
                   </li>
                   <li className="flex gap-2">
                     <span className="text-coral shrink-0">&bull;</span>
-                    <span><strong className="text-deep">AIDA 1–2:</strong> $30 full morning / $20 dive-only</span>
+                    <span><strong className="text-deep">AIDA 1–2 / equivalent</strong> — welcome</span>
                   </li>
                   <li className="flex gap-2">
                     <span className="text-coral shrink-0">&bull;</span>

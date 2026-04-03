@@ -170,7 +170,7 @@ function buildGoEmailHtml(
       </tr>
     </table>
     <div style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(11,29,44,0.06);font-size:12px;color:#1B6B6B;line-height:1.5;">
-      AIDA 3+ — full morning free. AIDA 1–2 — $30 full morning or $20 dive-only. Payment at the beach.
+      Open to all certified divers. Register at lajollafreediveclub.com/saturday-sessions so we have a headcount.
     </div>
   </div>
 
