@@ -219,34 +219,81 @@ export default function SaturdaySessionsPage() {
         </div>
       </section>
 
-      {/* ── WHO IT'S FOR ── */}
+      {/* ── OPTIONS ── */}
       <section id="pricing" className="bg-deep py-16 md:py-24 px-6 relative overflow-hidden scroll-mt-20">
         <div className="absolute inset-0 opacity-[0.03]" style={grain} />
-        <div className="max-w-[700px] mx-auto relative z-10">
+        <div className="max-w-[900px] mx-auto relative z-10">
           <Reveal>
-            <div className="grid md:grid-cols-3 gap-4 mb-6">
-              <div className="bg-white/[0.04] border border-seafoam/15 rounded-2xl p-7 text-center">
-                <div className="text-seafoam text-2xl mb-3">🤿</div>
-                <h3 className="font-serif text-lg text-white mb-2">Advanced Divers</h3>
-                <p className="text-white/40 text-sm leading-relaxed">
-                  AIDA 3+, Molchanovs W3+, FII Level 2+, or equivalent. Full morning — yoga, dry training, and line diving.
-                </p>
+            <div className="text-center mb-10">
+              <div className="text-[11px] text-teal/60 font-medium tracking-[0.2em] uppercase mb-3">Choose Your Saturday</div>
+              <h2 className="font-serif text-[clamp(1.5rem,3vw,2.2rem)] text-white">Three ways to join</h2>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-5 mb-6">
+              {/* Full Morning */}
+              <div className="bg-white/[0.04] border border-seafoam/15 rounded-2xl p-7 text-center relative">
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-seafoam text-deep text-[10px] font-semibold tracking-wide uppercase rounded-full whitespace-nowrap">
+                  The Complete Morning
+                </div>
+                <h3 className="font-serif text-xl text-white mt-3 mb-4">Everything</h3>
+                <div className="space-y-3 text-left">
+                  <div className="flex gap-3 items-start">
+                    <span className="text-seafoam/60 text-xs mt-0.5 shrink-0">7:00</span>
+                    <span className="text-white/60 text-sm">Ocean Flow — yoga on the beach</span>
+                  </div>
+                  <div className="flex gap-3 items-start">
+                    <span className="text-seafoam/60 text-xs mt-0.5 shrink-0">7:45</span>
+                    <span className="text-white/60 text-sm">Dry Training — breathing drills + CO₂ work</span>
+                  </div>
+                  <div className="flex gap-3 items-start">
+                    <span className="text-seafoam/60 text-xs mt-0.5 shrink-0">8:30</span>
+                    <span className="text-white/60 text-sm">Line Diving — canyon edge, buddied</span>
+                  </div>
+                </div>
+                <div className="mt-5 pt-4 border-t border-white/[0.06]">
+                  <p className="text-white/30 text-xs">Cert required for diving (any agency)</p>
+                </div>
               </div>
-              <div className="bg-white/[0.04] border border-coral/20 rounded-2xl p-7 text-center">
-                <div className="text-coral text-2xl mb-3">🏊</div>
-                <h3 className="font-serif text-lg text-white mb-2">Newer Divers</h3>
-                <p className="text-white/40 text-sm leading-relaxed">
-                  AIDA 1–2, Molchanovs W1–2, FII Level 1, SSI, PADI, or equivalent. Join for the full morning or just line diving.
-                </p>
+
+              {/* Just Dive */}
+              <div className="bg-white/[0.04] border border-white/[0.08] rounded-2xl p-7 text-center relative">
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-white/10 text-white/60 text-[10px] font-semibold tracking-wide uppercase rounded-full whitespace-nowrap">
+                  Skip the beach session
+                </div>
+                <h3 className="font-serif text-xl text-white mt-3 mb-4">Just Dive</h3>
+                <div className="space-y-3 text-left">
+                  <div className="flex gap-3 items-start">
+                    <span className="text-white/30 text-xs mt-0.5 shrink-0">8:30</span>
+                    <span className="text-white/60 text-sm">Line Diving — show up at Kellogg Park ready to go</span>
+                  </div>
+                </div>
+                <div className="mt-5 pt-4 border-t border-white/[0.06]">
+                  <p className="text-white/30 text-xs">Cert required · own gear + lanyard</p>
+                </div>
               </div>
-              <div className="bg-white/[0.04] border border-white/[0.06] rounded-2xl p-7 text-center">
-                <div className="text-white/40 text-2xl mb-3">🧘</div>
-                <h3 className="font-serif text-lg text-white mb-2">Beach Only</h3>
-                <p className="text-white/40 text-sm leading-relaxed">
-                  No certification needed. Ocean Flow + dry training on the beach. The perfect introduction.
-                </p>
+
+              {/* Just Beach */}
+              <div className="bg-white/[0.04] border border-white/[0.08] rounded-2xl p-7 text-center relative">
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-white/10 text-white/60 text-[10px] font-semibold tracking-wide uppercase rounded-full whitespace-nowrap">
+                  No cert needed
+                </div>
+                <h3 className="font-serif text-xl text-white mt-3 mb-4">Just Beach</h3>
+                <div className="space-y-3 text-left">
+                  <div className="flex gap-3 items-start">
+                    <span className="text-white/30 text-xs mt-0.5 shrink-0">7:00</span>
+                    <span className="text-white/60 text-sm">Ocean Flow — yoga on the beach</span>
+                  </div>
+                  <div className="flex gap-3 items-start">
+                    <span className="text-white/30 text-xs mt-0.5 shrink-0">7:45</span>
+                    <span className="text-white/60 text-sm">Dry Training — breathing drills + CO₂ work</span>
+                  </div>
+                </div>
+                <div className="mt-5 pt-4 border-t border-white/[0.06]">
+                  <p className="text-white/30 text-xs">Open to everyone · bring a towel + water</p>
+                </div>
               </div>
             </div>
+
             <div className="bg-seafoam/[0.08] border border-seafoam/15 rounded-xl p-5 text-center">
               <p className="text-seafoam text-sm font-medium mb-1">Not certified yet?</p>
               <p className="text-white/35 text-xs leading-relaxed">
