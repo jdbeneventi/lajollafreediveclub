@@ -82,24 +82,24 @@ async function fillLiabilityPDF(
   const doc = await PDFDocument.load(pdfBytes);
   const form = doc.getForm();
 
-  // Fill name
+  // Fill student name
   try { form.getTextField("name").setText(fullName); } catch {}
 
-  // Fill instructor name
-  try { form.getTextField("Joshua Beneventi").setText("La Jolla Freedive Club"); } catch {}
+  // Fill instructor/org name (appears in 3 blanks in the legal text)
+  try { form.getTextField("Joshua Beneventi").setText("Joshua Beneventi / La Jolla Freedive Club"); } catch {}
 
   // Fill date
   const dateStr = new Date().toLocaleDateString("en-US", { month: "2-digit", day: "2-digit", year: "numeric" });
   try { form.getTextField("Date4_af_date").setText(dateStr); } catch {}
 
-  // Embed signature
+  // Embed signature on the participant signature line (y=173)
   if (signatureData) {
     try {
       const base64 = signatureData.split(",")[1];
       const sigBytes = Uint8Array.from(atob(base64), c => c.charCodeAt(0));
       const sigImage = await doc.embedPng(sigBytes);
       const page = doc.getPage(0);
-      page.drawImage(sigImage, { x: 72, y: 108, width: 180, height: 50 });
+      page.drawImage(sigImage, { x: 162, y: 173, width: 150, height: 30 });
     } catch {}
   }
 
