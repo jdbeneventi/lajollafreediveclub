@@ -8,25 +8,32 @@ const SECRET = "ljfc";
 
 const ADMIN_PAGES = [
   {
+    label: "Saturday Dashboard",
+    href: "/saturday",
+    desc: "This week's RSVPs, confirmations, dive headcount, waiver status, and Go/No-Go blast.",
+    icon: "🌊",
+    color: "from-ocean to-teal",
+  },
+  {
+    label: "Calendar Manager",
+    href: "/admin/calendar",
+    desc: "Add, edit, delete course dates and events. Changes go live in ~60 seconds.",
+    icon: "📅",
+    color: "from-seafoam to-teal",
+  },
+  {
+    label: "Camp Registrations",
+    href: "/admin/registrations",
+    desc: "Camp Garibaldi signups stored in Supabase. Student info, sessions, medical, charter.",
+    icon: "🏕️",
+    color: "from-coral to-sun",
+  },
+  {
     label: "Partner Network",
     href: "/admin/partners",
-    desc: "Track 37+ partner relationships, follow-ups, and outreach status.",
+    desc: "Track partner relationships, follow-ups, and outreach status.",
     icon: "🤝",
     color: "from-teal to-seafoam",
-  },
-  {
-    label: "Add Partner",
-    href: "/admin/partners/add",
-    desc: "Submit a new partner to the network tracker.",
-    icon: "➕",
-    color: "from-teal to-seafoam",
-  },
-  {
-    label: "Curriculum Planner",
-    href: "/admin/curriculum",
-    desc: "Build session plans tied to NGSS standards. Full K-12 standards library.",
-    icon: "📋",
-    color: "from-coral to-sun",
   },
   {
     label: "Revenue Calculator",
@@ -35,15 +42,16 @@ const ADMIN_PAGES = [
     icon: "💰",
     color: "from-sun to-sand",
   },
+  {
+    label: "Curriculum Planner",
+    href: "/admin/curriculum",
+    desc: "Build session plans tied to NGSS standards. Full K-12 standards library.",
+    icon: "📋",
+    color: "from-coral to-sun",
+  },
 ];
 
 const GATED_PAGES = [
-  {
-    label: "ORIGIN Protocol",
-    href: "/science",
-    desc: "The breath-first methodology — internal documentation.",
-    icon: "🧬",
-  },
   {
     label: "Student Portal",
     href: "/students",
@@ -51,10 +59,10 @@ const GATED_PAGES = [
     icon: "🎓",
   },
   {
-    label: "Saturday Blast",
-    href: "/saturday",
-    desc: "Go/No-Go email blast dashboard for Saturday sessions.",
-    icon: "📧",
+    label: "ORIGIN Protocol",
+    href: "/science",
+    desc: "The breath-first methodology — internal documentation.",
+    icon: "🧬",
   },
   {
     label: "OHPC Plan",
@@ -63,10 +71,10 @@ const GATED_PAGES = [
     icon: "📄",
   },
   {
-    label: "Education",
-    href: "/education",
-    desc: "Ocean education programs overview (gated for development).",
-    icon: "🌊",
+    label: "Add Partner",
+    href: "/admin/partners/add",
+    desc: "Submit a new partner to the network tracker.",
+    icon: "➕",
   },
 ];
 
