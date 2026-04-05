@@ -49,6 +49,13 @@ const ADMIN_PAGES = [
     icon: "📋",
     color: "from-coral to-sun",
   },
+  {
+    label: "Site Map",
+    href: "/admin/sitemap",
+    desc: "Visual tree of all 40 pages, 22 API routes, and infrastructure.",
+    icon: "🗺️",
+    color: "from-ocean to-deep",
+  },
 ];
 
 const GATED_PAGES = [
