@@ -16,6 +16,7 @@ export async function POST(request: Request) {
 
     const name = `${firstName} ${lastName}`.trim();
     const isAIDA = course.includes("AIDA");
+    const formsUrl = `https://lajollafreediveclub.com/forms/aida?email=${encodeURIComponent(email)}&course=${encodeURIComponent(course.split("—")[0].trim())}`;
     const medicalUrl = "https://lajollafreediveclub.com/documents/aida-medical-statement.pdf";
     const liabilityUrl = "https://lajollafreediveclub.com/documents/aida-liability-release.pdf";
     const waiverUrl = "https://lajollafreediveclub.com/waiver";
@@ -60,20 +61,15 @@ export async function POST(request: Request) {
               <div style="background:#FAF3EC;border-radius:12px;padding:16px;margin:20px 0;">
                 <p style="font-size:14px;font-weight:600;color:#0B1D2C;margin:0 0 8px 0;">Get a head start — complete these before your course</p>
                 <p style="font-size:13px;color:#5a6a7a;line-height:1.6;margin:0 0 12px 0;">
-                  AIDA requires two forms from every student. Download, fill out, and bring them to your first day (or email them back to us).
+                  AIDA requires a Medical Statement and Liability Release from every student. Complete them online — takes about 5 minutes.
                 </p>
-                <div style="margin-bottom:8px;">
-                  <a href="${medicalUrl}" style="display:inline-block;padding:10px 20px;background:#1B6B6B;color:white;border-radius:50px;text-decoration:none;font-weight:600;font-size:13px;margin-right:8px;">
-                    Medical Statement (PDF)
+                <div style="margin-bottom:12px;">
+                  <a href="${formsUrl}" style="display:inline-block;padding:12px 24px;background:#C75B3A;color:white;border-radius:50px;text-decoration:none;font-weight:600;font-size:14px;">
+                    Complete AIDA Forms Online →
                   </a>
                 </div>
-                <div style="margin-bottom:8px;">
-                  <a href="${liabilityUrl}" style="display:inline-block;padding:10px 20px;background:#1B6B6B;color:white;border-radius:50px;text-decoration:none;font-weight:600;font-size:13px;">
-                    Liability Release (PDF)
-                  </a>
-                </div>
-                <p style="font-size:11px;color:#5a6a7a;margin:8px 0 0 0;">
-                  If any medical questions are marked YES, you'll need a physician's signature on the medical form before the course.
+                <p style="font-size:11px;color:#5a6a7a;margin:0;">
+                  Or download PDFs: <a href="${medicalUrl}" style="color:#1B6B6B;">Medical Statement</a> · <a href="${liabilityUrl}" style="color:#1B6B6B;">Liability Release</a>
                 </p>
               </div>
               ` : ""}

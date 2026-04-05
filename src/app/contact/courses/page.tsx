@@ -69,8 +69,7 @@ function CourseFormInner() {
                 message="We'll be in touch within 24 hours with course details and available dates. Check your email for a confirmation."
                 nextSteps={[
                   ...(selectedCourse.includes("AIDA") ? [
-                    { label: "AIDA Medical Statement (PDF)", href: "/documents/aida-medical-statement.pdf" },
-                    { label: "AIDA Liability Release (PDF)", href: "/documents/aida-liability-release.pdf" },
+                    { label: "Complete AIDA Forms Online", href: "/forms/aida" },
                   ] : []),
                   { label: "Sign your LJFC waiver", href: "/waiver" },
                   { label: "View course calendar", href: "/calendar" },

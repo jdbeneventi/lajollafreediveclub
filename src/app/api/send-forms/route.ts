@@ -24,6 +24,7 @@ export async function POST(request: Request) {
 
     const resend = new Resend(RESEND_API_KEY);
     const firstName = name?.split(" ")[0] || "there";
+    const formsUrl = `https://lajollafreediveclub.com/forms/aida?email=${encodeURIComponent(email)}&course=${encodeURIComponent(course || "AIDA 2")}`;
     const medicalUrl = "https://lajollafreediveclub.com/documents/aida-medical-statement.pdf";
     const liabilityUrl = "https://lajollafreediveclub.com/documents/aida-liability-release.pdf";
     const waiverUrl = "https://lajollafreediveclub.com/waiver";
@@ -40,24 +41,17 @@ export async function POST(request: Request) {
           </p>
 
           <div style="background:#FAF3EC;border-radius:12px;padding:20px;margin:20px 0;">
-            <p style="font-size:14px;font-weight:600;color:#0B1D2C;margin:0 0 12px 0;">Required AIDA Forms</p>
+            <p style="font-size:14px;font-weight:600;color:#0B1D2C;margin:0 0 8px 0;">Required AIDA Forms</p>
+            <p style="font-size:13px;color:#5a6a7a;margin:0 0 16px 0;">Complete both forms online — takes about 5 minutes.</p>
 
-            <div style="margin-bottom:10px;">
-              <a href="${medicalUrl}" style="display:inline-block;padding:12px 24px;background:#1B6B6B;color:white;border-radius:50px;text-decoration:none;font-weight:600;font-size:14px;">
-                Download Medical Statement
+            <div style="margin-bottom:16px;">
+              <a href="${formsUrl}" style="display:inline-block;padding:14px 28px;background:#C75B3A;color:white;border-radius:50px;text-decoration:none;font-weight:600;font-size:14px;">
+                Complete Forms Online →
               </a>
             </div>
-            <p style="font-size:12px;color:#5a6a7a;margin:0 0 16px 0;">
-              11 yes/no health questions. If any are YES, a physician must sign the bottom section.
-            </p>
 
-            <div style="margin-bottom:10px;">
-              <a href="${liabilityUrl}" style="display:inline-block;padding:12px 24px;background:#1B6B6B;color:white;border-radius:50px;text-decoration:none;font-weight:600;font-size:14px;">
-                Download Liability Release
-              </a>
-            </div>
-            <p style="font-size:12px;color:#5a6a7a;margin:0;">
-              Read, sign, and return. If under 18, a parent/guardian must also sign.
+            <p style="font-size:11px;color:#5a6a7a;margin:0;">
+              Or download PDFs: <a href="${medicalUrl}" style="color:#1B6B6B;">Medical Statement</a> · <a href="${liabilityUrl}" style="color:#1B6B6B;">Liability Release</a>
             </p>
           </div>
 
