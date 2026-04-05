@@ -32,13 +32,8 @@ async function fillMedicalPDF(
   const doc = await PDFDocument.load(pdfBytes);
   const form = doc.getForm();
 
-  // Fill name
+  // Page 1: Fill freediver name at top
   try { form.getTextField("NAME OF FREEDIVER").setText(fullName); } catch {}
-
-  // Fill date
-  const dateStr = new Date().toLocaleDateString("en-US", { month: "2-digit", day: "2-digit", year: "numeric" });
-  try { form.getTextField("Date").setText(dateStr); } catch {}
-  try { form.getTextField("Date5_af_date").setText(dob); } catch {}
 
   // Fill checkboxes
   for (const [qNum, mapping] of Object.entries(MEDICAL_CHECKBOX_MAP)) {
@@ -52,16 +47,32 @@ async function fillMedicalPDF(
     } catch {}
   }
 
-  // Embed signature image on page 2
+  // Page 2: "Date" field is actually "Name of Freediver" on page 2
+  try { form.getTextField("Date").setText(fullName); } catch {}
+
+  // Page 2: DOB — format as MM/DD/YYYY
+  if (dob) {
+    try {
+      const d = new Date(dob + "T12:00:00");
+      const formatted = d.toLocaleDateString("en-US", { month: "2-digit", day: "2-digit", year: "numeric" });
+      form.getTextField("Date5_af_date").setText(formatted);
+    } catch {}
+  }
+
+  // Page 2: Embed signature on the "Signed:" line (y=478)
   if (signatureData) {
     try {
       const base64 = signatureData.split(",")[1];
       const sigBytes = Uint8Array.from(atob(base64), c => c.charCodeAt(0));
       const sigImage = await doc.embedPng(sigBytes);
       const page2 = doc.getPage(1);
-      page2.drawImage(sigImage, { x: 72, y: 480, width: 180, height: 50 });
+      page2.drawImage(sigImage, { x: 85, y: 478, width: 200, height: 24 });
     } catch {}
   }
+
+  // Page 2: Date of signing
+  const dateStr = new Date().toLocaleDateString("en-US", { month: "2-digit", day: "2-digit", year: "numeric" });
+  try { form.getTextField("Date11_af_date").setText(dateStr); } catch {}
 
   // Guardian name if minor
   if (isMinor && guardianName) {
