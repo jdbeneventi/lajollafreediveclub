@@ -100,7 +100,7 @@ export function FormShell({
   action: string;
   formType: string;
   children: ReactNode;
-  onSuccess: (formData?: FormData) => void;
+  onSuccess: (formData?: FormData) => void | Promise<void>;
 }) {
   const [submitting, setSubmitting] = useState(false);
 
@@ -118,7 +118,7 @@ export function FormShell({
         headers: { Accept: "application/json" },
       });
       if (res.ok) {
-        onSuccess(formData);
+        await onSuccess(formData);
       } else {
         alert("Something went wrong. Email joshuabeneventi@gmail.com directly.");
       }
