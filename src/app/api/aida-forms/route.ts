@@ -62,7 +62,7 @@ async function fillMedicalPDF(
 
   // Page 2: "Name of Freediver" has no fillable field — draw text directly
   const page2 = doc.getPage(1);
-  page2.drawText(fullName, { x: 85, y: 510, size: 11, color: rgb(0.04, 0.11, 0.17) });
+  page2.drawText(fullName, { x: 200, y: 510, size: 11, color: rgb(0.04, 0.11, 0.17) });
 
   // Page 2: Embed signature on the "Signed:" line
   if (signatureData) {
