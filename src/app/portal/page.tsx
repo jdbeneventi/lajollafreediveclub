@@ -1,4 +1,3 @@
-import { redirect } from "next/navigation";
 import { getStudent } from "@/lib/auth";
 import { supabase } from "@/lib/supabase";
 import Link from "next/link";
