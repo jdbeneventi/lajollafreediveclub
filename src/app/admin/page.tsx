@@ -8,6 +8,13 @@ const SECRET = "ljfc";
 
 const ADMIN_PAGES = [
   {
+    label: "Invoices & Payments",
+    href: "/admin/invoices",
+    desc: "Create invoices, send payment links, track payments. Custom amounts + deposits.",
+    icon: "💳",
+    color: "from-coral to-sun",
+  },
+  {
     label: "Saturday Dashboard",
     href: "/saturday",
     desc: "This week's RSVPs, confirmations, dive headcount, waiver status, and Go/No-Go blast.",
