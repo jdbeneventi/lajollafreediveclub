@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { PDFDocument } from "pdf-lib";
+import { PDFDocument, rgb } from "pdf-lib";
 import { Resend } from "resend";
 import { supabase } from "@/lib/supabase";
 import { readFile } from "fs/promises";
@@ -25,7 +25,7 @@ const MEDICAL_CHECKBOX_MAP: Record<number, { yes: string; no: string }> = {
 
 async function fillMedicalPDF(
   fullName: string, dob: string, answers: Record<string, string>,
-  signatureData: string, isMinor: boolean, guardianName: string
+  signatureData: string
 ): Promise<Uint8Array> {
   const pdfPath = join(process.cwd(), "public/documents/aida-medical-statement.pdf");
   const pdfBytes = await readFile(pdfPath);
@@ -47,10 +47,7 @@ async function fillMedicalPDF(
     } catch {}
   }
 
-  // Page 2: "Date" field is actually "Name of Freediver" on page 2
-  try { form.getTextField("Date").setText(fullName); } catch {}
-
-  // Page 2: DOB — format as MM/DD/YYYY
+  // Page 2: DOB field
   if (dob) {
     try {
       const d = new Date(dob + "T12:00:00");
@@ -59,25 +56,30 @@ async function fillMedicalPDF(
     } catch {}
   }
 
-  // Page 2: Embed signature on the "Signed:" line (y=478)
+  // Page 2: "Date" field = signing date
+  const dateStr = new Date().toLocaleDateString("en-US", { month: "2-digit", day: "2-digit", year: "numeric" });
+  try { form.getTextField("Date").setText(dateStr); } catch {}
+
+  // Page 2: "Name of Freediver" has no fillable field — draw text directly
+  const page2 = doc.getPage(1);
+  page2.drawText(fullName, { x: 85, y: 510, size: 11, color: rgb(0.04, 0.11, 0.17) });
+
+  // Page 2: Embed signature on the "Signed:" line
   if (signatureData) {
     try {
       const base64 = signatureData.split(",")[1];
       const sigBytes = Uint8Array.from(atob(base64), c => c.charCodeAt(0));
       const sigImage = await doc.embedPng(sigBytes);
-      const page2 = doc.getPage(1);
       page2.drawImage(sigImage, { x: 85, y: 478, width: 200, height: 24 });
     } catch {}
   }
 
-  // Page 2: Date of signing
-  const dateStr = new Date().toLocaleDateString("en-US", { month: "2-digit", day: "2-digit", year: "numeric" });
-  try { form.getTextField("Date11_af_date").setText(dateStr); } catch {}
+  // Physician section: Name of Freediver (for physician reference)
+  try { form.getTextField("Text6").setText(fullName); } catch {}
 
-  // Guardian name if minor
-  if (isMinor && guardianName) {
-    try { form.getTextField("Text6").setText(guardianName); } catch {}
-  }
+  // Guardian name if minor — no dedicated field, but Text6 is physician section
+  // Minor guardian goes on the "Signature of participant's parent or guardian" line
+  // which has no fillable field, so we skip unless needed
 
   // Flatten so fields are no longer editable
   form.flatten();
@@ -128,7 +130,7 @@ export async function POST(request: Request) {
     }
 
     // Fill the actual AIDA PDFs
-    const medicalPdfBytes = await fillMedicalPDF(fullName, dob || "", medicalAnswers || {}, signatureData || "", isMinor || false, guardianName || "");
+    const medicalPdfBytes = await fillMedicalPDF(fullName, dob || "", medicalAnswers || {}, signatureData || "");
     const liabilityPdfBytes = await fillLiabilityPDF(fullName, signatureData || "");
 
     const medicalBase64 = Buffer.from(medicalPdfBytes).toString("base64");
