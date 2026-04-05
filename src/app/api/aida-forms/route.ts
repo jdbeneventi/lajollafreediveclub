@@ -1,194 +1,110 @@
 import { NextResponse } from "next/server";
-import { jsPDF } from "jspdf";
+import { PDFDocument } from "pdf-lib";
 import { Resend } from "resend";
 import { supabase } from "@/lib/supabase";
+import { readFile } from "fs/promises";
+import { join } from "path";
 
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const OWNER_EMAIL = "joshuabeneventi@gmail.com";
 
-const MEDICAL_QUESTIONS = [
-  "Medication: Any medication taken on a regular basis?",
-  "Mental and Mood Conditions: Current or history of mental illness or mood disorder?",
-  "Neurological Conditions: Seizure disorder, stroke, brain surgery, blackouts, severe migraines?",
-  "Cardiovascular Conditions: Heart attack, heart surgery, irregular heartbeat, pacemaker, elevated blood pressure?",
-  "Pulmonary Conditions: Asthma, collapsed lung, lung damage, emphysema, breathing problems?",
-  "Ear, nose and throat: Sinus surgery, ruptured eardrum, hearing loss, ear surgery?",
-  "Eye Condition: Severe myopia, retinal detachment, eye surgery?",
-  "Diabetes Mellitus: Type I or Type II requiring medication?",
-  "Freediving/Scuba History: Previous diving accident, blackout, DCS, lung squeeze?",
-  "General Medical Problems: Any condition affecting underwater safety or judgment?",
-  "Pregnancy: If presently pregnant?",
-];
+// YES checkbox = even number, NO = odd number
+const MEDICAL_CHECKBOX_MAP: Record<number, { yes: string; no: string }> = {
+  1: { yes: "Check Box12", no: "Check Box13" },
+  2: { yes: "Check Box14", no: "Check Box15" },
+  3: { yes: "Check Box16", no: "Check Box17" },
+  4: { yes: "Check Box18", no: "Check Box19" },
+  5: { yes: "Check Box20", no: "Check Box21" },
+  6: { yes: "Check Box22", no: "Check Box23" },
+  7: { yes: "Check Box24", no: "Check Box25" },
+  8: { yes: "Check Box26", no: "Check Box27" },
+  9: { yes: "Check Box28", no: "Check Box29" },
+  10: { yes: "Check Box30", no: "Check Box31" },
+  11: { yes: "Check Box32", no: "Check Box33" },
+};
 
-function generateMedicalPDF(
-  fullName: string, dob: string, email: string, course: string,
-  answers: Record<string, string>, details: string, physicianRequired: boolean,
-  isMinor: boolean, guardianName: string, signatureData: string, signedAt: string
-): string {
-  const doc = new jsPDF({ unit: "pt", format: "letter" });
-  const pw = doc.internal.pageSize.getWidth();
-  const margin = 50;
-  const cw = pw - margin * 2;
-  let y = 50;
+async function fillMedicalPDF(
+  fullName: string, dob: string, answers: Record<string, string>,
+  signatureData: string, isMinor: boolean, guardianName: string
+): Promise<Uint8Array> {
+  const pdfPath = join(process.cwd(), "public/documents/aida-medical-statement.pdf");
+  const pdfBytes = await readFile(pdfPath);
+  const doc = await PDFDocument.load(pdfBytes);
+  const form = doc.getForm();
 
-  const addText = (text: string, size: number, style: string = "normal", color: [number, number, number] = [10, 10, 10]) => {
-    doc.setFontSize(size);
-    doc.setFont("helvetica", style);
-    doc.setTextColor(...color);
-    const lines = doc.splitTextToSize(text, cw);
-    if (y + lines.length * size * 1.2 > 740) { doc.addPage(); y = 50; }
-    doc.text(lines, margin, y);
-    y += lines.length * size * 1.3 + 4;
-  };
+  // Fill name
+  try { form.getTextField("NAME OF FREEDIVER").setText(fullName); } catch {}
 
-  const addLine = () => { doc.setDrawColor(200, 200, 200); doc.line(margin, y, pw - margin, y); y += 12; };
+  // Fill date
+  const dateStr = new Date().toLocaleDateString("en-US", { month: "2-digit", day: "2-digit", year: "numeric" });
+  try { form.getTextField("Date").setText(dateStr); } catch {}
+  try { form.getTextField("Date5_af_date").setText(dob); } catch {}
 
-  // Header
-  doc.setFontSize(16); doc.setFont("helvetica", "bold"); doc.setTextColor(11, 29, 44);
-  doc.text("AIDA MEDICAL STATEMENT", pw / 2, y, { align: "center" }); y += 20;
-  doc.setFontSize(9); doc.setFont("helvetica", "normal"); doc.setTextColor(100, 100, 100);
-  doc.text("La Jolla Freedive Club — Digital Submission", pw / 2, y, { align: "center" }); y += 8;
-  doc.text(`Signed digitally on ${signedAt}`, pw / 2, y, { align: "center" }); y += 16;
-  addLine();
-
-  // Participant info
-  addText("PARTICIPANT INFORMATION", 10, "bold", [11, 29, 44]); y += 2;
-  addText(`Name: ${fullName}`, 9);
-  addText(`Date of Birth: ${dob}`, 9);
-  addText(`Email: ${email}`, 9);
-  addText(`Course: ${course}`, 9);
-  if (isMinor) addText(`Parent/Guardian: ${guardianName}`, 9);
-  y += 6; addLine();
-
-  // Medical questions
-  addText("MEDICAL QUESTIONNAIRE", 10, "bold", [11, 29, 44]); y += 4;
-
-  MEDICAL_QUESTIONS.forEach((q, i) => {
-    const answer = answers[String(i + 1)] || "—";
-    const isYes = answer === "yes";
-    if (y > 700) { doc.addPage(); y = 50; }
-    doc.setFontSize(8); doc.setFont("helvetica", "normal"); doc.setTextColor(100, 100, 100);
-    doc.text(`${i + 1}.`, margin, y);
-    doc.setTextColor(10, 10, 10);
-    const lines = doc.splitTextToSize(q, cw - 60);
-    doc.text(lines, margin + 18, y);
-    doc.setFont("helvetica", "bold");
-    doc.setTextColor(isYes ? 199 : 27, isYes ? 91 : 107, isYes ? 58 : 107);
-    doc.text(answer.toUpperCase(), pw - margin, y, { align: "right" });
-    y += lines.length * 11 + 6;
-  });
-
-  if (physicianRequired && details) {
-    y += 6;
-    addText("DETAILS FOR YES ANSWERS:", 9, "bold", [199, 91, 58]);
-    addText(details, 9, "normal", [80, 80, 80]);
+  // Fill checkboxes
+  for (const [qNum, mapping] of Object.entries(MEDICAL_CHECKBOX_MAP)) {
+    const answer = answers[qNum];
+    try {
+      if (answer === "yes") {
+        form.getCheckBox(mapping.yes).check();
+      } else if (answer === "no") {
+        form.getCheckBox(mapping.no).check();
+      }
+    } catch {}
   }
 
-  y += 8; addLine();
-
-  // Status
-  if (physicianRequired) {
-    addText("⚠ PHYSICIAN CLEARANCE REQUIRED", 10, "bold", [199, 91, 58]);
-    addText("One or more questions were answered YES. A physician must review and sign the official AIDA Medical Statement form before the course begins.", 8, "normal", [100, 100, 100]);
-  } else {
-    addText("✓ ALL CLEAR — No physician clearance required", 10, "bold", [27, 107, 107]);
-  }
-
-  y += 8; addLine();
-
-  // Certification
-  addText("I certify that I have answered the above questions accurately and honestly. I am responsible for omission regarding my failure to disclose any current or past health condition.", 8, "normal", [80, 80, 80]);
-  y += 12;
-
-  // Signature
+  // Embed signature image on page 2
   if (signatureData) {
     try {
-      doc.addImage(signatureData, "PNG", margin, y, 200, 60);
-      y += 68;
-    } catch {
-      addText("[Signature on file]", 9, "italic", [100, 100, 100]);
-    }
+      const base64 = signatureData.split(",")[1];
+      const sigBytes = Uint8Array.from(atob(base64), c => c.charCodeAt(0));
+      const sigImage = await doc.embedPng(sigBytes);
+      const page2 = doc.getPage(1);
+      page2.drawImage(sigImage, { x: 72, y: 480, width: 180, height: 50 });
+    } catch {}
   }
-  addText(`${fullName} — ${signedAt}`, 8, "normal", [100, 100, 100]);
-  if (isMinor) { y += 4; addText(`Parent/Guardian: ${guardianName}`, 8, "normal", [100, 100, 100]); }
 
-  // Footer
-  y += 16;
-  doc.setFontSize(7); doc.setTextColor(150, 150, 150);
-  doc.text("La Jolla Freedive Club · AIDA Instructor & Youth Instructor · DAN Insured · lajollafreediveclub.com", pw / 2, y, { align: "center" });
+  // Guardian name if minor
+  if (isMinor && guardianName) {
+    try { form.getTextField("Text6").setText(guardianName); } catch {}
+  }
 
-  return doc.output("datauristring");
+  // Flatten so fields are no longer editable
+  form.flatten();
+
+  return doc.save();
 }
 
-function generateLiabilityPDF(
-  fullName: string, dob: string, email: string, course: string,
-  isMinor: boolean, guardianName: string, signatureData: string, signedAt: string
-): string {
-  const doc = new jsPDF({ unit: "pt", format: "letter" });
-  const pw = doc.internal.pageSize.getWidth();
-  const margin = 50;
-  const cw = pw - margin * 2;
-  let y = 50;
+async function fillLiabilityPDF(
+  fullName: string, signatureData: string
+): Promise<Uint8Array> {
+  const pdfPath = join(process.cwd(), "public/documents/aida-liability-release.pdf");
+  const pdfBytes = await readFile(pdfPath);
+  const doc = await PDFDocument.load(pdfBytes);
+  const form = doc.getForm();
 
-  const addText = (text: string, size: number, style: string = "normal", color: [number, number, number] = [10, 10, 10]) => {
-    doc.setFontSize(size);
-    doc.setFont("helvetica", style);
-    doc.setTextColor(...color);
-    const lines = doc.splitTextToSize(text, cw);
-    if (y + lines.length * size * 1.2 > 740) { doc.addPage(); y = 50; }
-    doc.text(lines, margin, y);
-    y += lines.length * size * 1.3 + 4;
-  };
+  // Fill name
+  try { form.getTextField("name").setText(fullName); } catch {}
 
-  const addLine = () => { doc.setDrawColor(200, 200, 200); doc.line(margin, y, pw - margin, y); y += 12; };
+  // Fill instructor name
+  try { form.getTextField("Joshua Beneventi").setText("La Jolla Freedive Club"); } catch {}
 
-  // Header
-  doc.setFontSize(16); doc.setFont("helvetica", "bold"); doc.setTextColor(11, 29, 44);
-  doc.text("AIDA LIABILITY RELEASE", pw / 2, y, { align: "center" }); y += 16;
-  doc.setFontSize(10);
-  doc.text("AND ASSUMPTION OF RISK", pw / 2, y, { align: "center" }); y += 20;
-  doc.setFontSize(9); doc.setFont("helvetica", "normal"); doc.setTextColor(100, 100, 100);
-  doc.text("La Jolla Freedive Club — Digital Submission", pw / 2, y, { align: "center" }); y += 8;
-  doc.text(`Signed digitally on ${signedAt}`, pw / 2, y, { align: "center" }); y += 16;
-  addLine();
+  // Fill date
+  const dateStr = new Date().toLocaleDateString("en-US", { month: "2-digit", day: "2-digit", year: "numeric" });
+  try { form.getTextField("Date4_af_date").setText(dateStr); } catch {}
 
-  // Participant info
-  addText(`Name: ${fullName}    DOB: ${dob}    Course: ${course}`, 9);
-  y += 4; addLine();
-
-  // Liability text
-  addText("TO AIDA INTERNATIONAL AND AIDA INSTRUCTOR", 10, "bold", [11, 29, 44]); y += 6;
-
-  addText(`I, ${fullName}, hereby declare that I am aware that freediving has inherent risks, which may result in serious injury or death. I still choose to participate in the freediving activities with La Jolla Freedive Club / AIDA International.`, 9);
-  y += 4;
-  addText("I understand and agree that neither my instructor nor AIDA International, nor any of their respective employees, officers, agents, contractors or assigns (herein after referred to as the \"Released Parties\") may be held liable or responsible in any way for any injury, death or other damages to me, my family, estate, heirs or assigns that may occur as a result of my participation in freediving activity with AIDA International or as a result of the negligence of any party, including the Released Parties whether passive or active.", 9);
-  y += 4;
-  addText(`In consideration of AIDA International allowing me to participate in the freediving activity, I hereby personally assume all risks of the experience, whether foreseen or unforeseen, that may befall me while I am freediving with La Jolla Freedive Club.`, 9);
-  y += 4;
-  addText("I declare that I am in good mental and physical fitness for freediving and that I am not under the influence of alcohol, nor am I under the influence of any drugs that are contraindicatory to freediving. I declare that if requested as a result of completion of the AIDA Medical Statement, I have seen a physician and have approval to freedive.", 9);
-  y += 4;
-  addText("I further declare that I am of lawful age and legally competent to sign this liability release. I understand that the terms herein are contractual and not a mere recital, and that I have signed this document of my own free act and with the knowledge that I hereby agree to waive my legal rights.", 9);
-
-  y += 12; addLine();
-
-  // Signature
+  // Embed signature
   if (signatureData) {
     try {
-      doc.addImage(signatureData, "PNG", margin, y, 200, 60);
-      y += 68;
-    } catch {
-      addText("[Signature on file]", 9, "italic", [100, 100, 100]);
-    }
+      const base64 = signatureData.split(",")[1];
+      const sigBytes = Uint8Array.from(atob(base64), c => c.charCodeAt(0));
+      const sigImage = await doc.embedPng(sigBytes);
+      const page = doc.getPage(0);
+      page.drawImage(sigImage, { x: 72, y: 108, width: 180, height: 50 });
+    } catch {}
   }
-  addText(`${fullName} — ${signedAt}`, 8, "normal", [100, 100, 100]);
-  if (isMinor) { y += 4; addText(`Parent/Guardian: ${guardianName}`, 8, "normal", [100, 100, 100]); }
 
-  // Footer
-  y += 16;
-  doc.setFontSize(7); doc.setTextColor(150, 150, 150);
-  doc.text("La Jolla Freedive Club · AIDA Instructor & Youth Instructor · DAN Insured · lajollafreediveclub.com", pw / 2, y, { align: "center" });
-
-  return doc.output("datauristring");
+  form.flatten();
+  return doc.save();
 }
 
 export async function POST(request: Request) {
@@ -200,21 +116,14 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Name and email required" }, { status: 400 });
     }
 
-    const signedAt = new Date().toLocaleString("en-US", {
-      timeZone: "America/Los_Angeles",
-      year: "numeric", month: "long", day: "numeric",
-      hour: "numeric", minute: "2-digit", second: "2-digit", hour12: true,
-    });
+    // Fill the actual AIDA PDFs
+    const medicalPdfBytes = await fillMedicalPDF(fullName, dob || "", medicalAnswers || {}, signatureData || "", isMinor || false, guardianName || "");
+    const liabilityPdfBytes = await fillLiabilityPDF(fullName, signatureData || "");
 
-    // Generate PDFs
-    const medicalPDF = generateMedicalPDF(fullName, dob, email, course || "AIDA", medicalAnswers || {}, medicalDetails || "", physicianRequired || false, isMinor || false, guardianName || "", signatureData || "", signedAt);
-    const liabilityPDF = generateLiabilityPDF(fullName, dob, email, course || "AIDA", isMinor || false, guardianName || "", signatureData || "", signedAt);
+    const medicalBase64 = Buffer.from(medicalPdfBytes).toString("base64");
+    const liabilityBase64 = Buffer.from(liabilityPdfBytes).toString("base64");
 
-    // Convert data URIs to base64 for email attachments
-    const medicalBase64 = medicalPDF.split(",")[1];
-    const liabilityBase64 = liabilityPDF.split(",")[1];
-
-    // Store medical statement
+    // Store in Supabase
     try {
       await supabase.from("aida_forms").insert({
         email, full_name: fullName, date_of_birth: dob, phone: phone || null,
@@ -226,7 +135,6 @@ export async function POST(request: Request) {
       });
     } catch {}
 
-    // Store liability release
     try {
       await supabase.from("aida_forms").insert({
         email, full_name: fullName, date_of_birth: dob, phone: phone || null,
@@ -256,18 +164,17 @@ export async function POST(request: Request) {
         { filename: `AIDA_Liability_Release_${fullName.replace(/\s+/g, "_")}.pdf`, content: liabilityBase64 },
       ];
 
-      // Email to student with PDFs
+      // Email to student
       try {
         await resend.emails.send({
-          from: fromAddress,
-          to: [email],
+          from: fromAddress, to: [email],
           subject: `AIDA Forms Submitted — ${course || "Course"}`,
           attachments,
           html: `
             <div style="font-family:-apple-system,sans-serif;max-width:540px;padding:20px;">
               <h2 style="color:#0B1D2C;margin-bottom:8px;">Forms received, ${firstName}!</h2>
               <p style="color:#5a6a7a;font-size:14px;line-height:1.6;">
-                Your AIDA Medical Statement and Liability Release have been submitted for your <strong>${course || "AIDA"}</strong> course. Signed copies are attached as PDFs.
+                Your signed AIDA Medical Statement and Liability Release are attached as PDFs. Keep these for your records.
               </p>
               <div style="background:#FAF3EC;border-radius:12px;padding:16px;margin:16px 0;">
                 <table style="width:100%;font-size:13px;border-collapse:collapse;">
@@ -279,39 +186,35 @@ export async function POST(request: Request) {
               <div style="background:#FFF3EE;border:1px solid rgba(199,91,58,0.2);border-radius:12px;padding:16px;margin:16px 0;">
                 <p style="font-size:14px;font-weight:600;color:#C75B3A;margin:0 0 8px 0;">Physician sign-off needed</p>
                 <p style="font-size:13px;color:#5a6a7a;margin:0;">
-                  Download the attached Medical Statement PDF, take it to your doctor for review and signature, and bring the signed copy to Day 1 of your course.
+                  Print the attached Medical Statement, take it to your doctor for review and signature on page 2, and bring the signed copy to Day 1 of your course.
                 </p>
               </div>
               ` : ""}
               <p style="color:#5a6a7a;font-size:13px;margin-top:16px;">
-                <strong>Don't forget:</strong> <a href="https://lajollafreediveclub.com/waiver" style="color:#1B6B6B;">Sign your LJFC waiver</a> if you haven't already.
+                <strong>Also required:</strong> <a href="https://lajollafreediveclub.com/waiver" style="color:#1B6B6B;">Sign your LJFC waiver</a> if you haven't already.
               </p>
-              <p style="color:#5a6a7a;font-size:11px;margin-top:24px;">
-                La Jolla Freedive Club · San Diego, CA · AIDA Certified · DAN Insured
-              </p>
+              <p style="color:#5a6a7a;font-size:11px;margin-top:24px;">La Jolla Freedive Club · San Diego, CA · AIDA Certified · DAN Insured</p>
             </div>
           `,
         });
       } catch {}
 
-      // Email to Joshua with PDFs
+      // Email to Joshua
       try {
         await resend.emails.send({
-          from: fromAddress,
-          to: [OWNER_EMAIL],
+          from: fromAddress, to: [OWNER_EMAIL],
           subject: `AIDA Forms: ${fullName} — ${course}${physicianRequired ? " ⚠️ PHYSICIAN REQUIRED" : ""}`,
           attachments,
           html: `
             <div style="font-family:-apple-system,sans-serif;max-width:540px;padding:20px;">
-              <h3 style="color:#0B1D2C;">${fullName} submitted AIDA forms</h3>
-              <p style="color:#5a6a7a;font-size:13px;">Signed PDFs attached.</p>
+              <h3 style="color:#0B1D2C;">${fullName} — AIDA forms submitted</h3>
+              <p style="color:#5a6a7a;font-size:13px;">Filled official AIDA PDFs attached.</p>
               <table style="font-size:14px;border-collapse:collapse;margin-top:12px;">
                 <tr><td style="padding:4px 12px 4px 0;color:#5a6a7a;">Email</td><td>${email}</td></tr>
                 <tr><td style="padding:4px 12px 4px 0;color:#5a6a7a;">DOB</td><td>${dob}</td></tr>
                 <tr><td style="padding:4px 12px 4px 0;color:#5a6a7a;">Course</td><td style="font-weight:600;">${course}</td></tr>
                 <tr><td style="padding:4px 12px 4px 0;color:#5a6a7a;">Medical</td><td style="${physicianRequired ? "color:#C75B3A;font-weight:600;" : "color:#1B6B6B;"}">${medicalStatus}</td></tr>
-                <tr><td style="padding:4px 12px 4px 0;color:#5a6a7a;">Liability</td><td style="color:#1B6B6B;">Signed</td></tr>
-                <tr><td style="padding:4px 12px 4px 0;color:#5a6a7a;">Minor</td><td>${isMinor ? `Yes — guardian: ${guardianName}` : "No"}</td></tr>
+                <tr><td style="padding:4px 12px 4px 0;color:#5a6a7a;">Minor</td><td>${isMinor ? `Yes — ${guardianName}` : "No"}</td></tr>
               </table>
             </div>
           `,
@@ -319,12 +222,7 @@ export async function POST(request: Request) {
       } catch {}
     }
 
-    return NextResponse.json({
-      success: true,
-      physicianRequired: physicianRequired || false,
-      medicalPDF,
-      liabilityPDF,
-    });
+    return NextResponse.json({ success: true, physicianRequired: physicianRequired || false });
   } catch (error) {
     return NextResponse.json(
       { error: error instanceof Error ? error.message : "Failed" },
