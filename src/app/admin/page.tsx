@@ -71,6 +71,12 @@ const GATED_PAGES = [
     icon: "📄",
   },
   {
+    label: "Education",
+    href: "/education",
+    desc: "Ocean education programs overview.",
+    icon: "🌊",
+  },
+  {
     label: "Add Partner",
     href: "/admin/partners/add",
     desc: "Submit a new partner to the network tracker.",
