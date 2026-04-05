@@ -56,9 +56,13 @@ async function fillMedicalPDF(
     } catch {}
   }
 
-  // Page 2: "Date" field = signing date
+  // Page 2: "Date" field = signing date — set font size to match other fields
   const dateStr = new Date().toLocaleDateString("en-US", { month: "2-digit", day: "2-digit", year: "numeric" });
-  try { form.getTextField("Date").setText(dateStr); } catch {}
+  try {
+    const dateField = form.getTextField("Date");
+    dateField.setFontSize(12);
+    dateField.setText(dateStr);
+  } catch {}
 
   // Page 2: "Name of Freediver" has no fillable field — draw text directly
   const page2 = doc.getPage(1);
