@@ -50,6 +50,13 @@ const ADMIN_PAGES = [
     color: "from-coral to-sun",
   },
   {
+    label: "Send AIDA Forms",
+    href: "/admin/send-forms",
+    desc: "Email medical statement + liability release to a student.",
+    icon: "📨",
+    color: "from-teal to-ocean",
+  },
+  {
     label: "Site Map",
     href: "/admin/sitemap",
     desc: "Visual tree of all 40 pages, 22 API routes, and infrastructure.",

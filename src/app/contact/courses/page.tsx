@@ -66,17 +66,42 @@ function CourseFormInner() {
           {submitted ? (
             <Reveal>
               <SuccessState
-                message="We'll be in touch within 24 hours with course details and available dates."
+                message="We'll be in touch within 24 hours with course details and available dates. Check your email for a confirmation."
                 nextSteps={[
-                  { label: "Complete your waiver", href: "/waiver" },
-                  { label: "Check gear guide", href: "/gear" },
-                  { label: "Read the blog", href: "/blog" },
+                  ...(selectedCourse.includes("AIDA") ? [
+                    { label: "AIDA Medical Statement (PDF)", href: "/documents/aida-medical-statement.pdf" },
+                    { label: "AIDA Liability Release (PDF)", href: "/documents/aida-liability-release.pdf" },
+                  ] : []),
+                  { label: "Sign your LJFC waiver", href: "/waiver" },
+                  { label: "View course calendar", href: "/calendar" },
                 ]}
               />
             </Reveal>
           ) : (
             <Reveal>
-              <FormShell action={FORMSPREE} formType="course_inquiry" onSuccess={() => setSubmitted(true)}>
+              <FormShell action={FORMSPREE} formType="course_inquiry" onSuccess={async (formData?: FormData) => {
+                // Also send to our API for confirmation email + Supabase storage
+                if (formData) {
+                  try {
+                    await fetch("/api/course-inquiry", {
+                      method: "POST",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify({
+                        firstName: formData.get("firstName"),
+                        lastName: formData.get("lastName"),
+                        email: formData.get("email"),
+                        phone: formData.get("phone"),
+                        course: formData.get("course"),
+                        experience: formData.get("experience"),
+                        dates: formData.get("dates"),
+                        groupSize: formData.get("groupSize"),
+                        message: formData.get("message"),
+                      }),
+                    });
+                  } catch {}
+                }
+                setSubmitted(true);
+              }}>
                 <div className="grid md:grid-cols-2 gap-6">
                   <Input label="First Name" name="firstName" required placeholder="Your first name" />
                   <Input label="Last Name" name="lastName" required placeholder="Your last name" />
