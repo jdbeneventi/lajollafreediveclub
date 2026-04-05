@@ -123,6 +123,14 @@ export function Nav() {
         ))}
         <li>
           <Link
+            href="/portal"
+            className="text-white/50 text-sm font-medium hover:text-white transition-colors no-underline"
+          >
+            My Account
+          </Link>
+        </li>
+        <li>
+          <Link
             href="/contact"
             className="bg-coral text-white px-5 py-2.5 rounded-full text-sm font-medium hover:-translate-y-0.5 hover:shadow-[0_4px_20px_rgba(232,115,74,0.4)] transition-all no-underline"
           >
