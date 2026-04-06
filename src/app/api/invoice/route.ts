@@ -38,6 +38,9 @@ export async function POST(request: Request) {
       const isDeposit = depositAmount && depositAmount < amount;
       const chargeAmount = isDeposit ? depositAmount : amount;
 
+      // Calculate processing fee (2.9% + $0.30 for card — passed to student)
+      const processingFee = Math.round(chargeAmount * 0.029 + 0.30);
+
       // Create Stripe Checkout session
       const session = await stripe.checkout.sessions.create({
         payment_method_types: ["card", "us_bank_account"],
@@ -53,6 +56,17 @@ export async function POST(request: Request) {
                   : `Full payment${courseDates ? ` · ${courseDates}` : ""}`,
               },
               unit_amount: chargeAmount * 100,
+            },
+            quantity: 1,
+          },
+          {
+            price_data: {
+              currency: "usd",
+              product_data: {
+                name: "Processing fee",
+                description: "Card/bank processing fee",
+              },
+              unit_amount: processingFee * 100,
             },
             quantity: 1,
           },

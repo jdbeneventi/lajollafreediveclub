@@ -30,6 +30,8 @@ function BookingInner() {
 
   const selected = COURSES.find(c => c.id === courseId);
   const amount = selected ? (paymentType === "deposit" ? Math.round(selected.price / 2) : selected.price) : 0;
+  const fee = amount ? Math.round(amount * 0.029 + 0.30) : 0;
+  const total = amount + fee;
 
   const handleCheckout = async () => {
     if (!courseId || !email || !name) {
@@ -147,12 +149,21 @@ function BookingInner() {
 
             {/* Summary + CTA */}
             {selected && (
-              <div className="bg-salt rounded-xl p-4 flex items-center justify-between">
-                <div>
+              <div className="bg-salt rounded-xl p-4">
+                <div className="flex items-center justify-between mb-2">
                   <div className="text-sm font-medium">{selected.name}</div>
-                  <div className="text-xs text-[#5a6a7a]">{selected.duration}{dates ? ` · ${dates}` : ""}</div>
+                  <div className="text-sm">${amount}</div>
                 </div>
-                <div className="font-serif text-xl text-teal">${amount}</div>
+                {fee > 0 && (
+                  <div className="flex items-center justify-between text-xs text-[#5a6a7a]">
+                    <span>Processing fee</span>
+                    <span>${fee.toFixed(2)}</span>
+                  </div>
+                )}
+                <div className="flex items-center justify-between pt-2 mt-2 border-t border-deep/[0.06]">
+                  <div className="text-sm font-semibold">Total</div>
+                  <div className="font-serif text-xl text-teal">${total.toFixed(2)}</div>
+                </div>
               </div>
             )}
 
@@ -163,7 +174,7 @@ function BookingInner() {
               disabled={loading || !courseId || !email || !name}
               className="w-full py-3.5 bg-coral text-white rounded-full font-semibold text-sm cursor-pointer border-none hover:-translate-y-0.5 hover:shadow-[0_8px_25px_rgba(199,91,58,0.4)] transition-all disabled:opacity-40 disabled:cursor-not-allowed"
             >
-              {loading ? "Redirecting to Stripe..." : `Pay $${amount} →`}
+              {loading ? "Redirecting to Stripe..." : `Pay $${total.toFixed(2)} →`}
             </button>
 
             <div className="flex items-center justify-center gap-2 text-xs text-[#5a6a7a]">
