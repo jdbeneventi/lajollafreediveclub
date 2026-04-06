@@ -5,8 +5,8 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: "2025-03-31.basil",
 });
 
-export default async function BookingSuccessPage({ searchParams }: { searchParams: Promise<{ session_id?: string }> }) {
-  const { session_id } = await searchParams;
+export default async function BookingSuccessPage({ searchParams }: { searchParams: { session_id?: string } }) {
+  const { session_id } = searchParams;
 
   let session: Stripe.Checkout.Session | null = null;
   if (session_id) {
