@@ -30,7 +30,7 @@ export async function POST(request: Request) {
     const amount = isDeposit ? Math.round(course.price / 2) : course.price;
 
     const session = await stripe.checkout.sessions.create({
-      payment_method_types: ["card"],
+      payment_method_types: ["card", "us_bank_account"],
       customer_email: email || undefined,
       line_items: [
         {
