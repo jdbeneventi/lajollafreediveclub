@@ -26,6 +26,7 @@ const infoLinks = [
   { href: "/contact/courses", label: "Course Inquiry" },
   { href: "/camp-garibaldi/register", label: "Camp Registration" },
   { href: "/about#faq", label: "FAQ" },
+  { href: "/policies", label: "Booking Policy" },
 ];
 
 export function Footer() {

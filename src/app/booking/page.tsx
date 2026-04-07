@@ -183,9 +183,12 @@ function BookingInner() {
             </div>
           </div>
 
-          <div className="text-center mt-6">
-            <Link href="/contact/courses" className="text-teal text-sm no-underline hover:underline">
+          <div className="text-center mt-6 space-y-2">
+            <Link href="/contact/courses" className="text-teal text-sm no-underline hover:underline block">
               Have questions? Contact us first →
+            </Link>
+            <Link href="/policies" className="text-[#5a6a7a] text-xs no-underline hover:underline block">
+              View cancellation &amp; deposit policy
             </Link>
           </div>
         </div>
