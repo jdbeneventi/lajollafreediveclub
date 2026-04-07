@@ -25,6 +25,7 @@ const testimonials = [
   { text: "Josh is the best! His teaching was personalized — I especially appreciated how he took into account my own goals. I had previously taken a free dive course but was unable to complete it due to problems with equalization. The combination of Josh's calm, grounded presence & tips/tricks made me feel so comfortable in the water that all the muscle tension was relieved, and I was able to get my certification. We wrapped up with a fun dive with incredible visibility — kelp forest, leopard sharks, sand dollars, schools of fish, and playful sea lions. Overall excellent experience.", name: "Kat", role: "AIDA 2 Graduate" },
   { text: "The Saturday group dives are the highlight of my week. A crew that takes safety seriously but still makes it fun.", name: "David K.", role: "Club Member" },
   { text: "My son came back a different kid in the water. From nervous about waves to duck diving on his own.", name: "Jennifer T.", role: "Camp Garibaldi Parent" },
+  { text: "Had a great day with Josh and his teammates on Saturday community freedive!", name: "Oliver", role: "Google Review · 5 stars" },
 ];
 
 const blogPosts = [
@@ -344,7 +345,7 @@ export default function Home() {
             </div>
           </Reveal>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {testimonials.map((t, i) => (
               <Reveal key={i} delay={i * 80}>
                 <div className={`bg-white rounded-xl p-8 relative ${i % 2 === 1 ? "md:translate-y-6" : ""}`}>
