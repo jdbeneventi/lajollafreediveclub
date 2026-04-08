@@ -238,10 +238,7 @@ function scoreConditions(
   waterQuality: "none" | "advisory" | "closure",
 ): { grade: string; score: number; summary: string; visLabel: string } {
 
-  // Water safety — closure overrides everything
-  if (waterQuality === "closure") {
-    return { grade: "F", score: 10, summary: "Water quality closure affecting La Jolla. Stay out of the water until cleared.", visLabel: "Water quality closure" };
-  }
+  // Water quality no longer overrides the score — it's a notice, not a grade killer
 
   // Visibility score (weight: 30)
   let visScore: number;
@@ -304,8 +301,8 @@ function scoreConditions(
     else tempScore = 20;
   }
 
-  // Safety score (weight: 15)
-  const safetyScore = waterQuality === "advisory" ? 40 : 90;
+  // Safety score (weight: 15) — water quality reduces but never overrides
+  const safetyScore = waterQuality === "closure" ? 20 : waterQuality === "advisory" ? 50 : 90;
 
   // Weighted average
   const weighted =
