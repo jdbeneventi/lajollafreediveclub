@@ -157,21 +157,37 @@ async function fetchTideData(): Promise<{ note: string; state: string }> {
   }
 }
 
-// ─── Check for recent rain ───
-async function checkRecentRain(): Promise<boolean> {
+// ─── Check for recent rain / water quality ───
+// Returns: "none" | "advisory" | "closure"
+// Only triggers if La Jolla area is specifically mentioned,
+// or if there are widespread closures (5+) suggesting a major event
+async function checkWaterQuality(): Promise<"none" | "advisory" | "closure"> {
   try {
     const res = await fetch("https://www.sdbeachinfo.com/", {
       headers: { "User-Agent": "LaJollaFreediveClub/1.0" },
     });
-    if (!res.ok) return false;
+    if (!res.ok) return "none";
     const html = await res.text();
-    const am = html.match(/Advisories\s*\((\d+)\)/i);
+
+    // Check for La Jolla specific mentions near advisory/closure context
+    const hasLaJollaIssue = /la jolla.*(?:advisory|closure|warning)|(?:advisory|closure|warning).*la jolla/i.test(html);
+
+    // Check county-wide numbers
     const cm = html.match(/Closures\s*\((\d+)\)/i);
-    const ac = am ? parseInt(am[1]) : 0;
     const cc = cm ? parseInt(cm[1]) : 0;
-    return (ac + cc) > 0;
+
+    // La Jolla specifically flagged → closure
+    if (hasLaJollaIssue) return "closure";
+
+    // Widespread closures (5+) suggest a major rain event affecting the whole coast
+    if (cc >= 5) return "closure";
+
+    // Some closures but not widespread — advisory level, don't hard-fail
+    if (cc > 0) return "advisory";
+
+    return "none";
   } catch {
-    return false;
+    return "none";
   }
 }
 
@@ -219,12 +235,12 @@ function scoreConditions(
   conditions: ConditionsData,
   vis: VisData | null,
   tideState: string,
-  recentRain: boolean,
+  waterQuality: "none" | "advisory" | "closure",
 ): { grade: string; score: number; summary: string; visLabel: string } {
 
-  // Water safety — overrides everything if rain advisory
-  if (recentRain) {
-    return { grade: "F", score: 10, summary: "Water quality advisory. Stay out of the water until 72 hours post-rain.", visLabel: "Rain advisory" };
+  // Water safety — closure overrides everything
+  if (waterQuality === "closure") {
+    return { grade: "F", score: 10, summary: "Water quality closure affecting La Jolla. Stay out of the water until cleared.", visLabel: "Water quality closure" };
   }
 
   // Visibility score (weight: 30)
@@ -289,7 +305,7 @@ function scoreConditions(
   }
 
   // Safety score (weight: 15)
-  const safetyScore = 90; // Already checked rain above
+  const safetyScore = waterQuality === "advisory" ? 40 : 90;
 
   // Weighted average
   const weighted =
@@ -484,12 +500,12 @@ export async function GET(request: Request) {
   }
 
   try {
-    const [buoyData, windData, tideData, vis, recentRain, localIntel] = await Promise.all([
+    const [buoyData, windData, tideData, vis, waterQuality, localIntel] = await Promise.all([
       fetchBuoyDirect(),
       fetchWindDirect(),
       fetchTideData(),
       fetchVisibility(),
-      checkRecentRain(),
+      checkWaterQuality(),
       getLocalIntel().catch(() => null),
     ]);
 
@@ -498,22 +514,28 @@ export async function GET(request: Request) {
       ...windData,
     };
 
-    const grade = scoreConditions(conditions, vis, tideData.state, recentRain);
+    const grade = scoreConditions(conditions, vis, tideData.state, waterQuality);
     const moon = getMoonPhase();
     const events = getTopEvents(new Date(), 4);
     const grunion = isGrunionNight(new Date(), moon.age);
 
     // Water quality alert for email display
-    let waterQuality: WaterQualityEmail | undefined;
-    if (recentRain) {
-      waterQuality = {
+    let waterQualityAlert: WaterQualityEmail | undefined;
+    if (waterQuality === "closure") {
+      waterQualityAlert = {
         hasAlert: true,
-        alertText: "Active advisories across San Diego County. Avoid ocean contact for 72 hours after rain.",
+        alertText: "Water quality closure affecting La Jolla area. Avoid ocean contact until cleared.",
         color: "#C75B3A",
+      };
+    } else if (waterQuality === "advisory") {
+      waterQualityAlert = {
+        hasAlert: true,
+        alertText: "Water quality advisories active in San Diego County. Check sdbeachinfo.com for La Jolla status.",
+        color: "#D4A574",
       };
     }
 
-    const html = buildEmailHtml(conditions, grade, moon, events, grunion, tideData.note, waterQuality, localIntel?.alerts);
+    const html = buildEmailHtml(conditions, grade, moon, events, grunion, tideData.note, waterQualityAlert, localIntel?.alerts);
 
     // Preview mode
     if (preview) {
