@@ -49,7 +49,7 @@ export const events: CalendarEvent[] = [
     time: "8:00 AM – 1:00 PM",
     description: "Half-day introduction to freediving. Theory, pool session, first breath-hold. No experience needed.",
     price: "$200",
-    spots: "6 spots",
+    spots: "4 spots",
     href: "/contact/courses?course=aida1",
   },
   {
@@ -70,7 +70,7 @@ export const events: CalendarEvent[] = [
     time: "8:00 AM – 1:00 PM",
     description: "Half-day introduction to freediving. Theory, pool session, first breath-hold. No experience needed.",
     price: "$200",
-    spots: "6 spots",
+    spots: "4 spots",
     href: "/contact/courses?course=aida1",
   },
 
@@ -83,7 +83,7 @@ export const events: CalendarEvent[] = [
     time: "8:00 AM – 1:00 PM",
     description: "Half-day introduction to freediving. No experience needed.",
     price: "$200",
-    spots: "6 spots",
+    spots: "4 spots",
     href: "/contact/courses?course=aida1",
   },
   {
@@ -94,7 +94,7 @@ export const events: CalendarEvent[] = [
     time: "8:00 AM – 1:00 PM",
     description: "Half-day introduction to freediving. No experience needed.",
     price: "$200",
-    spots: "6 spots",
+    spots: "4 spots",
     href: "/contact/courses?course=aida1",
   },
   {
@@ -105,7 +105,7 @@ export const events: CalendarEvent[] = [
     time: "8:00 AM – 1:00 PM",
     description: "Half-day introduction to freediving. No experience needed.",
     price: "$200",
-    spots: "6 spots",
+    spots: "4 spots",
     href: "/contact/courses?course=aida1",
   },
   {
@@ -130,7 +130,7 @@ export const events: CalendarEvent[] = [
     time: "8:00 AM – 1:00 PM",
     description: "Half-day introduction to freediving. No experience needed.",
     price: "$200",
-    spots: "6 spots",
+    spots: "4 spots",
     href: "/contact/courses?course=aida1",
   },
   {
