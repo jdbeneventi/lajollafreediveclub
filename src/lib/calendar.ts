@@ -168,7 +168,7 @@ export const events: CalendarEvent[] = [
     time: "8:00 AM – 4:00 PM",
     description: "3-day course. Theory, pool session, open water dives at La Jolla Shores.",
     price: "$575 (group) / $800 (private)",
-    spots: "4 spots",
+    spots: "3 spots",
     href: "/contact/courses?course=aida2",
   },
   {
