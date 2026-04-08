@@ -65,46 +65,64 @@ async function fetchBuoyDirect(): Promise<Partial<ConditionsData>> {
   return data;
 }
 
-// ─── Fetch wind from LJPC1 RSS ───
+// ─── Fetch wind from LJPC1 RSS (with LJAC1 fallback) ───
 async function fetchWindDirect(): Promise<Partial<ConditionsData>> {
   const data: Partial<ConditionsData> = {};
-  try {
-    const res = await fetch("https://www.ndbc.noaa.gov/data/latest_obs/ljpc1.rss", {
-      headers: { "User-Agent": "LaJollaFreediveClub/1.0" },
-    });
-    if (!res.ok) return data;
-    const xml = await res.text();
 
-    const extract = (label: string) => {
-      const re = new RegExp(`<strong>${label}:</strong>\\s*([^<]+)`, "i");
-      const descs = xml.match(/<description><!\[CDATA\[([\s\S]*?)\]\]><\/description>/g);
-      if (!descs || descs.length < 2) return undefined;
-      const m = descs[1].match(re);
-      return m ? m[1].trim() : undefined;
-    };
+  const tryRSS = async (url: string) => {
+    try {
+      const res = await fetch(url, {
+        headers: { "User-Agent": "LaJollaFreediveClub/1.0" },
+        signal: AbortSignal.timeout(6000),
+      });
+      if (!res.ok) return false;
+      const xml = await res.text();
 
-    data.windSpeed = extract("Wind Speed");
-    data.windDir = extract("Wind Direction");
-    data.windGust = extract("Wind Gust");
-  } catch {}
+      const extract = (label: string) => {
+        const re = new RegExp(`<strong>${label}:</strong>\\s*([^<]+)`, "i");
+        const descs = xml.match(/<description><!\[CDATA\[([\s\S]*?)\]\]><\/description>/g);
+        if (!descs || descs.length < 2) return undefined;
+        const m = descs[1].match(re);
+        return m ? m[1].trim() : undefined;
+      };
+
+      data.windSpeed = extract("Wind Speed");
+      data.windDir = extract("Wind Direction");
+      data.windGust = extract("Wind Gust");
+      return !!data.windSpeed;
+    } catch { return false; }
+  };
+
+  // Try LJPC1 first, fall back to LJAC1
+  const gotData = await tryRSS("https://www.ndbc.noaa.gov/data/latest_obs/ljpc1.rss");
+  if (!gotData) await tryRSS("https://www.ndbc.noaa.gov/data/latest_obs/ljac1.rss");
+
   return data;
 }
 
-// ─── Fetch visibility from AI analysis ───
-async function fetchVisibility(): Promise<VisData | null> {
+// ─── Water temp fallback chain ───
+const SEASONAL_TEMPS: Record<number, number> = {
+  0: 58, 1: 58, 2: 59, 3: 60, 4: 62, 5: 64,
+  6: 67, 7: 69, 8: 70, 9: 67, 10: 63, 11: 59,
+};
+
+async function fetchWaterTempFallback(): Promise<number | null> {
+  // Try seatemperature.net as fallback
   try {
-    const base = process.env.VERCEL_URL
-      ? `https://${process.env.VERCEL_URL}`
-      : "https://lajollafreediveclub.com";
-    const res = await fetch(`${base}/api/visibility`, {
-      headers: { "User-Agent": "LaJollaFreediveClub/1.0" },
-    });
+    const res = await fetch(
+      "https://seatemperature.net/current/united-states/san-diego-california-united-states-sea-temperature",
+      { headers: { "User-Agent": "Mozilla/5.0 (compatible; LaJollaFreediveClub/1.0)" }, signal: AbortSignal.timeout(6000) }
+    );
     if (!res.ok) return null;
-    const data = await res.json();
-    return data;
-  } catch {
-    return null;
-  }
+    const html = await res.text();
+    const m = html.match(/Current Water Temperature[\s\S]{0,300}?([\d]+\.[\d]+)\s*°C/i);
+    if (m) {
+      const c = parseFloat(m[1]);
+      if (!isNaN(c) && c > 5 && c < 35) return Math.round(c * 9 / 5 + 32);
+    }
+  } catch {}
+  // Last resort: seasonal average
+  return SEASONAL_TEMPS[new Date().getMonth()] || 63;
 }
 
 // ─── Fetch tide predictions from NOAA ───
@@ -491,18 +509,17 @@ export async function GET(request: Request) {
   const preview = searchParams.get("preview") === "true";
   const testMode = searchParams.get("test") === "true";
 
-  const validSecret = secret === "ljfc-daily-2026" || (process.env.CRON_SECRET && secret === process.env.CRON_SECRET);
+  const validSecret = secret === "ljfc" || (process.env.CRON_SECRET && secret === process.env.CRON_SECRET);
   if (!validSecret) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   try {
-    const [buoyData, windData, tideData, vis, waterQuality, localIntel] = await Promise.all([
-      fetchBuoyDirect(),
-      fetchWindDirect(),
-      fetchTideData(),
-      fetchVisibility(),
-      checkWaterQuality(),
+    const [buoyData, windData, tideData, waterQuality, localIntel] = await Promise.all([
+      fetchBuoyDirect().catch(() => ({})),
+      fetchWindDirect().catch(() => ({})),
+      fetchTideData().catch(() => ({ note: "Check tides page", state: "unknown" })),
+      checkWaterQuality().catch(() => "none" as const),
       getLocalIntel().catch(() => null),
     ]);
 
@@ -511,7 +528,14 @@ export async function GET(request: Request) {
       ...windData,
     };
 
-    const grade = scoreConditions(conditions, vis, tideData.state, waterQuality);
+    // Water temp fallback: if buoy didn't return temp, try other sources
+    if (!conditions.waterTemp) {
+      conditions.waterTemp = await fetchWaterTempFallback().catch(() => null) || undefined;
+    }
+
+    // No self-call to /api/visibility — use predictive model only
+    // This avoids Vercel function-to-function timeout issues
+    const grade = scoreConditions(conditions, null, tideData.state, waterQuality);
     const moon = getMoonPhase();
     const events = getTopEvents(new Date(), 4);
     const grunion = isGrunionNight(new Date(), moon.age);
