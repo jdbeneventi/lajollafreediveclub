@@ -365,26 +365,79 @@ export function ConditionsWidget() {
       </div>
 
       {/* Today's Outlook — Morning / Afternoon / Evening */}
-      {todayPeriods.length > 0 && (
-        <div className="bg-white rounded-2xl overflow-hidden">
-          <div className="px-8 py-5 border-b border-deep/[0.06]">
-            <h3 className="font-serif text-lg">Today&apos;s Outlook</h3>
-            <p className="text-[10px] text-[#5a6a7a] mt-0.5">Conditions by time of day — based on NWS marine forecast</p>
-          </div>
-          <div className="grid grid-cols-3">
-            {todayPeriods.map((p, i) => (
-              <div key={p.period} className={`p-5 text-center ${i < todayPeriods.length - 1 ? "border-r border-deep/[0.04]" : ""}`}>
-                <div className="text-[10px] uppercase tracking-wider text-[#5a6a7a] font-medium mb-2">{p.period}</div>
-                <div className="w-10 h-10 rounded-full flex items-center justify-center mx-auto mb-2" style={{ background: p.color + "15" }}>
-                  <span className="font-serif text-lg" style={{ color: p.color }}>{p.grade}</span>
+      {(() => {
+        // Determine current period
+        const hour = new Date().toLocaleString("en-US", { timeZone: "America/Los_Angeles", hour: "numeric", hour12: false });
+        const currentHour = parseInt(hour);
+        const currentPeriod = currentHour < 12 ? "Morning" : currentHour < 17 ? "Afternoon" : "Evening";
+
+        // Build periods: use live data for current period, forecast for others
+        const liveSwell = conditions?.waveHeight ? `${conditions.waveHeight.toFixed(1)}ft` : null;
+        const liveWind = conditions?.windSpeed || null;
+        const liveGrade = overall.grade;
+        const liveColor = overall.color;
+
+        const allPeriods = ["Morning", "Afternoon", "Evening"].map(period => {
+          const isLive = period === currentPeriod && conditions;
+          const forecast = todayPeriods.find(p => p.period === period);
+
+          if (isLive) {
+            return {
+              period,
+              seas: liveSwell || forecast?.seas || "—",
+              wind: liveWind ? `${liveWind}` : forecast?.wind || "—",
+              grade: liveGrade,
+              color: liveColor,
+              isLive: true,
+            };
+          }
+
+          if (forecast) {
+            return { period, seas: forecast.seas, wind: forecast.wind, grade: forecast.grade, color: forecast.color, isLive: false };
+          }
+
+          // No data — estimate from live conditions
+          if (conditions) {
+            const windNum = parseFloat(conditions.windSpeed || "5");
+            const seaNum = conditions.waveHeight || 2;
+            if (period === "Afternoon") {
+              return { period, seas: `${seaNum.toFixed(1)}ft`, wind: `${Math.round(windNum + 5)}kt`, grade: "—", color: "#5a6a7a", isLive: false };
+            }
+            return { period, seas: `${seaNum.toFixed(1)}ft`, wind: `${Math.round(Math.max(3, windNum - 3))}kt`, grade: "—", color: "#5a6a7a", isLive: false };
+          }
+
+          return null;
+        }).filter(Boolean);
+
+        if (allPeriods.length === 0) return null;
+
+        return (
+          <div className="bg-white rounded-2xl overflow-hidden">
+            <div className="px-8 py-5 border-b border-deep/[0.06]">
+              <h3 className="font-serif text-lg">Today&apos;s Outlook</h3>
+              <p className="text-[10px] text-[#5a6a7a] mt-0.5">Live data for now, NWS forecast for later</p>
+            </div>
+            <div className="grid grid-cols-3">
+              {allPeriods.map((p, i) => p && (
+                <div key={p.period} className={`p-5 text-center ${i < allPeriods.length - 1 ? "border-r border-deep/[0.04]" : ""} ${p.isLive ? "bg-deep/[0.03]" : ""}`}>
+                  <div className="text-[10px] uppercase tracking-wider font-medium mb-2 flex items-center justify-center gap-1">
+                    {p.isLive && <span className="w-1.5 h-1.5 rounded-full bg-seafoam animate-pulse" />}
+                    <span className={p.isLive ? "text-deep font-semibold" : "text-[#5a6a7a]"}>{p.period}</span>
+                  </div>
+                  {p.isLive && <div className="text-[9px] text-seafoam font-medium mb-1">Live</div>}
+                  {p.grade !== "—" && (
+                    <div className="w-10 h-10 rounded-full flex items-center justify-center mx-auto mb-2" style={{ background: p.color + "15" }}>
+                      <span className="font-serif text-lg" style={{ color: p.color }}>{p.grade}</span>
+                    </div>
+                  )}
+                  <div className="text-[10px] text-[#5a6a7a]">{p.seas}</div>
+                  <div className="text-[10px] text-[#5a6a7a]">{p.wind}</div>
                 </div>
-                <div className="text-[10px] text-[#5a6a7a]">{p.seas}</div>
-                <div className="text-[10px] text-[#5a6a7a]">{p.wind}</div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      )}
+        );
+      })()}
 
       {/* 7-Day Forecast */}
       {forecast.length > 0 && (
@@ -409,8 +462,10 @@ export function ConditionsWidget() {
               const isToday = i === 0;
               const displayGrade = isToday ? overall.grade : day.grade;
               const displayColor = isToday ? overall.color : day.color;
-              const displaySeas = isToday && conditions?.waveHeight ? `${conditions.waveHeight}ft swell` : `${day.seaHeight}ft seas`;
-              const displayWind = isToday && conditions?.windSpeed ? `${conditions.windSpeed}kt wind` : `${day.windSpeed}kt wind`;
+              const displaySeas = isToday && conditions?.waveHeight ? `${conditions.waveHeight.toFixed(1)}ft swell` : `${day.seaHeight}ft seas`;
+              const rawWind = conditions?.windSpeed || "";
+              const cleanWind = rawWind.replace(/\s*(knots?|kts?)\s*/gi, "").trim();
+              const displayWind = isToday && cleanWind ? `${cleanWind}kt wind` : `${day.windSpeed}kt wind`;
 
               return (
                 <div key={day.day} className={`p-4 text-center ${i < forecast.length - 1 ? "border-r border-deep/[0.04]" : ""} ${isToday ? "bg-deep/[0.03]" : ""}`}>
