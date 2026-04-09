@@ -189,6 +189,7 @@ export function ConditionsWidget() {
   const [lastRefresh, setLastRefresh] = useState<string>(nowPacific());
   const [buoyTime, setBuoyTime] = useState<string | null>(null);
   const [forecast, setForecast] = useState<{ day: string; date: string; grade: string; score: number; summary: string; color: string; seaHeight: number; windSpeed: number }[]>([]);
+  const [todayPeriods, setTodayPeriods] = useState<{ period: string; wind: string; seas: string; grade: string; score: number; color: string; summary: string }[]>([]);
 
   const fetchData = useCallback(() => {
     fetch("/api/conditions").then(r => r.json()).then(d => {
@@ -203,7 +204,7 @@ export function ConditionsWidget() {
       if (d.tide_state) setTideState(d.tide_state);
       if (d.tides) setTides(d.tides);
     }).catch(() => {});
-    fetch("/api/forecast").then(r => r.json()).then(d => { if (d.days) setForecast(d.days); }).catch(() => {});
+    fetch("/api/forecast").then(r => r.json()).then(d => { if (d.days) setForecast(d.days); if (d.todayPeriods) setTodayPeriods(d.todayPeriods); }).catch(() => {});
   }, [waterTemp]);
 
   useEffect(() => {
@@ -362,6 +363,28 @@ export function ConditionsWidget() {
           </div>
         </div>
       </div>
+
+      {/* Today's Outlook — Morning / Afternoon / Evening */}
+      {todayPeriods.length > 0 && (
+        <div className="bg-white rounded-2xl overflow-hidden">
+          <div className="px-8 py-5 border-b border-deep/[0.06]">
+            <h3 className="font-serif text-lg">Today&apos;s Outlook</h3>
+            <p className="text-[10px] text-[#5a6a7a] mt-0.5">Conditions by time of day — based on NWS marine forecast</p>
+          </div>
+          <div className="grid grid-cols-3">
+            {todayPeriods.map((p, i) => (
+              <div key={p.period} className={`p-5 text-center ${i < todayPeriods.length - 1 ? "border-r border-deep/[0.04]" : ""}`}>
+                <div className="text-[10px] uppercase tracking-wider text-[#5a6a7a] font-medium mb-2">{p.period}</div>
+                <div className="w-10 h-10 rounded-full flex items-center justify-center mx-auto mb-2" style={{ background: p.color + "15" }}>
+                  <span className="font-serif text-lg" style={{ color: p.color }}>{p.grade}</span>
+                </div>
+                <div className="text-[10px] text-[#5a6a7a]">{p.seas}</div>
+                <div className="text-[10px] text-[#5a6a7a]">{p.wind}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* 7-Day Forecast */}
       {forecast.length > 0 && (

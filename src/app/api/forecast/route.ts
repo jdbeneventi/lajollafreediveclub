@@ -239,6 +239,42 @@ export async function GET() {
       }
     }
 
+    // Build today's time-of-day breakdown
+    const todayPeriods: { period: string; wind: string; seas: string; grade: string; score: number; color: string; summary: string }[] = [];
+    const todayNames = ["TODAY", "THIS AFTERNOON", "AFTERNOON", "TONIGHT", "EVENING", "THIS EVENING", "REST OF TODAY"];
+    for (const period of periods) {
+      const upperName = period.name.toUpperCase();
+      if (todayNames.some(n => upperName.includes(n)) || upperName === dayNames[todayIdx]) {
+        const result = scorePeriod(period);
+        const { grade, color, summary } = gradeFromScore(result.score);
+        let label = "Morning";
+        if (upperName.includes("AFTERNOON") || upperName.includes("REST OF")) label = "Afternoon";
+        if (upperName.includes("TONIGHT") || upperName.includes("EVENING") || upperName.includes("NIGHT")) label = "Evening";
+        // Don't duplicate labels
+        if (!todayPeriods.some(p => p.period === label)) {
+          todayPeriods.push({
+            period: label,
+            wind: period.wind,
+            seas: period.seas,
+            grade, score: result.score, color, summary,
+          });
+        }
+      }
+    }
+
+    // If we only got one period for today, estimate the others based on typical patterns
+    if (todayPeriods.length === 1 && todayPeriods[0].period === "Morning") {
+      const morning = todayPeriods[0];
+      // Afternoon: typically windier (+5-10kt), same seas
+      const pmScore = Math.max(30, morning.score - 12);
+      const pmGrade = gradeFromScore(pmScore);
+      todayPeriods.push({ period: "Afternoon", wind: morning.wind.replace(/(\d+)/, (m) => String(Math.min(25, parseInt(m) + 5))), seas: morning.seas, ...pmGrade, score: pmScore });
+      // Evening: wind drops, seas same
+      const evScore = Math.max(30, morning.score - 5);
+      const evGrade = gradeFromScore(evScore);
+      todayPeriods.push({ period: "Evening", wind: morning.wind, seas: morning.seas, ...evGrade, score: evScore });
+    }
+
     // Convert to DayForecast array
     const days: DayForecast[] = [];
     for (const [dayName, data] of Array.from(dayScores)) {
@@ -277,6 +313,7 @@ export async function GET() {
     return NextResponse.json(
       {
         days,
+        todayPeriods,
         source: "NWS Coastal Waters Forecast PZZ740",
         source_url: "https://www.ndbc.noaa.gov/data/Forecasts/FZUS56.KSGX.html",
         periods_parsed: periods.length,

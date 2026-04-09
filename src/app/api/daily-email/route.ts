@@ -354,6 +354,7 @@ function buildEmailHtml(
   tideNote: string,
   waterQuality?: WaterQualityEmail,
   localAlerts?: LocalAlert[],
+  todayPeriods?: { period: string; wind: string; seas: string; grade: string; score: number; color: string }[],
 ): string {
   const now = new Date();
   const dateStr = now.toLocaleDateString("en-US", {
@@ -388,6 +389,29 @@ function buildEmailHtml(
     <div style="font-size:16px;color:#0B1D2C;font-weight:600;margin-bottom:4px;">${grade.summary}</div>
     <div style="font-size:12px;color:#5a6a7a;">Score: ${grade.score}/100</div>
   </div>
+
+  ${todayPeriods && todayPeriods.length > 0 ? `
+  <!-- Today's Outlook -->
+  <div style="background:white;border-radius:16px;overflow:hidden;margin-bottom:16px;">
+    <div style="padding:14px 20px;border-bottom:1px solid rgba(0,0,0,0.04);">
+      <div style="font-size:11px;color:#5a6a7a;text-transform:uppercase;letter-spacing:1.5px;">Today's Outlook</div>
+    </div>
+    <table style="width:100%;border-collapse:collapse;">
+      <tr>
+        ${todayPeriods.map((p, i) => `
+          <td style="width:${Math.round(100/todayPeriods.length)}%;text-align:center;padding:16px 8px;${i < todayPeriods.length - 1 ? "border-right:1px solid rgba(0,0,0,0.04);" : ""}">
+            <div style="font-size:10px;color:#5a6a7a;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">${p.period}</div>
+            <div style="width:40px;height:40px;border-radius:50%;background:${p.color}15;display:inline-flex;align-items:center;justify-content:center;margin-bottom:6px;">
+              <span style="font-size:18px;font-weight:bold;color:${p.color};">${p.grade}</span>
+            </div>
+            <div style="font-size:10px;color:#5a6a7a;">${p.seas}</div>
+            <div style="font-size:10px;color:#5a6a7a;">${p.wind}</div>
+          </td>
+        `).join("")}
+      </tr>
+    </table>
+  </div>
+  ` : ""}
 
   <!-- Quick Stats -->
   <div style="background:white;border-radius:16px;padding:20px;margin-bottom:16px;">
@@ -556,7 +580,48 @@ export async function GET(request: Request) {
       };
     }
 
-    const html = buildEmailHtml(conditions, grade, moon, events, grunion, tideData.note, waterQualityAlert, localIntel?.alerts);
+    // Fetch NWS forecast directly for today's time-of-day breakdown
+    const todayPeriods: { period: string; wind: string; seas: string; grade: string; score: number; color: string }[] = [];
+    try {
+      const fRes = await fetch("https://www.ndbc.noaa.gov/data/Forecasts/FZUS56.KSGX.html", {
+        headers: { "User-Agent": "LaJollaFreediveClub/1.0" },
+        signal: AbortSignal.timeout(6000),
+      });
+      if (fRes.ok) {
+        const fText = (await fRes.text()).replace(/<[^>]+>/g, " ").replace(/&nbsp;/g, " ");
+        // Simple period extraction for today
+        const periodPattern = /\.?(TODAY|THIS AFTERNOON|AFTERNOON|TONIGHT|THIS EVENING|EVENING)\.{3}([\s\S]*?)(?=\.(?:TODAY|TONIGHT|MON|TUE|WED|THU|FRI|SAT|SUN|REST|\n\s*\n)|$)/gi;
+        let m;
+        while ((m = periodPattern.exec(fText)) !== null) {
+          const name = m[1].toUpperCase();
+          const body = m[2];
+          const windMatch = body.match(/Wind\s+(?:([NSEW]{1,3})\s+)?(\d+)(?:\s+to\s+(\d+))?\s+kt/i);
+          const seasMatch = body.match(/Seas\s+(\d+)(?:\s+to\s+(\d+))?\s+ft/i);
+          const wind = windMatch ? `${windMatch[1] || "var"} ${windMatch[3] || windMatch[2]} kt` : "light";
+          const seas = seasMatch ? (seasMatch[2] ? `${seasMatch[1]}-${seasMatch[2]} ft` : `${seasMatch[1]} ft`) : "calm";
+
+          let label = "Morning";
+          if (name.includes("AFTERNOON")) label = "Afternoon";
+          if (name.includes("TONIGHT") || name.includes("EVENING")) label = "Evening";
+
+          // Simple score from wind + seas
+          const ws = windMatch ? parseInt(windMatch[3] || windMatch[2]) : 3;
+          const sh = seasMatch ? parseInt(seasMatch[2] || seasMatch[1]) : 1;
+          let sc = 70;
+          if (ws <= 5) sc += 15; else if (ws <= 10) sc += 5; else if (ws > 15) sc -= 15;
+          if (sh <= 2) sc += 10; else if (sh <= 3) sc += 0; else if (sh > 4) sc -= 15;
+          sc = Math.max(20, Math.min(100, sc));
+          const g = sc >= 88 ? "A" : sc >= 78 ? "B+" : sc >= 68 ? "B" : sc >= 58 ? "C+" : sc >= 45 ? "C" : sc >= 30 ? "D" : "F";
+          const c = sc >= 68 ? "#1B6B6B" : sc >= 45 ? "#D4A574" : "#C75B3A";
+
+          if (!todayPeriods.some(p => p.period === label)) {
+            todayPeriods.push({ period: label, wind, seas, grade: g, score: sc, color: c });
+          }
+        }
+      }
+    } catch {}
+
+    const html = buildEmailHtml(conditions, grade, moon, events, grunion, tideData.note, waterQualityAlert, localIntel?.alerts, todayPeriods);
 
     // Preview mode
     if (preview) {
