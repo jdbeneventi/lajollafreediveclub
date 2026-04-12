@@ -100,6 +100,74 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: bookErr.message }, { status: 500 });
     }
 
+    // Send enrollment invite email
+    const RESEND_API_KEY = process.env.RESEND_API_KEY;
+    if (RESEND_API_KEY) {
+      const resend = new Resend(RESEND_API_KEY);
+      const studentName = firstName?.trim() || cleanEmail.split("@")[0];
+      const courseName = event?.title || "your freediving course";
+
+      try {
+        await resend.emails.send({
+          from: "La Jolla Freedive Club <noreply@lajollafreediveclub.com>",
+          to: [cleanEmail],
+          subject: `You're enrolled — ${courseName}`,
+          html: `
+            <div style="font-family:-apple-system,'DM Sans',sans-serif;max-width:540px;padding:20px;">
+              <div style="font-size:11px;color:#3db8a4;text-transform:uppercase;letter-spacing:2px;margin-bottom:16px;">La Jolla Freedive Club</div>
+
+              <h1 style="font-family:Georgia,serif;font-size:24px;color:#0B1D2C;font-weight:normal;margin:0 0 8px;">Hey ${studentName},</h1>
+
+              <p style="font-size:15px;color:#3A4A56;line-height:1.7;">
+                You're enrolled in <strong style="color:#0B1D2C;">${courseName}</strong>${courseDates ? ` (${courseDates})` : ""}. Here's how to get ready.
+              </p>
+
+              <div style="background:#F5F0E6;border-radius:12px;padding:20px;margin:20px 0;">
+                <div style="font-size:11px;color:#1B6B6B;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:12px;font-weight:700;">Before Day 1</div>
+
+                <div style="margin-bottom:16px;">
+                  <a href="https://lajollafreediveclub.com/portal" style="display:inline-block;padding:12px 24px;background:#1B6B6B;color:white;border-radius:50px;text-decoration:none;font-weight:600;font-size:14px;">
+                    Open Your Student Portal →
+                  </a>
+                </div>
+
+                <div style="font-size:13px;color:#3A4A56;line-height:1.8;">
+                  <strong style="color:#0B1D2C;">1. Complete the Course Prep Guide</strong><br/>
+                  Interactive guide covering physiology, equalization, safety, and technique. Students who complete it arrive ready.<br/><br/>
+
+                  <strong style="color:#0B1D2C;">2. Download the AIDA2 Manual</strong><br/>
+                  <a href="https://lajollafreediveclub.com/documents/aida2-manual.pdf" style="color:#1B6B6B;text-decoration:underline;">AIDA2 Freediver Course Manual (PDF)</a> — the official reference material for your course.<br/><br/>
+
+                  <strong style="color:#0B1D2C;">3. Complete Your Forms</strong><br/>
+                  <a href="https://lajollafreediveclub.com/forms/aida" style="color:#1B6B6B;text-decoration:underline;">AIDA Medical Statement & Liability Release</a><br/>
+                  <a href="https://lajollafreediveclub.com/waiver" style="color:#1B6B6B;text-decoration:underline;">LJFC Waiver</a>
+                </div>
+              </div>
+
+              <p style="font-size:13px;color:#3A4A56;line-height:1.7;">
+                Log in to your portal using this email address (<strong>${cleanEmail}</strong>). I'll send meeting location and time details separately before your course date.
+              </p>
+
+              <p style="font-size:13px;color:#3A4A56;line-height:1.7;">
+                Questions? Just reply to this email or text me anytime.
+              </p>
+
+              <p style="font-size:14px;color:#0B1D2C;margin-top:20px;">
+                — Joshua<br/>
+                <span style="font-size:12px;color:#999;">AIDA Instructor · La Jolla Freedive Club</span>
+              </p>
+
+              <div style="margin-top:24px;padding-top:16px;border-top:1px solid #eee;font-size:11px;color:#999;">
+                La Jolla Freedive Club · La Jolla Shores, San Diego, CA
+              </div>
+            </div>
+          `,
+        });
+      } catch {
+        // Don't fail the enrollment if email fails
+      }
+    }
+
     return NextResponse.json({ ok: true });
   }
 
