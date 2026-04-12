@@ -29,6 +29,13 @@ const ADMIN_PAGES = [
     color: "from-seafoam to-teal",
   },
   {
+    label: "Course Roster",
+    href: "/admin/courses",
+    desc: "Enrollments per course date. Enroll students, email participants, track capacity.",
+    icon: "📋",
+    color: "from-teal to-ocean",
+  },
+  {
     label: "Camp Registrations",
     href: "/admin/registrations",
     desc: "Camp Garibaldi signups stored in Supabase. Student info, sessions, medical, charter.",
