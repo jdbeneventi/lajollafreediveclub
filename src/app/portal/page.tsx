@@ -49,6 +49,47 @@ export default async function PortalPage() {
       </div>
 
       <div className="max-w-[700px] mx-auto px-6 py-8 space-y-6">
+        {/* Prep guide nudge — show if they haven't completed all 10 sections */}
+        {!currentCert && (() => {
+          const prepSections = completedRequirements.filter((r: string) => r.startsWith("prep-section-"));
+          const prepDone = prepSections.length >= 10;
+          if (prepDone) return null;
+          const pct = Math.round((prepSections.length / 10) * 100);
+          return (
+            <Link href="/portal/prep/aida2" className="block no-underline">
+              <div className="bg-gradient-to-r from-deep to-ocean rounded-2xl p-6 relative overflow-hidden group hover:shadow-lg transition-shadow">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-seafoam/[0.06] rounded-full -translate-y-1/2 translate-x-1/2" />
+                <div className="relative">
+                  <div className="text-[10px] font-bold text-seafoam uppercase tracking-[1.5px] mb-1">
+                    {prepSections.length === 0 ? "Before Day 1" : `${pct}% Complete`}
+                  </div>
+                  <h2 className="font-serif text-xl text-white mb-1">
+                    {prepSections.length === 0 ? "Start your course prep" : "Continue your course prep"}
+                  </h2>
+                  <p className="text-white/40 text-sm mb-4 max-w-[460px]">
+                    {prepSections.length === 0
+                      ? "This interactive guide covers everything you need to know before the course — physiology, equalization, safety, and more. Students who complete it show up ready."
+                      : `You've completed ${prepSections.length} of 10 sections. Pick up where you left off.`}
+                  </p>
+                  <div className="flex items-center gap-3">
+                    <span className="inline-flex items-center gap-2 px-5 py-2.5 bg-seafoam text-deep rounded-full text-sm font-semibold group-hover:-translate-y-0.5 transition-transform">
+                      {prepSections.length === 0 ? "Start prep guide →" : "Continue →"}
+                    </span>
+                    {prepSections.length > 0 && (
+                      <div className="flex items-center gap-2 flex-1 max-w-[160px]">
+                        <div className="flex-1 h-1.5 bg-white/10 rounded-full overflow-hidden">
+                          <div className="h-full bg-seafoam rounded-full" style={{ width: `${pct}%` }} />
+                        </div>
+                        <span className="text-[10px] text-white/30">{prepSections.length}/10</span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </Link>
+          );
+        })()}
+
         {/* Journey */}
         <JourneyCard
           currentCert={currentCert}
