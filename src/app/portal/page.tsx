@@ -3,6 +3,8 @@ import { supabase } from "@/lib/supabase";
 import Link from "next/link";
 import { PortalLogin } from "./PortalLogin";
 import { LogoutButton } from "./LogoutButton";
+import { JourneyCard } from "./JourneyCard";
+import type { CertLevel } from "@/lib/certifications";
 
 export default async function PortalPage() {
   const student = await getStudent();
@@ -11,21 +13,27 @@ export default async function PortalPage() {
     return <PortalLogin />;
   }
 
-  // Fetch student data
+  // Fetch all student data in parallel
   const [
     { data: bookings },
     { data: aidaForms },
     { data: waiverMember },
+    { data: progress },
+    { data: certRecord },
   ] = await Promise.all([
     supabase.from("bookings").select("*").eq("email", student.email).order("created_at", { ascending: false }),
     supabase.from("aida_forms").select("id, form_type, course, physician_required, physician_cleared, signed_at").eq("email", student.email).order("created_at", { ascending: false }),
     supabase.from("saturday_members").select("waiver_signed, waiver_signed_at").eq("email", student.email).single(),
+    supabase.from("student_progress").select("requirement_id").eq("student_id", student.id),
+    supabase.from("student_certifications").select("cert_level, certified_at").eq("student_id", student.id).order("certified_at", { ascending: false }).limit(1),
   ]);
 
   const firstName = student.first_name || student.email.split("@")[0];
   const hasWaiver = waiverMember?.waiver_signed || false;
   const hasMedical = aidaForms?.some((f: { form_type: string }) => f.form_type === "medical_statement");
   const hasLiability = aidaForms?.some((f: { form_type: string }) => f.form_type === "liability_release");
+  const completedRequirements = (progress || []).map((p: { requirement_id: string }) => p.requirement_id);
+  const currentCert = certRecord?.[0]?.cert_level as CertLevel | undefined ?? null;
 
   return (
     <div className="min-h-screen bg-salt">
@@ -41,6 +49,15 @@ export default async function PortalPage() {
       </div>
 
       <div className="max-w-[700px] mx-auto px-6 py-8 space-y-6">
+        {/* Journey */}
+        <JourneyCard
+          currentCert={currentCert}
+          completedRequirements={completedRequirements}
+          hasWaiver={hasWaiver}
+          hasMedical={!!hasMedical}
+          hasLiability={!!hasLiability}
+        />
+
         {/* Forms Status */}
         <div className="bg-white rounded-2xl p-6">
           <h2 className="font-serif text-lg mb-4">Forms on File</h2>
