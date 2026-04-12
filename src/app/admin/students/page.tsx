@@ -67,6 +67,10 @@ function StudentsContent() {
   const [certGranting, setCertGranting] = useState<{ studentId: string; level: CertLevel } | null>(null);
   const [cardNumber, setCardNumber] = useState("");
   const [saving, setSaving] = useState(false);
+  const [showAdd, setShowAdd] = useState(false);
+  const [newEmail, setNewEmail] = useState("");
+  const [newFirst, setNewFirst] = useState("");
+  const [newLast, setNewLast] = useState("");
 
   const fetchData = useCallback(async () => {
     const res = await fetch(`/api/admin/students?key=${key}`);
@@ -156,7 +160,44 @@ function StudentsContent() {
             <h1 className="font-serif text-2xl text-white mt-1">Students & Progress</h1>
             <p className="text-white/30 text-xs mt-1">{data.students.length} students</p>
           </div>
+          <button onClick={() => setShowAdd(true)}
+            className="px-4 py-2 rounded-lg bg-seafoam text-deep text-sm font-semibold border-none cursor-pointer hover:bg-seafoam/80 transition-colors">
+            + Add Student
+          </button>
         </div>
+
+        {/* Add student inline form */}
+        {showAdd && (
+          <div className="bg-white/[0.04] border border-white/10 rounded-xl p-5 mb-6">
+            <h3 className="text-white text-sm font-semibold mb-3">Add New Student</h3>
+            <div className="flex gap-3 flex-wrap">
+              <input type="email" value={newEmail} onChange={(e) => setNewEmail(e.target.value)}
+                placeholder="Email (required)"
+                className="flex-1 min-w-[200px] px-4 py-2.5 rounded-lg bg-white/[0.06] border border-white/10 text-white text-sm outline-none focus:border-seafoam placeholder:text-white/20" />
+              <input type="text" value={newFirst} onChange={(e) => setNewFirst(e.target.value)}
+                placeholder="First name"
+                className="w-[140px] px-4 py-2.5 rounded-lg bg-white/[0.06] border border-white/10 text-white text-sm outline-none focus:border-seafoam placeholder:text-white/20" />
+              <input type="text" value={newLast} onChange={(e) => setNewLast(e.target.value)}
+                placeholder="Last name"
+                className="w-[140px] px-4 py-2.5 rounded-lg bg-white/[0.06] border border-white/10 text-white text-sm outline-none focus:border-seafoam placeholder:text-white/20" />
+            </div>
+            <div className="flex gap-3 mt-3">
+              <button onClick={async () => {
+                if (!newEmail) return;
+                await apiCall({ action: "add_student", email: newEmail, firstName: newFirst, lastName: newLast });
+                setNewEmail(""); setNewFirst(""); setNewLast(""); setShowAdd(false);
+              }} disabled={saving || !newEmail}
+                className="px-5 py-2 rounded-lg bg-seafoam text-deep text-sm font-semibold border-none cursor-pointer disabled:opacity-40">
+                {saving ? "Adding..." : "Add Student"}
+              </button>
+              <button onClick={() => setShowAdd(false)}
+                className="px-5 py-2 rounded-lg bg-transparent border border-white/10 text-white/50 text-sm cursor-pointer">
+                Cancel
+              </button>
+            </div>
+            <p className="text-white/20 text-[10px] mt-2">This creates their account so they can log in via the portal with a magic link.</p>
+          </div>
+        )}
 
         <div className="flex gap-6">
           {/* Student list */}

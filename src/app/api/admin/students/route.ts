@@ -101,5 +101,29 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ ok: true });
   }
 
+  if (action === "add_student") {
+    const { email, firstName, lastName } = body as {
+      email: string; firstName?: string; lastName?: string;
+    };
+
+    if (!email) {
+      return NextResponse.json({ error: "Email required" }, { status: 400 });
+    }
+
+    const { error } = await supabase
+      .from("students")
+      .upsert({
+        email: email.toLowerCase().trim(),
+        first_name: firstName?.trim() || null,
+        last_name: lastName?.trim() || null,
+      }, { onConflict: "email" });
+
+    if (error) {
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+
+    return NextResponse.json({ ok: true });
+  }
+
   return NextResponse.json({ error: "Unknown action" }, { status: 400 });
 }

@@ -13,18 +13,32 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Email required" }, { status: 400 });
     }
 
+    // Check if student exists (created via booking, form submission, or admin)
+    const { data: existing } = await supabase
+      .from("students")
+      .select("id")
+      .eq("email", email.toLowerCase())
+      .single();
+
+    if (!existing) {
+      return NextResponse.json(
+        { error: "No account found for this email. If you've booked a course, use the same email you booked with. Otherwise, contact Joshua to get set up." },
+        { status: 404 }
+      );
+    }
+
     // Generate token
     const token = randomBytes(32).toString("hex");
     const expires = new Date(Date.now() + 15 * 60 * 1000); // 15 minutes
 
-    // Upsert student record with token
+    // Update existing student with login token
     const { error: dbError } = await supabase
       .from("students")
-      .upsert({
-        email,
+      .update({
         magic_token: token,
         magic_token_expires: expires.toISOString(),
-      }, { onConflict: "email" });
+      })
+      .eq("email", email.toLowerCase());
 
     if (dbError) {
       return NextResponse.json({ error: "Failed to create login link" }, { status: 500 });
