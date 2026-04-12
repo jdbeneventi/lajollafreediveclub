@@ -82,6 +82,7 @@ const SECTIONS: Section[] = [
   ]},
   { id: "breathing", num: "03", title: "The Breathing Cycle", subtitle: "Four phases for every dive", icon: "🌊", blocks: [
     { t: "p", text: "Now that you understand CO₂ and why relaxation matters, here's the practical framework." },
+    { t: "video", videoId: "3aXxXCXptYA", title: "Breath-Up & Breathing for Freediving", context: "Watch the full relaxation and breath-up sequence before diving. This is the technique you'll use before every dive." },
     { t: "phases", items: [
       { name: "1. Relaxation Phase", desc: "1–2 min calm belly breathing. Let body and mind settle. Breathe normally — don't force deeper or faster." },
       { name: "2. One Full Breath", desc: "Single slow deep inhalation — belly first (diaphragm), then chest (intercostals). Comfortable fullness, not max tension." },
@@ -115,7 +116,7 @@ const SECTIONS: Section[] = [
     { t: "p", text: "Good technique minimizes O₂ use and CO₂ production. We'll work on each skill individually." },
     { t: "h3", text: "The Duck Dive" },
     { t: "p", text: "Transitions you from surface to descent. Done well, carries you to 5m before kicking. Sequence: stretch out → bend at waist → pull arms to thighs → equalize → kick. Smooth and continuous." },
-    { t: "video", videoId: "HphNnaPLSrI", title: "Perfect Your Duck Dive — Sheena McNally", context: "Canadian record holder breaks it down on land and in water. Watch the common mistakes section." },
+    { t: "video", videoId: "YzJLBBkG3RE", title: "How to Duck Dive for Freediving", context: "Watch the full sequence: stretch out, bend at waist, arms to thighs, equalize, kick. Smooth and continuous." },
     { t: "h3", text: "Finning & Streamlining" },
     { t: "p", text: "Kick from hips, not knees. Long fluid strokes. Head aligned with body — look forward along the line, not up. On ascent, let buoyancy do the work for the last meters." },
     { t: "callout", label: "One rule for the ascent", text: "Once you start ascending, never turn back down. There will always be another dive." },
@@ -137,6 +138,7 @@ const SECTIONS: Section[] = [
     ]},
     { t: "callout", label: "Then: BTT Cycle", text: "Blow around nose/eyes. Tap both cheeks. Talk: \"[Name], breathe in!\" Repeat 10–15s. No response → 5 rescue breaths. Still nothing → CPR + emergency services." },
     { t: "quiz", q: "Most likely cause of a blackout:", type: "mc", options: ["Not enough prep time", "Hyperventilation", "Bad finning", "Safety diver too close"], answer: 1, explain: "Hyperventilation suppresses CO₂ warnings, letting divers push past safe limits." },
+    { t: "video", videoId: "2RinEp3I6LA", title: "Blackout Rescue — What It Looks Like", context: "See the SAFE protocol and BTT cycle in action. This is what we practice in every course." },
     { t: "instructor", text: "We practice rescue in every course. By the end, SAFE becomes muscle memory. That's the point." },
   ]},
   { id: "risk", num: "07", title: "Risk Reduction", subtitle: "The habits that keep it safe", icon: "✅", blocks: [
@@ -161,6 +163,7 @@ const SECTIONS: Section[] = [
       { name: "Snorkel", points: ["Surface breathing safety tool", "Rigid preferred", "Always remove before diving"] },
       { name: "Weight Belt", points: ["Rubber/silicone, on hips", "Quick-release buckle", "Preserves belly breathing"] },
     ]},
+    { t: "video", videoId: "0D_zKZv3VTg", title: "Freediving Fins — What to Know", context: "Overview of fin types, fit, and technique. Don't buy anything before the course — this is just context." },
     { t: "quiz", q: "Short/soft fins are better for learning technique.", type: "tf", answer: true, explain: "Develop hip-driven technique before moving to longer blades." },
     { t: "instructor", text: "Don't buy anything before the course. We provide everything. If you want one investment: a well-fitting mask. Try before you buy." },
   ]},
