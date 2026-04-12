@@ -57,6 +57,13 @@ const ADMIN_PAGES = [
     color: "from-coral to-sun",
   },
   {
+    label: "Students & Progress",
+    href: "/admin/students",
+    desc: "View all students, certification progress, sign off requirements, grant certs.",
+    icon: "🎓",
+    color: "from-seafoam to-ocean",
+  },
+  {
     label: "Send AIDA Forms",
     href: "/admin/send-forms",
     desc: "Email medical statement + liability release to a student.",
