@@ -80,7 +80,7 @@ export function JourneyCard({ currentCert, completedRequirements, hasWaiver, has
                   )}
                 </div>
                 {i < CERT_ORDER.length - 1 && (
-                  <div className={`w-4 h-px mt-[-12px] ${isPast ? "bg-seafoam" : "bg-white/10"}`} />
+                  <div className={`w-4 h-px mt-[-12px] ${isPast || isCurrent ? "bg-seafoam" : "bg-white/10"}`} />
                 )}
               </div>
             );

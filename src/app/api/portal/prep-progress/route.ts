@@ -9,12 +9,22 @@ export async function POST(req: NextRequest) {
   }
 
   const { sections } = await req.json() as { sections: string[] };
-  if (!Array.isArray(sections)) {
+  if (!Array.isArray(sections) || sections.length === 0) {
     return NextResponse.json({ error: "Invalid payload" }, { status: 400 });
   }
 
+  // Validate section IDs — only allow known section names
+  const validSections = [
+    "welcome", "nerves", "physiology", "breathing", "equalization",
+    "technique", "safety", "risk", "equipment", "logistics",
+  ];
+  const filtered = sections.filter((s) => validSections.includes(s));
+  if (filtered.length === 0) {
+    return NextResponse.json({ error: "No valid sections" }, { status: 400 });
+  }
+
   // Upsert each completed section as a progress record
-  const records = sections.map((sectionId: string) => ({
+  const records = filtered.map((sectionId: string) => ({
     student_id: student.id,
     requirement_id: `prep-section-${sectionId}`,
     cert_level: "aida2",
@@ -30,7 +40,7 @@ export async function POST(req: NextRequest) {
   }
 
   // Check if all 10 sections completed → also mark the a2-prep requirement
-  if (sections.length >= 10) {
+  if (filtered.length >= validSections.length) {
     await supabase
       .from("student_progress")
       .upsert(

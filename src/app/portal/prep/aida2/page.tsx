@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default async function Aida2PrepPage() {
   const student = await getStudent();
-  if (!student) redirect("/portal?redirect=/portal/prep/aida2");
+  if (!student) return redirect("/portal");
 
   // Fetch existing progress
   const { data: progress } = await supabase
