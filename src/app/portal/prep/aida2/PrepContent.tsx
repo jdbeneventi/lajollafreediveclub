@@ -165,8 +165,7 @@ const SECTIONS: Section[] = [
     { t: "instructor", text: "Don't buy anything before the course. We provide everything. If you want one investment: a well-fitting mask. Try before you buy." },
   ]},
   { id: "logistics", num: "09", title: "Day 1 Logistics", subtitle: "Where, when, what to bring", icon: "📍", hideQC: true, blocks: [
-    { t: "h3", text: "Where to Meet" },
-    { t: "p", text: "La Jolla Shores beach, near the main lifeguard tower. I'll send the exact pin and time separately. Parking on Camino Del Oro or La Jolla Shores Drive — arrive 15 min early, lot fills on weekends." },
+    { t: "callout", label: "Meeting Location & Time", text: "Joshua will send you the exact meeting point, time, and parking details individually before your course date." },
     { t: "h3", text: "What to Bring" },
     { t: "list", items: ["Swimsuit + towel", "Reef-safe sunscreen", "Water bottle + electrolytes", "Light snack (no dairy, heavy fats, spicy)", "Completed AIDA medical statement + signed waiver", "Personal gear if you have it — otherwise we provide everything", "Positive attitude"] },
     { t: "h3", text: "What to Eat" },
