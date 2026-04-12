@@ -107,7 +107,7 @@ const SECTIONS: Section[] = [
       { name: "Frenzel", how: "Pinch nose, use tongue as piston against palate to compress mouth air.", note: "The Swiss army knife of freediving. No chest tension." },
       { name: "Hands-Free (BTV)", how: "Mechanically open Eustachian tubes without pressure.", note: "Appealing but unreliable. Learn Frenzel as backup." },
     ]},
-    { t: "video", videoId: "L_MFqjnGxEs", title: "How to Frenzel Equalize — Adam Stern", context: "Australian record holder walks through tongue movements step by step. Practice in front of a mirror. This is pre-course homework." },
+    { t: "video", videoId: "Mo07gZR741M", title: "How to Frenzel Equalize — Adam Stern", context: "Australian record holder walks through tongue movements step by step. Practice in front of a mirror. This is pre-course homework." },
     { t: "quiz", q: "Air spaces a diver equalizes on descent:", type: "multi", options: ["Lungs", "Ears (middle ear)", "Sinuses", "Mask"], answer: [1, 2, 3], explain: "Ears, sinuses, and mask. Lungs compress naturally." },
     { t: "instructor", text: "Equalization is the #1 thing students stress about. Practice Frenzel dry — on the bus, watching TV — even 5 min/day before the course. The Adam Stern video above is your best friend here." },
   ]},
