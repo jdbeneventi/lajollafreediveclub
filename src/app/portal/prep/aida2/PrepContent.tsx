@@ -165,6 +165,12 @@ const SECTIONS: Section[] = [
     ]},
     { t: "video", videoId: "0D_zKZv3VTg", title: "Freediving Fins — What to Know", context: "Overview of fin types, fit, and technique. Don't buy anything before the course — this is just context." },
     { t: "quiz", q: "Short/soft fins are better for learning technique.", type: "tf", answer: true, explain: "Develop hip-driven technique before moving to longer blades." },
+    { t: "h3", text: "How Much Weight?" },
+    { t: "p", text: "Your weight belt compensates for the buoyancy of your wetsuit and body. The goal: neutrally buoyant at 10m on a full exhale. At the surface, you should float on a full inhale and sink slowly on a full exhale." },
+    { t: "callout", label: "Starting point by wetsuit thickness", text: "No wetsuit: 1–2 kg (2–4 lbs). 3mm suit: 3–4 kg (6–8 lbs). 5mm suit: 5–7 kg (10–14 lbs). 7mm suit: 7–9 kg (14–18 lbs). Body composition matters — more body fat means more buoyancy — but wetsuit thickness is the biggest variable." },
+    { t: "p", text: "The in-water check: get in with your gear, take a full exhale at the surface. You should sink slowly — not plummet, not float. Full inhale — you should float comfortably. We'll fine-tune this together on Day 1." },
+    { t: "safety", text: "Overweighting is dangerous. It makes surfacing harder, increases O₂ consumption, and adds unnecessary risk. When in doubt, go lighter. You can always add weight — you can't undo a problem at depth." },
+    { t: "quiz", q: "The correct weighting check at the surface is:", type: "mc", options: ["Sink on full inhale, float on full exhale", "Float on full inhale, slowly sink on full exhale", "Sink rapidly on full exhale", "Stay perfectly neutral on full inhale"], answer: 1, explain: "Full inhale = float. Full exhale = slow sink. That's correct weighting for freediving." },
     { t: "instructor", text: "Don't buy anything before the course. We provide everything. If you want one investment: a well-fitting mask. Try before you buy." },
   ]},
   { id: "logistics", num: "09", title: "Day 1 Logistics", subtitle: "Where, when, what to bring", icon: "📍", hideQC: true, blocks: [
