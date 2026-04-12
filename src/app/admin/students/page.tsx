@@ -253,7 +253,6 @@ function StudentsContent() {
                 student={selectedStudent}
                 completed={buildCompleted(selectedStudent.id, selectedStudent.email)}
                 certs={getStudentCerts(selectedStudent.id)}
-                formStatus={getStudentFormStatus(selectedStudent.email)}
                 bookings={studentBookings}
                 progressRecords={data.progress.filter((p) => p.student_id === selectedStudent.id)}
                 saving={saving}
@@ -305,13 +304,12 @@ function StudentsContent() {
 }
 
 function StudentDetail({
-  student, completed, certs, formStatus, bookings, progressRecords, saving,
+  student, completed, certs, bookings, progressRecords, saving,
   onToggle, onGrantCert, onRevokeCert,
 }: {
   student: Student;
   completed: string[];
   certs: CertRecord[];
-  formStatus: { hasWaiver: boolean; hasMedical: boolean; hasLiability: boolean };
   bookings: BookingRecord[];
   progressRecords: ProgressRecord[];
   saving: boolean;
