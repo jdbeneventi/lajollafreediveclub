@@ -209,6 +209,12 @@ function CoursesContent() {
                                 b.payment_status === "deposit" ? "bg-sun/15 text-sun" :
                                 "bg-coral/15 text-coral"
                               }`}>{b.payment_status}</span>
+                              <button onClick={async () => {
+                                await apiCall({ action: "resend_invite", bookingId: b.id });
+                              }}
+                                disabled={saving}
+                                className="text-[10px] text-seafoam/40 hover:text-seafoam bg-transparent border-none cursor-pointer"
+                                title="Resend onboarding email">✉</button>
                               <button onClick={() => apiCall({ action: "remove_enrollment", bookingId: b.id })}
                                 disabled={saving}
                                 className="text-[10px] text-coral/40 hover:text-coral bg-transparent border-none cursor-pointer"
