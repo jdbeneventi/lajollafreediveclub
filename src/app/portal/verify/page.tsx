@@ -3,8 +3,8 @@ import { supabase } from "@/lib/supabase";
 import { cookies } from "next/headers";
 import { randomBytes } from "crypto";
 
-export default async function VerifyPage({ searchParams }: { searchParams: { token?: string } }) {
-  const { token } = searchParams;
+export default async function VerifyPage({ searchParams }: { searchParams: Promise<{ token?: string }> }) {
+  const { token } = await searchParams;
 
   if (!token) {
     redirect("/portal?error=invalid");
