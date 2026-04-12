@@ -167,3 +167,8 @@
 /* Partner pages: keep nav, hide main footer, dark background */
 body:has(.partner-page) { background: #0B1D2C !important; }
 body:has(.partner-page) > main + footer { display: none !important; }
+
+/* Portal pages: hide global nav and footer — portal has its own header */
+body:has(.portal-page) > nav { display: none !important; }
+body:has(.portal-page) > main + footer { display: none !important; }
+body:has(.portal-page) > main { padding-top: 0 !important; }
