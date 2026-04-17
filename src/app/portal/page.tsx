@@ -109,23 +109,40 @@ export default async function PortalPage() {
           </div>
         </div>
 
-        {/* Course Materials */}
-        <div className="bg-white rounded-2xl p-6">
-          <h2 className="font-serif text-lg mb-4">Course Materials</h2>
-          <div className="space-y-2">
-            <a href="/documents/aida2-manual.pdf" target="_blank" rel="noopener noreferrer"
-              className="flex items-center gap-3 px-4 py-3 bg-salt rounded-xl no-underline hover:bg-deep/5 transition-colors group">
-              <div className="w-9 h-9 rounded-lg bg-coral/10 flex items-center justify-center shrink-0">
-                <span className="text-coral text-sm">PDF</span>
+        {/* Course Materials — show manuals based on bookings */}
+        {(() => {
+          const manuals: { label: string; file: string; desc: string }[] = [];
+          const courseNames = (bookings || []).map((b: { course: string }) => b.course.toLowerCase());
+          const hasAida1 = courseNames.some((c: string) => c.includes("aida 1") || c.includes("aida1") || c.includes("discover"));
+          const hasAida2Plus = courseNames.some((c: string) => c.includes("aida 2") || c.includes("aida2") || c.includes("aida 3") || c.includes("aida3") || c.includes("aida 4") || c.includes("aida4"));
+
+          if (hasAida1) manuals.push({ label: "AIDA1 Discover Freediving Manual", file: "aida1-manual.pdf", desc: "Official AIDA reference · v2.0" });
+          if (hasAida2Plus) manuals.push({ label: "AIDA2 Freediver Course Manual", file: "aida2-manual.pdf", desc: "Official AIDA reference · v2.0" });
+          if (manuals.length === 0 && !currentCert) manuals.push({ label: "AIDA2 Freediver Course Manual", file: "aida2-manual.pdf", desc: "Official AIDA reference · v2.0" });
+
+          if (manuals.length === 0) return null;
+
+          return (
+            <div className="bg-white rounded-2xl p-6">
+              <h2 className="font-serif text-lg mb-4">Course Materials</h2>
+              <div className="space-y-2">
+                {manuals.map((m) => (
+                  <a key={m.file} href={`/documents/${m.file}`} target="_blank" rel="noopener noreferrer"
+                    className="flex items-center gap-3 px-4 py-3 bg-salt rounded-xl no-underline hover:bg-deep/5 transition-colors group">
+                    <div className="w-9 h-9 rounded-lg bg-coral/10 flex items-center justify-center shrink-0">
+                      <span className="text-coral text-sm">PDF</span>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="text-sm font-medium text-deep">{m.label}</div>
+                      <div className="text-[10px] text-[#5a6a7a]">{m.desc}</div>
+                    </div>
+                    <span className="text-[#5a6a7a]/40 text-xs group-hover:text-teal transition-colors">↓</span>
+                  </a>
+                ))}
               </div>
-              <div className="flex-1 min-w-0">
-                <div className="text-sm font-medium text-deep">AIDA2 Freediver Course Manual</div>
-                <div className="text-[10px] text-[#5a6a7a]">Official AIDA reference material · v2.0</div>
-              </div>
-              <span className="text-[#5a6a7a]/40 text-xs group-hover:text-teal transition-colors">↓</span>
-            </a>
-          </div>
-        </div>
+            </div>
+          );
+        })()}
 
         {/* Bookings */}
         <div className="bg-white rounded-2xl p-6">

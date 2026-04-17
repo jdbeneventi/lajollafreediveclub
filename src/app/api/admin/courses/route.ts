@@ -21,17 +21,25 @@ function formatCourseDates(dates: string): string {
   return dates; // Already formatted
 }
 
-function isAida2OrHigher(courseName: string): boolean {
+function getCourseLevel(courseName: string): "aida1" | "aida2" | "aida3" | "other" {
   const lower = courseName.toLowerCase();
-  return lower.includes("aida 2") || lower.includes("aida2") ||
-         lower.includes("aida 3") || lower.includes("aida3") ||
-         lower.includes("aida 4") || lower.includes("aida4");
+  if (lower.includes("aida 3") || lower.includes("aida3")) return "aida3";
+  if (lower.includes("aida 2") || lower.includes("aida2")) return "aida2";
+  if (lower.includes("aida 1") || lower.includes("aida1") || lower.includes("discover")) return "aida1";
+  return "other";
 }
+
+const MANUAL_MAP: Record<string, { label: string; file: string }> = {
+  aida1: { label: "AIDA1 Discover Freediving Manual", file: "aida1-manual.pdf" },
+  aida2: { label: "AIDA2 Freediver Course Manual", file: "aida2-manual.pdf" },
+  aida3: { label: "AIDA2 Freediver Course Manual", file: "aida2-manual.pdf" }, // AIDA3 students should already have AIDA2
+};
 
 function enrollmentEmailHtml(studentName: string, courseName: string, courseDates: string, email: string) {
   const formattedDates = courseDates ? formatCourseDates(courseDates) : "";
-  const showPrepGuide = isAida2OrHigher(courseName);
-  const showManual = isAida2OrHigher(courseName);
+  const level = getCourseLevel(courseName);
+  const showPrepGuide = level === "aida2" || level === "aida3";
+  const manual = MANUAL_MAP[level];
 
   let stepNum = 1;
   const steps: string[] = [];
@@ -42,9 +50,9 @@ function enrollmentEmailHtml(studentName: string, courseName: string, courseDate
     stepNum++;
   }
 
-  if (showManual) {
-    steps.push(`<strong style="color:#0B1D2C;">${stepNum}. Download the AIDA2 Manual</strong><br/>
-          <a href="https://lajollafreediveclub.com/documents/aida2-manual.pdf" style="color:#1B6B6B;text-decoration:underline;">AIDA2 Freediver Course Manual (PDF)</a> — the official reference material for your course.`);
+  if (manual) {
+    steps.push(`<strong style="color:#0B1D2C;">${stepNum}. Download the ${manual.label}</strong><br/>
+          <a href="https://lajollafreediveclub.com/documents/${manual.file}" style="color:#1B6B6B;text-decoration:underline;">${manual.label} (PDF)</a> — the official reference material for your course.`);
     stepNum++;
   }
 
