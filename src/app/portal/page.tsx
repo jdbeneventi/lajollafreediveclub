@@ -35,13 +35,14 @@ export default async function PortalPage() {
   const completedRequirements = (progress || []).map((p: { requirement_id: string }) => p.requirement_id);
   const currentCert = certRecord?.[0]?.cert_level as CertLevel | undefined ?? null;
 
-  // Determine what cert level the student is working toward from their bookings
+  // Determine what cert level the student is working toward from their MOST RECENT booking
   const bookedLevel: CertLevel | null = (() => {
     if (!bookings || bookings.length === 0) return null;
-    const courseNames = bookings.map((b: { course: string }) => b.course.toLowerCase());
-    if (courseNames.some((c: string) => c.includes("aida 3") || c.includes("aida3"))) return "aida3";
-    if (courseNames.some((c: string) => c.includes("aida 2") || c.includes("aida2"))) return "aida2";
-    if (courseNames.some((c: string) => c.includes("aida 1") || c.includes("aida1") || c.includes("discover"))) return "aida1";
+    // bookings are already ordered by created_at desc, so first one is most recent
+    const latest = (bookings[0] as { course: string }).course.toLowerCase();
+    if (latest.includes("aida 3") || latest.includes("aida3")) return "aida3";
+    if (latest.includes("aida 2") || latest.includes("aida2")) return "aida2";
+    if (latest.includes("aida 1") || latest.includes("aida1") || latest.includes("discover")) return "aida1";
     return null;
   })();
 
