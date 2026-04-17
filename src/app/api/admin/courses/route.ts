@@ -4,13 +4,60 @@ import { Resend } from "resend";
 
 const SECRET = "ljfc";
 
+function formatDateReadable(dateStr: string): string {
+  const d = new Date(dateStr + "T12:00:00");
+  return d.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric" });
+}
+
+function formatCourseDates(dates: string): string {
+  // Handle "2026-04-29" or "2026-04-29 – 2026-05-01"
+  const parts = dates.split(/\s*[–-]\s*/);
+  if (parts.length === 2 && parts[0].match(/^\d{4}-/)) {
+    return `${formatDateReadable(parts[0])} – ${formatDateReadable(parts[1])}`;
+  }
+  if (parts[0].match(/^\d{4}-/)) {
+    return formatDateReadable(parts[0]);
+  }
+  return dates; // Already formatted
+}
+
+function isAida2OrHigher(courseName: string): boolean {
+  const lower = courseName.toLowerCase();
+  return lower.includes("aida 2") || lower.includes("aida2") ||
+         lower.includes("aida 3") || lower.includes("aida3") ||
+         lower.includes("aida 4") || lower.includes("aida4");
+}
+
 function enrollmentEmailHtml(studentName: string, courseName: string, courseDates: string, email: string) {
+  const formattedDates = courseDates ? formatCourseDates(courseDates) : "";
+  const showPrepGuide = isAida2OrHigher(courseName);
+  const showManual = isAida2OrHigher(courseName);
+
+  let stepNum = 1;
+  const steps: string[] = [];
+
+  if (showPrepGuide) {
+    steps.push(`<strong style="color:#0B1D2C;">${stepNum}. Complete the Course Prep Guide</strong><br/>
+          Interactive guide covering physiology, equalization, safety, and technique. Students who complete it arrive ready.`);
+    stepNum++;
+  }
+
+  if (showManual) {
+    steps.push(`<strong style="color:#0B1D2C;">${stepNum}. Download the AIDA2 Manual</strong><br/>
+          <a href="https://lajollafreediveclub.com/documents/aida2-manual.pdf" style="color:#1B6B6B;text-decoration:underline;">AIDA2 Freediver Course Manual (PDF)</a> — the official reference material for your course.`);
+    stepNum++;
+  }
+
+  steps.push(`<strong style="color:#0B1D2C;">${stepNum}. Complete Your Forms</strong><br/>
+          <a href="https://lajollafreediveclub.com/forms/aida" style="color:#1B6B6B;text-decoration:underline;">AIDA Medical Statement & Liability Release</a><br/>
+          <a href="https://lajollafreediveclub.com/waiver" style="color:#1B6B6B;text-decoration:underline;">LJFC Waiver</a>`);
+
   return `
     <div style="font-family:-apple-system,'DM Sans',sans-serif;max-width:540px;padding:20px;">
       <div style="font-size:11px;color:#3db8a4;text-transform:uppercase;letter-spacing:2px;margin-bottom:16px;">La Jolla Freedive Club</div>
       <h1 style="font-family:Georgia,serif;font-size:24px;color:#0B1D2C;font-weight:normal;margin:0 0 8px;">Hey ${studentName},</h1>
       <p style="font-size:15px;color:#3A4A56;line-height:1.7;">
-        You're enrolled in <strong style="color:#0B1D2C;">${courseName}</strong>${courseDates ? ` (${courseDates})` : ""}. Here's how to get ready.
+        You're enrolled in <strong style="color:#0B1D2C;">${courseName}</strong>${formattedDates ? ` — ${formattedDates}` : ""}. Here's how to get ready.
       </p>
       <div style="background:#F5F0E6;border-radius:12px;padding:20px;margin:20px 0;">
         <div style="font-size:11px;color:#1B6B6B;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:12px;font-weight:700;">Before Day 1</div>
@@ -20,13 +67,7 @@ function enrollmentEmailHtml(studentName: string, courseName: string, courseDate
           </a>
         </div>
         <div style="font-size:13px;color:#3A4A56;line-height:1.8;">
-          <strong style="color:#0B1D2C;">1. Complete the Course Prep Guide</strong><br/>
-          Interactive guide covering physiology, equalization, safety, and technique. Students who complete it arrive ready.<br/><br/>
-          <strong style="color:#0B1D2C;">2. Download the AIDA2 Manual</strong><br/>
-          <a href="https://lajollafreediveclub.com/documents/aida2-manual.pdf" style="color:#1B6B6B;text-decoration:underline;">AIDA2 Freediver Course Manual (PDF)</a> — the official reference material for your course.<br/><br/>
-          <strong style="color:#0B1D2C;">3. Complete Your Forms</strong><br/>
-          <a href="https://lajollafreediveclub.com/forms/aida" style="color:#1B6B6B;text-decoration:underline;">AIDA Medical Statement & Liability Release</a><br/>
-          <a href="https://lajollafreediveclub.com/waiver" style="color:#1B6B6B;text-decoration:underline;">LJFC Waiver</a>
+          ${steps.join("<br/><br/>")}
         </div>
       </div>
       <p style="font-size:13px;color:#3A4A56;line-height:1.7;">
