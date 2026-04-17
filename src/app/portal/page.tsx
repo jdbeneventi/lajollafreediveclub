@@ -44,7 +44,6 @@ export default async function PortalPage() {
     if (courseNames.some((c: string) => c.includes("aida 1") || c.includes("aida1") || c.includes("discover"))) return "aida1";
     return null;
   })();
-  const hasAida2PlusBooking = bookedLevel === "aida2" || bookedLevel === "aida3";
 
   return (
     <div className="min-h-screen bg-salt">
@@ -60,14 +59,17 @@ export default async function PortalPage() {
       </div>
 
       <div className="max-w-[700px] mx-auto px-6 py-8 space-y-6">
-        {/* Prep guide nudge — only for AIDA 2+ students */}
-        {!currentCert && hasAida2PlusBooking && (() => {
-          const prepSections = completedRequirements.filter((r: string) => r.startsWith("prep-section-"));
-          const prepDone = prepSections.length >= 10;
+        {/* Prep guide nudge — show for any student with a booking that has a prep guide */}
+        {!currentCert && bookedLevel && (() => {
+          const prefix = bookedLevel === "aida1" ? "prep-aida1-section-" : "prep-section-";
+          const totalSections = bookedLevel === "aida1" ? 6 : 10;
+          const prepGuideUrl = bookedLevel === "aida1" ? "/portal/prep/aida1" : "/portal/prep/aida2";
+          const prepSections = completedRequirements.filter((r: string) => r.startsWith(prefix));
+          const prepDone = prepSections.length >= totalSections;
           if (prepDone) return null;
-          const pct = Math.round((prepSections.length / 10) * 100);
+          const pct = Math.round((prepSections.length / totalSections) * 100);
           return (
-            <Link href="/portal/prep/aida2" className="block no-underline">
+            <Link href={prepGuideUrl} className="block no-underline">
               <div className="bg-gradient-to-r from-deep to-ocean rounded-2xl p-6 relative overflow-hidden group hover:shadow-lg transition-shadow">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-seafoam/[0.06] rounded-full -translate-y-1/2 translate-x-1/2" />
                 <div className="relative">
@@ -80,7 +82,7 @@ export default async function PortalPage() {
                   <p className="text-white/40 text-sm mb-4 max-w-[460px]">
                     {prepSections.length === 0
                       ? "This interactive guide covers everything you need to know before the course — physiology, equalization, safety, and more. Students who complete it show up ready."
-                      : `You've completed ${prepSections.length} of 10 sections. Pick up where you left off.`}
+                      : `You've completed ${prepSections.length} of ${totalSections} sections. Pick up where you left off.`}
                   </p>
                   <div className="flex items-center gap-3">
                     <span className="inline-flex items-center gap-2 px-5 py-2.5 bg-seafoam text-deep rounded-full text-sm font-semibold group-hover:-translate-y-0.5 transition-transform">
@@ -91,7 +93,7 @@ export default async function PortalPage() {
                         <div className="flex-1 h-1.5 bg-white/10 rounded-full overflow-hidden">
                           <div className="h-full bg-seafoam rounded-full" style={{ width: `${pct}%` }} />
                         </div>
-                        <span className="text-[10px] text-white/30">{prepSections.length}/10</span>
+                        <span className="text-[10px] text-white/30">{prepSections.length}/{totalSections}</span>
                       </div>
                     )}
                   </div>

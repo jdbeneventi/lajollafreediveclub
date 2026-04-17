@@ -38,10 +38,12 @@ export const CERTIFICATIONS: Record<CertLevel, Certification> = {
     price: 200,
     prereq: null,
     color: "#3db8a4", // seafoam
+    prepGuide: "/portal/prep/aida1",
     requirements: [
       { id: "a1-waiver", label: "LJFC Waiver", category: "form" },
       { id: "a1-medical", label: "AIDA Medical Statement", category: "form" },
       { id: "a1-liability", label: "AIDA Liability Release", category: "form" },
+      { id: "a1-prep", label: "Course Prep Guide", category: "prep", description: "Complete the interactive prep guide" },
       { id: "a1-theory", label: "Introduction to freediving theory", category: "theory" },
       { id: "a1-breathing", label: "Breathing & relaxation technique", category: "pool" },
       { id: "a1-static", label: "Static breath hold (pool)", category: "pool" },
