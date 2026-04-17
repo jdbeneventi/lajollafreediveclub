@@ -11,6 +11,7 @@ import {
 
 interface JourneyCardProps {
   currentCert: CertLevel | null;
+  bookedLevel: CertLevel | null;
   completedRequirements: string[];
   hasWaiver: boolean;
   hasMedical: boolean;
@@ -25,9 +26,10 @@ const CATEGORY_LABELS: Record<Requirement["category"], { label: string; icon: st
   openwater: { label: "Open Water", icon: "🌊" },
 };
 
-export function JourneyCard({ currentCert, completedRequirements, hasWaiver, hasMedical, hasLiability }: JourneyCardProps) {
+export function JourneyCard({ currentCert, bookedLevel, completedRequirements, hasWaiver, hasMedical, hasLiability }: JourneyCardProps) {
   const nextLevel = getNextCert(currentCert);
-  const workingOn = nextLevel || (currentCert ? null : "aida2" as CertLevel);
+  // Use booked level if no cert yet, otherwise use next cert in progression
+  const workingOn = nextLevel || (currentCert ? null : bookedLevel || null);
 
   // Build the full completed set including form status from existing tables
   const allCompleted = [...completedRequirements];

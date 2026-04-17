@@ -35,6 +35,17 @@ export default async function PortalPage() {
   const completedRequirements = (progress || []).map((p: { requirement_id: string }) => p.requirement_id);
   const currentCert = certRecord?.[0]?.cert_level as CertLevel | undefined ?? null;
 
+  // Determine what cert level the student is working toward from their bookings
+  const bookedLevel: CertLevel | null = (() => {
+    if (!bookings || bookings.length === 0) return null;
+    const courseNames = bookings.map((b: { course: string }) => b.course.toLowerCase());
+    if (courseNames.some((c: string) => c.includes("aida 3") || c.includes("aida3"))) return "aida3";
+    if (courseNames.some((c: string) => c.includes("aida 2") || c.includes("aida2"))) return "aida2";
+    if (courseNames.some((c: string) => c.includes("aida 1") || c.includes("aida1") || c.includes("discover"))) return "aida1";
+    return null;
+  })();
+  const hasAida2PlusBooking = bookedLevel === "aida2" || bookedLevel === "aida3";
+
   return (
     <div className="min-h-screen bg-salt">
       {/* Header */}
@@ -49,8 +60,8 @@ export default async function PortalPage() {
       </div>
 
       <div className="max-w-[700px] mx-auto px-6 py-8 space-y-6">
-        {/* Prep guide nudge — show if they haven't completed all 10 sections */}
-        {!currentCert && (() => {
+        {/* Prep guide nudge — only for AIDA 2+ students */}
+        {!currentCert && hasAida2PlusBooking && (() => {
           const prepSections = completedRequirements.filter((r: string) => r.startsWith("prep-section-"));
           const prepDone = prepSections.length >= 10;
           if (prepDone) return null;
@@ -93,6 +104,7 @@ export default async function PortalPage() {
         {/* Journey */}
         <JourneyCard
           currentCert={currentCert}
+          bookedLevel={bookedLevel}
           completedRequirements={completedRequirements}
           hasWaiver={hasWaiver}
           hasMedical={!!hasMedical}
