@@ -44,9 +44,39 @@ const faqs = [
   },
 ];
 
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Joshua Beneventi",
+  url: "https://lajollafreediveclub.com/about",
+  image: "https://lajollafreediveclub.com/images/photos/joshua-red-sea.jpg",
+  jobTitle: "AIDA Freediving Instructor",
+  description: "San Diego's only AIDA-certified freediving instructor for both adults and kids. Founder of La Jolla Freedive Club.",
+  worksFor: { "@type": "SportsClub", name: "La Jolla Freedive Club", url: "https://lajollafreediveclub.com" },
+  sameAs: [
+    "https://www.aidainternational.org/InstructorProfile/858dbbd9-9e54-4235-abf8-e0a035ccd077",
+    "https://joshuabeneventi.substack.com",
+  ],
+  knowsAbout: ["Freediving", "AIDA certification", "Youth freediving instruction", "Mammalian dive reflex", "Breath-hold training", "Equalization technique", "Freediving safety"],
+  hasCredential: [
+    { "@type": "EducationalOccupationalCredential", name: "AIDA Instructor", credentialCategory: "certification", recognizedBy: { "@type": "Organization", name: "AIDA International" } },
+    { "@type": "EducationalOccupationalCredential", name: "AIDA Youth Instructor", credentialCategory: "certification", recognizedBy: { "@type": "Organization", name: "AIDA International" } },
+    { "@type": "EducationalOccupationalCredential", name: "AIDA 4 Freediver", credentialCategory: "certification", recognizedBy: { "@type": "Organization", name: "AIDA International" } },
+    { "@type": "EducationalOccupationalCredential", name: "American Red Cross Adult & Pediatric First Aid/CPR/AED", credentialCategory: "certification", recognizedBy: { "@type": "Organization", name: "American Red Cross" } },
+    { "@type": "EducationalOccupationalCredential", name: "DAN Professional Liability Insurance", credentialCategory: "insurance", recognizedBy: { "@type": "Organization", name: "Divers Alert Network" } },
+  ],
+  alumniOf: [
+    { "@type": "Organization", name: "Freedive Tioman (Malaysia) — Stella Abbas" },
+    { "@type": "Organization", name: "Dahab Freedivers (Egypt) — Pieter Van Veen" },
+    { "@type": "Organization", name: "Freedive Passion (La Ventana, Mexico) — Harry Chamas" },
+    { "@type": "Organization", name: "Dahab Freedivers (Egypt) — Khaled El Gammal" },
+  ],
+};
+
 export default function AboutPage() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }} />
       {/* Header */}
       <section className="bg-gradient-to-b from-deep to-ocean pt-36 pb-20 px-6 text-center">
         <Reveal>

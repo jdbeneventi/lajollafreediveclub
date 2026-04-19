@@ -1,8 +1,15 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Reveal } from "@/components/Reveal";
 import { EmailCapture } from "@/components/EmailCapture";
 import { WeekendEmailForm } from "@/components/WeekendEmailForm";
 import { SaturdayBanner } from "@/components/SaturdayBanner";
+
+export const metadata: Metadata = {
+  title: "Freediving Courses & AIDA Certification in La Jolla, San Diego",
+  description: "Learn to freedive with San Diego's only AIDA-certified instructor for adults and kids. AIDA 1-3 courses, private coaching, Camp Garibaldi youth program, and live ocean conditions for La Jolla Shores.",
+  alternates: { canonical: "https://lajollafreediveclub.com" },
+};
 
 /* ─── Data ─── */
 const programs = [
@@ -40,7 +47,7 @@ export default function Home() {
       <section className="relative min-h-[85vh] md:min-h-screen flex items-center md:items-end overflow-hidden">
         {/* BG layers */}
         <div className="absolute inset-0">
-          <img src="/images/hero.jpg" alt="" className="w-full h-full object-cover" />
+          <img src="/images/hero.jpg" alt="Freediver descending along the LJFC mooring line at La Jolla Shores" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-t from-deep via-deep/60 to-deep/30" />
         </div>
 

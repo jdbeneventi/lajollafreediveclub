@@ -35,6 +35,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       type: "article",
       url,
       publishedTime: post.isoDate,
+      modifiedTime: post.isoDate,
       authors: ["Joshua Beneventi"],
       section: post.category,
       images: [{ url: ogImage, width: 1200, height: 800, alt: post.title }],
@@ -69,6 +70,7 @@ export default async function BlogPostPage({ params }: Props) {
       ? `https://lajollafreediveclub.com${post.heroImage}`
       : "https://lajollafreediveclub.com/images/hero.jpg",
     datePublished: post.isoDate,
+    dateModified: post.isoDate,
     author: {
       "@type": "Person",
       name: "Joshua Beneventi",
