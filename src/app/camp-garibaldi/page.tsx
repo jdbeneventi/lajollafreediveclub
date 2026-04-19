@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import CampScheduleTabsLight from "./CampScheduleTabsLight";
+import CampDayRhythm from "./CampDayRhythm";
+import CampFAQ from "./CampFAQ";
 import FloatingFish from "./FloatingFish";
 import "./camp-styles.css";
 
@@ -134,7 +136,24 @@ export default function CampGaribaldiPage() {
         </div>
       </section>
 
-      {/* ─── SESSIONS / PRICING ─── */}
+      {/* ─── THE WEEK (moved before Sessions) ─── */}
+      <section className="camp-week camp-section" id="the-week">
+        <div className="camp-container">
+          <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1.75rem", flexWrap: "wrap" }}>
+            <span className="eyebrow" style={{ marginBottom: 0 }}>The Program</span>
+            <h2 style={{ fontFamily: "'Fraunces', serif", fontSize: "clamp(1.4rem, 2.2vw, 1.9rem)", color: "var(--ink)", margin: 0 }}>What a week looks like.</h2>
+            <span style={{ padding: "0.25rem 0.7rem", background: "rgba(26,127,168,0.08)", border: "1px solid rgba(26,127,168,0.14)", borderRadius: "99px", fontSize: "0.68rem", fontWeight: 500, color: "var(--ink-light)", letterSpacing: "0.06em", textTransform: "uppercase" }}>Sample Curriculum</span>
+          </div>
+          <CampScheduleTabsLight />
+          <CampDayRhythm />
+          <p style={{ fontSize: "0.74rem", color: "var(--ink-faint)", marginTop: "1.25rem", lineHeight: 1.6, textAlign: "center" }}>
+            All sessions 9am–3pm · Ages 8–14 · Student observation journal included<br />
+            <span style={{ fontStyle: "italic", fontSize: "0.68rem" }}>Sample curriculum — actual content varies with conditions, group readiness, and site.</span>
+          </p>
+        </div>
+      </section>
+
+      {/* ─── SESSIONS / PRICING (moved after The Week) ─── */}
       <section className="camp-sessions camp-section" id="sessions">
         <div className="camp-container">
           <div className="camp-sessions-header">
@@ -167,22 +186,6 @@ export default function CampGaribaldiPage() {
           </div>
           <p style={{ fontSize: "0.76rem", color: "var(--ink-faint)", textAlign: "center", lineHeight: 1.6 }}>
             All sessions 9am–3pm · Ages 8–14 · Small groups · La Jolla Shores
-          </p>
-        </div>
-      </section>
-
-      {/* ─── THE WEEK ─── */}
-      <section className="camp-week camp-section" id="the-week">
-        <div className="camp-container">
-          <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1.75rem", flexWrap: "wrap" }}>
-            <span className="eyebrow" style={{ marginBottom: 0 }}>The Program</span>
-            <h2 style={{ fontFamily: "'Fraunces', serif", fontSize: "clamp(1.4rem, 2.2vw, 1.9rem)", color: "var(--ink)", margin: 0 }}>What a week looks like.</h2>
-            <span style={{ padding: "0.25rem 0.7rem", background: "rgba(26,127,168,0.08)", border: "1px solid rgba(26,127,168,0.14)", borderRadius: "99px", fontSize: "0.68rem", fontWeight: 500, color: "var(--ink-light)", letterSpacing: "0.06em", textTransform: "uppercase" }}>Sample Curriculum</span>
-          </div>
-          <CampScheduleTabsLight />
-          <p style={{ fontSize: "0.74rem", color: "var(--ink-faint)", marginTop: "1.25rem", lineHeight: 1.6, textAlign: "center" }}>
-            All sessions 9am–3pm · Ages 8–14 · Student observation journal included<br />
-            <span style={{ fontStyle: "italic", fontSize: "0.68rem" }}>Sample curriculum — actual content varies with conditions, group readiness, and site.</span>
           </p>
         </div>
       </section>
@@ -257,7 +260,7 @@ export default function CampGaribaldiPage() {
               Lena runs Ocean Flow — the Saturday morning session at La Jolla Shores that anchors the LJFC community. She&apos;s been diving at the canyon long enough that she didn&apos;t just join the program, she helped shape it. Her son trained with Camp Garibaldi before the first session launched.
             </p>
             <p className="camp-instructor-body">
-              As a homeschool parent, she&apos;s the first call for families with questions about the camp — what to expect, what kids need to bring, and what the week actually looks like day to day.
+              As a homeschool parent, she&apos;s the first call for families with questions about the camp — what to expect, what kids need to bring, and what the week actually looks like day to day. <a href="/contact/camp" style={{ color: "var(--teal)", textDecoration: "none", borderBottom: "1px solid rgba(42,168,154,0.3)", fontWeight: 500 }}>Message Lena →</a>
             </p>
           </div>
         </div>
@@ -296,6 +299,9 @@ export default function CampGaribaldiPage() {
         </div>
       </section>
 
+      {/* ─── FAQ ─── */}
+      <CampFAQ />
+
       {/* ─── FOOTER CTA ─── */}
       <section className="camp-footer-cta">
         <div className="camp-container-narrow">
@@ -306,7 +312,8 @@ export default function CampGaribaldiPage() {
           <p>Small groups fill quickly. Reserve your student&apos;s spot — or reach out with questions.</p>
           <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}>
             <Link href="/camp-garibaldi/register" className="camp-btn-primary">Reserve a Spot →</Link>
-            <Link href="/contact" className="camp-btn-ghost">Ask a question</Link>
+            <Link href="/contact/camp" className="camp-btn-ghost">Ask a question</Link>
+            <Link href="/contact/camp" className="camp-btn-ghost">Talk to a parent</Link>
           </div>
         </div>
       </section>

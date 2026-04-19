@@ -410,6 +410,15 @@
   color: var(--ink); margin-bottom: 0.15rem;
 }
 
+.camp-day-ecosystem {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 0.5rem;
+}
+
 .camp-day-theme {
   font-size: 0.72rem; color: var(--garibaldi); font-style: italic;
   font-family: 'Fraunces', serif; margin-bottom: 0.8rem; opacity: 0.8;
@@ -610,6 +619,191 @@
 .camp-footer-inner a:hover { color: rgba(255,255,255,0.6); }
 
 .camp-footer-links { display: flex; gap: 1.25rem; }
+
+/* ─── DAY RHYTHM ─────────────────────────── */
+.camp-rhythm {
+  margin-top: 3rem;
+  padding-top: 2.5rem;
+  border-top: 1px solid rgba(26, 127, 168, 0.12);
+}
+
+.camp-rhythm-header {
+  text-align: center;
+  max-width: 620px;
+  margin: 0 auto 2rem;
+}
+
+.camp-rhythm-header h3 {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(1.4rem, 2.2vw, 1.8rem);
+  color: var(--ink);
+  margin: 0.25rem 0 0.75rem;
+}
+
+.camp-rhythm-header p {
+  font-size: 0.95rem;
+  color: var(--ink-light);
+  line-height: 1.65;
+  margin: 0;
+}
+
+.camp-rhythm-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.camp-rhythm-block {
+  display: grid;
+  grid-template-columns: 130px 1fr;
+  gap: 1.25rem;
+  padding: 0.9rem 1.1rem;
+  background: rgba(253, 250, 245, 0.6);
+  border: 1px solid rgba(26, 127, 168, 0.08);
+  border-radius: 10px;
+  align-items: start;
+}
+
+.camp-rhythm-time {
+  font-family: 'Fraunces', serif;
+  font-size: 0.92rem;
+  color: var(--ocean);
+  font-weight: 500;
+  padding-top: 2px;
+}
+
+.camp-rhythm-title {
+  font-weight: 500;
+  color: var(--ink);
+  font-size: 0.98rem;
+  margin-bottom: 0.2rem;
+}
+
+.camp-rhythm-desc {
+  font-size: 0.88rem;
+  color: var(--ink-light);
+  line-height: 1.55;
+}
+
+@media (max-width: 600px) {
+  .camp-rhythm-block {
+    grid-template-columns: 1fr;
+    gap: 0.35rem;
+  }
+  .camp-rhythm-time {
+    font-size: 0.82rem;
+    color: var(--teal);
+  }
+}
+
+/* ─── FAQ ─────────────────────────────────── */
+.camp-faq {
+  background: var(--cream);
+  padding: 5rem 2rem;
+}
+
+.camp-faq-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.camp-faq-header h2 {
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  color: var(--ink);
+  margin: 0.25rem 0 0;
+}
+
+.camp-faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.camp-faq-item {
+  border: 1px solid rgba(26, 127, 168, 0.12);
+  border-radius: 10px;
+  background: #fff;
+  transition: border-color 0.2s ease;
+  overflow: hidden;
+}
+
+.camp-faq-item.open {
+  border-color: rgba(232, 104, 42, 0.35);
+}
+
+.camp-faq-q {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.05rem 1.25rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--ink);
+  text-align: left;
+  line-height: 1.4;
+}
+
+.camp-faq-q:hover {
+  color: var(--garibaldi-dk);
+}
+
+.camp-faq-chev {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--ocean-pale);
+  color: var(--ocean);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  font-weight: 400;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.camp-faq-item.open .camp-faq-chev {
+  transform: rotate(45deg);
+  background: var(--garibaldi);
+  color: #fff;
+}
+
+.camp-faq-a {
+  padding: 0 1.25rem 1.25rem;
+  color: var(--ink-light);
+  font-size: 0.95rem;
+  line-height: 1.65;
+}
+
+.camp-faq-footer {
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 0.9rem;
+  color: var(--ink-light);
+}
+
+.camp-faq-footer a {
+  color: var(--garibaldi-dk);
+  font-weight: 500;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(196, 82, 28, 0.3);
+}
+
+.camp-faq-footer a:hover {
+  border-bottom-color: var(--garibaldi-dk);
+}
 
 /* ─── RESPONSIVE ──────────────────────────── */
 @media (max-width: 900px) {
