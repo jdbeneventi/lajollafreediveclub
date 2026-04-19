@@ -71,6 +71,13 @@ const ADMIN_PAGES = [
     color: "from-ocean to-seafoam",
   },
   {
+    label: "Send Onboarding Links",
+    href: "/admin/send-links",
+    desc: "Paste student emails, send magic links that drop them into the 3-step onboarding flow.",
+    icon: "🔗",
+    color: "from-teal to-deep",
+  },
+  {
     label: "Students & Progress",
     href: "/admin/students",
     desc: "View all students, certification progress, sign off requirements, grant certs.",
