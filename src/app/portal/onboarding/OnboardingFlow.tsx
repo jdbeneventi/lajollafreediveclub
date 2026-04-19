@@ -526,6 +526,11 @@ export default function OnboardingFlow({ student, initial, hasMedical, physician
               </div>
             </div>
 
+            {/* Weight calculator */}
+            {weightLbs && heightFt && (
+              <WeightCalculator weightLbs={parseInt(weightLbs)} heightFt={parseInt(heightFt)} heightIn={parseInt(heightIn || "0")} sex={sex} />
+            )}
+
             {/* Theory preference */}
             <RadioGroup
               label="Theory session preference"
@@ -664,6 +669,76 @@ function MultiSelect({ label, options, value, onChange }: {
             </button>
           );
         })}
+      </div>
+    </div>
+  );
+}
+
+function WeightCalculator({ weightLbs, heightFt, heightIn, sex }: { weightLbs: number; heightFt: number; heightIn: number; sex: string }) {
+  const [thickness, setThickness] = useState("5");
+
+  // Total height in inches
+  const totalInches = heightFt * 12 + heightIn;
+
+  // BMI-ish proxy: higher ratio = more buoyant (more body fat tends to float more)
+  // Average male: ~5'10" (70in), 170lbs. Average female: ~5'5" (65in), 150lbs.
+  const bmi = (weightLbs / (totalInches * totalInches)) * 703;
+
+  // Base weight: ~8-12% of body weight depending on body composition
+  // Leaner people (lower BMI) need less weight; higher body fat needs more
+  const basePct = bmi < 20 ? 0.06 : bmi < 24 ? 0.08 : bmi < 28 ? 0.10 : 0.12;
+  let baseWeight = weightLbs * basePct;
+
+  // Wetsuit buoyancy adjustment: thicker = more buoyancy = more weight needed
+  const thicknessNum = parseInt(thickness);
+  const suitAdjust = thicknessNum === 3 ? -1 : thicknessNum === 5 ? 0 : thicknessNum === 7 ? 2 : 0;
+  baseWeight += suitAdjust;
+
+  // Sex adjustment: females tend to have higher body fat % → slightly more buoyant
+  if (sex === "female") baseWeight += 1;
+
+  // Saltwater adds ~3% buoyancy vs fresh — La Jolla is salt
+  baseWeight += 1;
+
+  // Round to nearest 0.5
+  const recommended = Math.round(baseWeight * 2) / 2;
+  const rangeLow = Math.max(recommended - 2, 2);
+  const rangeHigh = recommended + 2;
+
+  return (
+    <div className="bg-gradient-to-r from-deep to-ocean rounded-2xl p-5">
+      <div className="text-[10px] font-bold text-seafoam uppercase tracking-[1.5px] mb-1">Weight Estimate</div>
+      <p className="text-white/40 text-[11px] mb-3">
+        Based on your body measurements. This is a starting point — Joshua will fine-tune it on course day.
+      </p>
+
+      <div className="flex items-center gap-3 mb-4">
+        <div className="text-[10px] text-white/50">Wetsuit thickness:</div>
+        <div className="flex gap-1">
+          {["3", "5", "7"].map(t => (
+            <button
+              key={t}
+              onClick={() => setThickness(t)}
+              className={`px-3 py-1 rounded-lg text-xs font-semibold transition-colors ${
+                thickness === t ? "bg-seafoam text-deep" : "bg-white/10 text-white/40 hover:bg-white/15"
+              }`}
+            >
+              {t}mm
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="flex items-end gap-3">
+        <div>
+          <div className="text-3xl font-bold text-white">{recommended} <span className="text-lg font-normal text-white/50">lbs</span></div>
+          <div className="text-[10px] text-white/30">Range: {rangeLow}–{rangeHigh} lbs</div>
+        </div>
+        <div className="flex-1 text-right">
+          <div className="text-[10px] text-white/20">
+            {weightLbs}lbs · {heightFt}&apos;{heightIn}&quot; · {thickness}mm suit · saltwater
+          </div>
+        </div>
       </div>
     </div>
   );
