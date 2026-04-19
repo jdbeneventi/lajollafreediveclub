@@ -64,6 +64,13 @@ const ADMIN_PAGES = [
     color: "from-coral to-sun",
   },
   {
+    label: "Student Onboarding",
+    href: "/admin/onboarding",
+    desc: "Gear inventory, sizing, theory preferences, and notes from incoming students.",
+    icon: "🎒",
+    color: "from-ocean to-seafoam",
+  },
+  {
     label: "Students & Progress",
     href: "/admin/students",
     desc: "View all students, certification progress, sign off requirements, grant certs.",

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { PortalLogin } from "./PortalLogin";
 import { LogoutButton } from "./LogoutButton";
 import { JourneyCard } from "./JourneyCard";
+import { OnboardingCard } from "./OnboardingCard";
 import type { CertLevel } from "@/lib/certifications";
 
 export default async function PortalPage() {
@@ -20,12 +21,14 @@ export default async function PortalPage() {
     { data: waiverMember },
     { data: progress },
     { data: certRecord },
+    { data: onboarding },
   ] = await Promise.all([
     supabase.from("bookings").select("*").eq("email", student.email).order("created_at", { ascending: false }),
     supabase.from("aida_forms").select("id, form_type, course, physician_required, physician_cleared, signed_at").eq("email", student.email).order("created_at", { ascending: false }),
     supabase.from("saturday_members").select("waiver_signed, waiver_signed_at").eq("email", student.email).single(),
     supabase.from("student_progress").select("requirement_id").eq("student_id", student.id),
     supabase.from("student_certifications").select("cert_level, certified_at").eq("student_id", student.id).order("certified_at", { ascending: false }).limit(1),
+    supabase.from("student_onboarding").select("*").eq("student_id", student.id).single(),
   ]);
 
   const firstName = student.first_name || student.email.split("@")[0];
@@ -114,6 +117,9 @@ export default async function PortalPage() {
           hasMedical={!!hasMedical}
           hasLiability={!!hasLiability}
         />
+
+        {/* Onboarding — gear, sizing, theory preference */}
+        <OnboardingCard initial={onboarding} />
 
         {/* Forms Status */}
         <div className="bg-white rounded-2xl p-6">

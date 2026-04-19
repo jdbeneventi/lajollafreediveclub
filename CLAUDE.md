@@ -69,8 +69,12 @@ Competitor reference: JGW beginner $495, intermediate $550, private $1900 (for u
 /saturday-sessions — Saturday Sessions landing page (Ocean Flow, ORIGIN, Line Diving)
 /science — ORIGIN Protocol (password gated, code: ljfc)
 /events/big-blue-night — Big Blue Movie Night event page
+/portal — Student portal (magic link auth)
+/portal/prep/aida1 — AIDA 1 interactive prep guide (10 sections, quizzes, progress tracking)
+/portal/prep/aida2 — AIDA 2 interactive prep guide
 /students — Student coaching portal (password gated, coach: ljfc-coach, student: ljfc)
 /saturday — Saturday blast admin dashboard (password gated)
+/admin/onboarding — Student onboarding admin (gear, sizing, theory prefs)
 /ohpc/plan — OHPC action plan (password gated, code: ljfc)
 /community — Partner network page
 /calendar — Master calendar
@@ -91,6 +95,9 @@ Competitor reference: JGW beginner $495, intermediate $550, private $1900 (for u
 /api/saturday-blast — Go/No-Go Saturday email blast to Kit
 /api/students — Student portal CRUD (Google Sheet backend)
 /api/conditions-card — SVG conditions card for Instagram Stories
+/api/portal/onboarding — Student onboarding data (GET/POST, auth'd via magic link)
+/api/portal/prep-progress — Save prep guide section completion
+/api/admin/onboarding — Admin view of all student onboarding submissions
 ```
 
 ## Data Sources
