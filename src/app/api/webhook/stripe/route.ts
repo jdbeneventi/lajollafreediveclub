@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
 import { supabase } from "@/lib/supabase";
+import { issueMagicLink } from "@/lib/auth";
 import { Resend } from "resend";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
@@ -20,7 +21,6 @@ export async function POST(request: Request) {
     if (WEBHOOK_SECRET && sig) {
       event = stripe.webhooks.constructEvent(body, sig, WEBHOOK_SECRET);
     } else {
-      // No webhook secret configured — parse directly (dev mode)
       event = JSON.parse(body) as Stripe.Event;
     }
   } catch {
@@ -48,6 +48,15 @@ export async function POST(request: Request) {
       } catch {}
     }
 
+    // Generate magic link for the student
+    let magicLinkUrl = "https://lajollafreediveclub.com/portal";
+    if (email) {
+      const link = await issueMagicLink(email);
+      if (link) {
+        magicLinkUrl = link.url;
+      }
+    }
+
     // Send confirmation emails
     if (RESEND_API_KEY && email) {
       const resend = new Resend(RESEND_API_KEY);
@@ -56,7 +65,7 @@ export async function POST(request: Request) {
       const coursePrice = parseInt(meta.coursePrice || "0");
       const balance = isDeposit ? coursePrice - amountPaid : 0;
 
-      // Email to student
+      // Email to student — with magic link CTA
       try {
         await resend.emails.send({
           from: fromAddress,
@@ -73,14 +82,20 @@ export async function POST(request: Request) {
                   ${balance > 0 ? `<tr><td style="padding:6px 0;color:#5a6a7a;">Balance due</td><td style="padding:6px 0;font-weight:600;color:#C75B3A;">$${balance} — due before course</td></tr>` : ""}
                 </table>
               </div>
-              <div style="margin:16px 0;">
-                <p style="font-size:13px;color:#5a6a7a;line-height:1.6;">
-                  <strong>Next steps:</strong><br>
-                  <a href="https://lajollafreediveclub.com/forms/aida" style="color:#1B6B6B;">Complete AIDA forms</a> ·
-                  <a href="https://lajollafreediveclub.com/waiver" style="color:#1B6B6B;">Sign waiver</a> ·
-                  <a href="https://lajollafreediveclub.com/portal" style="color:#1B6B6B;">View your dashboard</a>
-                </p>
+
+              <div style="background:#0B1D2C;border-radius:12px;padding:20px;margin:20px 0;text-align:center;">
+                <p style="color:#3db8a4;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin:0 0 4px;">Next Step</p>
+                <p style="color:white;font-size:16px;font-weight:600;margin:0 0 4px;">Finish your pre-course onboarding</p>
+                <p style="color:rgba(255,255,255,0.4);font-size:12px;margin:0 0 16px;">Gear, medical info, and course prep — takes 5 minutes.</p>
+                <a href="${magicLinkUrl}" style="display:inline-block;padding:14px 32px;background:#3db8a4;color:#0B1D2C;border-radius:50px;text-decoration:none;font-weight:700;font-size:14px;">
+                  Start onboarding →
+                </a>
               </div>
+
+              <p style="font-size:12px;color:#5a6a7a;line-height:1.6;">
+                You can also access your portal anytime at
+                <a href="https://lajollafreediveclub.com/portal" style="color:#1B6B6B;">lajollafreediveclub.com/portal</a>
+              </p>
               <p style="color:#5a6a7a;font-size:11px;margin-top:24px;">La Jolla Freedive Club · San Diego, CA · AIDA Certified · DAN Insured</p>
             </div>
           `,

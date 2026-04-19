@@ -7,6 +7,14 @@
     {
       "path": "/api/friday-reminder?secret=${CRON_SECRET}",
       "schedule": "0 14 * * 5"
+    },
+    {
+      "path": "/api/course-briefing?secret=${CRON_SECRET}",
+      "schedule": "0 16 * * *"
+    },
+    {
+      "path": "/api/course-reminder?secret=${CRON_SECRET}",
+      "schedule": "0 16 * * *"
     }
   ]
 }

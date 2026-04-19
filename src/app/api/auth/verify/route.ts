@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
+import { isOnboardingComplete } from "@/lib/auth";
 import { randomBytes } from "crypto";
 
 export async function GET(req: NextRequest) {
@@ -37,8 +38,11 @@ export async function GET(req: NextRequest) {
     })
     .eq("id", student.id);
 
-  // Set cookie on the redirect response
-  const response = NextResponse.redirect(new URL("/portal", req.url));
+  // Check if onboarding is complete — redirect accordingly
+  const complete = await isOnboardingComplete(student.id, student.email);
+  const destination = complete ? "/portal" : "/portal/onboarding";
+
+  const response = NextResponse.redirect(new URL(destination, req.url));
   response.cookies.set("ljfc_session", sessionToken, {
     httpOnly: true,
     secure: true,

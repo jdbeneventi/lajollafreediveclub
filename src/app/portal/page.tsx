@@ -1,10 +1,9 @@
-import { getStudent } from "@/lib/auth";
+import { getStudent, isOnboardingComplete } from "@/lib/auth";
 import { supabase } from "@/lib/supabase";
 import Link from "next/link";
 import { PortalLogin } from "./PortalLogin";
 import { LogoutButton } from "./LogoutButton";
 import { JourneyCard } from "./JourneyCard";
-import { OnboardingCard } from "./OnboardingCard";
 import type { CertLevel } from "@/lib/certifications";
 
 export default async function PortalPage() {
@@ -38,10 +37,11 @@ export default async function PortalPage() {
   const completedRequirements = (progress || []).map((p: { requirement_id: string }) => p.requirement_id);
   const currentCert = certRecord?.[0]?.cert_level as CertLevel | undefined ?? null;
 
-  // Determine what cert level the student is working toward from their MOST RECENT booking
+  const onboardingComplete = await isOnboardingComplete(student.id, student.email);
+
+  // Determine what cert level the student is working toward
   const bookedLevel: CertLevel | null = (() => {
     if (!bookings || bookings.length === 0) return null;
-    // bookings are already ordered by created_at desc, so first one is most recent
     const latest = (bookings[0] as { course: string }).course.toLowerCase();
     if (latest.includes("aida 3") || latest.includes("aida3")) return "aida3";
     if (latest.includes("aida 2") || latest.includes("aida2")) return "aida2";
@@ -63,8 +63,29 @@ export default async function PortalPage() {
       </div>
 
       <div className="max-w-[700px] mx-auto px-6 py-8 space-y-6">
-        {/* Prep guide nudge — show for any student (default to AIDA 1 if no booking) */}
-        {!currentCert && (() => {
+        {/* Onboarding gate — if not complete, show prominent CTA */}
+        {!onboardingComplete && (
+          <Link href="/portal/onboarding" className="block no-underline">
+            <div className="bg-gradient-to-r from-coral to-sun rounded-2xl p-6 relative overflow-hidden group hover:shadow-lg transition-shadow">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-white/[0.06] rounded-full -translate-y-1/2 translate-x-1/2" />
+              <div className="relative">
+                <div className="text-[10px] font-bold text-white/80 uppercase tracking-[1.5px] mb-1">Required</div>
+                <h2 className="font-serif text-xl text-white mb-1">
+                  {onboarding ? "Finish your onboarding" : "Complete your onboarding"}
+                </h2>
+                <p className="text-white/60 text-sm mb-4 max-w-[460px]">
+                  We need a few things before your course — medical info, emergency contact, swim experience, and gear. Takes about 5 minutes.
+                </p>
+                <span className="inline-flex items-center gap-2 px-5 py-2.5 bg-white text-deep rounded-full text-sm font-semibold group-hover:-translate-y-0.5 transition-transform">
+                  {onboarding ? "Continue onboarding →" : "Start onboarding →"}
+                </span>
+              </div>
+            </div>
+          </Link>
+        )}
+
+        {/* Prep guide nudge — only show if onboarding is complete */}
+        {onboardingComplete && !currentCert && (() => {
           const prepLevel = bookedLevel || "aida1";
           const prefix = prepLevel === "aida1" ? "prep-aida1-section-" : "prep-section-";
           const totalSections = 10;
@@ -108,6 +129,21 @@ export default async function PortalPage() {
           );
         })()}
 
+        {/* Locked prep guide if onboarding not done */}
+        {!onboardingComplete && !currentCert && (
+          <div className="bg-white rounded-2xl p-6 opacity-60">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-deep/10 flex items-center justify-center shrink-0">
+                <span className="text-deep/30">🔒</span>
+              </div>
+              <div>
+                <h2 className="font-serif text-lg text-deep/50">Course Prep Guide</h2>
+                <p className="text-[11px] text-slate/40">Complete your onboarding to unlock</p>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Journey */}
         <JourneyCard
           currentCert={currentCert}
@@ -118,20 +154,17 @@ export default async function PortalPage() {
           hasLiability={!!hasLiability}
         />
 
-        {/* Onboarding — gear, sizing, theory preference */}
-        <OnboardingCard initial={onboarding} />
-
         {/* Forms Status */}
         <div className="bg-white rounded-2xl p-6">
           <h2 className="font-serif text-lg mb-4">Forms on File</h2>
           <div className="space-y-3">
             <FormRow label="LJFC Waiver" completed={hasWaiver} href="/waiver" />
-            <FormRow label="AIDA Medical Statement" completed={!!hasMedical} href="/forms/aida" />
+            <FormRow label="AIDA Medical Statement" completed={!!hasMedical} href={onboardingComplete ? "/forms/aida" : "/portal/onboarding"} />
             <FormRow label="AIDA Liability Release" completed={!!hasLiability} href="/forms/aida" />
           </div>
         </div>
 
-        {/* Course Materials — show manuals based on bookings */}
+        {/* Course Materials */}
         {(() => {
           const manuals: { label: string; file: string; desc: string }[] = [];
           const courseNames = (bookings || []).map((b: { course: string }) => b.course.toLowerCase());

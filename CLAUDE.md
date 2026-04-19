@@ -182,6 +182,8 @@ Competitor reference: JGW beginner $495, intermediate $550, private $1900 (for u
 13. Why Singers Make Natural Freedivers (Science)
 
 ## Key Decisions
+- **Student onboarding is REQUIRED (blocking).** Portal should gate prep guide, forms, and course-day access on onboarding completion, not just nudge. Magic-link landing goes to onboarding first; portal shows locked states on dependent features until submitted.
+- **AIDA Medical Statement is UNIVERSAL** — used for every course level (AIDA 1, 2, 3+). The onboarding flow should include the full 11-question AIDA medical and write to `aida_forms`; no course-level gating. The `/forms/aida` page keeps only the liability release + signature (which is per-course legally distinct).
 - Water temp: parse Celsius from NDBC 46254 text file (WTMP column), convert to F
 - Visibility: AI vision analysis of Scripps cam + predictive model fallback
 - Daily email fetches directly from NDBC/NOAA (not own API routes — self-calls fail on Vercel)
