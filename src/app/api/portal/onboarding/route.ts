@@ -2,18 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { getStudent } from "@/lib/auth";
 import { supabase } from "@/lib/supabase";
 
-const VALID_GEAR = [
-  "wetsuit",
-  "hood",
-  "mask",
-  "snorkel",
-  "fins",
-  "booties",
-  "gloves",
-  "weight_belt",
-  "weights",
-] as const;
-
 const VALID_SEX = ["male", "female", "other"] as const;
 
 export async function GET() {
@@ -51,15 +39,6 @@ export async function POST(req: NextRequest) {
   // Validate
   if (sex && !VALID_SEX.includes(sex)) {
     return NextResponse.json({ error: "Invalid sex value" }, { status: 400 });
-  }
-  if (gear_owned && !Array.isArray(gear_owned)) {
-    return NextResponse.json({ error: "gear_owned must be array" }, { status: 400 });
-  }
-  if (gear_owned) {
-    const invalid = gear_owned.filter((g: string) => !VALID_GEAR.includes(g as typeof VALID_GEAR[number]));
-    if (invalid.length > 0) {
-      return NextResponse.json({ error: `Invalid gear items: ${invalid.join(", ")}` }, { status: 400 });
-    }
   }
 
   const record = {
