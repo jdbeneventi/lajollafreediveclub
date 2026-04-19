@@ -35,7 +35,7 @@ export default function CampGaribaldiPage() {
         <div className="camp-hero-content">
           <span className="eyebrow camp-fade-1">Ages 8–14 · La Jolla Shores · Summer 2026</span>
           <h1 className="camp-fade-2">The ocean camp that starts from the <em>inside out.</em></h1>
-          <p className="camp-hero-sub camp-fade-3">Breath skills, ocean reading, real freediving. Small groups at the marine reserve with an internationally certified instructor.</p>
+          <p className="camp-hero-sub camp-fade-3">Breath skills, ocean wonder, real freediving. Kids leave calmer, more curious, and more at home in the water.</p>
           <div className="camp-pills camp-fade-3">
             <span className="camp-pill"><span className="camp-pill-dot" />Small groups</span>
             <span className="camp-pill"><span className="camp-pill-dot" />Ages 8–14</span>
@@ -66,25 +66,25 @@ export default function CampGaribaldiPage() {
             <div>
               <p className="camp-gap-statement">
                 Most ocean programs give kids <em>exposure.</em><br />
-                Camp Garibaldi gives kids <em>competence.</em>
+                Camp Garibaldi builds <em>competence</em> — the kind that lasts.
               </p>
               <p className="camp-gap-sub" style={{ marginTop: "1rem" }}>
-                The difference: a child who&apos;s been near the ocean versus a child who knows how to <strong>read conditions, manage their breath, and make their own go/no-go call</strong>. That&apos;s a skill set for life — not a summer memory.
+                The difference: a child who&apos;s been near the ocean versus a child who knows how to <strong>read conditions, manage their breath, and make their own go/no-go call</strong>. That&apos;s a skill set for life. And along the way, kids have the summer of their lives.
               </p>
             </div>
             <div>
               <div className="camp-gap-stats">
                 <div className="camp-gap-stat">
-                  <div className="camp-gap-stat-num" style={{ color: "var(--garibaldi-lt)" }}>25%</div>
-                  <div className="camp-gap-stat-label">Heart rate drop<br />from dive reflex</div>
+                  <div className="camp-gap-stat-num" style={{ color: "var(--garibaldi-lt)" }}>6:1</div>
+                  <div className="camp-gap-stat-label">Max ratio<br />in the water</div>
                 </div>
                 <div className="camp-gap-stat">
-                  <div className="camp-gap-stat-num" style={{ color: "#7DD8F0" }}>15+</div>
-                  <div className="camp-gap-stat-label">Marine species<br />observed per session</div>
+                  <div className="camp-gap-stat-num" style={{ color: "#7DD8F0" }}>90+</div>
+                  <div className="camp-gap-stat-label">Species documented<br />in the reserve</div>
                 </div>
                 <div className="camp-gap-stat">
-                  <div className="camp-gap-stat-num" style={{ color: "var(--garibaldi-lt)" }}>50+</div>
-                  <div className="camp-gap-stat-label">Species in the<br />La Jolla reserve</div>
+                  <div className="camp-gap-stat-num" style={{ color: "var(--garibaldi-lt)" }}>10–35 ft</div>
+                  <div className="camp-gap-stat-label">Supervised<br />depth range</div>
                 </div>
               </div>
             </div>
@@ -97,18 +97,27 @@ export default function CampGaribaldiPage() {
         <div className="camp-container">
           <div className="camp-photo-grid">
             <div className="camp-photo-cell">
-              <img src="/images/photos/joshua-teaching-kids.jpg" alt="Joshua briefing two students poolside before a training session" />
+              <img src="/images/photos/joshua-teaching-kids.jpg" alt="Pre-dive briefing at the pool — breathing and equalization practice" />
             </div>
             <div className="camp-photo-cell">
-              <img src="/images/photos/birch-child-pointing.jpg" alt="Child pointing at fish in the Birch Aquarium tank" />
+              <img src="/images/photos/birch-child-pointing.jpg" alt="Spotting species at the Birch Aquarium" />
             </div>
             <div className="camp-photo-cell">
-              <img src="/images/photos/joshua-two-kids-pool.jpg" alt="Poolside briefing with students in wetsuits" />
+              <img src="/images/photos/joshua-two-kids-pool.jpg" alt="First equalization practice in the pool" />
             </div>
             <div className="camp-photo-cell">
-              <img src="/images/photos/joshua-kid-beach.jpg" alt="Student in full gear ready for the ocean with instructor" />
+              <img src="/images/photos/joshua-kid-beach.jpg" alt="Gearing up at La Jolla Shores" />
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* ─── WHAT KIDS LOVE ─── */}
+      <section className="camp-kids-love">
+        <div className="camp-container-narrow">
+          <p className="camp-kids-love-text">
+            <em>Kids love the first time they equalize and feel the pressure click. The garibaldi that follows them around like a puppy. Finding a nudibranch no adult saw. Showing their parents a species they identified themselves. This is the stuff they&apos;ll still be telling stories about at Thanksgiving.</em>
+          </p>
         </div>
       </section>
 
@@ -118,29 +127,29 @@ export default function CampGaribaldiPage() {
           <div className="camp-method-header">
             <span className="eyebrow">How It Works</span>
             <h2>Breath first. Water second. <em>Ocean after.</em></h2>
-            <p>Every session starts on land — breathing drills, conditions briefings, dive reflex experiments. By the time kids enter the water, they already have the tools to handle what they find there.</p>
+            <p>Every session starts on land — breathing, conditions briefings, dive reflex experiments. By the time kids enter the water, they already have the tools to handle what they find there.</p>
           </div>
           <div className="camp-method-cards">
             <div className="camp-method-card">
               <div className="camp-method-num">01</div>
               <h3>Breath &amp; composure</h3>
-              <p>Diaphragmatic breathing, CO₂ tolerance, the mammalian dive reflex — kids learn to manage their nervous system before they&apos;re asked to trust the ocean. They measure their own heart rate response on Day 1.</p>
+              <p>Diaphragmatic breathing, calm-body cues, the mammalian dive reflex — kids learn how to settle before they&apos;re asked to trust the water. On Day 1 they feel their own body respond to a cold cloth on the face — the same reflex seals and whales use.</p>
             </div>
             <div className="camp-method-card">
               <div className="camp-method-num">02</div>
-              <h3>Progressive water entry</h3>
-              <p>Pool to shallows to open water. Every step builds on demonstrated competence, not just courage. Mixed-age groups (8–14) work at their own depth with differentiated instruction — no one gets pushed past their edge.</p>
+              <h3>From pool to reserve</h3>
+              <p>Pool to shallows to open water. Every step builds on demonstrated competence, not just courage. Mixed-age groups (8–14) work at their own depth — no one gets pushed past their edge.</p>
             </div>
             <div className="camp-method-card">
               <div className="camp-method-num">03</div>
               <h3>Read the ocean like a local</h3>
-              <p>Students pull live Scripps buoy data every morning — wave height, tide, water temperature. By Day 5, they make the go/no-go call themselves and justify it in their observation journal.</p>
+              <p>Students pull live Scripps buoy data every morning — wave height, tide, water temperature. By Day 5, they make the go/no-go call themselves and explain why.</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ─── THE WEEK (moved before Sessions) ─── */}
+      {/* ─── THE WEEK ─── */}
       <section className="camp-week camp-section" id="the-week">
         <div className="camp-container">
           <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1.75rem", flexWrap: "wrap" }}>
@@ -151,13 +160,13 @@ export default function CampGaribaldiPage() {
           <CampScheduleTabsLight />
           <CampDayRhythm />
           <p style={{ fontSize: "0.74rem", color: "var(--ink-faint)", marginTop: "1.25rem", lineHeight: 1.6, textAlign: "center" }}>
-            All sessions 9am–3pm · Ages 8–14 · Student observation journal included<br />
+            All sessions 9am–3pm · Ages 8–14 · Field journal included<br />
             <span style={{ fontStyle: "italic", fontSize: "0.68rem" }}>Sample curriculum — actual content varies with conditions, group readiness, and site.</span>
           </p>
         </div>
       </section>
 
-      {/* ─── SESSIONS / PRICING (moved after The Week) ─── */}
+      {/* ─── SESSIONS / PRICING ─── */}
       <section className="camp-sessions camp-section" id="sessions">
         <div className="camp-container">
           <div className="camp-sessions-header">
@@ -201,14 +210,14 @@ export default function CampGaribaldiPage() {
             <div>
               <span className="eyebrow" style={{ color: "rgba(125,216,240,0.5)" }}>Safety</span>
               <h2>Safety isn&apos;t supervision. It&apos;s <em>knowledge.</em></h2>
-              <p>There&apos;s a difference between a child who won&apos;t drown today and a child who understands the ocean well enough to make good decisions in it for the rest of their life.</p>
+              <p>There&apos;s a difference between a child who&apos;s safe because someone&apos;s watching, and a child who&apos;s safe because she understands the ocean well enough to make good decisions in it for the rest of her life. Both matter. We do both.</p>
               <p>Students leave knowing how to read a marine forecast, how their body responds to cold water and depth, and how to assess conditions before they enter. That&apos;s a skill set — not a safety rule.</p>
               <div className="camp-creds">
                 <span className="camp-cred">AIDA Instructor</span>
                 <span className="camp-cred">AIDA Youth Instructor</span>
                 <span className="camp-cred">DAN Professional Liability</span>
                 <span className="camp-cred">ARC Pediatric First Aid/CPR/AED</span>
-                <span className="camp-cred">Small Groups</span>
+                <span className="camp-cred">6:1 Max Water Ratio</span>
                 <span className="camp-cred">DOJ Background Checked</span>
               </div>
             </div>
@@ -281,7 +290,7 @@ export default function CampGaribaldiPage() {
           <div className="camp-community-strip">
             <div className="camp-community-item">
               <h3>Saturday Sessions</h3>
-              <p>Weekly open-water training at the canyon. Free with Ocean Flow, $25 drop-in. Camp alumni always welcome.</p>
+              <p>Weekly open-water sessions at the canyon. Free with Ocean Flow, $25 drop-in. Camp alumni always welcome.</p>
             </div>
             <div className="camp-community-item">
               <h3>The Pipeline</h3>
@@ -289,7 +298,7 @@ export default function CampGaribaldiPage() {
             </div>
             <div className="camp-community-item">
               <h3>Citizen Science</h3>
-              <p>Every species observed is logged to iNaturalist with GPS coordinates. Students become published citizen scientists.</p>
+              <p>Every species observed is logged to iNaturalist with GPS coordinates. Campers become published contributors to the La Jolla marine record.</p>
             </div>
             <div className="camp-community-item">
               <h3>Scholarship Access</h3>
@@ -317,7 +326,6 @@ export default function CampGaribaldiPage() {
           <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}>
             <Link href="/camp-garibaldi/register" className="camp-btn-primary">Reserve a Spot →</Link>
             <Link href="/contact/camp" className="camp-btn-ghost">Ask a question</Link>
-            <Link href="/contact/camp" className="camp-btn-ghost">Talk to a parent</Link>
           </div>
         </div>
       </section>
