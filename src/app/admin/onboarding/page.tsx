@@ -82,6 +82,11 @@ function AdminOnboardingContent() {
   const [newGear, setNewGear] = useState({ name: "", slug: "", category: "essential", description: "", rental_available: false, rental_note: "" });
   const [addingGear, setAddingGear] = useState(false);
 
+  // Edit gear
+  const [editingGearId, setEditingGearId] = useState<string | null>(null);
+  const [editGear, setEditGear] = useState<Partial<GearCatalogItem>>({});
+  const [savingGear, setSavingGear] = useState(false);
+
   useEffect(() => {
     if (key === SECRET) setAuthed(true);
   }, [key]);
@@ -163,6 +168,24 @@ function AdminOnboardingContent() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ action: "archive", id }),
     });
+    fetchData();
+  }
+
+  function startEditGear(g: GearCatalogItem) {
+    setEditingGearId(g.id);
+    setEditGear({ name: g.name, category: g.category, description: g.description || "", rental_available: g.rental_available, rental_note: g.rental_note || "" });
+  }
+
+  async function handleSaveGear() {
+    if (!editingGearId) return;
+    setSavingGear(true);
+    await fetch(`/api/admin/gear?key=${SECRET}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action: "update", id: editingGearId, ...editGear }),
+    });
+    setEditingGearId(null);
+    setSavingGear(false);
     fetchData();
   }
 
@@ -467,29 +490,77 @@ function AdminOnboardingContent() {
                         const ownCount = gearEntries.filter((e) => e.status === "own").length;
                         const needCount = gearEntries.filter((e) => e.status === "need").length;
                         const rentCount = gearEntries.filter((e) => e.status === "renting").length;
+                        const isEditing = editingGearId === g.id;
                         return (
-                          <div key={g.id} className="bg-white/5 rounded-xl px-4 py-3 flex items-center justify-between">
-                            <div>
-                              <div className="text-sm text-white font-medium">{g.name}</div>
-                              {g.description && <div className="text-[10px] text-white/30 mt-0.5 max-w-md">{g.description}</div>}
-                              {g.rental_available && <div className="text-[9px] text-teal/50 mt-0.5">Rental available</div>}
-                            </div>
-                            <div className="flex items-center gap-3">
-                              {gearEntries.length > 0 && (
-                                <div className="flex gap-1.5 text-[9px] font-semibold">
-                                  {ownCount > 0 && <span className="text-seafoam">{ownCount} own</span>}
-                                  {needCount > 0 && <span className="text-coral">{needCount} need</span>}
-                                  {rentCount > 0 && <span className="text-sun">{rentCount} rent</span>}
-                                </div>
-                              )}
-                              <button
-                                onClick={() => handleArchiveGear(g.id)}
-                                className="text-[10px] text-white/20 hover:text-coral transition-colors"
-                                title="Archive this item"
-                              >
-                                ✗
+                          <div key={g.id} className="bg-white/5 rounded-xl overflow-hidden">
+                            {/* Display row */}
+                            <div className="px-4 py-3 flex items-center justify-between">
+                              <button onClick={() => isEditing ? setEditingGearId(null) : startEditGear(g)} className="text-left flex-1 min-w-0">
+                                <div className="text-sm text-white font-medium">{g.name}</div>
+                                {g.description && <div className="text-[10px] text-white/30 mt-0.5 max-w-md">{g.description}</div>}
+                                {g.rental_available && <div className="text-[9px] text-teal/50 mt-0.5">Rental available{g.rental_note ? ` — ${g.rental_note}` : ""}</div>}
                               </button>
+                              <div className="flex items-center gap-3 shrink-0">
+                                {gearEntries.length > 0 && (
+                                  <div className="flex gap-1.5 text-[9px] font-semibold">
+                                    {ownCount > 0 && <span className="text-seafoam">{ownCount} own</span>}
+                                    {needCount > 0 && <span className="text-coral">{needCount} need</span>}
+                                    {rentCount > 0 && <span className="text-sun">{rentCount} rent</span>}
+                                  </div>
+                                )}
+                                <button onClick={() => isEditing ? setEditingGearId(null) : startEditGear(g)} className="text-[10px] text-white/20 hover:text-seafoam transition-colors" title="Edit">
+                                  {isEditing ? "▴" : "✎"}
+                                </button>
+                                <button onClick={() => handleArchiveGear(g.id)} className="text-[10px] text-white/20 hover:text-coral transition-colors" title="Archive">
+                                  ✗
+                                </button>
+                              </div>
                             </div>
+                            {/* Inline edit form */}
+                            {isEditing && (
+                              <div className="px-4 pb-4 pt-1 border-t border-white/5 space-y-3">
+                                <div className="grid grid-cols-2 gap-3">
+                                  <div>
+                                    <div className="text-[10px] text-white/30 mb-1">Name</div>
+                                    <input type="text" value={editGear.name || ""} onChange={(e) => setEditGear({ ...editGear, name: e.target.value })}
+                                      className="w-full px-3 py-2 rounded-lg bg-white/[0.06] border border-white/10 text-white text-sm" />
+                                  </div>
+                                  <div>
+                                    <div className="text-[10px] text-white/30 mb-1">Category</div>
+                                    <select value={editGear.category || "essential"} onChange={(e) => setEditGear({ ...editGear, category: e.target.value })}
+                                      className="w-full px-3 py-2 rounded-lg bg-white/[0.06] border border-white/10 text-white text-sm">
+                                      <option value="essential">Essential</option>
+                                      <option value="recommended">Recommended</option>
+                                      <option value="optional">Optional</option>
+                                    </select>
+                                  </div>
+                                </div>
+                                <div>
+                                  <div className="text-[10px] text-white/30 mb-1">Description</div>
+                                  <input type="text" value={editGear.description || ""} onChange={(e) => setEditGear({ ...editGear, description: e.target.value })}
+                                    className="w-full px-3 py-2 rounded-lg bg-white/[0.06] border border-white/10 text-white text-sm" />
+                                </div>
+                                <div className="flex items-center gap-4">
+                                  <label className="flex items-center gap-2 text-sm text-white/60">
+                                    <input type="checkbox" checked={editGear.rental_available || false} onChange={(e) => setEditGear({ ...editGear, rental_available: e.target.checked })} className="rounded" />
+                                    Rental available
+                                  </label>
+                                  {editGear.rental_available && (
+                                    <input type="text" value={editGear.rental_note || ""} onChange={(e) => setEditGear({ ...editGear, rental_note: e.target.value })}
+                                      placeholder="Rental details..." className="flex-1 px-3 py-1.5 rounded-lg bg-white/[0.06] border border-white/10 text-white text-xs" />
+                                  )}
+                                </div>
+                                <div className="flex gap-2">
+                                  <button onClick={handleSaveGear} disabled={savingGear}
+                                    className="px-4 py-1.5 rounded-full bg-seafoam text-deep text-xs font-semibold disabled:opacity-50">
+                                    {savingGear ? "Saving..." : "Save"}
+                                  </button>
+                                  <button onClick={() => setEditingGearId(null)} className="px-4 py-1.5 rounded-full border border-white/10 text-white/40 text-xs">
+                                    Cancel
+                                  </button>
+                                </div>
+                              </div>
+                            )}
                           </div>
                         );
                       })}
