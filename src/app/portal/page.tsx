@@ -67,7 +67,7 @@ export default async function PortalPage() {
         {!currentCert && (() => {
           const prepLevel = bookedLevel || "aida1";
           const prefix = prepLevel === "aida1" ? "prep-aida1-section-" : "prep-section-";
-          const totalSections = prepLevel === "aida1" ? 6 : 10;
+          const totalSections = 10;
           const prepGuideUrl = prepLevel === "aida1" ? "/portal/prep/aida1" : "/portal/prep/aida2";
           const prepSections = completedRequirements.filter((r: string) => r.startsWith(prefix));
           const prepDone = prepSections.length >= totalSections;
