@@ -60,11 +60,12 @@ export default async function PortalPage() {
       </div>
 
       <div className="max-w-[700px] mx-auto px-6 py-8 space-y-6">
-        {/* Prep guide nudge — show for any student with a booking that has a prep guide */}
-        {!currentCert && bookedLevel && (() => {
-          const prefix = bookedLevel === "aida1" ? "prep-aida1-section-" : "prep-section-";
-          const totalSections = bookedLevel === "aida1" ? 6 : 10;
-          const prepGuideUrl = bookedLevel === "aida1" ? "/portal/prep/aida1" : "/portal/prep/aida2";
+        {/* Prep guide nudge — show for any student (default to AIDA 1 if no booking) */}
+        {!currentCert && (() => {
+          const prepLevel = bookedLevel || "aida1";
+          const prefix = prepLevel === "aida1" ? "prep-aida1-section-" : "prep-section-";
+          const totalSections = prepLevel === "aida1" ? 6 : 10;
+          const prepGuideUrl = prepLevel === "aida1" ? "/portal/prep/aida1" : "/portal/prep/aida2";
           const prepSections = completedRequirements.filter((r: string) => r.startsWith(prefix));
           const prepDone = prepSections.length >= totalSections;
           if (prepDone) return null;
@@ -201,6 +202,8 @@ export default async function PortalPage() {
         <div className="bg-white rounded-2xl p-6">
           <h2 className="font-serif text-lg mb-4">Quick Links</h2>
           <div className="grid grid-cols-2 gap-3">
+            <QuickLink href="/portal/prep/aida1" label="AIDA 1 Prep Guide" />
+            <QuickLink href="/portal/prep/aida2" label="AIDA 2 Prep Guide" />
             <QuickLink href="/calendar" label="Course Calendar" />
             <QuickLink href="/saturday-sessions" label="Saturday Sessions" />
             <QuickLink href="/conditions" label="Live Conditions" />
