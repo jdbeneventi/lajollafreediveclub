@@ -19,8 +19,12 @@ export default function CampGaribaldiPage() {
       <nav className="camp-nav">
         <Link href="/camp-garibaldi" className="camp-nav-brand">
           <img src="/images/camp/cg-logo.svg" alt="Camp Garibaldi" className="camp-nav-logo" />
+          <span className="camp-nav-sub">La Jolla Freedive Club</span>
         </Link>
-        <a href="#sessions" className="camp-nav-cta">Reserve a Spot</a>
+        <div className="camp-nav-right">
+          <Link href="/" className="camp-nav-home">LJFC Home</Link>
+          <a href="#sessions" className="camp-nav-cta">Reserve a Spot</a>
+        </div>
       </nav>
 
       {/* ─── HERO ─── */}

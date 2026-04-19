@@ -91,6 +91,30 @@
   width: auto;
 }
 
+.camp-nav-sub {
+  font-size: 0.6rem;
+  color: var(--ink-light);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 500;
+  margin-top: -2px;
+}
+
+.camp-nav-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.camp-nav-home {
+  font-size: 0.78rem;
+  color: var(--ink-light);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+.camp-nav-home:hover { color: var(--ocean); }
+
 .camp-nav-cta {
   background: var(--garibaldi); color: white; text-decoration: none;
   padding: 0.5rem 1.3rem; border-radius: 99px;
@@ -853,6 +877,12 @@
   }
   .camp-nav-logo {
     height: 28px;
+  }
+  .camp-nav-sub {
+    font-size: 0.5rem;
+  }
+  .camp-nav-home {
+    font-size: 0.68rem;
   }
 
   /* Sections — tighter padding */
