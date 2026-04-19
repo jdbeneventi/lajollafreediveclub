@@ -108,7 +108,6 @@ export default function OnboardingFlow({ student, initial, hasMedical, physician
   const [firstName, setFirstName] = useState((initial?.first_name as string) || student.first_name || "");
   const [lastName, setLastName] = useState((initial?.last_name as string) || student.last_name || "");
   const [dob, setDob] = useState((initial?.date_of_birth as string) || "");
-  const [pronouns, setPronouns] = useState((initial?.pronouns as string) || "");
   const [sex, setSex] = useState((initial?.sex as string) || "");
   const [heightFt, setHeightFt] = useState((initial?.height_ft as number)?.toString() || "");
   const [heightIn, setHeightIn] = useState((initial?.height_in as number)?.toString() || "");
@@ -213,7 +212,7 @@ export default function OnboardingFlow({ student, initial, hasMedical, physician
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         first_name: firstName, last_name: lastName, date_of_birth: dob || null,
-        pronouns, sex, height_ft: heightFt, height_in: heightIn, weight_lbs: weightLbs,
+        sex, height_ft: heightFt, height_in: heightIn, weight_lbs: weightLbs,
         emergency_contact_name: ecName, emergency_contact_phone: ecPhone,
         emergency_contact_relationship: ecRelationship,
         swim_ability: swimAbility, swim_200m_no_fins: swim200m || null,
@@ -287,7 +286,7 @@ export default function OnboardingFlow({ student, initial, hasMedical, physician
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         first_name: firstName, last_name: lastName, date_of_birth: dob || null,
-        pronouns, sex, height_ft: heightFt, height_in: heightIn, weight_lbs: weightLbs,
+        sex, height_ft: heightFt, height_in: heightIn, weight_lbs: weightLbs,
         emergency_contact_name: ecName, emergency_contact_phone: ecPhone,
         emergency_contact_relationship: ecRelationship,
         swim_ability: swimAbility, swim_200m_no_fins: swim200m || null,
@@ -342,13 +341,10 @@ export default function OnboardingFlow({ student, initial, hasMedical, physician
               <Field label="Last name *" value={lastName} onChange={setLastName} placeholder="Smith" />
             </div>
 
-            <div className="grid grid-cols-2 gap-3">
-              <Field label="Date of birth" type="date" value={dob} onChange={setDob} />
-              <Field label="Pronouns" value={pronouns} onChange={setPronouns} placeholder="e.g. he/him" />
-            </div>
+            <Field label="Date of birth" type="date" value={dob} onChange={setDob} />
 
-            {/* Sex */}
-            <ChoiceRow label="Sex *" options={[{ value: "male", label: "Male" }, { value: "female", label: "Female" }, { value: "other", label: "Other" }]} value={sex} onChange={setSex} />
+            {/* Sex — for wetsuit/gear sizing */}
+            <ChoiceRow label="Sex *" options={[{ value: "male", label: "Male" }, { value: "female", label: "Female" }]} value={sex} onChange={setSex} />
 
             {/* Height & Weight */}
             <div>

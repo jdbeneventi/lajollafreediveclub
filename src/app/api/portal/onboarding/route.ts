@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getStudent } from "@/lib/auth";
 import { supabase } from "@/lib/supabase";
 
-const VALID_SEX = ["male", "female", "other"];
+const VALID_SEX = ["male", "female"];
 const VALID_SWIM = ["non_swimmer", "basic", "comfortable", "strong", "competitive"];
 const VALID_SWIM_200M = ["yes", "with_difficulty", "no", "havent_tried"];
 const VALID_EXPERIENCE = ["none", "recreational", "trained_other_agency", "aida_certified"];
