@@ -193,12 +193,18 @@ export async function GET() {
       return NextResponse.json({ error: "Could not parse forecast", days: [], raw: text.slice(0, 500) }, { status: 200 });
     }
 
-    // Map periods to days
-    const today = new Date();
+    // Map periods to days — use Pacific time so day labels are correct
+    // Build a reliable Pacific date from Intl formatters (avoids Date string parsing bugs)
+    const ptFormatter = new Intl.DateTimeFormat("en-US", { timeZone: "America/Los_Angeles", year: "numeric", month: "numeric", day: "numeric", weekday: "short" });
+    const ptParts = Object.fromEntries(ptFormatter.formatToParts(new Date()).map(p => [p.type, p.value]));
+    const pacificYear = parseInt(ptParts.year);
+    const pacificMonth = parseInt(ptParts.month) - 1; // 0-indexed
+    const pacificDay = parseInt(ptParts.day);
+    const pacificDate = new Date(pacificYear, pacificMonth, pacificDay);
     const dayNames = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
     const shortDayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    const todayIdx = today.getDay();
+    const todayIdx = pacificDate.getDay();
 
     // Group periods by day
     const dayScores = new Map<string, { scores: number[]; windSpeed: number; windDir: string; seaHeight: number; swellPeriod: number | null }>();
@@ -287,7 +293,7 @@ export async function GET() {
       let daysFromNow = dayIdx - todayIdx;
       if (daysFromNow < 0) daysFromNow += 7;
 
-      const date = new Date(today);
+      const date = new Date(pacificDate);
       date.setDate(date.getDate() + daysFromNow);
 
       days.push({
