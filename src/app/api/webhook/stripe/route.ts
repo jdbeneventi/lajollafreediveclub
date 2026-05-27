@@ -35,16 +35,47 @@ export async function POST(request: Request) {
     const amountPaid = (session.amount_total || 0) / 100;
 
     // Update booking
+    let bookingId: string | null = null;
     if (session.id) {
       try {
-        await supabase
+        const { data: updated } = await supabase
           .from("bookings")
           .update({
             status: "confirmed",
             payment_status: isDeposit ? "deposit" : "paid",
             deposit_paid: isDeposit ? amountPaid : null,
           })
-          .eq("stripe_session_id", session.id);
+          .eq("stripe_session_id", session.id)
+          .select("id")
+          .single();
+        bookingId = updated?.id ?? null;
+      } catch {}
+    }
+
+    // Link the most recent active inquiry to this booking and bump status to 'paid'.
+    // This is what powers the /admin/inquiries pipeline view — students who pay
+    // automatically advance to the 'paid' column.
+    if (email && bookingId) {
+      try {
+        const { data: latestInquiry } = await supabase
+          .from("course_inquiries")
+          .select("id")
+          .eq("email", email.toLowerCase())
+          .eq("archived", false)
+          .in("status", ["new", "replied", "quoted", "deposit_sent"])
+          .order("created_at", { ascending: false })
+          .limit(1)
+          .maybeSingle();
+
+        if (latestInquiry) {
+          await supabase
+            .from("course_inquiries")
+            .update({
+              status: "paid",
+              linked_booking_id: bookingId,
+            })
+            .eq("id", latestInquiry.id);
+        }
       } catch {}
     }
 
