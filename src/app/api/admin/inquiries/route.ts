@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
+import { parseDateRange } from "@/lib/parseDateRange";
 
 const SECRET = "ljfc";
 
@@ -33,6 +34,32 @@ export async function GET(req: NextRequest) {
   const { data: inquiries, error } = await query;
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+
+  // Lazily fill parsed_start_date / parsed_end_date for any rows that have a
+  // preferred_dates string but no parsed range yet. Cheap, and means the
+  // conflict detector has data immediately without a separate backfill job.
+  const toPersist: Array<{ id: string; start: string; end: string }> = [];
+  for (const inq of inquiries || []) {
+    if (inq.parsed_start_date && inq.parsed_end_date) continue;
+    if (!inq.preferred_dates) continue;
+    const range = parseDateRange(inq.preferred_dates);
+    if (range) {
+      inq.parsed_start_date = range.start.toISOString().slice(0, 10);
+      inq.parsed_end_date = range.end.toISOString().slice(0, 10);
+      toPersist.push({ id: inq.id, start: inq.parsed_start_date, end: inq.parsed_end_date });
+    }
+  }
+  // Fire-and-forget persistence — don't block the response
+  if (toPersist.length > 0) {
+    Promise.all(
+      toPersist.map((p) =>
+        supabase
+          .from("course_inquiries")
+          .update({ parsed_start_date: p.start, parsed_end_date: p.end })
+          .eq("id", p.id),
+      ),
+    ).catch(() => {});
   }
 
   // Enrich: pull bookings + onboarding completion in two batched queries

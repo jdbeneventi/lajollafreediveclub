@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useEffect, useCallback, Suspense } from "react";
+import { useState, useEffect, useCallback, useMemo, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
+import { buildConflictReport, type InquiryLite, type CalendarEventLite } from "@/lib/inquiryConflicts";
 
 const SECRET = "ljfc";
 
@@ -91,11 +92,13 @@ function InquiriesContent() {
   const [authed, setAuthed] = useState(false);
   const [password, setPassword] = useState("");
   const [inquiries, setInquiries] = useState<Inquiry[]>([]);
+  const [events, setEvents] = useState<CalendarEventLite[]>([]);
   const [loading, setLoading] = useState(false);
   const [filterStatus, setFilterStatus] = useState<InquiryStatus | "all">("all");
   const [showArchived, setShowArchived] = useState(false);
   const [expanded, setExpanded] = useState<string | null>(null);
   const [showWalkthrough, setShowWalkthrough] = useState(false);
+  const [highlightIds, setHighlightIds] = useState<string[]>([]);
 
   useEffect(() => {
     if (keyParam === SECRET) setAuthed(true);
@@ -111,10 +114,17 @@ function InquiriesContent() {
     setLoading(true);
     try {
       const archivedParam = showArchived ? "&archived=true" : "";
-      const res = await fetch(`/api/admin/inquiries?key=${SECRET}${archivedParam}`);
-      if (res.ok) {
-        const data = await res.json();
+      const [inqRes, calRes] = await Promise.all([
+        fetch(`/api/admin/inquiries?key=${SECRET}${archivedParam}`),
+        fetch(`/api/calendar`),
+      ]);
+      if (inqRes.ok) {
+        const data = await inqRes.json();
         setInquiries(data.inquiries || []);
+      }
+      if (calRes.ok) {
+        const data = await calRes.json();
+        setEvents(data.events || []);
       }
     } catch {}
     setLoading(false);
@@ -123,6 +133,22 @@ function InquiriesContent() {
   useEffect(() => {
     if (authed) fetchInquiries();
   }, [authed, fetchInquiries]);
+
+  // Conflict report: recomputed whenever inquiries or events change.
+  const conflictReport = useMemo(() => {
+    const lite: InquiryLite[] = inquiries.map((i) => ({
+      id: i.id,
+      first_name: i.first_name,
+      last_name: i.last_name,
+      email: i.email,
+      course: i.course,
+      parsed_start_date: i.parsed_start_date,
+      parsed_end_date: i.parsed_end_date,
+      group_size: i.group_size,
+      status: i.status,
+    }));
+    return buildConflictReport(lite, events, { minOverlapDays: 2 });
+  }, [inquiries, events]);
 
   const dismissWalkthrough = () => {
     if (typeof window !== "undefined") {
@@ -258,6 +284,106 @@ function InquiriesContent() {
           </div>
         )}
 
+        {/* Conflicts & Opportunities panel */}
+        {(conflictReport.groupings.length > 0 ||
+          conflictReport.overlaps.length > 0 ||
+          conflictReport.calendarConflicts.length > 0) && (
+          <div className="bg-gradient-to-br from-coral/10 to-sun/5 border border-coral/30 rounded-2xl p-5 mb-6">
+            <div className="text-[11px] text-coral font-medium tracking-[0.2em] uppercase mb-3">
+              Conflicts & opportunities
+            </div>
+
+            {/* Group suggestions */}
+            {conflictReport.groupings.length > 0 && (
+              <div className="mb-4">
+                <div className="text-[11px] text-salt/50 font-medium uppercase tracking-wider mb-2">
+                  Suggested groupings
+                </div>
+                <div className="space-y-2">
+                  {conflictReport.groupings.map((g, idx) => {
+                    const names = g.inquiries.map((i) => i.first_name).join(" + ");
+                    const startStr = g.windowStart.toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "UTC" });
+                    const endStr = g.windowEnd.toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "UTC" });
+                    const window = g.windowStart.getTime() === g.windowEnd.getTime() ? startStr : `${startStr} – ${endStr}`;
+                    const ids = g.inquiries.map((i) => i.id);
+                    return (
+                      <div key={idx} className="flex items-center justify-between bg-deep/40 rounded-lg px-3 py-2.5">
+                        <div className="text-sm text-salt/85">
+                          <span className="text-salt font-medium">{names}</span>
+                          <span className="text-salt/40"> · {window} · </span>
+                          <span className="text-seafoam">{g.overlapDays} day{g.overlapDays === 1 ? "" : "s"} overlap</span>
+                          <span className="text-salt/30 text-xs"> · {g.course}</span>
+                        </div>
+                        <button
+                          onClick={() => setHighlightIds(ids)}
+                          className="text-[11px] px-2.5 py-1 rounded-full bg-seafoam/15 text-seafoam border border-seafoam/30 hover:bg-seafoam/25 transition-colors"
+                        >
+                          Highlight these
+                        </button>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+            {/* Overlapping pairs (only shown if no grouping already covers them) */}
+            {conflictReport.overlaps.length > 0 && (
+              <div className="mb-4">
+                <div className="text-[11px] text-salt/50 font-medium uppercase tracking-wider mb-2">
+                  Overlapping date windows
+                </div>
+                <div className="space-y-1">
+                  {conflictReport.overlaps.slice(0, 5).map((o, idx) => {
+                    const startStr = o.overlapStart.toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "UTC" });
+                    const endStr = o.overlapEnd.toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "UTC" });
+                    const window = o.overlapStart.getTime() === o.overlapEnd.getTime() ? startStr : `${startStr} – ${endStr}`;
+                    return (
+                      <div key={idx} className="text-xs text-salt/70 flex items-center gap-2">
+                        <span className={o.sameCourse ? "text-seafoam" : "text-salt/40"}>•</span>
+                        <span className="text-salt/85">{o.a.first_name}</span>
+                        <span className="text-salt/30">↔</span>
+                        <span className="text-salt/85">{o.b.first_name}</span>
+                        <span className="text-salt/40">— {window} ({o.overlapDays}d)</span>
+                        {o.sameCourse && <span className="text-[10px] text-seafoam/70">same course</span>}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+            {/* Calendar conflicts */}
+            {conflictReport.calendarConflicts.length > 0 && (
+              <div>
+                <div className="text-[11px] text-coral/80 font-medium uppercase tracking-wider mb-2">
+                  Inquiry windows that hit scheduled events
+                </div>
+                <div className="space-y-1">
+                  {conflictReport.calendarConflicts.slice(0, 5).map((c, idx) => (
+                    <div key={idx} className="text-xs text-salt/70 flex items-center gap-2">
+                      <span className="text-coral">⚠</span>
+                      <span className="text-salt/85">{c.inquiry.first_name}</span>
+                      <span className="text-salt/40">wants a window that overlaps</span>
+                      <span className="text-salt/85">&quot;{c.event.title}&quot;</span>
+                      <span className="text-salt/40">({c.overlapDays}d)</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {highlightIds.length > 0 && (
+              <button
+                onClick={() => setHighlightIds([])}
+                className="text-[10px] text-salt/40 hover:text-salt/70 mt-3 uppercase tracking-wider"
+              >
+                Clear highlight
+              </button>
+            )}
+          </div>
+        )}
+
         {/* Status filter chips */}
         <div className="flex flex-wrap gap-2 mb-4">
           <button
@@ -305,6 +431,7 @@ function InquiriesContent() {
                   key={inq.id}
                   inquiry={inq}
                   expanded={expanded === inq.id}
+                  highlighted={highlightIds.includes(inq.id)}
                   onToggle={() => setExpanded(expanded === inq.id ? null : inq.id)}
                   onUpdate={(updates) => updateInquiry(inq.id, updates)}
                 />
@@ -327,11 +454,13 @@ function InquiriesContent() {
 function InquiryRow({
   inquiry,
   expanded,
+  highlighted,
   onToggle,
   onUpdate,
 }: {
   inquiry: Inquiry;
   expanded: boolean;
+  highlighted: boolean;
   onToggle: () => void;
   onUpdate: (updates: Partial<Inquiry>) => void;
 }) {
@@ -365,7 +494,13 @@ function InquiryRow({
   const ageLabel = ageDays === 0 ? "today" : ageDays === 1 ? "yesterday" : `${ageDays}d ago`;
 
   return (
-    <div className="bg-ocean/0 hover:bg-ocean/30 transition-colors">
+    <div
+      className={`transition-colors ${
+        highlighted
+          ? "bg-seafoam/10 ring-1 ring-inset ring-seafoam/40"
+          : "bg-ocean/0 hover:bg-ocean/30"
+      }`}
+    >
       {/* Summary row */}
       <button
         onClick={onToggle}
