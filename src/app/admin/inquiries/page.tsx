@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback, useMemo, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { buildConflictReport, type InquiryLite, type CalendarEventLite } from "@/lib/inquiryConflicts";
+import CalendarPanel from "./CalendarPanel";
 
 const SECRET = "ljfc";
 
@@ -99,6 +100,7 @@ function InquiriesContent() {
   const [expanded, setExpanded] = useState<string | null>(null);
   const [showWalkthrough, setShowWalkthrough] = useState(false);
   const [highlightIds, setHighlightIds] = useState<string[]>([]);
+  const [showCalendar, setShowCalendar] = useState(false);
 
   useEffect(() => {
     if (keyParam === SECRET) setAuthed(true);
@@ -217,13 +219,21 @@ function InquiriesContent() {
           >
             ← Admin Hub
           </Link>
-          <button
-            onClick={fetchInquiries}
-            disabled={loading}
-            className="text-[11px] text-salt/40 hover:text-salt/70 uppercase tracking-[0.15em] disabled:opacity-50"
-          >
-            {loading ? "Refreshing…" : "Refresh"}
-          </button>
+          <div className="flex items-center gap-4">
+            <button
+              onClick={() => setShowCalendar((v) => !v)}
+              className="text-[11px] text-seafoam/70 hover:text-seafoam uppercase tracking-[0.15em]"
+            >
+              {showCalendar ? "Hide calendar" : "Show calendar"}
+            </button>
+            <button
+              onClick={fetchInquiries}
+              disabled={loading}
+              className="text-[11px] text-salt/40 hover:text-salt/70 uppercase tracking-[0.15em] disabled:opacity-50"
+            >
+              {loading ? "Refreshing…" : "Refresh"}
+            </button>
+          </div>
         </div>
         <div className="text-[11px] text-teal/60 font-medium tracking-[0.2em] uppercase mb-1">Admin</div>
         <h1 className="font-serif text-3xl text-salt mb-2">Inquiries Pipeline</h1>
@@ -281,6 +291,26 @@ function InquiriesContent() {
             <div className="text-xs text-salt/40 mt-4">
               Coming soon: conflict detection (suggest groupings when date windows overlap), embedded calendar, and AI-drafted replies.
             </div>
+          </div>
+        )}
+
+        {/* Calendar overlay (toggleable) */}
+        {showCalendar && (
+          <div className="mb-6">
+            <CalendarPanel
+              inquiries={inquiries.map((i) => ({
+                id: i.id,
+                first_name: i.first_name,
+                last_name: i.last_name,
+                email: i.email,
+                course: i.course,
+                parsed_start_date: i.parsed_start_date,
+                parsed_end_date: i.parsed_end_date,
+                group_size: i.group_size,
+                status: i.status,
+              }))}
+              events={events}
+            />
           </div>
         )}
 
