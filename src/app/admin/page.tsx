@@ -8,6 +8,13 @@ const SECRET = "ljfc";
 
 const ADMIN_PAGES = [
   {
+    label: "Inquiries Pipeline",
+    href: "/admin/inquiries",
+    desc: "New-student command center: every course inquiry, status workflow, quick actions to invoice, send onboarding, reply.",
+    icon: "📥",
+    color: "from-coral to-teal",
+  },
+  {
     label: "Invoices & Payments",
     href: "/admin/invoices",
     desc: "Create invoices, send payment links, track payments. Custom amounts + deposits.",
