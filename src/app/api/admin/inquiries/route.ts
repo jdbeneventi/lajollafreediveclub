@@ -107,6 +107,55 @@ export async function GET(req: NextRequest) {
   return NextResponse.json({ inquiries: enriched });
 }
 
+// ─── POST — manually add an inquiry ───────────────────────────────────────
+// Body: { first_name, email, course, last_name?, phone?, experience?,
+//         preferred_dates?, group_size?, message?, status? }
+export async function POST(req: NextRequest) {
+  if (req.nextUrl.searchParams.get("key") !== SECRET) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const body = await req.json();
+  const { first_name, email, course } = body;
+  if (!first_name || !email || !course) {
+    return NextResponse.json({ error: "first_name, email, and course are required" }, { status: 400 });
+  }
+
+  const row: Record<string, unknown> = {
+    first_name,
+    email: email.toLowerCase(),
+    course,
+    last_name: body.last_name || "",
+    phone: body.phone || null,
+    experience: body.experience || null,
+    preferred_dates: body.preferred_dates || null,
+    group_size: body.group_size || null,
+    message: body.message || null,
+    status: body.status || "new",
+    admin_notes: body.admin_notes || null,
+  };
+
+  if (body.preferred_dates) {
+    const range = parseDateRange(body.preferred_dates);
+    if (range) {
+      row.parsed_start_date = range.start.toISOString().slice(0, 10);
+      row.parsed_end_date = range.end.toISOString().slice(0, 10);
+    }
+  }
+
+  const { data, error } = await supabase
+    .from("course_inquiries")
+    .insert(row)
+    .select()
+    .single();
+
+  if (error) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+
+  return NextResponse.json({ inquiry: data }, { status: 201 });
+}
+
 // ─── PATCH — update a single inquiry ──────────────────────────────────────
 // Body: { id, status?, admin_notes?, parsed_start_date?, parsed_end_date?, archived?, linked_booking_id? }
 export async function PATCH(req: NextRequest) {

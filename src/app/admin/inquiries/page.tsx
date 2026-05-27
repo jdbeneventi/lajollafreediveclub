@@ -101,6 +101,9 @@ function InquiriesContent() {
   const [showWalkthrough, setShowWalkthrough] = useState(false);
   const [highlightIds, setHighlightIds] = useState<string[]>([]);
   const [showCalendar, setShowCalendar] = useState(false);
+  const [showAddForm, setShowAddForm] = useState(false);
+  const [addForm, setAddForm] = useState({ first_name: "", last_name: "", email: "", phone: "", course: "", experience: "", preferred_dates: "", group_size: "", message: "", admin_notes: "" });
+  const [addSaving, setAddSaving] = useState(false);
 
   useEffect(() => {
     if (keyParam === SECRET) setAuthed(true);
@@ -157,6 +160,24 @@ function InquiriesContent() {
       window.localStorage.setItem("ljfc-inquiries-walkthrough-seen", "1");
     }
     setShowWalkthrough(false);
+  };
+
+  const addInquiry = async () => {
+    if (!addForm.first_name || !addForm.email || !addForm.course) return;
+    setAddSaving(true);
+    try {
+      const res = await fetch(`/api/admin/inquiries?key=${SECRET}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(addForm),
+      });
+      if (res.ok) {
+        setAddForm({ first_name: "", last_name: "", email: "", phone: "", course: "", experience: "", preferred_dates: "", group_size: "", message: "", admin_notes: "" });
+        setShowAddForm(false);
+        fetchInquiries();
+      }
+    } catch {}
+    setAddSaving(false);
   };
 
   const updateInquiry = async (id: string, updates: Partial<Inquiry>) => {
@@ -238,9 +259,60 @@ function InquiriesContent() {
         <div className="text-[11px] text-teal/60 font-medium tracking-[0.2em] uppercase mb-1">Admin</div>
         <h1 className="font-serif text-3xl text-salt mb-2">Inquiries Pipeline</h1>
         <p className="text-salt/40 text-sm mb-6">
-          Every course inquiry that comes through <code className="text-salt/60">/contact/courses</code> lands here. Move each one through the
+          Every inquiry lands here — from <code className="text-salt/60">/contact</code>, <code className="text-salt/60">/contact/courses</code>, and <code className="text-salt/60">/contact/camp</code>. Move each one through the
           workflow as you respond, quote, and onboard.
         </p>
+
+        {/* Add inquiry button */}
+        <button
+          onClick={() => setShowAddForm((v) => !v)}
+          className="mb-4 text-xs px-4 py-2 rounded-full bg-seafoam/15 text-seafoam border border-seafoam/30 hover:bg-seafoam/25 transition-colors"
+        >
+          {showAddForm ? "Cancel" : "+ Add inquiry manually"}
+        </button>
+
+        {/* Add inquiry form */}
+        {showAddForm && (
+          <div className="bg-ocean/30 border border-teal/20 rounded-2xl p-5 mb-6">
+            <div className="text-[11px] text-seafoam/80 font-medium tracking-[0.2em] uppercase mb-3">
+              Add inquiry manually
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-3">
+              <input placeholder="First name *" value={addForm.first_name} onChange={(e) => setAddForm({ ...addForm, first_name: e.target.value })} className="bg-deep/40 border border-teal/15 rounded-lg px-3 py-2 text-sm text-salt placeholder:text-salt/25 focus:outline-none focus:border-teal/40" />
+              <input placeholder="Last name" value={addForm.last_name} onChange={(e) => setAddForm({ ...addForm, last_name: e.target.value })} className="bg-deep/40 border border-teal/15 rounded-lg px-3 py-2 text-sm text-salt placeholder:text-salt/25 focus:outline-none focus:border-teal/40" />
+              <input placeholder="Email *" type="email" value={addForm.email} onChange={(e) => setAddForm({ ...addForm, email: e.target.value })} className="bg-deep/40 border border-teal/15 rounded-lg px-3 py-2 text-sm text-salt placeholder:text-salt/25 focus:outline-none focus:border-teal/40" />
+              <input placeholder="Phone" value={addForm.phone} onChange={(e) => setAddForm({ ...addForm, phone: e.target.value })} className="bg-deep/40 border border-teal/15 rounded-lg px-3 py-2 text-sm text-salt placeholder:text-salt/25 focus:outline-none focus:border-teal/40" />
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-3">
+              <select value={addForm.course} onChange={(e) => setAddForm({ ...addForm, course: e.target.value })} className="bg-deep/40 border border-teal/15 rounded-lg px-3 py-2 text-sm text-salt focus:outline-none focus:border-teal/40">
+                <option value="">Course *</option>
+                <option value="AIDA 1">AIDA 1</option>
+                <option value="AIDA 2 (Group)">AIDA 2 (Group)</option>
+                <option value="AIDA 2 (Private)">AIDA 2 (Private)</option>
+                <option value="AIDA 3 (Group)">AIDA 3 (Group)</option>
+                <option value="AIDA 3 (Private)">AIDA 3 (Private)</option>
+                <option value="Private Coaching">Private Coaching</option>
+                <option value="Camp Garibaldi">Camp Garibaldi</option>
+                <option value="Saturday Session">Saturday Session</option>
+                <option value="General inquiry">General inquiry</option>
+              </select>
+              <input placeholder="Preferred dates" value={addForm.preferred_dates} onChange={(e) => setAddForm({ ...addForm, preferred_dates: e.target.value })} className="bg-deep/40 border border-teal/15 rounded-lg px-3 py-2 text-sm text-salt placeholder:text-salt/25 focus:outline-none focus:border-teal/40" />
+              <input placeholder="Group size" value={addForm.group_size} onChange={(e) => setAddForm({ ...addForm, group_size: e.target.value })} className="bg-deep/40 border border-teal/15 rounded-lg px-3 py-2 text-sm text-salt placeholder:text-salt/25 focus:outline-none focus:border-teal/40" />
+              <input placeholder="Experience" value={addForm.experience} onChange={(e) => setAddForm({ ...addForm, experience: e.target.value })} className="bg-deep/40 border border-teal/15 rounded-lg px-3 py-2 text-sm text-salt placeholder:text-salt/25 focus:outline-none focus:border-teal/40" />
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
+              <textarea placeholder="Message / context" value={addForm.message} onChange={(e) => setAddForm({ ...addForm, message: e.target.value })} rows={2} className="bg-deep/40 border border-teal/15 rounded-lg px-3 py-2 text-sm text-salt placeholder:text-salt/25 focus:outline-none focus:border-teal/40 resize-none" />
+              <textarea placeholder="Admin notes" value={addForm.admin_notes} onChange={(e) => setAddForm({ ...addForm, admin_notes: e.target.value })} rows={2} className="bg-deep/40 border border-teal/15 rounded-lg px-3 py-2 text-sm text-salt placeholder:text-salt/25 focus:outline-none focus:border-teal/40 resize-none" />
+            </div>
+            <button
+              onClick={addInquiry}
+              disabled={addSaving || !addForm.first_name || !addForm.email || !addForm.course}
+              className="text-xs px-5 py-2.5 rounded-full bg-seafoam text-deep font-semibold hover:bg-seafoam/80 transition-colors disabled:opacity-40"
+            >
+              {addSaving ? "Adding…" : "Add to pipeline"}
+            </button>
+          </div>
+        )}
 
         {/* Walkthrough panel */}
         {showWalkthrough && (
