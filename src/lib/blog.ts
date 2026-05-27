@@ -13,6 +13,557 @@ export interface BlogPost {
 
 export const posts: BlogPost[] = [
   {
+    slug: "why-spearfishers-should-get-aida-certified",
+    title: "Why Spearfishers Should Get AIDA Certified",
+    description:
+      "Most spearfishers are self-taught — and skipping AIDA training leaves you exposed to the exact failure modes (shallow water blackout, samba, loss of motor control) that kill divers. Here's what proper training closes off.",
+    category: "Training",
+    date: "May 27, 2026",
+    isoDate: "2026-05-27",
+    readTime: "10 min read",
+    gradient: "from-deep to-coral",
+    heroImage: "/images/photos/joshua-red-sea.jpg",
+    content: `
+<p>Most spearos learn the way I did: from a friend, in a boat, on a day with too much excitement and not quite enough explanation. Someone hands you a gun, points at the kelp, tells you to stay close to your buddy, and that's the lesson. Everyone you know dives this way. It feels normal. Until it doesn't.</p>
+
+<p>Every year in California, spearfishers die in shallow water from injuries that are almost entirely preventable. The fish weren't the problem. The depth wasn't the problem. The problem was the part of the dive nobody taught them — how to manage their own physiology underwater, and how to keep a buddy alive when something goes wrong.</p>
+
+<p><a href="https://www.aidainternational.org/" target="_blank" rel="noopener">AIDA</a> is the international standards body for freediving. Its courses are built around exactly this gap. If you spearfish in San Diego and you've never taken one, you're missing the safety half of the sport.</p>
+
+<hr>
+
+<h2>What You're Actually Risking</h2>
+
+<p>Spearfishing fatalities almost never come from the obvious causes — shark, entanglement, equipment failure. They come from three physiological events that look minor right up until they're not:</p>
+
+<h3>Shallow Water Blackout (SWB)</h3>
+
+<p>You hold your breath past the urge to breathe. You hit the surface. Your body fails to draw the recovery breath in time and you lose consciousness — usually in the last 15 feet of ascent or within seconds of surfacing. SWB doesn't feel like anything. You don't get a warning. One moment you're swimming up; the next moment you're face-down in the kelp with no airway.</p>
+
+<p>This is what hyperventilation before a dive sets you up for. The deep-breathing-up routine many spearos do — a dozen forced breaths before going down — is the single most dangerous habit in the sport. It blows off carbon dioxide, which is what triggers your urge to breathe. You lose your warning system. You can stay down longer, but you also can no longer feel the threshold where you're about to black out.</p>
+
+<h3>Loss of Motor Control (LMC) — "Samba"</h3>
+
+<p>A milder version of the same problem. You surface, you take a breath, you start to convulse: head tilts back, body shakes, mouth gapes. It usually resolves in 5–15 seconds. If you have a buddy holding your airway above water, you breathe through it and recover. If you're alone — or your buddy didn't see you surface — you breathe water and drown.</p>
+
+<h3>Hypoxic Surface Loss</h3>
+
+<p>The third one is sneakier: a delayed blackout that happens 30–60 seconds after surfacing, after a borderline dive. You come up, you feel fine, you start swimming back to the boat, and then the lights go out. This is why proper protocol is "wait 30 seconds at the surface before doing anything" — and why a buddy who watches you for that 30 seconds is the difference between an interesting story and an obituary.</p>
+
+<hr>
+
+<h2>What AIDA Training Actually Teaches</h2>
+
+<p>An AIDA course isn't about going deeper or holding your breath longer. Those things happen, but they're side effects. The core curriculum is risk management — the stuff that closes off the three failure modes above.</p>
+
+<h3>1. Breath-up Without Hyperventilation</h3>
+
+<p>You learn a calm, diaphragmatic breath-up that lowers heart rate without stripping your CO2. You stop blowing off your warning system. Your urge-to-breathe contractions come back at the correct depth and tell you when it's time to head up. This single skill probably prevents more blackouts than every other intervention combined.</p>
+
+<h3>2. One Up, One Down</h3>
+
+<p>The AIDA buddy protocol is non-negotiable: one diver is in the water on the line or watching from above; the other is making the dive. Nobody dives without a buddy. Nobody dives at the same time. Your buddy meets you at 30 feet on the ascent and watches you for 30 seconds at the surface. This sounds slow until you realize the alternative is the silent blackouts described above.</p>
+
+<h3>3. LMC and Blackout Rescue</h3>
+
+<p>You learn the standard "blow-tap-talk" protocol for a surface blackout, how to support an LMC victim's airway, how to bring an unconscious diver up from depth without dropping them. You practice it in the pool until it's reflex. If your buddy goes down, you don't have time to remember what to do — you do it.</p>
+
+<h3>4. Frenzel Equalization</h3>
+
+<p>Most spearos equalize using a hard Valsalva — clamping nose, blowing pressure into the ears through the chest. It works at shallow depth. At 40 feet and below, with the diaphragm pulling up against negative pressure, Valsalva starts to fail. Frenzel uses the tongue and soft palate to move air independently of the lungs. It works deeper, costs no air, and dramatically reduces ear and sinus barotrauma.</p>
+
+<h3>5. The 1:1 Surface Interval Rule</h3>
+
+<p>Every dive accumulates a small oxygen debt. AIDA teaches the surface-interval rule: rest at least as long as the dive lasted, and double that on dives near your limit. Most spearfishing days break this rule constantly — short surface, dive, short surface, dive — and the cumulative debt is why people blackout on dive #8 of the morning, not dive #1.</p>
+
+<hr>
+
+<h2>AIDA 2 Is the Standard</h2>
+
+<p>The relevant certification for a working spearo is the <a href="https://www.aidainternational.org/Education/AIDAFreedivingCourses#aida2" target="_blank" rel="noopener"><strong>AIDA 2 Freediver</strong></a> course. The performance bar is reasonable for anyone already comfortable in the water:</p>
+
+<ul>
+<li>A 2-minute static breath hold</li>
+<li>A 40-meter pool swim on one breath</li>
+<li>A 12-meter (~39 ft) constant-weight ocean dive with proper buddy and recovery protocol</li>
+<li>A written exam on physiology, safety, and equipment</li>
+</ul>
+
+<p>That's it. Most spearos hit those numbers in a 2.5–3 day course without serious prep. What you walk out with is the structured knowledge of <em>why</em> each protocol exists — not "because the instructor said so," but because here is exactly what happens in the body when you skip it.</p>
+
+<hr>
+
+<h2>The San Diego Context</h2>
+
+<p>La Jolla is a near-perfect spearfishing ecosystem. The kelp forests off the Marine Room and Boomer Beach hold legal lobster, white seabass when they're in, halibut, and the occasional yellowtail. The canyon edge drops to 35+ feet within a short swim of shore. Visibility runs 15–40 feet most of the year. The water is cold enough to keep crowds manageable and warm enough for a 5/3 wetsuit to be plenty.</p>
+
+<p>All of which means your typical dive day involves repeated 25–35 foot dives over several hours, often solo or with a casual buddy, in kelp that obscures sight lines. This is exactly the environment where the SWB / LMC / surface-loss failure modes are most likely. Every spearo I know has a story about a buddy who came up wrong. The ones who knew what to do told a better story.</p>
+
+<hr>
+
+<h2>What the Course Day Looks Like</h2>
+
+<p>Day one is a pool session and theory. We work on relaxation, breath-up, static apnea, and rescue scenarios in chest-deep water. The 40-meter dynamic is more about technique than fitness — most spearos swim that far on the surface without thinking.</p>
+
+<p>Day two and three are open water at La Jolla Shores. We use a buoy and a vertical line — you descend along the line head-first, work on equalization technique on the way down, turn at 12 meters, and ascend with a buddy on safety. By day three, most students hit 16–18 meters on the line without trying.</p>
+
+<p>You walk away with an AIDA 2 card recognized by every freediving school in the world, the technical vocabulary to articulate what's happening in your body underwater, and — most importantly — the muscle memory to handle a buddy emergency without having to think.</p>
+
+<hr>
+
+<h2>After the Course: Saturday Sessions</h2>
+
+<p>The other piece worth mentioning is the LJFC <a href="/saturday-sessions">Saturday Sessions</a>. Once you're certified, you're welcome to join the group ocean session every Saturday morning at La Jolla Shores. Free with Ocean Flow membership, $25 drop-in. We set the mooring line at 35–40 feet, run safety rotations, and let everyone work on their own depth or technique. This is where spearos get to keep the freediving muscle memory sharp on the days they're not chasing fish.</p>
+
+<hr>
+
+<h2>The Bottom Line</h2>
+
+<p>The spearos who skip the training aren't wrong because the dives are too dangerous. They're wrong because the failure modes are silent. You don't get a near-miss to warn you. You either know what to do on the surface when your buddy comes up wrong, or you don't — and the difference is the AIDA course you took or didn't take.</p>
+
+<p>Spearing brought you to the ocean. AIDA training keeps you in it.</p>
+
+<p><a href="/programs">See current AIDA course dates →</a></p>
+    `,
+  },
+  {
+    slug: "teaching-kids-to-freedive-camp-garibaldi-philosophy",
+    title: "Teaching Kids to Freedive: The Camp Garibaldi Philosophy",
+    description:
+      "Most ocean camps teach surfing or swimming. Camp Garibaldi teaches breath-first water confidence — and the difference shows up in everything from how kids enter the water to how they react when a wave breaks over their head.",
+    category: "Education",
+    date: "May 27, 2026",
+    isoDate: "2026-05-27",
+    readTime: "11 min read",
+    gradient: "from-teal to-seafoam",
+    heroImage: "/images/photos/joshua-teaching-kids.jpg",
+    content: `
+<p>The first thing you notice when you watch a confident young freediver enter the water is how different it looks from the way most kids enter the water. There's no shriek, no bracing, no flinch at the cold. They submerge, exhale slowly, look around, and come up smiling. The ocean isn't a thing happening <em>to</em> them. They're inside it.</p>
+
+<p>That kind of relationship with the ocean isn't something most kids develop on their own. It's certainly not something you get from a typical swim lesson, where the goal is reasonably "don't drown" and the metric is laps completed. And it's not what surf camp delivers either — surf camp is great, but it's about the board, the wave, and the pop-up. The water itself stays mostly external.</p>
+
+<p>Camp Garibaldi is built around a different premise: that the most useful, durable, and joyful skill a kid can develop in the ocean is comfort holding their breath underwater. Not because they'll become competitive freedivers — almost none of them will. Because that comfort changes everything else.</p>
+
+<hr>
+
+<h2>What "Breath-First" Actually Means</h2>
+
+<p>Freediving is the entry point. The full sport — depth, lines, equalization technique — is for adults. But the foundational layer of freediving is something every kid can learn safely and benefit from for the rest of their life: <strong>knowing that you can hold your breath calmly underwater, and that the urge to breathe is a sensation you can sit with rather than panic at.</strong></p>
+
+<p>That foundation does several things at once:</p>
+
+<ul>
+<li><strong>Removes the panic response.</strong> A kid who has practiced holding their breath in a calm pool doesn't flail when a wave knocks them over. They stay relaxed, wait it out, and surface when they're ready.</li>
+<li><strong>Builds water reading.</strong> Kids who can submerge comfortably learn to read what the ocean is doing below the surface — currents, surge, kelp lanes — instead of just reacting to chop.</li>
+<li><strong>Develops genuine respect.</strong> The ocean stops being a generic "scary thing" and becomes a specific environment with rules. Respect built on understanding holds; respect built on fear evaporates the moment a kid stops being afraid.</li>
+<li><strong>Cross-applies everywhere.</strong> Surf survival, body surfing, snorkeling, lifeguarding later, scuba later, even competitive swimming — all of them get easier and safer for a kid who's done breath-first work.</li>
+</ul>
+
+<hr>
+
+<h2>The Three Levels: Bronze, Silver, Gold Dolphin</h2>
+
+<p>Camp Garibaldi is staged by readiness, not strictly by age. The three Dolphin levels follow the <a href="https://www.aidainternational.org/Education/AIDAFreedivingCourses#aidayouth" target="_blank" rel="noopener">AIDA Youth standard</a> and are designed so a 7-year-old who's a strong swimmer can sit in the same group as an 11-year-old who's just learning to put their face in the water.</p>
+
+<h3>Bronze Dolphin (typical age 6–9)</h3>
+
+<p>The point of Bronze is the foundation: face in the water without flinching, eyes open underwater, basic snorkel clearing, a short calm breath hold, and the games that teach buddy awareness. Most of the day is play — but play with a purpose. Kids leave Bronze knowing that holding their breath underwater is fun, not scary.</p>
+
+<h3>Silver Dolphin (typical age 8–12)</h3>
+
+<p>Silver introduces light freediving mechanics. Duck dives, equalization basics (the gentle ear pinch and blow), short downward swims to grab a target weight off the bottom of the pool, surface protocols. We start using the word "buddy" in its real freediving sense — one person watches while the other goes under. Static apnea up to a minute or so, on land or in the pool, treated as a relaxation exercise rather than a competition.</p>
+
+<h3>Gold Dolphin (typical age 11–14)</h3>
+
+<p>Gold is the bridge to actual freediving. Kids work on Frenzel equalization, longer dynamic swims, deeper duck dives, and start to do real ocean work — but in the kid version: a 3–4 meter ocean dive in chest-deep water at La Jolla Shores, with a coach on safety. The point isn't depth. The point is doing it correctly: relaxed breath-up, calm descent, good equalization, proper recovery.</p>
+
+<h3>AIDA Junior (ages 12–15)</h3>
+
+<p>For the older end of the camp — and for kids who finish Gold and want to keep going — there's the AIDA Junior course. This is structurally close to the adult AIDA program: pool sessions, theory, a written exam, and supervised ocean dives. The standards are scaled for the age group but the rigor is the same. At 16, an AIDA Junior graduate is eligible to take the full adult <a href="https://www.aidainternational.org/Education/AIDAFreedivingCourses#aida2" target="_blank" rel="noopener">AIDA 2 course</a>.</p>
+
+<hr>
+
+<h2>What This Looks Like in Practice</h2>
+
+<p>A Camp Garibaldi week runs five days at La Jolla Shores and the pool. Each day has the same rhythm:</p>
+
+<p><strong>Morning land session.</strong> A short warm-up — stretching and breathing drills, no yoga vocabulary, just the practical mechanics of slowing the breath down. We talk about what's coming, what we're working on, and answer the question every kid asks at some point: "Why doesn't my body want me to do this?"</p>
+
+<p><strong>Pool block.</strong> Goggles on, masks on, snorkels in. Games that secretly teach: who can sit longest at the bottom of the pool relaxed, who can pick up the most weights on one breath, who can pass an object to a buddy underwater without missing the handoff. Skill drills disguised as fun.</p>
+
+<p><strong>Lunch and surface time.</strong> Snacks, hydration, and a quick story from somewhere in freediving history — Jacques Mayol, Audrey Mestre, the AIDA Worlds. Kids are sponges for context. They retain the technique better when they know why anyone bothered to develop it.</p>
+
+<p><strong>Ocean session.</strong> Suits on, walk to the water, group entry through the surf zone. The ocean part of camp is the part most parents are nervous about and most kids end up loving. We work in chest-to-shoulder-deep water for Bronze and Silver, slightly deeper for Gold, always with the coach in the water and never outside line of sight.</p>
+
+<p><strong>Closing.</strong> Quick debrief, what we learned, what to work on tomorrow. Kids tell each other their best moment of the day. Then home.</p>
+
+<hr>
+
+<h2>What Parents Should Know About Safety</h2>
+
+<p>The honest answer to "is this safe for my kid?" is: yes, when it's run to the standards Camp Garibaldi is built on. Here's what those standards look like in practice:</p>
+
+<ul>
+<li><strong>AIDA Youth Instructor certification.</strong> The Youth Instructor course is a separate <a href="https://www.aidainternational.org/Education/AIDAFreedivingCourses#aidayouthinst" target="_blank" rel="noopener">AIDA credential</a> beyond the adult Instructor cert. It covers child physiology, age-appropriate exposure progression, communication, and the specific risk profile of teaching kids underwater. Joshua holds both.</li>
+<li><strong>Ratios.</strong> AIDA standards require a 4:1 student-to-instructor ratio in open water, with assistant support for larger groups. Camp Garibaldi runs lower ratios than the requirement — typically 3:1 in water — because kids need more direct visual contact than adults.</li>
+<li><strong>Never out of sight.</strong> Every kid in the water is in the line of sight of a coach or assistant at all times. There's no "let them play and check back in 10 minutes." The supervision is continuous.</li>
+<li><strong>First aid and CPR on site.</strong> The instructor team carries current <a href="https://www.redcross.org/take-a-class/cpr" target="_blank" rel="noopener">Red Cross Adult &amp; Pediatric First Aid/CPR/AED</a>, plus <a href="https://dan.org/" target="_blank" rel="noopener">DAN Professional Liability Insurance</a> for the in-water work.</li>
+<li><strong>Medical screening up front.</strong> Before camp starts, every family completes a youth medical statement. Any flag — asthma, ear issues, recent surgery — gets a conversation, sometimes a physician sign-off, sometimes a modification to the kid's program. We don't surprise anyone with a problem on day three.</li>
+<li><strong>No hyperventilation, ever.</strong> The single most important safety rule in freediving is also the single most important rule at Camp Garibaldi. Kids are taught a calm, two-minute breath-up. They are explicitly told that "deep breaths fast before going under" is the wrong way and shown why.</li>
+</ul>
+
+<hr>
+
+<h2>Why La Jolla Is the Right Setting</h2>
+
+<p>La Jolla Shores is one of the most forgiving ocean training environments in California. The beach is sand, gradual, and protected on three sides by the kelp and the canyon walls. The surf at the Shores section is small most days, often ankle-to-knee high, breaking gently over a sandy bottom. Visibility is good. Water temperature is moderate. The lifeguard tower is staffed and within sight of where camp runs.</p>
+
+<p>And the marine life is the secret weapon. Kids who learn to freedive in a tide-pool environment care about tide pools the rest of their lives. Kids who learn at La Jolla — among the leopard sharks, garibaldi (yes, the camp is named after the fish), bat rays, and seasonal sea lions — develop a relationship with that specific ecosystem that doesn't go away.</p>
+
+<hr>
+
+<h2>What Kids Take Home</h2>
+
+<p>The literal souvenirs are small: a certificate, a stamped logbook, maybe a Camp Garibaldi sticker. The actual takeaway is harder to measure but easier to see in the water.</p>
+
+<p>Parents who've sent kids to camp tell us the same thing: their kid swims differently afterward. Calmer in the surf zone. Goes deeper when snorkeling without making a thing of it. Holds their breath underwater on the way to grab a sand dollar without surfacing in a panic. Treats the ocean like a friend they know rather than a stranger.</p>
+
+<p>That's the goal. Not a future world-record freediver. A kid who is at home in the water for the rest of their life.</p>
+
+<hr>
+
+<h2>How to Sign Up</h2>
+
+<p>Camp Garibaldi runs in week-long sessions throughout the summer at La Jolla Shores. See <a href="/camp-garibaldi">camp dates and details</a>, or reach out via <a href="/contact/camp">the camp inquiry form</a> with your kid's age, swim background, and any medical context. We respond within 24 hours and can usually fit families into the session that works for their summer.</p>
+
+<p><a href="/camp-garibaldi">See Camp Garibaldi 2026 dates →</a></p>
+    `,
+  },
+  {
+    slug: "how-to-prepare-for-aida-2-san-diego-4-week-plan",
+    title: "How to Prepare for AIDA 2 in San Diego: A 4-Week Plan",
+    description:
+      "A four-week prep protocol that gets you ready for AIDA 2 — swim test, breath-hold, equalization, and the mindset for your first ocean dive. Built around the current AIDA standards: 2-minute static, 40m dynamic, 12m depth.",
+    category: "Training",
+    date: "May 27, 2026",
+    isoDate: "2026-05-27",
+    readTime: "13 min read",
+    gradient: "from-ocean to-sun",
+    heroImage: "/images/photos/joshua-stella.jpg",
+    content: `
+<p>Most students who book an AIDA 2 course show up underprepared. Not catastrophically — they almost all pass — but they spend the first day catching up on things they could have arrived knowing, and they miss out on the deeper experiences the course can offer when the basics are already in place.</p>
+
+<p>Four weeks of focused, low-volume prep makes the difference. You don't need to become a fit freediver before the course. You need to arrive with a functional swim base, a usable equalization technique, the start of breath-hold relaxation, and the right mindset. Here's how to build all four in 30 days.</p>
+
+<hr>
+
+<h2>What You Need to Be Able to Do on Day 1</h2>
+
+<p><a href="https://www.aidainternational.org/Education/AIDAFreedivingCourses#aida2" target="_blank" rel="noopener">AIDA 2</a> has four hard standards. Knowing them shapes the prep:</p>
+
+<ul>
+<li><strong>Swim 200 meters non-stop without fins</strong> (or 300m with mask, fins, and snorkel). This is the gating prereq before the open-water portion.</li>
+<li><strong>A 2-minute static breath hold.</strong> Performed in a pool, with a buddy.</li>
+<li><strong>A 40-meter dynamic swim with bi-fins.</strong> One breath, underwater, in the pool.</li>
+<li><strong>A 12-meter (~39 ft) Constant Weight Bi-fins dive.</strong> Open water, on a vertical line, with safety on standby.</li>
+</ul>
+
+<p>All four are reachable for almost anyone in reasonable health with a month of attention. The prep below targets each one specifically.</p>
+
+<hr>
+
+<h2>Week 1 — Swim Foundation</h2>
+
+<p>The goal of week 1 is removing the swim test as a stressor. If you arrive day one already comfortable with the 200m or 300m, your nervous system has more capacity to absorb the actual freediving curriculum.</p>
+
+<h3>Three sessions, 30–40 minutes each</h3>
+
+<p><strong>Session structure:</strong></p>
+
+<ul>
+<li>5 minutes easy freestyle warm-up</li>
+<li>4 × 50m freestyle, breathing every 3 strokes, easy pace</li>
+<li>1 × 200m freestyle continuous — if you can't make it the first try, build up: 100 + rest 30s + 100, then 150 + 50, then unbroken 200. Most people get to unbroken 200 by session 5 or 6.</li>
+<li>Cool down: 100m breaststroke or backstroke, very easy</li>
+</ul>
+
+<h3>If you don't have pool access</h3>
+
+<p>The ocean works. La Jolla Shores has a marked 200-meter buoy run during summer (yellow buoys roughly 100m and 200m off the lifeguard tower) — swim it, rest, swim back. Bring a swim buoy if you don't have a strong open-water swim background. Be honest about ocean conditions before going.</p>
+
+<h3>What to track</h3>
+
+<p>You don't need a stopwatch. You need the answer to one question: <em>can I swim 200 meters continuously without stopping, without feeling like I'm racing?</em> Once that's a yes, this part of prep is done. Move maintenance to one session a week and shift effort to the others.</p>
+
+<hr>
+
+<h2>Week 2 — Relaxation and Frenzel Equalization</h2>
+
+<p>Week 2 is the most underestimated week. The two skills it covers — diaphragmatic relaxation and Frenzel equalization — are what separate students who hit 12 meters comfortably from students who struggle to get past 6.</p>
+
+<h3>Diaphragmatic Breathing (daily, 10 minutes)</h3>
+
+<p>Lie on your back. Place one hand on your chest, one on your belly. Breathe in through the nose for 4 counts and feel the belly rise without the chest moving. Breathe out through the mouth for 8 counts. Repeat for 5–10 minutes daily, ideally before sleep.</p>
+
+<p>This is the foundation of the breath-up you'll use before every dive. The point isn't to maximize lung capacity. The point is to lower your heart rate and quiet your nervous system on demand — a learned skill, like any other.</p>
+
+<h3>Frenzel Equalization (5 sessions over the week)</h3>
+
+<p>Frenzel uses the tongue and soft palate to compress air into the eustachian tubes, instead of the chest-pressure Valsalva most people default to. Frenzel works deeper, costs less air, and dramatically reduces sinus and ear barotrauma.</p>
+
+<p>Learning Frenzel dry is straightforward. The drill:</p>
+
+<ol>
+<li>Close your mouth and pinch your nose.</li>
+<li>Make a "K" sound, like the start of "key" — feel the back of the tongue press up against the soft palate.</li>
+<li>Now make a "T" sound — the tongue tip presses against the roof of the mouth just behind the front teeth.</li>
+<li>Combine: with nose pinched, do a "K" then push the tongue forward like a "T" — you're now compressing the small pocket of air in your mouth and throat into the eustachian tubes. You'll feel your ears pop.</li>
+</ol>
+
+<p>Do this 20–30 times a day for a week. By the end of the week it'll be automatic. If you can't get it from text — and many people can't — there are good video tutorials (search "Adam Stern Frenzel" for the cleanest one). Our existing <a href="/blog/equalization-guide-freediving">guide to equalization</a> goes deeper if you want the full picture.</p>
+
+<hr>
+
+<h2>Week 3 — Static Breath Hold and CO2 Tolerance</h2>
+
+<p>Week 3 builds the 2-minute static breath hold and starts conditioning your body to the urge-to-breathe sensation that will show up around the 1-minute mark on most dives.</p>
+
+<h3>Static Apnea Tables (3 sessions, ~25 minutes each)</h3>
+
+<p>Always do these lying down or sitting with your head supported. <strong>Never do breath-hold training alone in or near water — this is non-negotiable.</strong> On dry land, the risk is much lower, but still: lying on a couch or bed is safest.</p>
+
+<p>The progression:</p>
+
+<table>
+<tr><th>Session</th><th>Pattern</th></tr>
+<tr><td>1</td><td>5 × 1:00 hold with 1:30 rest between each</td></tr>
+<tr><td>2</td><td>5 × 1:15 hold with 1:30 rest between each</td></tr>
+<tr><td>3</td><td>5 × 1:30 hold with 1:30 rest between each</td></tr>
+</table>
+
+<p>The breath hold should feel easy for the first 30–45 seconds. Around 60–75 seconds you'll feel the first contractions — your diaphragm involuntarily pulsing as CO2 rises. <strong>This is the most important part of the training.</strong> The instinct is to break the hold. The skill is to stay relaxed, let the contractions happen, and notice that they're uncomfortable but not actually emergency signals.</p>
+
+<p>Your job is to find the texture of that discomfort and develop tolerance to it. Most people, by session 3, can hold 1:30 with contractions and feel like they could keep going.</p>
+
+<h3>CO2 Tables (2 sessions)</h3>
+
+<p>A CO2 table holds the hold duration constant but shortens the rest periods. This conditions your body to handle higher CO2 levels without panicking. A starter table:</p>
+
+<ul>
+<li>1:00 hold / 2:00 rest</li>
+<li>1:00 hold / 1:45 rest</li>
+<li>1:00 hold / 1:30 rest</li>
+<li>1:00 hold / 1:15 rest</li>
+<li>1:00 hold / 1:00 rest</li>
+<li>1:00 hold / 0:45 rest</li>
+<li>1:00 hold / 0:30 rest</li>
+<li>1:00 hold (finish)</li>
+</ul>
+
+<p>The last few rounds will be uncomfortable. That's the point. Our full <a href="/blog/co2-tolerance-training-guide">CO2 tolerance training guide</a> has the deeper protocol.</p>
+
+<hr>
+
+<h2>Week 4 — Taper, Integration, and Readiness Check</h2>
+
+<p>The final week is not about pushing harder. It's about consolidating what you've built and arriving on day one fresh.</p>
+
+<h3>Volume drops by ~50%</h3>
+
+<p>One easy swim of 200m. Two short static sessions of 3 × 1:30 with full rest. Equalization drills every day. Diaphragmatic breathing every night before sleep. That's it.</p>
+
+<h3>Readiness self-check</h3>
+
+<p>Use these as a passing checklist 48–72 hours before your course:</p>
+
+<ul>
+<li>Swim 200m continuously without fins (or 300m with mask/fins/snorkel) and step out of the pool not gassed.</li>
+<li>Hold your breath for 1:30 lying down without panicking through the contractions.</li>
+<li>Equalize your ears (using Frenzel, ideally) ten times in a row without effort.</li>
+<li>Breathe diaphragmatically and slow your heart rate noticeably in under 60 seconds.</li>
+</ul>
+
+<p>If any of these are still a struggle, tell your instructor before day one. We can plan around it. The day-of surprise is what makes courses harder than they need to be.</p>
+
+<h3>Practical preparation</h3>
+
+<ul>
+<li><strong>Rest.</strong> Sleep is the most under-utilized freediving performance enhancer.</li>
+<li><strong>Hydrate, but not the morning of.</strong> Heavy fluids day-of can make recovery breathing awkward.</li>
+<li><strong>No alcohol or recreational drugs for at least 48 hours pre-course.</strong> Both significantly raise blackout risk.</li>
+<li><strong>Light meal 2 hours before water sessions.</strong> Not a fasted state, not a full state. Toast and an egg, or a banana and yogurt.</li>
+<li><strong>Bring layers.</strong> San Diego sun gets hot between dives even when the water is cold. A hat, a hooded sweatshirt, and a towel are the kit.</li>
+</ul>
+
+<hr>
+
+<h2>What to Expect on Day One</h2>
+
+<p>Most AIDA 2 courses spend day one on theory, a pool session, and getting you familiar with the equipment. By the end of day one you'll have done your static hold, your 40m dynamic, and the swim test (if you didn't do it ahead of time). Day two moves to open water — buoy, line, gentle introduction to the dive itself. Day three is performance: line dives to your target depth, rescue scenarios, and the final ocean component for certification.</p>
+
+<p>Coming in with the prep above means day one feels achievable instead of overwhelming. You're not learning Frenzel for the first time in front of a stranger. You're not gassed from the swim. You're not surprised by what a contraction feels like. You have capacity to absorb the parts that <em>can't</em> be prepared for in advance — being on the line, equalizing head-down, surfacing protocols.</p>
+
+<hr>
+
+<h2>Booking the Course</h2>
+
+<p>AIDA 2 at LJFC is $575 in a group (2+ students) and $800 private. Course minimum is 2.5 days; we typically run it as a full 3 days with one evening theory session. See <a href="/programs">current course dates</a> or use the <a href="/contact/courses">course inquiry form</a> to request a window that works for your schedule.</p>
+
+<p>Show up ready and the course becomes one of the better weeks of your year.</p>
+
+<p><a href="/contact/courses">Inquire about AIDA 2 dates →</a></p>
+    `,
+  },
+  {
+    slug: "what-makes-a-good-freediving-instructor",
+    title: "What Makes a Good Freediving Instructor",
+    description:
+      "'Freediving instructor' is an unregulated title. Agencies vary, credentials vary, and what an instructor actually does in the water varies even more. Here's how to vet one — the credentials that matter, the standards that exist, and what to look for on course day.",
+    category: "Education",
+    date: "May 27, 2026",
+    isoDate: "2026-05-27",
+    readTime: "12 min read",
+    gradient: "from-deep to-teal",
+    heroImage: "/images/photos/joshua-khaled.jpg",
+    content: `
+<p>There is no government license to teach freediving. Anyone can hang out a shingle, build a website, and start collecting students. The agencies (<a href="https://www.aidainternational.org/" target="_blank" rel="noopener">AIDA</a>, <a href="https://www.padi.com/courses/freediver" target="_blank" rel="noopener">PADI</a>, <a href="https://www.divessi.com/en/training/freediving/" target="_blank" rel="noopener">SSI</a>, <a href="https://www.molchanovs.com/" target="_blank" rel="noopener">Molchanovs</a>, NAUI) impose their own standards on their own instructors, but there's no overarching regulator the way there is for, say, scuba in Europe or driving instruction anywhere. The result is a wide range of teaching quality and a wider range of safety posture, with the same credential printed on the wall.</p>
+
+<p>This puts the burden of vetting on the student. The good news is that vetting isn't difficult once you know what to look for. The bad news is that almost nobody knows what to look for, and the marketing language across freediving schools is virtually identical — which means you can't tell schools apart just from their websites.</p>
+
+<p>Here is what actually matters.</p>
+
+<hr>
+
+<h2>The Agencies — What the Credential Actually Means</h2>
+
+<h3>AIDA International</h3>
+
+<p><a href="https://www.aidainternational.org/" target="_blank" rel="noopener">AIDA</a> is the oldest international standards body in freediving and the most rigorous on the instructor side. AIDA Instructors must hold AIDA 4 (the master freediver cert), pass a multi-stage instructor course taught by an active Instructor Trainer, demonstrate teaching skills with real students under supervision, hold valid first aid certification, and renew annually. AIDA also runs the world championships and sets the competitive standards. If you see "AIDA" on a wall, the credentials behind it are real.</p>
+
+<h3>Molchanovs</h3>
+
+<p>Founded by Alexey Molchanov and his mother Natalia. Modern, well-designed curriculum that overlaps heavily with AIDA's. Strong reputation, growing fast. Instructor standards are rigorous. If you train with a <a href="https://www.molchanovs.com/" target="_blank" rel="noopener">Molchanovs</a> instructor, you're in good hands.</p>
+
+<h3>PADI Freediver</h3>
+
+<p><a href="https://www.padi.com/courses/freediver" target="_blank" rel="noopener">PADI</a> is the giant in scuba and is now offering a freediving certification track. The course content is solid for beginners. The instructor standards are less demanding than AIDA's — a PADI Freediver Instructor doesn't need the AIDA 4 equivalent depth requirement, for example. This isn't a knock; PADI's model is mass-market accessibility, which has value. Just know what you're getting.</p>
+
+<h3>SSI Freediving</h3>
+
+<p>Similar profile to PADI: a scuba-adjacent agency that added a freediving track. Reasonable content, more accessible instructor pathway, broader reach. See <a href="https://www.divessi.com/en/training/freediving/" target="_blank" rel="noopener">SSI Freediving</a>.</p>
+
+<h3>NAUI, FII, CMAS</h3>
+
+<p>Each has its own curriculum and standards. <a href="https://www.performancefreediving.com/" target="_blank" rel="noopener">FII (Performance Freediving International)</a> in particular has a strong reputation in the spearfishing community. CMAS is the international diving federation and runs depth competitions alongside AIDA.</p>
+
+<h3>What this means in practice</h3>
+
+<p>For a beginner course (AIDA 1, AIDA 2, or equivalents), the agency matters less than the individual instructor. For intermediate and advanced training (AIDA 3+ or anything past 20 meters), agency rigor starts to matter more, because the skill set being taught carries higher risk. AIDA and Molchanovs are the two safest bets at the higher levels.</p>
+
+<hr>
+
+<h2>What an Instructor Cert Actually Requires</h2>
+
+<p>The <a href="https://www.aidainternational.org/Education/AIDAFreedivingCourses#aidainst" target="_blank" rel="noopener">AIDA Instructor course</a> is a useful reference point because it's transparent and demanding. To become an AIDA Instructor you must:</p>
+
+<ul>
+<li>Hold an active AIDA 4 Master Freediver certification (which itself requires 32m depth, 70m dynamic, 3:30 static)</li>
+<li>Hold a first aid and CPR certification not older than two years</li>
+<li>Complete the full Instructor course, which is 7+ days of theory, performance demonstration, and supervised teaching</li>
+<li>Demonstrate 40–50m Constant Weight in open water, slow controlled dives at 30m, solo rescue from 25m + 50m tow, and stamina sets like 5×20m CWTB with 1-minute recoveries</li>
+<li>Demonstrate 4:00–5:00 static, 90m+ dynamic, and 50m+ no-fins dynamic in the pool</li>
+<li>Pass written exams at 75% minimum and teach real students under the supervision of an Instructor Trainer</li>
+<li>Renew annually with continuing education credits</li>
+</ul>
+
+<p>If you're being taught by an AIDA Instructor, that's the floor of what they've demonstrated. Compare that to any agency where the instructor pathway can be completed in a 2-week intensive — both produce a credential, but the credentials are not equivalent.</p>
+
+<hr>
+
+<h2>Insurance, CPR, and Other Practical Credentials</h2>
+
+<p>These aren't glamorous, but they are the difference between an emergency that ends well and one that doesn't.</p>
+
+<ul>
+<li><strong>Professional liability insurance.</strong> Through <a href="https://dan.org/" target="_blank" rel="noopener">DAN (Divers Alert Network)</a> or a comparable provider. If your instructor doesn't carry it, you have no recourse if something goes wrong and they have a financial incentive to under-train and under-supervise. Ask. They should be able to give you the policy number.</li>
+<li><strong>Current first aid + CPR/AED.</strong> <a href="https://www.redcross.org/take-a-class/cpr" target="_blank" rel="noopener">Red Cross</a> or AHA, ideally with adult and pediatric coverage. The cert renews every 2 years and is a hard requirement under AIDA standards.</li>
+<li><strong>Oxygen administration training (DAN O2 Provider or equivalent).</strong> Freediving emergencies often respond well to supplemental oxygen. Your instructor should know how to deliver it.</li>
+<li><strong>An AED on site or within minutes.</strong> La Jolla Shores has lifeguard towers with AEDs during open hours, which is one of the reasons it's a great training location.</li>
+</ul>
+
+<hr>
+
+<h2>Lineage — Why It Matters</h2>
+
+<p>This is the credential nobody asks about and the one that often tells you the most. Who did your instructor train with? Where did they spend time as a working freediver before they started teaching?</p>
+
+<p>Freediving as a sport has a small number of training hubs where instructors actually get good. Dahab (Egypt), Cyprus, Roatán, Tioman (Malaysia), La Paz and La Ventana (Mexico). The Blue Hole. Vertical Blue in the Bahamas. When you ask an instructor "where did you train?" you should hear answers like these and names you can search and find. Lineage is verifiable; you can look up the people who trained your instructor and see what their reputation is.</p>
+
+<p>For context: I trained under Stella Abbas at Freedive Tioman in Malaysia (AIDA 1–2), Pieter Van Veen in Dahab (AIDA 3), Harry Chamas at Freedive Passion in La Ventana (deep training and coaching), and Khaled El Gammal in Dahab (AIDA 4 and the full Instructor Course, including the Youth Instructor track). Each of those teachers is publicly findable, has a competition or instructor record you can look up, and is part of a verifiable chain back to the founders of the sport.</p>
+
+<p>This isn't about credentialism. It's about the simple fact that good teaching propagates. An instructor who learned from a thoughtful, conservative, skilled teacher tends to teach the same way. An instructor who picked it up from YouTube and got their cert in a hurry doesn't have the same baseline. Ask. Anyone who's done real training will be happy to tell you.</p>
+
+<hr>
+
+<h2>Ratios and Supervision</h2>
+
+<p><a href="https://www.aidainternational.org/Education/AIDAFreedivingCourses" target="_blank" rel="noopener">AIDA standards</a> mandate the following student-to-instructor ratios:</p>
+
+<ul>
+<li><strong>Pool / confined water:</strong> 8:1, or 12:1 with a certified assistant</li>
+<li><strong>Open water:</strong> 4:1, or 6:1 with a certified assistant</li>
+</ul>
+
+<p>Most good instructors run tighter ratios than the standard. If an instructor is taking 8 students into open water with no assistant, walk away. They're operating above the agency limit and you have less safety margin than you should.</p>
+
+<p>Also worth asking: who is the assistant, and what's their certification? A "certified assistant" should be an AIDA 3 or higher freediver who can perform a rescue, not a friend of the instructor who's there to hand out water bottles.</p>
+
+<hr>
+
+<h2>What to Look For in the Water</h2>
+
+<p>Credentials get you a baseline. The qualitative tells on course day are what actually distinguish good instructors from credentialed ones:</p>
+
+<ul>
+<li><strong>They watch you, not the line.</strong> A good instructor's eyes are on the student during the breathup, the descent, and especially the surfacing. They're not scrolling their phone or chatting with the boat captain.</li>
+<li><strong>They speak in physiology, not metaphor.</strong> When you have trouble equalizing, they ask whether you're using Valsalva or Frenzel, whether your soft palate is locked, whether you can feel air moving into your eustachian tubes — not "just relax more." Specific feedback that you can act on.</li>
+<li><strong>They modify the plan based on what they see.</strong> If you're shaky on a 6m dive, they don't send you to 10m next. They keep you at 6m until the relaxation and equalization are clean, then move you down. A bad instructor sticks to the syllabus regardless.</li>
+<li><strong>They never let you hyperventilate.</strong> If your instructor tells you to "take a few quick deep breaths" before going down, they're teaching the wrong sport.</li>
+<li><strong>They demonstrate the rescue, not just talk through it.</strong> A blow-tap-talk demo on the surface, followed by your turn doing it on them. If you finished an AIDA 2 without practicing the rescue protocol, you didn't really finish an AIDA 2.</li>
+<li><strong>They tell you what you did wrong without making you feel bad about it.</strong> The water exposes everything; a good instructor names the issue clearly and helps you fix it. A bad instructor either pretends nothing is wrong or makes you feel like a failure.</li>
+</ul>
+
+<hr>
+
+<h2>The Vetting Checklist</h2>
+
+<p>Use this on any freediving instructor you're considering, anywhere in the world:</p>
+
+<ol>
+<li>What agency credential do you hold, and at what level? (For adult AIDA courses, you want an AIDA Instructor or higher. For kids, you want an AIDA Youth Instructor specifically.)</li>
+<li>Is the certification active? (Verify via the agency website; AIDA publishes its instructor directory at <a href="https://www.aidainternational.org/Instructors" target="_blank" rel="noopener">aidainternational.org/Instructors</a>.)</li>
+<li>Who did you train with, and where? (Look for verifiable names and locations.)</li>
+<li>Do you carry professional liability insurance? (Policy number on request.)</li>
+<li>Is your CPR/first aid current? (Within 2 years.)</li>
+<li>What's your ratio in open water? (Should be 4:1 or tighter without an assistant.)</li>
+<li>How many AIDA 2 courses (or equivalents) have you taught?</li>
+<li>Can I talk to a recent student? (A good instructor has references on tap.)</li>
+</ol>
+
+<p>If an instructor bristles at any of these questions, that's information. The good ones are happy you asked.</p>
+
+<hr>
+
+<h2>The Bottom Line</h2>
+
+<p>The instructor matters more than the agency. The lineage matters more than the website. The behavior in the water matters more than the credential on the wall.</p>
+
+<p>A few hours of vetting before you book a course saves a lot of regret afterward. The freediving community is small enough that good instructors are easy to find once you know what to look for — and the time you spend asking the right questions is the first sign you're going to be a serious student.</p>
+
+<p><a href="/about">More about Joshua's training lineage →</a></p>
+    `,
+  },
+  {
     slug: "state-anchors",
     title: "State Anchors: What Buddhist Monasteries Taught Me About Freediving",
     description:
