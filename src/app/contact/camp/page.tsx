@@ -48,7 +48,23 @@ export default function CampPage() {
             </Reveal>
           ) : (
             <Reveal>
-              <FormShell action={FORMSPREE} formType="camp_garibaldi" onSuccess={() => setSubmitted(true)}>
+              <FormShell action={FORMSPREE} formType="camp_garibaldi" onSuccess={async (formData?: FormData) => {
+                if (formData) {
+                  try {
+                    await fetch("/api/course-inquiry", {
+                      method: "POST",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify({
+                        firstName: formData.get("parentName") || "",
+                        email: formData.get("email"),
+                        course: "Camp Garibaldi",
+                        message: `Child: ${formData.get("childName") || ""}, age ${formData.get("childAge") || "?"}, swim: ${formData.get("swimLevel") || "?"}, session: ${formData.get("session") || "?"}. ${formData.get("message") || ""}`.trim(),
+                      }),
+                    });
+                  } catch {}
+                }
+                setSubmitted(true);
+              }}>
                 {/* Parent info */}
                 <div className="pb-4 mb-2 border-b border-deep/[0.06]">
                   <h3 className="text-sm font-semibold text-[#5a6a7a] uppercase tracking-wider">Parent / Guardian</h3>

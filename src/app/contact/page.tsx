@@ -110,7 +110,26 @@ export default function ContactPage() {
             </Reveal>
           ) : (
             <Reveal>
-              <FormShell action={FORMSPREE} formType="general" onSuccess={() => setSubmitted(true)}>
+              <FormShell action={FORMSPREE} formType="general" onSuccess={async (formData?: FormData) => {
+                if (formData) {
+                  try {
+                    const name = (formData.get("name") as string) || "";
+                    const nameParts = name.split(" ");
+                    await fetch("/api/course-inquiry", {
+                      method: "POST",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify({
+                        firstName: nameParts[0] || name,
+                        lastName: nameParts.slice(1).join(" ") || "",
+                        email: formData.get("email"),
+                        course: "General inquiry",
+                        message: `[${formData.get("subject") || "General"}] ${formData.get("message") || ""}`,
+                      }),
+                    });
+                  } catch {}
+                }
+                setSubmitted(true);
+              }}>
                 <div className="grid md:grid-cols-2 gap-6">
                   <Input label="Name" name="name" required placeholder="Your name" />
                   <Input label="Email" name="email" type="email" required placeholder="you@email.com" />
