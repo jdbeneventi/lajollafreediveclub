@@ -1,9 +1,14 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 
+const SECRET = "ljfc";
+
 // Auth handled by password input → stored in secret state
+// Or auto-authed when ?key=ljfc is present in the URL (used by deep links
+// from /admin/inquiries → 'Schedule a course here' button)
 
 interface CalendarEvent {
   id: string;
@@ -41,8 +46,21 @@ const emptyEvent = {
 };
 
 export default function CalendarAdmin() {
-  const [secret, setSecret] = useState("");
-  const [authed, setAuthed] = useState(false);
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-deep flex items-center justify-center text-salt/40">Loading…</div>}>
+      <CalendarAdminContent />
+    </Suspense>
+  );
+}
+
+function CalendarAdminContent() {
+  const searchParams = useSearchParams();
+  const keyParam = searchParams.get("key");
+  const prefillDate = searchParams.get("prefillDate");
+  const prefillEndDate = searchParams.get("prefillEndDate");
+
+  const [secret, setSecret] = useState(keyParam === SECRET ? SECRET : "");
+  const [authed, setAuthed] = useState(keyParam === SECRET);
   const [events, setEvents] = useState<CalendarEvent[]>([]);
   const [loading, setLoading] = useState(false);
   const [editing, setEditing] = useState<CalendarEvent | null>(null);
@@ -68,6 +86,29 @@ export default function CalendarAdmin() {
   useEffect(() => {
     if (authed) fetchEvents();
   }, [authed, fetchEvents]);
+
+  // Deep-link prefill: when arriving from /admin/inquiries with
+  // ?prefillDate=YYYY-MM-DD (and optional &prefillEndDate=YYYY-MM-DD),
+  // auto-open the create form with those dates filled in. Runs once
+  // after auth so we don't overwrite the user's in-progress edits.
+  const [prefillApplied, setPrefillApplied] = useState(false);
+  useEffect(() => {
+    if (!authed || prefillApplied || !prefillDate) return;
+    setForm({
+      ...emptyEvent,
+      date: prefillDate,
+      end_date: prefillEndDate && prefillEndDate !== prefillDate ? prefillEndDate : "",
+      category: "course",
+    });
+    setCreating(true);
+    setEditing(null);
+    setShowAdvanced(false);
+    setPrefillApplied(true);
+    // Scroll to the form so it's obvious what just happened
+    if (typeof window !== "undefined") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }, [authed, prefillDate, prefillEndDate, prefillApplied]);
 
   const handleAuth = (e: React.FormEvent) => {
     e.preventDefault();
