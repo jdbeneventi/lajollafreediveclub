@@ -496,7 +496,65 @@ function InquiryRow({
 }) {
   const [notes, setNotes] = useState(inquiry.admin_notes || "");
   const [savingNotes, setSavingNotes] = useState(false);
+  const [drafting, setDrafting] = useState(false);
+  const [draft, setDraft] = useState<{ subject: string; body: string } | null>(null);
+  const [draftError, setDraftError] = useState<string | null>(null);
+  const [sending, setSending] = useState(false);
+  const [sendStatus, setSendStatus] = useState<"idle" | "sent" | "error">("idle");
   const statusMeta = STATUS_BY_VALUE[inquiry.status];
+
+  const generateDraft = async () => {
+    setDrafting(true);
+    setDraftError(null);
+    try {
+      const res = await fetch(`/api/admin/inquiries/reply?key=${SECRET}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "draft", id: inquiry.id }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setDraft({ subject: data.subject || "", body: data.body || "" });
+      } else {
+        setDraftError(data.error || "Failed to draft");
+      }
+    } catch (e) {
+      setDraftError(e instanceof Error ? e.message : "Network error");
+    }
+    setDrafting(false);
+  };
+
+  const sendDraft = async () => {
+    if (!draft) return;
+    setSending(true);
+    setSendStatus("idle");
+    try {
+      const res = await fetch(`/api/admin/inquiries/reply?key=${SECRET}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "send", id: inquiry.id, subject: draft.subject, body: draft.body }),
+      });
+      if (res.ok) {
+        setSendStatus("sent");
+        // Auto-flip status visually (server already did so via PATCH)
+        onUpdate({ status: "replied" });
+      } else {
+        setSendStatus("error");
+      }
+    } catch {
+      setSendStatus("error");
+    }
+    setSending(false);
+  };
+
+  const copyDraft = async () => {
+    if (!draft) return;
+    try {
+      await navigator.clipboard.writeText(`Subject: ${draft.subject}\n\n${draft.body}`);
+      setSendStatus("sent");
+      setTimeout(() => setSendStatus("idle"), 1500);
+    } catch {}
+  };
 
   // Derived booking + onboarding chips
   const bookingChip = inquiry.latest_booking ? (
@@ -638,6 +696,13 @@ function InquiryRow({
             <div>
               <div className="text-[10px] text-salt/30 font-medium uppercase tracking-wider mb-2">Quick actions</div>
               <div className="flex flex-col gap-1.5">
+                <button
+                  onClick={generateDraft}
+                  disabled={drafting}
+                  className="text-xs px-3 py-2 rounded-lg bg-sun/15 text-sun border border-sun/30 hover:bg-sun/25 transition-colors text-center disabled:opacity-50"
+                >
+                  {drafting ? "Drafting with Claude…" : draft ? "Re-draft reply with Claude" : "Draft reply with Claude →"}
+                </button>
                 <Link
                   href={`/admin/invoices?key=${SECRET}&prefillEmail=${encodeURIComponent(inquiry.email)}&prefillName=${encodeURIComponent(
                     `${inquiry.first_name} ${inquiry.last_name || ""}`.trim(),
@@ -678,6 +743,78 @@ function InquiryRow({
               {inquiry.replied_at && ` · replied ${new Date(inquiry.replied_at).toLocaleDateString()}`}
             </div>
           </div>
+
+          {/* Claude-drafted reply editor — full width when present */}
+          {(draft || draftError) && (
+            <div className="col-span-12 mt-2 bg-gradient-to-br from-sun/10 to-coral/5 border border-sun/30 rounded-xl p-4">
+              <div className="flex items-center justify-between mb-3">
+                <div className="text-[11px] text-sun font-medium tracking-[0.2em] uppercase">
+                  Claude-drafted reply
+                </div>
+                <div className="flex items-center gap-3 text-[10px] text-salt/40 uppercase tracking-wider">
+                  {sendStatus === "sent" && <span className="text-seafoam">✓ done</span>}
+                  {sendStatus === "error" && <span className="text-coral">send failed</span>}
+                  <span className="text-salt/30">Edit before sending</span>
+                </div>
+              </div>
+
+              {draftError && (
+                <div className="text-xs text-coral bg-coral/10 rounded-lg p-3 mb-3">{draftError}</div>
+              )}
+
+              {draft && (
+                <>
+                  <div className="mb-3">
+                    <div className="text-[10px] text-salt/40 uppercase tracking-wider mb-1">Subject</div>
+                    <input
+                      type="text"
+                      value={draft.subject}
+                      onChange={(e) => setDraft({ ...draft, subject: e.target.value })}
+                      className="w-full bg-deep/40 border border-teal/15 rounded-lg px-3 py-2 text-sm text-salt focus:outline-none focus:border-teal/40"
+                    />
+                  </div>
+
+                  <div className="mb-3">
+                    <div className="text-[10px] text-salt/40 uppercase tracking-wider mb-1">Body</div>
+                    <textarea
+                      value={draft.body}
+                      onChange={(e) => setDraft({ ...draft, body: e.target.value })}
+                      rows={Math.min(24, Math.max(10, draft.body.split("\n").length + 1))}
+                      className="w-full bg-deep/40 border border-teal/15 rounded-lg p-3 text-sm text-salt focus:outline-none focus:border-teal/40 font-mono leading-relaxed"
+                    />
+                  </div>
+
+                  <div className="flex flex-wrap gap-2">
+                    <button
+                      onClick={sendDraft}
+                      disabled={sending}
+                      className="text-xs px-4 py-2 rounded-full bg-seafoam text-deep font-semibold hover:bg-seafoam/80 transition-colors disabled:opacity-50"
+                    >
+                      {sending ? "Sending…" : "Send via email"}
+                    </button>
+                    <button
+                      onClick={copyDraft}
+                      className="text-xs px-4 py-2 rounded-full bg-deep/40 text-salt/70 border border-teal/20 hover:text-salt transition-colors"
+                    >
+                      Copy to clipboard
+                    </button>
+                    <button
+                      onClick={() => {
+                        setDraft(null);
+                        setSendStatus("idle");
+                      }}
+                      className="text-xs px-4 py-2 rounded-full bg-deep/40 text-salt/40 hover:text-salt/70 transition-colors"
+                    >
+                      Discard
+                    </button>
+                    <div className="ml-auto text-[10px] text-salt/30 self-center">
+                      Sends from noreply@lajollafreediveclub.com · reply-to: you · BCC: you
+                    </div>
+                  </div>
+                </>
+              )}
+            </div>
+          )}
         </div>
       )}
     </div>
