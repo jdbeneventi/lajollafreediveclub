@@ -49,7 +49,9 @@ export async function POST(request: Request) {
           .select("id")
           .single();
         bookingId = updated?.id ?? null;
-      } catch {}
+      } catch (e) {
+        console.error("[stripe-webhook] booking update failed:", e);
+      }
     }
 
     // Link the most recent active inquiry to this booking and bump status to 'paid'.
@@ -76,7 +78,9 @@ export async function POST(request: Request) {
             })
             .eq("id", latestInquiry.id);
         }
-      } catch {}
+      } catch (e) {
+        console.error("[stripe-webhook] inquiry linking failed:", e);
+      }
     }
 
     // Generate magic link for the student

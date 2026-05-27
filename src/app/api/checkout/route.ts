@@ -29,8 +29,8 @@ export async function POST(request: Request) {
     const isDeposit = paymentType === "deposit";
     const amount = isDeposit ? Math.round(course.price / 2) : course.price;
 
-    // Processing fee passed to student (2.9% + $0.30)
-    const processingFee = Math.round(amount * 0.029 + 0.30);
+    // Processing fee passed to student (2.9% + $0.30), computed in cents
+    const processingFee = Math.ceil(amount * 100 * 0.029 + 30) / 100;
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card", "us_bank_account"],
@@ -56,7 +56,7 @@ export async function POST(request: Request) {
               name: "Processing fee",
               description: "Card/bank processing fee",
             },
-            unit_amount: processingFee * 100,
+            unit_amount: Math.round(processingFee * 100),
           },
           quantity: 1,
         },
@@ -103,7 +103,9 @@ export async function POST(request: Request) {
         deposit_paid: isDeposit ? amount : null,
         stripe_session_id: session.id,
       });
-    } catch {}
+    } catch (e) {
+      console.error("[checkout] booking record creation failed:", e);
+    }
 
     return NextResponse.json({ url: session.url });
   } catch (error) {

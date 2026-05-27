@@ -35,8 +35,8 @@ export async function POST(request: Request) {
         group_size: groupSize || null,
         message: message || null,
       });
-    } catch {
-      // Non-critical
+    } catch (e) {
+      console.error("[course-inquiry] Supabase insert failed:", e);
     }
 
     // Send confirmation email to student

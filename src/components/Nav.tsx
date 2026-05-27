@@ -13,8 +13,9 @@ const learnLinks = [
 
 const navLinks = [
   { href: "/conditions", label: "Conditions" },
+  { href: "/map", label: "Field Guide" },
+  { href: "/tides", label: "Tides" },
   { href: "/blog", label: "Journal" },
-  { href: "/science", label: "Science" },
   { href: "/about", label: "About" },
 ];
 
@@ -213,6 +214,13 @@ export function Nav() {
                 {l.label}
               </Link>
             ))}
+            <Link
+              href="/portal"
+              onClick={() => setMenuOpen(false)}
+              className="text-white/50 no-underline text-base py-3 hover:text-white transition-colors"
+            >
+              My Account
+            </Link>
             <Link
               href="/contact"
               onClick={() => setMenuOpen(false)}
