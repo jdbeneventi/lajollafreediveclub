@@ -39,7 +39,7 @@ export async function POST(request: Request) {
       const chargeAmount = isDeposit ? depositAmount : amount;
 
       // Calculate processing fee (2.9% + $0.30 for card — passed to student)
-      const processingFee = Math.round(chargeAmount * 0.029 + 0.30);
+      const processingFee = Math.ceil(chargeAmount * 100 * 0.029 + 30) / 100;
 
       // Create Stripe Checkout session
       const session = await stripe.checkout.sessions.create({
@@ -66,7 +66,7 @@ export async function POST(request: Request) {
                 name: "Processing fee",
                 description: "Card/bank processing fee",
               },
-              unit_amount: processingFee * 100,
+              unit_amount: Math.round(processingFee * 100),
             },
             quantity: 1,
           },
