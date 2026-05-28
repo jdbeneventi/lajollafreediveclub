@@ -242,7 +242,7 @@ export default async function PortalPage() {
           <h2 className="font-serif text-lg mb-4">Quick Links</h2>
           <div className="grid grid-cols-2 gap-3">
             <QuickLink href="/portal/profile" label="My Profile & Gear" />
-            <QuickLink href="/portal/prep/aida1" label="AIDA 1 Prep Guide" />
+            <QuickLink href={bookedLevel === "aida2" || bookedLevel === "aida3" ? "/portal/prep/aida2" : "/portal/prep/aida1"} label={bookedLevel === "aida2" || bookedLevel === "aida3" ? "AIDA 2 Prep Guide" : "AIDA 1 Prep Guide"} />
             <QuickLink href="/calendar" label="Course Calendar" />
             <QuickLink href="/saturday-sessions" label="Saturday Sessions" />
             <QuickLink href="/conditions" label="Live Conditions" />
