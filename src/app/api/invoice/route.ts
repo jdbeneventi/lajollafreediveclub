@@ -200,3 +200,50 @@ export async function GET(request: Request) {
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
   return NextResponse.json({ bookings: data });
 }
+
+// PATCH: update a booking
+export async function PATCH(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const secret = searchParams.get("secret");
+  if (secret !== "ljfc" && secret !== process.env.CRON_SECRET) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const body = await request.json();
+  const { id, ...updates } = body;
+  if (!id) return NextResponse.json({ error: "id required" }, { status: 400 });
+
+  const allowed: Record<string, unknown> = {};
+  for (const key of ["status", "payment_status", "payment_amount", "deposit_paid", "course", "course_dates", "notes", "email"]) {
+    if (key in updates) allowed[key] = updates[key];
+  }
+  if (Object.keys(allowed).length === 0) {
+    return NextResponse.json({ error: "No valid fields" }, { status: 400 });
+  }
+
+  const { data, error } = await supabase
+    .from("bookings")
+    .update(allowed)
+    .eq("id", id)
+    .select()
+    .single();
+
+  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  return NextResponse.json({ booking: data });
+}
+
+// DELETE: remove a booking
+export async function DELETE(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const secret = searchParams.get("secret");
+  if (secret !== "ljfc" && secret !== process.env.CRON_SECRET) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const id = searchParams.get("id");
+  if (!id) return NextResponse.json({ error: "id required" }, { status: 400 });
+
+  const { error } = await supabase.from("bookings").delete().eq("id", id);
+  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  return NextResponse.json({ deleted: true });
+}

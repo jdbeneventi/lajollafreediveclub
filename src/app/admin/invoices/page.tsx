@@ -51,6 +51,9 @@ export default function InvoicesPage() {
   // History
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [loadingBookings, setLoadingBookings] = useState(false);
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editForm, setEditForm] = useState<Partial<Booking>>({});
+  const [saving, setSaving] = useState(false);
 
   const fetchBookings = useCallback(async () => {
     setLoadingBookings(true);
@@ -261,30 +264,132 @@ export default function InvoicesPage() {
               <div className="text-salt/30 text-sm text-center py-12">No bookings yet.</div>
             ) : (
               <div className="space-y-2">
+                {/* Pending summary */}
+                {(() => {
+                  const pending = bookings.filter(b => b.payment_status === "unpaid" || b.payment_status === "pending");
+                  return pending.length > 0 ? (
+                    <div className="bg-coral/10 border border-coral/25 rounded-xl px-4 py-3 mb-3">
+                      <span className="text-coral text-xs font-semibold">{pending.length} pending invoice{pending.length > 1 ? "s" : ""}</span>
+                      <span className="text-salt/40 text-xs"> — awaiting payment</span>
+                    </div>
+                  ) : null;
+                })()}
                 {bookings.map(b => (
-                  <div key={b.id} className="flex items-center justify-between bg-ocean/20 rounded-lg px-4 py-3">
-                    <div>
-                      <div className="text-salt text-sm font-medium">{b.course}</div>
-                      <div className="text-salt/30 text-xs">{b.email}{b.course_dates ? ` · ${b.course_dates}` : ""}</div>
+                  <div key={b.id} className="bg-ocean/20 rounded-lg overflow-hidden">
+                    <div className="flex items-center justify-between px-4 py-3">
+                      <div>
+                        <div className="text-salt text-sm font-medium">{b.course}</div>
+                        <div className="text-salt/30 text-xs">{b.email}{b.course_dates ? ` · ${b.course_dates}` : ""}</div>
+                      </div>
+                      <div className="flex gap-2 items-center">
+                        {b.payment_amount && <span className="text-salt/40 text-xs">${b.payment_amount}</span>}
+                        <span className={`px-2.5 py-1 rounded-full text-[10px] font-semibold ${
+                          b.payment_status === "paid" ? "bg-seafoam/15 text-seafoam" :
+                          b.payment_status === "deposit" ? "bg-sun/15 text-sun" :
+                          b.payment_status === "pending" || b.payment_status === "unpaid" ? "bg-coral/15 text-coral" :
+                          "bg-ocean/30 text-salt/50"
+                        }`}>
+                          {b.payment_status}
+                        </span>
+                        <span className={`px-2.5 py-1 rounded-full text-[10px] font-semibold ${
+                          b.status === "confirmed" ? "bg-seafoam/15 text-seafoam" :
+                          b.status === "invoice_sent" ? "bg-teal/15 text-teal" :
+                          "bg-ocean/30 text-salt/50"
+                        }`}>
+                          {b.status}
+                        </span>
+                        <button
+                          onClick={() => {
+                            if (editingId === b.id) { setEditingId(null); } else {
+                              setEditingId(b.id);
+                              setEditForm({ status: b.status, payment_status: b.payment_status, payment_amount: b.payment_amount, course: b.course, course_dates: b.course_dates, email: b.email, notes: b.notes });
+                            }
+                          }}
+                          className="text-[10px] text-salt/30 hover:text-salt cursor-pointer bg-transparent border-none ml-1"
+                        >
+                          {editingId === b.id ? "▲" : "✎"}
+                        </button>
+                      </div>
                     </div>
-                    <div className="flex gap-2 items-center">
-                      {b.payment_amount && <span className="text-salt/40 text-xs">${b.payment_amount}</span>}
-                      <span className={`px-2.5 py-1 rounded-full text-[10px] font-semibold ${
-                        b.payment_status === "paid" ? "bg-seafoam/15 text-seafoam" :
-                        b.payment_status === "deposit" ? "bg-sun/15 text-sun" :
-                        b.payment_status === "pending" ? "bg-ocean/30 text-salt/50" :
-                        "bg-coral/15 text-coral"
-                      }`}>
-                        {b.payment_status}
-                      </span>
-                      <span className={`px-2.5 py-1 rounded-full text-[10px] font-semibold ${
-                        b.status === "confirmed" ? "bg-seafoam/15 text-seafoam" :
-                        b.status === "invoice_sent" ? "bg-teal/15 text-teal" :
-                        "bg-ocean/30 text-salt/50"
-                      }`}>
-                        {b.status}
-                      </span>
-                    </div>
+
+                    {editingId === b.id && (
+                      <div className="px-4 pb-4 pt-2 border-t border-teal/10 space-y-3">
+                        <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                          <div>
+                            <label className="text-[10px] text-salt/40 block mb-1">Email</label>
+                            <input value={editForm.email || ""} onChange={e => setEditForm({ ...editForm, email: e.target.value })} className="w-full px-3 py-2 bg-deep/40 border border-teal/15 rounded-lg text-sm text-salt focus:outline-none focus:border-teal/40" />
+                          </div>
+                          <div>
+                            <label className="text-[10px] text-salt/40 block mb-1">Course</label>
+                            <input value={editForm.course || ""} onChange={e => setEditForm({ ...editForm, course: e.target.value })} className="w-full px-3 py-2 bg-deep/40 border border-teal/15 rounded-lg text-sm text-salt focus:outline-none focus:border-teal/40" />
+                          </div>
+                          <div>
+                            <label className="text-[10px] text-salt/40 block mb-1">Dates</label>
+                            <input value={editForm.course_dates || ""} onChange={e => setEditForm({ ...editForm, course_dates: e.target.value })} className="w-full px-3 py-2 bg-deep/40 border border-teal/15 rounded-lg text-sm text-salt focus:outline-none focus:border-teal/40" />
+                          </div>
+                          <div>
+                            <label className="text-[10px] text-salt/40 block mb-1">Amount ($)</label>
+                            <input type="number" value={editForm.payment_amount ?? ""} onChange={e => setEditForm({ ...editForm, payment_amount: e.target.value ? Number(e.target.value) : null })} className="w-full px-3 py-2 bg-deep/40 border border-teal/15 rounded-lg text-sm text-salt focus:outline-none focus:border-teal/40" />
+                          </div>
+                          <div>
+                            <label className="text-[10px] text-salt/40 block mb-1">Payment status</label>
+                            <select value={editForm.payment_status || ""} onChange={e => setEditForm({ ...editForm, payment_status: e.target.value })} className="w-full px-3 py-2 bg-deep/40 border border-teal/15 rounded-lg text-sm text-salt focus:outline-none focus:border-teal/40">
+                              <option value="unpaid">unpaid</option>
+                              <option value="pending">pending</option>
+                              <option value="deposit">deposit</option>
+                              <option value="partial">partial</option>
+                              <option value="paid">paid</option>
+                            </select>
+                          </div>
+                          <div>
+                            <label className="text-[10px] text-salt/40 block mb-1">Booking status</label>
+                            <select value={editForm.status || ""} onChange={e => setEditForm({ ...editForm, status: e.target.value })} className="w-full px-3 py-2 bg-deep/40 border border-teal/15 rounded-lg text-sm text-salt focus:outline-none focus:border-teal/40">
+                              <option value="invoice_sent">invoice_sent</option>
+                              <option value="pending">pending</option>
+                              <option value="confirmed">confirmed</option>
+                              <option value="completed">completed</option>
+                              <option value="cancelled">cancelled</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div>
+                          <label className="text-[10px] text-salt/40 block mb-1">Notes</label>
+                          <input value={editForm.notes || ""} onChange={e => setEditForm({ ...editForm, notes: e.target.value })} placeholder="Internal notes" className="w-full px-3 py-2 bg-deep/40 border border-teal/15 rounded-lg text-sm text-salt placeholder:text-salt/25 focus:outline-none focus:border-teal/40" />
+                        </div>
+                        <div className="flex gap-2">
+                          <button
+                            onClick={async () => {
+                              setSaving(true);
+                              try {
+                                const res = await fetch(`/api/invoice?secret=${SECRET}`, { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id: b.id, ...editForm }) });
+                                if (res.ok) { setEditingId(null); fetchBookings(); }
+                              } catch {}
+                              setSaving(false);
+                            }}
+                            disabled={saving}
+                            className="text-xs px-4 py-2 rounded-lg bg-seafoam text-deep font-semibold hover:bg-seafoam/80 transition-colors disabled:opacity-50 cursor-pointer border-none"
+                          >
+                            {saving ? "Saving…" : "Save changes"}
+                          </button>
+                          <button
+                            onClick={async () => {
+                              if (!confirm(`Delete booking for ${b.email} — ${b.course}?`)) return;
+                              const res = await fetch(`/api/invoice?secret=${SECRET}&id=${b.id}`, { method: "DELETE" });
+                              if (res.ok) { setEditingId(null); fetchBookings(); }
+                            }}
+                            className="text-xs px-4 py-2 rounded-lg bg-coral/15 text-coral border border-coral/30 hover:bg-coral/25 transition-colors cursor-pointer"
+                          >
+                            Delete
+                          </button>
+                          <button
+                            onClick={() => setEditingId(null)}
+                            className="text-xs px-4 py-2 text-salt/40 hover:text-salt cursor-pointer bg-transparent border-none"
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>
