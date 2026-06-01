@@ -23,9 +23,15 @@ export async function POST(request: Request) {
     } else {
       event = JSON.parse(body) as Stripe.Event;
     }
-  } catch {
+  } catch (err) {
+    console.error("[stripe-webhook] verification failed:", err instanceof Error ? err.message : err);
+    console.error("[stripe-webhook] sig present:", !!sig, "secret present:", !!WEBHOOK_SECRET);
     return NextResponse.json({ error: "Webhook verification failed" }, { status: 400 });
   }
+
+  // Wrap all processing in try/catch — always return 200 to Stripe
+  // so it stops retrying, even if our internal processing fails.
+  try {
 
   if (event.type === "checkout.session.completed") {
     const session = event.data.object as Stripe.Checkout.Session;
@@ -159,6 +165,10 @@ export async function POST(request: Request) {
         });
       } catch {}
     }
+  }
+
+  } catch (err) {
+    console.error("[stripe-webhook] processing error:", err instanceof Error ? err.message : err);
   }
 
   return NextResponse.json({ received: true });
