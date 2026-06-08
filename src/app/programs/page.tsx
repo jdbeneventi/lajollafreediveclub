@@ -86,6 +86,7 @@ const aidaCourses = [
       water: "2 confined water sessions + 3 open water sessions over 2 days",
       ratios: "8:1 confined water · 4:1 open water",
     },
+    guideUrl: "/programs/aida-2-guide",
   },
   {
     id: "aida3",

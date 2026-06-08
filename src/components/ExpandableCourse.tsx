@@ -50,6 +50,7 @@ interface CourseData {
     water: string;
     ratios: string;
   };
+  guideUrl?: string;
 }
 
 export function ExpandableCourse({ course, isAida }: { course: CourseData; isAida: boolean }) {
@@ -207,9 +208,19 @@ export function ExpandableCourse({ course, isAida }: { course: CourseData; isAid
             </div>
           )}
 
-          <Link href="/contact/courses" className="inline-flex items-center gap-2 px-7 py-3 bg-coral text-white rounded-full font-medium text-[0.9rem] no-underline hover:shadow-[0_8px_25px_rgba(199,91,58,0.4)] transition-all">
-            Get started →
-          </Link>
+          <div className="flex flex-wrap gap-3">
+            <Link href="/contact/courses" className="inline-flex items-center gap-2 px-7 py-3 bg-coral text-white rounded-full font-medium text-[0.9rem] no-underline hover:shadow-[0_8px_25px_rgba(199,91,58,0.4)] transition-all">
+              Get started →
+            </Link>
+            {course.guideUrl && (
+              <Link
+                href={course.guideUrl}
+                className="inline-flex items-center gap-2 px-7 py-3 bg-transparent text-deep border border-deep/20 rounded-full font-medium text-[0.9rem] no-underline hover:bg-deep hover:text-white transition-all"
+              >
+                See the full guide →
+              </Link>
+            )}
+          </div>
         </div>
       </div>
     </div>
