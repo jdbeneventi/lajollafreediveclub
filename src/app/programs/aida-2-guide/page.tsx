@@ -114,7 +114,8 @@ export default function Aida2GuidePage() {
                   Inquire about dates →
                 </Link>
                 <a
-                  href="/api/guide-pdf?course=aida-2"
+                  href="/documents/LJFC-AIDA2-Course-Guide.pdf"
+                  download="LJFC-AIDA2-Course-Guide.pdf"
                   className="inline-block px-7 py-3 bg-transparent text-salt border border-salt/30 rounded-full font-medium text-sm hover:border-salt/60 transition-colors no-underline"
                 >
                   Download as PDF
