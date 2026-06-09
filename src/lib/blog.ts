@@ -2131,7 +2131,7 @@ Round 8: Hold 1:30, Done</p>
     isoDate: "2026-06-09",
     readTime: "14 min read",
     gradient: "from-deep to-ocean",
-    heroImage: "/images/photos/joshua-red-sea.jpg",
+    heroImage: "/images/photos/joshua-hank-youth.jpg",
     content: `
 <p>Two minutes is the AIDA 2 standard. Four minutes is the next plateau most freedivers shoot for once they're certified — it's the rough benchmark for an AIDA 3 candidate, it's a meaningful threshold for static apnea competition, and it's the point at which most students discover that breath-hold training stops being about lung capacity and starts being about the nervous system.</p>
 
@@ -2502,7 +2502,7 @@ Round 8: Hold 1:30, Done</p>
     isoDate: "2026-06-09",
     readTime: "14 min read",
     gradient: "from-deep to-seafoam",
-    heroImage: "/images/photos/joshua-presenting-dahab.jpg",
+    heroImage: "/images/photos/scripps-underwater.jpg",
     content: `
 <p>Two practices, separated by 2,500 years and several thousand miles of geography, train the same set of mental skills using almost identical mechanisms. One is concentration meditation as developed in the Theravada Buddhist monastic tradition. The other is competitive freediving.</p>
 
@@ -2655,7 +2655,7 @@ Round 8: Hold 1:30, Done</p>
     isoDate: "2026-06-09",
     readTime: "16 min read",
     gradient: "from-ocean to-deep",
-    heroImage: "/images/photos/joshua-stella.jpg",
+    heroImage: "/images/photos/joshua-presenting-dahab.jpg",
     content: `
 <p>The science of freediving has changed substantially in the last five years. Until recently, breath-hold diving was understood primarily through the lens of mammalian dive reflex research from the 1930s–1960s, supplemented by the work of researchers like Lin (1980s–90s) on bradycardia and peripheral vasoconstriction in elite divers. The mechanisms were known. The fine-grained neurological detail wasn't.</p>
 
@@ -3383,7 +3383,7 @@ Round 8: Hold 1:30, Done</p>
     isoDate: "2026-06-09",
     readTime: "14 min read",
     gradient: "from-deep to-seafoam",
-    heroImage: "/images/photos/joshua-khaled.jpg",
+    heroImage: "/images/photos/joshua-brooke-kristina.jpg",
     content: `
 <p>The Yoga Sutras of Patanjali, compiled somewhere between 400 BCE and 200 CE, contain instructions for breath disciplines that produce specific physiological states. The instructions are mechanical — slow your exhale, retain your breath, vary the ratio of inhale to exhale, hold after the inhale, hold after the exhale. The expected outcomes are described in the language of the time: steadier mind, withdrawal from external stimulus, increased control over the body.</p>
 
@@ -3540,7 +3540,7 @@ Round 8: Hold 1:30, Done</p>
     isoDate: "2026-06-09",
     readTime: "12 min read",
     gradient: "from-teal to-seafoam",
-    heroImage: "/images/photos/joshua-red-sea.jpg",
+    heroImage: "/images/photos/joshua-khaled-hannah.jpg",
     content: `
 <p>The single most common reason a student fails to hit their AIDA 2 depth on cert day isn't fitness. It isn't breath hold. It isn't fear. It's equalization. The student arrives at 8 or 9 meters, the ears refuse to clear, and the dive ends.</p>
 
