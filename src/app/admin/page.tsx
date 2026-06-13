@@ -22,6 +22,13 @@ const ADMIN_PAGES = [
     color: "from-coral to-sun",
   },
   {
+    label: "Email Workflows",
+    href: "/admin/emails",
+    desc: "Read-only registry of what sends, when, to whom, and which admin surface controls it.",
+    icon: "✉️",
+    color: "from-seafoam to-ocean",
+  },
+  {
     label: "Saturday Dashboard",
     href: "/saturday",
     desc: "This week's RSVPs, confirmations, dive headcount, waiver status, and Go/No-Go blast.",

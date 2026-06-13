@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LJFC Current State + Streamlined Future Map</title>
+  <style>
+    :root{
+      --deep:#0B1D2C; --ocean:#163B4E; --teal:#1B6B6B; --seafoam:#3db8a4; --sand:#D4A574; --salt:#FAF3EC; --coral:#C75B3A; --muted:rgba(250,243,236,.62); --line:rgba(250,243,236,.16);
+    }
+    *{box-sizing:border-box} body{margin:0;background:linear-gradient(135deg,#06111b,var(--deep) 55%,#0f2c38);color:var(--salt);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.42} main{max-width:1320px;margin:auto;padding:42px 22px 70px}.eyebrow{color:var(--seafoam);letter-spacing:.22em;text-transform:uppercase;font-size:11px;font-weight:800}h1{font-family:Georgia,serif;font-weight:400;letter-spacing:-.04em;font-size:clamp(34px,5vw,66px);line-height:.96;margin:14px 0}.lede{max-width:820px;color:var(--muted);font-size:18px}.bar{height:1px;background:var(--line);margin:30px 0}.tabs{display:grid;grid-template-columns:1fr 1fr;gap:18px}.section{border:1px solid var(--line);border-radius:24px;background:rgba(255,255,255,.035);padding:22px}.section h2{font-family:Georgia,serif;font-size:30px;font-weight:400;margin:0 0 8px}.section>p{color:var(--muted);margin:0 0 18px}.map{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}.node{min-height:95px;border:1px solid var(--line);border-radius:15px;background:rgba(250,243,236,.055);padding:13px;position:relative}.node strong{display:block;color:white;font-size:13px;margin-bottom:6px}.node span{font-size:11px;color:rgba(250,243,236,.55)}.node::after{content:"→";position:absolute;right:-11px;top:40%;color:rgba(61,184,164,.7);font-size:20px}.node:nth-child(5n)::after{content:"↓";right:12px;top:auto;bottom:-22px}.node:last-child::after{content:""}.admin{border-color:rgba(212,165,116,.42)}.email{border-color:rgba(61,184,164,.48)}.risk{border-color:rgba(199,91,58,.58);background:rgba(199,91,58,.08)}.pay{border-color:rgba(199,91,58,.72)}.ready{border-color:rgba(61,184,164,.7);background:rgba(61,184,164,.08)}.legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}.pill{border:1px solid var(--line);border-radius:999px;padding:6px 9px;font-size:11px;color:var(--muted)}.pill.admin{color:var(--sand)}.pill.email{color:var(--seafoam)}.pill.risk{color:var(--coral)}.swim{margin-top:20px;display:grid;grid-template-columns:170px 1fr;gap:10px}.lane-label{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--sand);font-weight:800;padding-top:13px}.lane{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}.step{border:1px solid var(--line);background:rgba(255,255,255,.045);border-radius:13px;padding:10px;min-height:70px}.step strong{display:block;font-size:12px}.step span{font-size:11px;color:rgba(250,243,236,.55)}.opps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:22px}.opp{border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,.035);padding:16px}.opp h3{margin:0 0 8px;color:white;font-size:15px}.opp p{margin:0;color:var(--muted);font-size:13px}.badge{display:inline-block;font-size:10px;text-transform:uppercase;letter-spacing:.14em;color:var(--seafoam);margin-bottom:8px}.footer{color:rgba(250,243,236,.38);font-size:12px;margin-top:28px}@media(max-width:1000px){.tabs,.opps{grid-template-columns:1fr}.map{grid-template-columns:1fr}.node::after,.node:nth-child(5n)::after{content:"↓";right:14px;top:auto;bottom:-22px}.swim{grid-template-columns:1fr}.lane{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<main>
+  <div class="eyebrow">LJFC · Current State Audit</div>
+  <h1>Working system, dispersed cockpit.</h1>
+  <p class="lede">The app already has the important pieces: inquiries, invoices, Stripe, PDFs, waivers, onboarding, gear/demographic elicitation, prep guides, readiness scoring, reminders, and internal education spaces. The opportunity is to unify the operating view without breaking the working flows.</p>
+  <div class="bar"></div>
+
+  <div class="tabs">
+    <section class="section">
+      <h2>Current state</h2>
+      <p>Feature-rich but spread across a flat admin grid, many API send points, and several student-facing surfaces.</p>
+      <div class="map">
+        <div class="node"><strong>Public site</strong><span>Courses, calendar, contact, booking, conditions, Saturday</span></div>
+        <div class="node"><strong>Inquiry form</strong><span>Course interest, experience, dates, group size</span></div>
+        <div class="node admin"><strong>Admin inquiries</strong><span>Reply, status, grouping, invoice/send-links jumps</span></div>
+        <div class="node pay"><strong>Invoice / Stripe</strong><span>Deposit/full payment link; booking row created</span></div>
+        <div class="node pay"><strong>Webhook</strong><span>Booking confirmed, inquiry paid, magic link issued</span></div>
+        <div class="node"><strong>Portal</strong><span>Student next steps after payment</span></div>
+        <div class="node"><strong>Onboarding</strong><span>Demographics, emergency, experience, gear sizing</span></div>
+        <div class="node"><strong>AIDA forms</strong><span>Medical + liability; physician flag</span></div>
+        <div class="node"><strong>Waiver PDF</strong><span>Signed PDF emailed to student + owner</span></div>
+        <div class="node ready"><strong>Readiness</strong><span>Prep progress + missing requirements</span></div>
+        <div class="node email"><strong>Reminders</strong><span>Course reminder, briefing, inquiry digest</span></div>
+        <div class="node admin"><strong>Course roster</strong><span>Enroll, resend invite, roster email</span></div>
+        <div class="node admin"><strong>Onboarding admin</strong><span>Gear/demographic/theory preferences</span></div>
+        <div class="node admin"><strong>Students/progress</strong><span>Cert progress and requirement signoff</span></div>
+        <div class="node risk"><strong>Missing map</strong><span>No single view of all email/workflow triggers</span></div>
+      </div>
+      <div class="legend"><span class="pill admin">admin surface</span><span class="pill email">email automation</span><span class="pill risk">clarity gap</span><span class="pill">student-facing</span></div>
+    </section>
+
+    <section class="section">
+      <h2>Better reality</h2>
+      <p>Same capabilities, but organized around a daily operator cockpit and one student readiness model.</p>
+      <div class="map">
+        <div class="node"><strong>Public routing</strong><span>New? inquire · Ready? deposit · Enrolled? portal</span></div>
+        <div class="node"><strong>Qualification</strong><span>Age, swim, prereq, medical flag, gear, date fit</span></div>
+        <div class="node admin"><strong>Today queue</strong><span>Needs reply, needs qualification, deposit pending</span></div>
+        <div class="node pay"><strong>Deposit boundary</strong><span>Seat reserved only after payment</span></div>
+        <div class="node"><strong>Portal source</strong><span>All post-payment steps point here</span></div>
+        <div class="node ready"><strong>Readiness card</strong><span>One checklist per student/course</span></div>
+        <div class="node email"><strong>Email registry</strong><span>What sends, when, to whom, from where</span></div>
+        <div class="node admin"><strong>Course cockpit</strong><span>Upcoming courses + blockers + roster</span></div>
+        <div class="node"><strong>Knowledge base</strong><span>Bounded answers for student questions</span></div>
+        <div class="node"><strong>Optional agent</strong><span>Reads readiness + KB; escalates exceptions</span></div>
+      </div>
+      <div class="legend"><span class="pill risk">do not rewrite first</span><span class="pill email">registry before automation</span><span class="pill admin">cockpit before CRM</span></div>
+    </section>
+  </div>
+
+  <section class="section" style="margin-top:18px">
+    <h2>Workflow-shaped admin IA</h2>
+    <p>Reorganize the existing surfaces before changing behavior.</p>
+    <div class="swim">
+      <div class="lane-label">Today</div>
+      <div class="lane"><div class="step"><strong>Needs reply</strong><span>new/stale inquiries</span></div><div class="step"><strong>Needs qualification</strong><span>eligibility/date blockers</span></div><div class="step"><strong>Deposit pending</strong><span>link sent, no payment</span></div><div class="step"><strong>Not ready</strong><span>paid students missing items</span></div><div class="step"><strong>Upcoming</strong><span>course briefing</span></div><div class="step"><strong>Exceptions</strong><span>medical/payment/safety</span></div></div>
+      <div class="lane-label">Enrollments</div>
+      <div class="lane"><div class="step"><strong>Inquiries</strong><span>/admin/inquiries</span></div><div class="step"><strong>Invoices</strong><span>/admin/invoices</span></div><div class="step"><strong>Calendar</strong><span>/admin/calendar</span></div><div class="step"><strong>Roster</strong><span>/admin/courses</span></div><div class="step"><strong>Send links</strong><span>/admin/send-links</span></div><div class="step"><strong>Forms</strong><span>/admin/send-forms</span></div></div>
+      <div class="lane-label">Readiness</div>
+      <div class="lane"><div class="step"><strong>Onboarding</strong><span>demographic/gear</span></div><div class="step"><strong>Medical</strong><span>AIDA form</span></div><div class="step"><strong>Waiver</strong><span>PDF signed copy</span></div><div class="step"><strong>Prep</strong><span>AIDA 1/2 progress</span></div><div class="step"><strong>Students</strong><span>certification/progress</span></div><div class="step"><strong>Reminders</strong><span>48h / 24h</span></div></div>
+      <div class="lane-label">Community</div>
+      <div class="lane"><div class="step"><strong>Saturday</strong><span>RSVP/go-no-go</span></div><div class="step"><strong>Conditions</strong><span>daily email</span></div><div class="step"><strong>Camp</strong><span>registrations/waivers</span></div><div class="step"><strong>Partners</strong><span>network tracker</span></div><div class="step"><strong>Curriculum</strong><span>education spaces</span></div><div class="step"><strong>Economics</strong><span>business model</span></div></div>
+    </div>
+  </section>
+
+  <section class="opps">
+    <div class="opp"><div class="badge">Highest leverage</div><h3>Email workflow registry</h3><p>Create one human-readable source of truth: trigger, recipient, timing, route, template, manual/cron/webhook, status effect.</p></div>
+    <div class="opp"><div class="badge">Lowest risk</div><h3>Admin navigation redesign</h3><p>Group current tools by workflow. This improves intuition without touching backend behavior.</p></div>
+    <div class="opp"><div class="badge">Next product win</div><h3>Course readiness cockpit</h3><p>For each upcoming course, show who is paid, who is missing forms/waiver/prep/gear, and what reminder goes next.</p></div>
+  </section>
+  <div class="footer">Generated as a planning artifact only. No runtime code changed.</div>
+</main>
+</body>
+</html>

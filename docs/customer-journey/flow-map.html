@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LJFC Lead → Ready Student Journey</title>
+  <style>
+    :root {
+      --deep: #0B1D2C;
+      --ocean: #163B4E;
+      --teal: #1B6B6B;
+      --seafoam: #3db8a4;
+      --sand: #D4A574;
+      --salt: #FAF3EC;
+      --coral: #C75B3A;
+      --slate: #3A4A56;
+      --line: rgba(250,243,236,.18);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top left, rgba(61,184,164,.18), transparent 34rem), linear-gradient(135deg, var(--deep), #07131d 65%);
+      color: var(--salt);
+      line-height: 1.45;
+    }
+    main { max-width: 1220px; margin: 0 auto; padding: 48px 24px 72px; }
+    .eyebrow { color: var(--seafoam); text-transform: uppercase; letter-spacing: .22em; font-size: 12px; font-weight: 700; }
+    h1 { font-family: Georgia, serif; font-weight: 400; font-size: clamp(34px, 6vw, 68px); line-height: .95; margin: 14px 0 18px; letter-spacing: -.03em; }
+    .lede { color: rgba(250,243,236,.66); font-size: 18px; max-width: 800px; }
+    .rule { height: 1px; background: var(--line); margin: 32px 0; }
+    .journey { display: grid; grid-template-columns: repeat(4, minmax(190px, 1fr)); gap: 14px; }
+    .card {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.045);
+      border-radius: 18px;
+      padding: 18px;
+      min-height: 170px;
+      position: relative;
+    }
+    .card::after {
+      content: "→";
+      position: absolute;
+      right: -14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: rgba(61,184,164,.75);
+      font-size: 24px;
+      z-index: 2;
+    }
+    .card:nth-child(4)::after, .card:nth-child(8)::after { content: "↓"; right: 18px; top: auto; bottom: -24px; }
+    .card:nth-child(5)::after, .card:nth-child(9)::after { content: ""; }
+    .card h2 { margin: 0 0 8px; font-size: 15px; color: white; }
+    .num { color: var(--sand); font-family: Georgia, serif; font-size: 28px; margin-bottom: 8px; }
+    .card p { margin: 0; color: rgba(250,243,236,.58); font-size: 13px; }
+    .boundary { border-color: rgba(199,91,58,.65); box-shadow: 0 0 0 1px rgba(199,91,58,.15) inset; }
+    .boundary .num { color: var(--coral); }
+    .ready { border-color: rgba(61,184,164,.7); background: rgba(61,184,164,.08); }
+    .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 28px; }
+    .panel { border: 1px solid var(--line); border-radius: 22px; padding: 22px; background: rgba(255,255,255,.035); }
+    h3 { font-family: Georgia, serif; font-size: 25px; font-weight: 400; margin: 0 0 14px; }
+    ul { margin: 0; padding-left: 19px; color: rgba(250,243,236,.66); }
+    li { margin: 8px 0; }
+    .tag { display: inline-block; border: 1px solid rgba(61,184,164,.35); color: var(--seafoam); border-radius: 999px; padding: 5px 9px; font-size: 11px; margin: 4px 4px 0 0; }
+    .swimlane { display: grid; grid-template-columns: 150px 1fr; gap: 12px; margin-top: 28px; }
+    .lane-label { color: var(--sand); text-transform: uppercase; letter-spacing: .16em; font-size: 11px; font-weight: 700; padding-top: 14px; }
+    .lane { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+    .step { background: rgba(250,243,236,.08); border: 1px solid var(--line); border-radius: 12px; padding: 11px; font-size: 12px; color: rgba(250,243,236,.72); min-height: 64px; }
+    .step strong { display: block; color: white; margin-bottom: 4px; }
+    footer { color: rgba(250,243,236,.38); font-size: 12px; margin-top: 34px; }
+    @media (max-width: 900px) {
+      .journey { grid-template-columns: 1fr; }
+      .card::after { content: "↓"; right: 18px; top: auto; bottom: -24px; }
+      .grid2, .swimlane { grid-template-columns: 1fr; }
+      .lane { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="eyebrow">La Jolla Freedive Club · Journey Map</div>
+    <h1>Lead → Qualified Candidate → Reserved Seat → Ready Student</h1>
+    <p class="lede">The objective is not maximum lead volume. The objective is operational relief: cleanly handle the students already arriving, make the deposit the seat-reservation boundary, and automate onboarding until each student is ready for course day.</p>
+    <div class="rule"></div>
+
+    <section class="journey" aria-label="Canonical journey">
+      <div class="card"><div class="num">01</div><h2>Inquiry received</h2><p>Candidate chooses a course/date or asks for help. Capture course, experience, preferred dates, group size, contact.</p></div>
+      <div class="card"><div class="num">02</div><h2>Needs qualification</h2><p>Check age, swim ability, prerequisite, medical risk, gear, and course fit. Do not overburden the form.</p></div>
+      <div class="card"><div class="num">03</div><h2>Date proposed</h2><p>Offer open course options or group-rate opportunities. AI draft replies can support Joshua here.</p></div>
+      <div class="card boundary"><div class="num">04</div><h2>Deposit requested</h2><p>Candidate gets payment link. Seat is explicitly not reserved yet.</p></div>
+      <div class="card boundary"><div class="num">05</div><h2>Seat reserved</h2><p>Stripe confirms deposit/full payment. Booking confirmed. Inquiry linked. Magic link issued.</p></div>
+      <div class="card"><div class="num">06</div><h2>Onboarding incomplete</h2><p>Portal shows remaining medical, AIDA, waiver, gear, and prep requirements.</p></div>
+      <div class="card ready"><div class="num">07</div><h2>Ready for course</h2><p>Readiness score is complete. Student gets logistics. Joshua gets briefing.</p></div>
+      <div class="card"><div class="num">08</div><h2>Course completed</h2><p>Follow-up, certification path, Saturday Sessions invite, review/referral.</p></div>
+    </section>
+
+    <section class="grid2">
+      <div class="panel">
+        <h3>First implementation bias</h3>
+        <ul>
+          <li>Make the funnel state model explicit before adding more automation.</li>
+          <li>Use existing routes and tables; avoid building a full CRM.</li>
+          <li>Move all post-payment next steps into the portal.</li>
+          <li>Make `/admin/inquiries` the pre-payment cockpit.</li>
+          <li>Keep the inquiry form lightweight but qualifying.</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <h3>Core rule</h3>
+        <p style="color:rgba(250,243,236,.72);font-size:17px;margin-top:0;">A student is not holding a course seat until a deposit or full payment is received.</p>
+        <span class="tag">Qualification before confidence</span>
+        <span class="tag">Payment reserves seat</span>
+        <span class="tag">Portal owns readiness</span>
+        <span class="tag">Digest flags exceptions</span>
+      </div>
+    </section>
+
+    <section class="swimlane">
+      <div class="lane-label">Student</div>
+      <div class="lane">
+        <div class="step"><strong>Inquire</strong>Course/date + basics</div>
+        <div class="step"><strong>Answer</strong>Eligibility questions</div>
+        <div class="step"><strong>Pay</strong>Deposit/full payment</div>
+        <div class="step"><strong>Prepare</strong>Portal checklist</div>
+        <div class="step"><strong>Arrive</strong>Ready for course</div>
+      </div>
+      <div class="lane-label">System</div>
+      <div class="lane">
+        <div class="step"><strong>Store</strong>`course_inquiries`</div>
+        <div class="step"><strong>Route</strong>Qualification/date options</div>
+        <div class="step"><strong>Confirm</strong>Stripe webhook + booking</div>
+        <div class="step"><strong>Score</strong>Readiness + reminders</div>
+        <div class="step"><strong>Brief</strong>Instructor digest</div>
+      </div>
+      <div class="lane-label">Joshua</div>
+      <div class="lane">
+        <div class="step"><strong>Review</strong>New/stale leads</div>
+        <div class="step"><strong>Approve</strong>Fit + dates</div>
+        <div class="step"><strong>Exceptions</strong>Medical/refund/edge cases</div>
+        <div class="step"><strong>Monitor</strong>Not ready students</div>
+        <div class="step"><strong>Teach</strong>Course delivery</div>
+      </div>
+    </section>
+
+    <footer>Generated from repo audit + user walk notes. See `ljfc-lead-to-ready-student-prd.md` for full product notes.</footer>
+  </main>
+</body>
+</html>

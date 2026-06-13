@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LJFC Current + Target Operating Map</title>
+  <style>
+    :root {
+      --deep:#0B1D2C; --ink:#102638; --teal:#1B6B6B; --seafoam:#3db8a4; --sand:#D4A574;
+      --coral:#C75B3A; --cream:#FAF3EC; --muted:#6B7B86; --line:#D8D0C5; --ok:#2F8F72;
+    }
+    *{box-sizing:border-box} body{margin:0;background:#f7f1e9;color:var(--deep);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.45}
+    main{max-width:1320px;margin:0 auto;padding:42px 24px 72px}.eyebrow{text-transform:uppercase;letter-spacing:.22em;color:var(--teal);font-weight:800;font-size:12px}h1{font-family:Georgia,serif;font-size:clamp(34px,6vw,72px);font-weight:400;line-height:.95;margin:12px 0 16px;letter-spacing:-.04em}.lede{font-size:18px;color:#52616b;max-width:880px}.section{margin-top:38px}.section h2{font-family:Georgia,serif;font-size:34px;font-weight:400;margin:0 0 14px}.note{background:#fff7ef;border:1px solid var(--line);border-radius:18px;padding:16px 18px;color:#4d5a63;margin:16px 0}.map{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;align-items:stretch}.node{background:white;border:1px solid var(--line);border-radius:16px;padding:14px;min-height:145px;box-shadow:0 1px 0 rgba(11,29,44,.04)}.node h3{font-size:14px;margin:0 0 7px;color:var(--deep)}.node p{font-size:12px;color:#65717a;margin:0}.node .meta{font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:var(--teal);font-weight:800;margin-bottom:8px}.weak{border-color:#e3b6a6;background:#fff8f6}.strong{border-color:#9dd7ca;background:#f1fffb}.manual{border-color:#dfc58d;background:#fffaf0}.arrow{display:flex;align-items:center;justify-content:center;color:var(--teal);font-size:26px;font-weight:300}.swim{display:grid;grid-template-columns:150px repeat(6,1fr);gap:10px;margin-top:16px}.label{font-size:11px;text-transform:uppercase;letter-spacing:.16em;font-weight:900;color:var(--teal);padding:14px 0}.cell{background:white;border:1px solid var(--line);border-radius:13px;padding:11px;min-height:80px;font-size:12px;color:#5c6870}.cell strong{display:block;color:var(--deep);margin-bottom:5px}.matrix{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.op{background:white;border:1px solid var(--line);border-radius:18px;padding:16px}.op h3{margin:0 0 8px;font-size:16px}.op .impact{display:inline-block;font-size:10px;text-transform:uppercase;letter-spacing:.14em;border-radius:99px;padding:4px 8px;margin-bottom:10px;font-weight:900}.high{background:#ffe8e0;color:#9d3518}.med{background:#fff1c9;color:#835d00}.low{background:#e9fff8;color:#166653}ul{margin:8px 0 0;padding-left:18px;color:#586670}li{margin:7px 0}.legend{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}.pill{font-size:11px;border-radius:99px;padding:6px 10px;border:1px solid var(--line);background:white}.safe{border-left:5px solid var(--ok)}.risk{border-left:5px solid var(--coral)}.mid{border-left:5px solid var(--sand)}.print{color:#71808b;font-size:12px;margin-top:30px}@media(max-width:980px){.map,.matrix{grid-template-columns:1fr}.swim{grid-template-columns:1fr}.arrow{display:none}}
+  </style>
+</head>
+<body>
+<main>
+  <div class="eyebrow">La Jolla Freedive Club · Operating System Map</div>
+  <h1>Current State + Safer Target State</h1>
+  <p class="lede">The live system already works: inquiry capture, email automations, PDFs/forms, payment, student portal, onboarding, readiness, reminders, and instructor briefings. The improvement path should preserve that working behavior and add visibility, state clarity, and safer automation around it.</p>
+
+  <div class="legend">
+    <span class="pill">White = existing capability</span>
+    <span class="pill">Gold = manual / Joshua-dependent seam</span>
+    <span class="pill">Coral = hole or risk</span>
+    <span class="pill">Seafoam = strong foundation</span>
+  </div>
+
+  <section class="section">
+    <h2>Current state: working but distributed</h2>
+    <div class="map">
+      <div class="node strong"><div class="meta">Acquire</div><h3>Public site + calendar</h3><p>Programs, calendar, booking page, conditions, blog, Camp Garibaldi. Strong trust surface.</p></div>
+      <div class="node strong"><div class="meta">Capture</div><h3>Inquiry / registration forms</h3><p>Course inquiry, camp registration, AIDA forms, LJFC waiver, Saturday RSVP.</p></div>
+      <div class="node manual"><div class="meta">Qualify</div><h3>Joshua reviews fit</h3><p>Eligibility, medical concerns, gear fit, dates, groupings. Some AI drafting exists, but authority is manual.</p></div>
+      <div class="node weak"><div class="meta">Convert</div><h3>Deposit / invoice links</h3><p>Stripe exists. Seat-reservation boundary needs to be made explicit everywhere.</p></div>
+      <div class="node strong"><div class="meta">Onboard</div><h3>Magic-link portal</h3><p>Onboarding, profile, gear, medical, prep progress, forms, waiver. Strong base.</p></div>
+      <div class="node strong"><div class="meta">Operate</div><h3>Reminders + briefings</h3><p>Course reminders, inquiry digest, instructor briefing, daily/Friday/Saturday automations.</p></div>
+    </div>
+
+    <div class="note mid"><strong>Diagnosis:</strong> You do not need a new system. You need a canonical map over the existing system so each automation knows which state the person is in and what the next safest action is.</div>
+  </section>
+
+  <section class="section">
+    <h2>Current swimlanes</h2>
+    <div class="swim">
+      <div class="label">Candidate</div>
+      <div class="cell"><strong>Discovers LJFC</strong>Programs, blog, conditions, calendar.</div>
+      <div class="cell"><strong>Inquires</strong>Course/camp/contact form.</div>
+      <div class="cell"><strong>Waits for reply</strong>Email confirmation exists; exact state may be unclear.</div>
+      <div class="cell"><strong>Receives proposal</strong>Dates, group-rate possibility, questions.</div>
+      <div class="cell"><strong>Pays</strong>Deposit/full payment.</div>
+      <div class="cell"><strong>Prepares</strong>Portal/forms/waiver/prep/logistics.</div>
+
+      <div class="label">System</div>
+      <div class="cell"><strong>Trust content</strong>SEO/content/conditions pages.</div>
+      <div class="cell"><strong>Stores inquiry</strong>`course_inquiries` + emails.</div>
+      <div class="cell"><strong>Drafts/admin</strong>AI reply route + admin inquiries.</div>
+      <div class="cell"><strong>Stripe</strong>Checkout/webhook links booking + portal.</div>
+      <div class="cell"><strong>Readiness</strong>Readiness score + missing items.</div>
+      <div class="cell"><strong>Cron</strong>Reminders/digests/briefings.</div>
+
+      <div class="label">Joshua</div>
+      <div class="cell"><strong>Creates demand</strong>Brand, course offering, trust.</div>
+      <div class="cell"><strong>Reviews lead</strong>Fit/date/capacity/medical risk.</div>
+      <div class="cell"><strong>Replies</strong>Manual judgment with AI assist.</div>
+      <div class="cell"><strong>Sends link</strong>Payment / forms / portal.</div>
+      <div class="cell"><strong>Checks readiness</strong>Before course.</div>
+      <div class="cell"><strong>Teaches</strong>Course delivery + follow-up.</div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Target state: same system, clearer state machine</h2>
+    <div class="map">
+      <div class="node strong"><div class="meta">1</div><h3>Inquiry received</h3><p>Capture need, date preference, course, contact, experience.</p></div>
+      <div class="node strong"><div class="meta">2</div><h3>Needs qualification</h3><p>Lightweight eligibility questions: age, swim, medical flag, prerequisite, gear.</p></div>
+      <div class="node strong"><div class="meta">3</div><h3>Qualified + date proposed</h3><p>Open seats shown. Grouping opportunities surfaced. Candidate knows next step.</p></div>
+      <div class="node weak"><div class="meta">4</div><h3>Deposit requested</h3><p>Seat still not held. Follow-up automation begins.</p></div>
+      <div class="node strong"><div class="meta">5</div><h3>Seat reserved</h3><p>Webhook confirms payment. Booking/event/student/inquiry link is canonical.</p></div>
+      <div class="node strong"><div class="meta">6</div><h3>Ready student</h3><p>Portal checklist complete. Student and Joshua both see readiness.</p></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Holes and opportunities</h2>
+    <div class="matrix">
+      <div class="op"><span class="impact high">High impact / low risk</span><h3>Single canonical journey map</h3><ul><li>Document current states and allowed transitions.</li><li>Do not change live code first.</li><li>Use it to align email copy, admin labels, reminders, portal copy.</li></ul></div>
+      <div class="op"><span class="impact high">High impact / medium risk</span><h3>Qualification fields before manual reply</h3><ul><li>Add age range, swim readiness, prior certification, gear status, medical flag.</li><li>Keep details out of marketing form.</li><li>Use answers to route, not auto-approve risky cases.</li></ul></div>
+      <div class="op"><span class="impact high">High impact / low risk</span><h3>Seat-reservation language</h3><ul><li>Put “seat reserved after deposit” in calendar, inquiry confirmation, proposal, checkout, portal.</li><li>This reduces confusion without changing backend behavior.</li></ul></div>
+      <div class="op"><span class="impact med">Medium impact</span><h3>Admin cockpit grouping</h3><ul><li>Needs reply.</li><li>Needs qualification.</li><li>Deposit pending.</li><li>Paid / onboarding incomplete.</li><li>Ready for course.</li></ul></div>
+      <div class="op"><span class="impact med">Medium impact</span><h3>Email timeline audit</h3><ul><li>List every automated email, trigger, audience, and next CTA.</li><li>Find duplicate or contradictory CTAs.</li><li>Make portal the post-payment source of truth.</li></ul></div>
+      <div class="op"><span class="impact med">Medium impact</span><h3>Knowledge base before chat agent</h3><ul><li>Build bounded answers for course fit, gear, logistics, forms, prep.</li><li>Escalate medical, refund, safety, edge cases.</li><li>Add agent only after state model is stable.</li></ul></div>
+      <div class="op"><span class="impact med">Medium impact</span><h3>Readiness visibility</h3><ul><li>Student sees one checklist.</li><li>Joshua sees course roster readiness.</li><li>Reminders use the same readiness calculation.</li></ul></div>
+      <div class="op"><span class="impact low">Later</span><h3>Post-course delight</h3><ul><li>Thank-you.</li><li>Certification path.</li><li>Saturday Sessions invitation.</li><li>Review/referral request.</li><li>Alumni conditions digest.</li></ul></div>
+      <div class="op"><span class="impact high">Risk</span><h3>Hardcoded secrets/passcodes</h3><ul><li>Several admin/cron/passcode strings are in code/docs.</li><li>Worth fixing carefully, but not in same pass as journey UX.</li><li>Needs staged env-var migration to avoid breaking automations.</li></ul></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Recommended safe sequence</h2>
+    <div class="note safe"><strong>1. Map-only pass:</strong> produce current-state and target-state maps, plus email/form inventory. No runtime changes.</div>
+    <div class="note safe"><strong>2. Copy-only pass:</strong> update language around deposit boundary and next steps. Low break risk.</div>
+    <div class="note mid"><strong>3. Admin visibility pass:</strong> improve grouping/status labels without changing schema if possible.</div>
+    <div class="note mid"><strong>4. Qualification pass:</strong> add lightweight fields to inquiry form and store them, behind careful defaults.</div>
+    <div class="note risk"><strong>5. Secrets/auth pass:</strong> migrate hardcoded secrets to env vars only after inventorying every automation that depends on them.</div>
+  </section>
+
+  <p class="print">Generated as a planning artifact. It intentionally does not modify application code or runtime behavior.</p>
+</main>
+</body>
+</html>

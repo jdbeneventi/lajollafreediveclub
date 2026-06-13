@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LJFC Operating System Map</title>
+  <style>
+    :root{--deep:#0B1D2C;--ocean:#163B4E;--teal:#1B6B6B;--seafoam:#3db8a4;--sand:#D4A574;--salt:#FAF3EC;--coral:#C75B3A;--slate:#3A4A56;--line:rgba(250,243,236,.16)}
+    *{box-sizing:border-box} body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:radial-gradient(circle at top left,rgba(61,184,164,.2),transparent 34rem),linear-gradient(135deg,var(--deep),#07131d 70%);color:var(--salt);line-height:1.45} main{max-width:1320px;margin:0 auto;padding:44px 22px 70px}.eyebrow{color:var(--seafoam);text-transform:uppercase;letter-spacing:.22em;font-size:12px;font-weight:800}h1{font-family:Georgia,serif;font-weight:400;font-size:clamp(34px,6vw,70px);line-height:.95;margin:14px 0 18px;letter-spacing:-.035em}.lede{color:rgba(250,243,236,.68);font-size:18px;max-width:880px}.rule{height:1px;background:var(--line);margin:30px 0}.journey{display:grid;grid-template-columns:repeat(8,1fr);gap:10px}.card{border:1px solid var(--line);background:rgba(255,255,255,.045);border-radius:16px;padding:14px;min-height:154px;position:relative}.card:after{content:"→";position:absolute;right:-12px;top:50%;transform:translateY(-50%);color:rgba(61,184,164,.75);font-size:22px;z-index:2}.card:last-child:after{content:""}.card h2{font-size:13px;margin:0 0 8px;color:white}.num{font-family:Georgia,serif;font-size:25px;color:var(--sand);margin-bottom:6px}.card p{font-size:12px;color:rgba(250,243,236,.6);margin:0}.boundary{border-color:rgba(199,91,58,.75);box-shadow:0 0 0 1px rgba(199,91,58,.15) inset}.boundary .num{color:var(--coral)}.ready{border-color:rgba(61,184,164,.75);background:rgba(61,184,164,.08)}.section-title{font-family:Georgia,serif;font-weight:400;font-size:30px;margin:36px 0 14px}.layers{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.panel{border:1px solid var(--line);border-radius:20px;padding:18px;background:rgba(255,255,255,.035)}.panel h3{margin:0 0 10px;font-size:16px;color:white}.panel p,.panel li{font-size:13px;color:rgba(250,243,236,.66)}ul{margin:0;padding-left:18px}.tag{display:inline-block;border:1px solid rgba(61,184,164,.35);color:var(--seafoam);border-radius:999px;padding:5px 9px;font-size:11px;margin:4px 4px 0 0}.map{display:grid;grid-template-columns:155px repeat(5,1fr);gap:9px;align-items:stretch}.label{color:var(--sand);text-transform:uppercase;letter-spacing:.14em;font-size:11px;font-weight:800;padding-top:15px}.step{background:rgba(250,243,236,.08);border:1px solid var(--line);border-radius:12px;padding:11px;font-size:12px;color:rgba(250,243,236,.7);min-height:66px}.step strong{display:block;color:#fff;margin-bottom:4px}.exception{border-color:rgba(199,91,58,.45);background:rgba(199,91,58,.08)}footer{margin-top:32px;color:rgba(250,243,236,.38);font-size:12px}@media(max-width:1000px){.journey,.layers,.map{grid-template-columns:1fr}.card:after{content:"↓";right:18px;top:auto;bottom:-22px}.card:last-child:after{content:""}}
+  </style>
+</head>
+<body>
+<main>
+  <div class="eyebrow">La Jolla Freedive Club · Operating System</div>
+  <h1>Protect the working system. Clarify the journey.</h1>
+  <p class="lede">LJFC already has email automations, PDF forms, internal education spaces, medical/demographic elicitation, gear collection, Stripe, Supabase, and admin views. The next move is not a rebuild. It is a safe state model that makes the existing machinery easier to operate.</p>
+  <div class="rule"></div>
+
+  <section class="journey">
+    <div class="card"><div class="num">01</div><h2>Inquiry</h2><p>Candidate submits course interest. Store in `course_inquiries`; confirm by email.</p></div>
+    <div class="card"><div class="num">02</div><h2>Qualification</h2><p>Light check: course fit, age/minor, swim ability, cert, gear, medical review flag.</p></div>
+    <div class="card"><div class="num">03</div><h2>Date / quote</h2><p>Joshua or assisted draft proposes dates, price, group-rate opportunities.</p></div>
+    <div class="card boundary"><div class="num">04</div><h2>Payment link</h2><p>Candidate can reserve. Seat not held yet.</p></div>
+    <div class="card boundary"><div class="num">05</div><h2>Reserved seat</h2><p>Stripe confirms deposit/full payment. Booking confirmed. Portal link issued.</p></div>
+    <div class="card"><div class="num">06</div><h2>Onboarding</h2><p>Demographics, emergency contact, swim profile, goals, fears, theory preference.</p></div>
+    <div class="card"><div class="num">07</div><h2>Forms + prep</h2><p>AIDA medical/liability, LJFC waiver, gear profile, prep-guide progress.</p></div>
+    <div class="card ready"><div class="num">08</div><h2>Ready</h2><p>Readiness complete. Logistics reminders sent. Joshua receives course briefing.</p></div>
+  </section>
+
+  <h2 class="section-title">Subsystems to preserve</h2>
+  <section class="layers">
+    <div class="panel"><h3>Email automation</h3><ul><li>Inquiry confirmation</li><li>Joshua notifications</li><li>Payment confirmation</li><li>Course reminders</li><li>Instructor briefings</li><li>Inquiry digest</li><li>Conditions / Saturday emails</li></ul></div>
+    <div class="panel"><h3>Forms + PDFs</h3><ul><li>AIDA medical statement</li><li>AIDA liability release</li><li>LJFC waiver</li><li>Camp waiver</li><li>Physician clearance</li><li>PDF generation + Resend delivery</li></ul></div>
+    <div class="panel"><h3>Portal + education</h3><ul><li>Magic-link auth</li><li>Onboarding flow</li><li>AIDA 1 / AIDA 2 prep</li><li>Prep progress tracking</li><li>Readiness scoring</li><li>Student journey cards</li></ul></div>
+    <div class="panel"><h3>Elicitation</h3><ul><li>Demographics</li><li>Emergency contact</li><li>Swim readiness</li><li>Experience</li><li>Goals and fears</li><li>Theory preference</li></ul></div>
+    <div class="panel"><h3>Gear + logistics</h3><ul><li>Gear catalog</li><li>Own/need/renting state</li><li>Brand/size/condition notes</li><li>Shoe/shirt size</li><li>Weight calculator</li></ul></div>
+    <div class="panel"><h3>Admin cockpit</h3><ul><li>Inquiries</li><li>Calendar/events</li><li>Courses/bookings</li><li>Onboarding</li><li>Students</li><li>Invoices/send links</li></ul></div>
+  </section>
+
+  <h2 class="section-title">Operating map</h2>
+  <section class="map">
+    <div class="label">Student</div><div class="step"><strong>Ask</strong>Course/date interest</div><div class="step"><strong>Qualify</strong>Answer basics</div><div class="step"><strong>Reserve</strong>Deposit/payment</div><div class="step"><strong>Prepare</strong>Portal checklist</div><div class="step"><strong>Arrive</strong>Ready + informed</div>
+    <div class="label">System</div><div class="step"><strong>Store</strong>Inquiry + email</div><div class="step"><strong>Route</strong>Fit + availability</div><div class="step"><strong>Confirm</strong>Stripe webhook</div><div class="step"><strong>Score</strong>Readiness</div><div class="step"><strong>Remind</strong>Missing items</div>
+    <div class="label">Joshua</div><div class="step"><strong>Review</strong>New/stale</div><div class="step"><strong>Decide</strong>Edge cases</div><div class="step"><strong>Monitor</strong>Paid/not-ready</div><div class="step"><strong>Brief</strong>Course packet</div><div class="step"><strong>Teach</strong>Actual course</div>
+    <div class="label">Exceptions</div><div class="step exception"><strong>Medical</strong>Physician clearance</div><div class="step exception"><strong>Safety</strong>Eligibility uncertainty</div><div class="step exception"><strong>Payment</strong>Refund/transfer</div><div class="step exception"><strong>Minor</strong>Guardian rules</div><div class="step exception"><strong>Scheduling</strong>Custom promises</div>
+  </section>
+
+  <h2 class="section-title">Safe next move</h2>
+  <div class="panel">
+    <p>Begin with copy and state clarity only: make the deposit boundary explicit, make the portal the single post-payment readiness home, and make `/admin/inquiries` show why each person needs attention. No database migration or automation rewrite until those labels are accepted.</p>
+    <span class="tag">Docs first</span><span class="tag">Copy-only PR second</span><span class="tag">Optional fields third</span><span class="tag">Automation last</span>
+  </div>
+
+  <footer>Generated from repo audit + user notes. See `operational-journey-inventory.md` and `safe-improvement-plan.md`.</footer>
+</main>
+</body>
+</html>
