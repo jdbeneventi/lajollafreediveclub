@@ -1,5 +1,10 @@
 import { NextResponse } from "next/server";
 
+// Hourly. This route sets no Cache-Control of its own, and without a revalidate
+// Next prerenders it at build time and never refreshes — see /api/almanac.
+// Hourly is plenty for a sightings feed off iNaturalist and Reddit.
+export const revalidate = 3600;
+
 // La Jolla Cove/Shores — centered slightly offshore to bias marine results
 const LAT = 32.856;
 const LNG = -117.265; // offshore from La Jolla Shores

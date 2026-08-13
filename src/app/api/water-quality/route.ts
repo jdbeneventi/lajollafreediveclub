@@ -1,5 +1,10 @@
 import { NextResponse } from "next/server";
 
+// Matches the s-maxage=600 this route already sets. Without it Next prerenders
+// at build time and never revalidates — see /api/almanac for the full note.
+// This one carries beach advisories and closures, so staleness is a safety issue.
+export const revalidate = 600;
+
 const LA_JOLLA_STATIONS = [
   "Vallecitos - La Jolla Shores",
   "Avenida De La Playa - La Jolla Shores",
