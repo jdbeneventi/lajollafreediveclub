@@ -1,6 +1,11 @@
 import { NextResponse } from "next/server";
 import { getLocalIntel, LocalIntelResult } from "@/lib/local-intel";
 
+// Matches the s-maxage=3600 this route already sets. Without it Next prerenders
+// at build time and never revalidates — see /api/almanac for the full note.
+// (The in-memory cache below is a separate, shorter-lived layer.)
+export const revalidate = 3600;
+
 // Simple in-memory cache (resets on cold start, which is fine)
 let cache: { data: LocalIntelResult; timestamp: number } | null = null;
 const CACHE_DURATION = 6 * 60 * 60 * 1000; // 6 hours

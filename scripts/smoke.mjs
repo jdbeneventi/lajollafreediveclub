@@ -28,8 +28,20 @@ const TIMEOUT_MS = 30_000;
 
 /** Pre-existing bugs. Keyed by check id. Remove an entry once it's fixed. */
 const KNOWN_ISSUES = {
+  // ── Build-time-frozen routes. Fixed on branch chore/safety-net; these entries
+  //    describe PRODUCTION, so they stay until that branch is deployed. Once it
+  //    is, these flip to FIXED and should be deleted.
   "fresh:/api/almanac":
-    "Route has no fetch(), so Next prerenders it at build time and it never revalidates. Serves build-day moon/seasonal data. Fix: export const revalidate = 3600.",
+    "Prerendered at build time with no revalidate, so it never refreshes. Serving build-day moon/seasonal data. Fixed on branch, awaiting deploy.",
+  "fresh:/api/visibility":
+    "Same build-time freeze — serving a stale underwater-visibility grade. Fixed on branch, awaiting deploy.",
+  "fresh:/api/water-quality":
+    "Same build-time freeze — serving stale beach advisories and closures. Safety-relevant. Fixed on branch, awaiting deploy.",
+  "fresh:/api/ocean-intel":
+    "Same build-time freeze — serving a stale sightings feed. Fixed on branch, awaiting deploy.",
+  "fresh:/api/local-intel":
+    "Same build-time freeze — serving stale local alerts. Fixed on branch, awaiting deploy.",
+
   "gate:/api/admin/students":
     "Admin API accepts the hardcoded fallback key 'ljfc', which ships in the public JS bundle.",
   "gate:/api/admin/onboarding": "Same hardcoded 'ljfc' fallback key — exposes medical and emergency-contact data.",
@@ -141,9 +153,11 @@ const APIS = [
     maxAgeHours: 48,
   },
   { path: "/api/forecast", required: [], maxAgeHours: 24 },
-  { path: "/api/visibility", required: [] },
-  { path: "/api/water-quality", required: [] },
-  { path: "/api/ocean-intel", required: [] },
+  { path: "/api/visibility", required: ["grade", "summary"], maxAgeHours: 2 },
+  { path: "/api/water-quality", required: ["status", "alerts"], maxAgeHours: 2 },
+  { path: "/api/ocean-intel", required: ["sightings"], maxAgeHours: 6 },
+  // This one reports its timestamp as lastUpdated rather than updated.
+  { path: "/api/local-intel", required: ["alerts"], maxAgeHours: 6, timestampKey: "lastUpdated" },
 ];
 
 async function checkApis() {
@@ -171,8 +185,9 @@ async function checkApis() {
     }
 
     // Freshness — catches build-time-frozen routes, which look healthy otherwise.
-    if (api.maxAgeHours && data.updated) {
-      const ageH = (Date.now() - new Date(data.updated).getTime()) / 3_600_000;
+    const stamp = data[api.timestampKey || "updated"];
+    if (api.maxAgeHours && stamp) {
+      const ageH = (Date.now() - new Date(stamp).getTime()) / 3_600_000;
       const fresh = ageH <= api.maxAgeHours;
       record(
         `fresh:${idBase}`,

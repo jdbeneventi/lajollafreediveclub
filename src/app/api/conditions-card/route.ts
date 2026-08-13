@@ -1,6 +1,11 @@
 import { NextResponse } from "next/server";
 import { getMoonPhase } from "@/lib/moon";
 
+// Every 10 min, matching /api/conditions — this renders the same numbers as a
+// shareable card, so it should not drift from them. Without a revalidate Next
+// prerenders it at build time and never refreshes; see /api/almanac.
+export const revalidate = 600;
+
 interface ConditionsData {
   waveHeight?: string;
   wavePeriod?: string;

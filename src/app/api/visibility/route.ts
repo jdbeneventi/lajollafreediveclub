@@ -1,5 +1,9 @@
 import { NextResponse } from "next/server";
 
+// Matches the s-maxage=900 this route already sets. Without it Next prerenders
+// at build time and never revalidates — see /api/almanac for the full note.
+export const revalidate = 900;
+
 // Possible thumbnail URLs for the Scripps Pier underwater camera
 // HDOnTap uses Wowza streaming with auto-updating thumbnails
 const SNAPSHOT_URLS = [
