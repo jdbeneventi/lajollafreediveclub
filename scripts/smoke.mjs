@@ -26,19 +26,18 @@ const JSON_OUT = args.includes("--json");
 const BASE = (args.find((a) => a.startsWith("http")) || "https://www.lajollafreediveclub.com").replace(/\/$/, "");
 const TIMEOUT_MS = 30_000;
 
-/** Pre-existing bugs. Keyed by check id. Remove an entry once it's fixed. */
-const KNOWN_ISSUES = {
-  // The six build-time-frozen data routes were fixed and deployed 2026-08-13
-  // (commits 2dca4ed, 40683e3) and verified fresh in production, so their
-  // entries are gone. The freshness assertions above stay — they are what
-  // would catch a regression.
-
-  "gate:/api/admin/students":
-    "Admin API accepts the hardcoded fallback key 'ljfc', which ships in the public JS bundle.",
-  "gate:/api/admin/onboarding": "Same hardcoded 'ljfc' fallback key — exposes medical and emergency-contact data.",
-  "gate:/api/admin/inquiries": "Same hardcoded 'ljfc' fallback key.",
-  "gate:/api/admin/gear": "Same hardcoded 'ljfc' fallback key.",
-};
+/**
+ * Pre-existing bugs. Keyed by check id. Remove an entry once it's fixed.
+ *
+ * Empty, and worth keeping that way. Two families lived here and both are
+ * fixed and verified in production:
+ *
+ *   the six build-time-frozen data routes   (2dca4ed, 40683e3)
+ *   the shared "ljfc" admin key             (9626225, 03a1001, 436788b)
+ *
+ * The assertions themselves stay — they are what catches a regression.
+ */
+const KNOWN_ISSUES = {};
 
 const results = [];
 const record = (id, label, ok, detail) => {
