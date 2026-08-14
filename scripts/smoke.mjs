@@ -47,11 +47,16 @@ const record = (id, label, ok, detail) => {
   results.push({ id, label, status, detail, known });
 };
 
+// Set VERCEL_BYPASS to a Protection Bypass for Automation secret to test a
+// protected preview deployment.
+const BYPASS = process.env.VERCEL_BYPASS;
+
 async function get(path, { redirect = "follow" } = {}) {
   const ctrl = new AbortController();
   const timer = setTimeout(() => ctrl.abort(), TIMEOUT_MS);
   try {
-    const res = await fetch(BASE + path, { redirect, signal: ctrl.signal });
+    const headers = BYPASS ? { "x-vercel-protection-bypass": BYPASS } : undefined;
+    const res = await fetch(BASE + path, { redirect, signal: ctrl.signal, headers });
     const body = await res.text();
     return { status: res.status, body, headers: res.headers };
   } finally {
@@ -245,8 +250,49 @@ async function checkRedirect() {
 
 // ─────────────────────────────────────────────────────────────────────
 
+/**
+ * Preflight: is this deployment behind Vercel Deployment Protection?
+ *
+ * Protected previews 302 to Vercel SSO, and the login page answers EVERY path
+ * with 200 — including /api/* and admin routes with a bad key. Without this
+ * check the suite reports ~23 confusing failures that say nothing about the
+ * deployment, and "?key=ljfc returned 200" reads exactly like a security hole
+ * when it is only a login form. Refuse to run rather than emit nonsense.
+ *
+ * To test a protected deployment, create a Protection Bypass for Automation
+ * secret (Vercel -> Settings -> Deployment Protection) and pass it as
+ * VERCEL_BYPASS; it is sent as the x-vercel-protection-bypass header.
+ */
+async function checkReachable() {
+  try {
+    const res = await fetch(BASE + "/api/conditions", { redirect: "manual" });
+    const loc = res.headers.get("location") || "";
+    const cookie = res.headers.get("set-cookie") || "";
+    const viaSso =
+      loc.includes("/sso") || loc.includes("vercel.com/login") || cookie.includes("_vercel_sso_nonce");
+
+    let body = "";
+    if (!viaSso && res.status === 200) body = (await res.text()).slice(0, 2000);
+    const looksLikeLogin = body.includes("Login – Vercel") || body.includes("Authentication Required");
+
+    if (viaSso || looksLikeLogin) {
+      console.log(`  This deployment is behind Vercel Deployment Protection.\n`);
+      console.log(`  Every path — pages and APIs alike — answers with a Vercel login`);
+      console.log(`  page, so no check here would mean anything. Not running them.\n`);
+      console.log(`  To test a protected deployment, create a Protection Bypass for`);
+      console.log(`  Automation secret (Vercel -> Settings -> Deployment Protection):\n`);
+      console.log(`      VERCEL_BYPASS=<secret> node scripts/smoke.mjs ${BASE}\n`);
+      process.exit(2);
+    }
+  } catch {
+    // A genuine network problem is a real result — let the checks report it.
+  }
+}
+
 const t0 = Date.now();
 if (!JSON_OUT) console.log(`\nLJFC smoke tests → ${BASE}\n`);
+
+await checkReachable();
 
 await checkPages();
 await checkApis();
