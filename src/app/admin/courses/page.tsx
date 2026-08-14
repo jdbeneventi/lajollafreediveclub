@@ -140,17 +140,17 @@ function CoursesContent() {
       <div className="max-w-[800px] mx-auto px-6 py-10">
         {/* Header */}
         <div className="mb-8">
-          <Link href={`/admin?key=${SECRET}`} className="text-seafoam/50 text-xs no-underline hover:text-seafoam">← Admin</Link>
+          <Link href={`/admin`} className="text-seafoam/50 text-xs no-underline hover:text-seafoam">← Admin</Link>
           <h1 className="font-serif text-2xl text-white mt-1">Course Roster</h1>
           <p className="text-white/30 text-xs mt-1">
-            {events.length} upcoming {events.length === 1 ? "course" : "courses"} · <Link href={`/admin/calendar?key=${SECRET}`} className="text-seafoam/50 no-underline hover:text-seafoam">Manage calendar →</Link>
+            {events.length} upcoming {events.length === 1 ? "course" : "courses"} · <Link href={`/admin/calendar`} className="text-seafoam/50 no-underline hover:text-seafoam">Manage calendar →</Link>
           </p>
         </div>
 
         {events.length === 0 ? (
           <div className="text-center py-16">
             <p className="text-white/30 text-sm mb-4">No upcoming courses or camps scheduled.</p>
-            <Link href={`/admin/calendar?key=${SECRET}`}
+            <Link href={`/admin/calendar`}
               className="inline-block px-5 py-2.5 bg-seafoam text-deep rounded-lg text-sm font-semibold no-underline">
               Add a course date →
             </Link>

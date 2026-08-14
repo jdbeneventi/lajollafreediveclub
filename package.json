@@ -9,7 +9,8 @@
     "start": "next start",
     "lint": "next lint",
     "check-env": "node scripts/check-env.mjs",
-    "smoke": "node scripts/smoke.mjs"
+    "smoke": "node scripts/smoke.mjs",
+    "verify": "rm -rf .next tsconfig.tsbuildinfo && next build"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.101.1",

@@ -186,13 +186,26 @@ Checkout also offers `camp-3day` at $450. Competitor reference: JGW beginner $49
 ## Workflow
 
 ```bash
+git fetch origin                     # the local checkout has been stale before
 git checkout -b some-change          # never commit straight to main
 # ...edit...
-npm run build                        # must pass — Vercel runs this too
+npm run verify                       # NOT `npm run build` — see below
 node scripts/smoke.mjs               # baseline against prod before you start
 git push -u origin some-change       # Vercel builds a preview URL
 node scripts/smoke.mjs <preview-url>  # verify the preview, not prod
 # merge to main only once the preview is green
+```
+
+⚠️ **`npm run build` is not a trustworthy check on its own.** TypeScript reuses `tsconfig.tsbuildinfo` between builds, and that file is gitignored — so it exists locally and never on Vercel. A local build can pass on stale incremental type info while Vercel fails on the same commit. This happened: `fix/admin-auth` built clean locally four times and failed on Vercel with `Cannot find name 'SECRET'`, then revealed a second hidden error once the cache was cleared.
+
+`npm run verify` removes both `.next` and `tsconfig.tsbuildinfo` first. Use it before every push.
+
+To reproduce Vercel exactly — fresh tree, no `.env.local`, CI semantics:
+
+```bash
+git worktree add --detach /tmp/verify <commit>
+cd /tmp/verify && ln -s <repo>/node_modules node_modules
+CI=true npm run verify
 ```
 
 `scripts/smoke.mjs` — zero-dependency, read-only. Checks 16 pages render with real content, 8 data APIs for shape + plausible ranges + **freshness**, that admin/cron endpoints reject unauthenticated callers, and the apex redirect. Pre-existing bugs are listed in its `KNOWN_ISSUES` map so they don't mask new breakage; if a known issue starts passing, the run says `FIXED` and tells you to delete the entry. Exits non-zero only on unexpected failures.

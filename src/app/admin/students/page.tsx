@@ -161,7 +161,7 @@ function StudentsContent() {
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <div>
-            <Link href={`/admin?key=${SECRET}`} className="text-seafoam/50 text-xs no-underline hover:text-seafoam">← Admin</Link>
+            <Link href={`/admin`} className="text-seafoam/50 text-xs no-underline hover:text-seafoam">← Admin</Link>
             <h1 className="font-serif text-2xl text-white mt-1">Students & Progress</h1>
             <p className="text-white/30 text-xs mt-1">{data.students.length} students</p>
           </div>

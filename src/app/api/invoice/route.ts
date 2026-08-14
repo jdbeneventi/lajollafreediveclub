@@ -227,7 +227,7 @@ export async function DELETE(request: Request) {
   const denied = requireAdmin(request);
   if (denied) return denied;
 
-  const id = searchParams.get("id");
+  const id = new URL(request.url).searchParams.get("id");
   if (!id) return NextResponse.json({ error: "id required" }, { status: 400 });
 
   const { error } = await supabase.from("bookings").delete().eq("id", id);
