@@ -83,6 +83,13 @@ Inquiry lifecycle (`inquiry_status` enum): `new → replied → quoted → depos
 
 **Read this before changing anything that sends mail** — it is more precise than grepping for `resend.emails.send`, and it records the intended side effects. Keep it in sync when adding or removing a send.
 
+## Assessment — `docs/system-assessment.md`
+
+Whole-system read from 2026-08-14: architecture across all five layers, the load-bearing
+paths with a resilience rating each, a health scorecard, every external dependency and what
+happens when one fails, and a ranked list of what to do. Figures verified against the repo,
+a full database export, and the live site. Start here for the shape of the thing.
+
 ## Planning docs — `docs/customer-journey/`
 
 Prior analysis of the lead → ready-student flow. Start with **`preservation-map.md` ("Do Not Break Existing Ops")** and **`safe-improvement-plan.md`** before changing pipeline behavior. Also: `current-state-audit.md`, `operational-journey-inventory.md`, `holes-and-opportunities.md`, `ljfc-lead-to-ready-student-prd.md`, and four interactive `.html` flow maps.
@@ -271,7 +278,10 @@ Backups (data + reconstructed schema + smoke baseline) live outside the repo in 
 
 ### Correctness
 - **Build-time-frozen data routes — fixed on `chore/safety-net`, awaiting deploy.** Six routes had no `revalidate` and no revalidating `fetch()`, so Next prerendered them on build day and served that body forever. As of 2026-08-13 production had been serving **June 13** data for 61 days across `/api/almanac` (wrong moon phase, "next full moon" seven weeks past), `/api/visibility` (stale vis grade), `/api/water-quality` (stale beach advisories and closures — safety-relevant), `/api/ocean-intel`, `/api/local-intel`, and `/api/conditions-card`. Each now declares a `revalidate` matching the `s-maxage` it already set. Verify with `.next/prerender-manifest.json` — every `/api/*` entry should show a number, never `false`. The daily conditions email was never affected: it calls `getLocalIntel()` from the lib directly and deliberately skips `/api/visibility`.
-- Waiver PDF archiving to Google Drive — Sheet logging works, PDF upload fails on large payloads
+- Waiver PDF archiving to Google Drive — Sheet logging works, PDF upload fails on large payloads. The Apps Script side is **fully built**: it decodes `pdfBase64`, files it in a Drive folder named "LJFC Waivers", and writes the file URL back to column 7 of the row. So this is a payload-size problem, not a missing feature. Contract documented in `scripts/apps-script/README.md`.
+
+### Infrastructure not in this repo
+**Two Google Apps Script projects back `/api/waiver` and `/api/students`, and their source is not in version control** — no history, no backup, nothing to restore from. For the waiver log, a legal record, this is the largest single gap in the system. IDs, contracts, and the `clasp` commands to pull exact copies are in `scripts/apps-script/README.md`. Do not transcribe them by hand.
 - `~/Documents/Claude/Scheduled/ljfc-inquiry-digest/SKILL.md` is a dead duplicate of the inquiry-digest cron — not registered in the scheduler, never runs
 
 ### Infrastructure
