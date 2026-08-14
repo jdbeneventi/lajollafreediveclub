@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { requireCron } from "@/lib/adminAuth";
 
 const KIT_API_SECRET = process.env.KIT_API_SECRET;
 const KIT_API_KEY = process.env.KIT_API_KEY;
@@ -437,10 +438,14 @@ export async function POST(request: Request) {
     const body = await request.json();
     const { type, note, secret } = body as { type: string; note?: string; secret: string };
 
-    // Validate secret
-    const validSecret = secret === "ljfc-saturday-2026" || (process.env.CRON_SECRET && secret === process.env.CRON_SECRET);
-    if (!validSecret) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    // The secret may arrive in the JSON body here rather than the query string,
+    // so check that too before falling back to the standard guard.
+    const bodySecretOk = Boolean(
+      secret && process.env.CRON_SECRET && secret === process.env.CRON_SECRET
+    );
+    if (!bodySecretOk) {
+      const denied = requireCron(request);
+      if (denied) return denied;
     }
 
     if (type !== "go" && type !== "nogo") {

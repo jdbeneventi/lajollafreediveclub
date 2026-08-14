@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { PartnerCategory, PartnerPriority } from "@/lib/partner-network";
+import { adminLogin, adminSession } from "@/lib/adminLogin";
 
-const SECRET = "ljfc";
 const FORMSPREE_URL = "https://formspree.io/f/mojknqlk";
 
 const categories: PartnerCategory[] = [
@@ -33,18 +33,13 @@ export default function AddPartnerPage() {
   const [notes, setNotes] = useState("");
 
   // Check URL param on mount
-  useState(() => {
-    if (typeof window !== "undefined") {
-      const params = new URLSearchParams(window.location.search);
-      if (params.get("key") === SECRET) {
-        setAuthed(true);
-      }
-    }
-  });
+  useEffect(() => {
+    adminSession().then((ok) => { if (ok) setAuthed(true); });
+  }, []);
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (password === SECRET) setAuthed(true);
+    if (await adminLogin(password)) setAuthed(true);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {

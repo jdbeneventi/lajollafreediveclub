@@ -4,7 +4,9 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import type { CalendarEventLite, InquiryLite } from "@/lib/inquiryConflicts";
 
-const SECRET = "ljfc";
+// Session lives in an httpOnly cookie set by /api/admin/login.
+// Kept empty so the inter-page ?key= links below carry no secret.
+const SECRET = "";
 
 interface Props {
   inquiries: InquiryLite[];

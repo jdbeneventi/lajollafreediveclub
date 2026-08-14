@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
 import { parseDateRange } from "@/lib/parseDateRange";
+import { requireAdmin } from "@/lib/adminAuth";
 
-const SECRET = "ljfc";
 
 // ─── GET — list all inquiries with enrichment ─────────────────────────────
 // Joins course_inquiries to bookings (by email) and student_onboarding (by email)
@@ -14,9 +14,8 @@ const SECRET = "ljfc";
 //   ?archived=true|false      (default false — hide archived)
 //   ?limit=100                (default 200)
 export async function GET(req: NextRequest) {
-  if (req.nextUrl.searchParams.get("key") !== SECRET) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+  const denied = requireAdmin(req);
+  if (denied) return denied;
 
   const statusFilter = req.nextUrl.searchParams.get("status");
   const includeArchived = req.nextUrl.searchParams.get("archived") === "true";
@@ -111,9 +110,8 @@ export async function GET(req: NextRequest) {
 // Body: { first_name, email, course, last_name?, phone?, experience?,
 //         preferred_dates?, group_size?, message?, status? }
 export async function POST(req: NextRequest) {
-  if (req.nextUrl.searchParams.get("key") !== SECRET) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+  const denied = requireAdmin(req);
+  if (denied) return denied;
 
   const body = await req.json();
   const { first_name, email, course } = body;
@@ -159,9 +157,8 @@ export async function POST(req: NextRequest) {
 // ─── PATCH — update a single inquiry ──────────────────────────────────────
 // Body: { id, status?, admin_notes?, parsed_start_date?, parsed_end_date?, archived?, linked_booking_id? }
 export async function PATCH(req: NextRequest) {
-  if (req.nextUrl.searchParams.get("key") !== SECRET) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+  const denied = requireAdmin(req);
+  if (denied) return denied;
 
   const body = await req.json();
   const { id, ...updates } = body;

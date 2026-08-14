@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { adminLogin, adminSession } from "@/lib/adminLogin";
 import Link from "next/link";
 import {
   partners,
@@ -13,7 +14,6 @@ import {
   type PartnerStatus,
 } from "@/lib/partner-network";
 
-const SECRET = "ljfc";
 
 const statusColors: Record<PartnerStatus, string> = {
   not_started: "#3A4A56",
@@ -171,18 +171,13 @@ export default function AdminPartnersPage() {
   const [sortBy, setSortBy] = useState<"priority" | "name" | "status">("priority");
 
   // Check URL param on mount
-  useState(() => {
-    if (typeof window !== "undefined") {
-      const params = new URLSearchParams(window.location.search);
-      if (params.get("key") === SECRET) {
-        setAuthed(true);
-      }
-    }
-  });
+  useEffect(() => {
+    adminSession().then((ok) => { if (ok) setAuthed(true); });
+  }, []);
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (password === SECRET) {
+    if (await adminLogin(password)) {
       setAuthed(true);
     }
   };

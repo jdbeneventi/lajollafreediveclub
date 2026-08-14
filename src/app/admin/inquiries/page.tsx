@@ -5,8 +5,11 @@ import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { buildConflictReport, type InquiryLite, type CalendarEventLite } from "@/lib/inquiryConflicts";
 import CalendarPanel from "./CalendarPanel";
+import { adminLogin, adminSession } from "@/lib/adminLogin";
 
-const SECRET = "ljfc";
+// Session lives in an httpOnly cookie set by /api/admin/login.
+// Kept empty so the inter-page ?key= links below carry no secret.
+const SECRET = "";
 
 // ─── Types ────────────────────────────────────────────────────────────────
 
@@ -106,7 +109,7 @@ function InquiriesContent() {
   const [addSaving, setAddSaving] = useState(false);
 
   useEffect(() => {
-    if (keyParam === SECRET) setAuthed(true);
+    adminSession().then((ok) => { if (ok) setAuthed(true); });
   }, [keyParam]);
 
   useEffect(() => {
@@ -196,9 +199,9 @@ function InquiriesContent() {
     return (
       <div className="min-h-screen bg-deep flex items-center justify-center px-6">
         <form
-          onSubmit={(e) => {
+          onSubmit={async (e) => {
             e.preventDefault();
-            if (password === SECRET) setAuthed(true);
+            if (await adminLogin(password)) setAuthed(true);
           }}
           className="bg-ocean/30 border border-teal/15 rounded-2xl p-8 w-full max-w-sm"
         >

@@ -1,10 +1,10 @@
 "use client";
 
 import { useState, useMemo, useEffect, useCallback } from "react";
+import { adminLogin, adminSession } from "@/lib/adminLogin";
 
 // ─── CONSTANTS ─────────────────────────────────────────────────────
 
-const SECRET = "ljfc";
 
 const MONTHS = [
   "January", "February", "March", "April", "May", "June",
@@ -593,14 +593,13 @@ export default function CurriculumPlannerPage() {
   // Auth via URL param
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const params = new URLSearchParams(window.location.search);
-      if (params.get("key") === SECRET) setAuthed(true);
+      adminSession().then((ok) => { if (ok) setAuthed(true); });
     }
   }, []);
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (password === SECRET) setAuthed(true);
+    if (await adminLogin(password)) setAuthed(true);
   };
 
   // Auto-fill theme when month changes

@@ -235,9 +235,18 @@ Backups (data + reconstructed schema + smoke baseline) live outside the repo in 
 
 ## Known Issues
 
-### Security — fix before other work
-- **The literal string `"ljfc"` is a hardcoded fallback secret across the whole admin + cron surface, and it ships in the public JS bundle.** Verified live 2026-08-13: `/api/admin/students?key=ljfc`, `/api/admin/onboarding?key=ljfc` (medical + emergency contacts), `/api/admin/inquiries?key=ljfc`, `/api/admin/gear?key=ljfc` all return 200 with real data. Same fallback authorizes `/api/daily-email` (schedules a Kit broadcast to the whole list), `/api/invoice`, `/api/send-forms`, `/api/aida-forms`, `/api/calendar`, `/api/calendar/seed`. Sibling literals: `ljfc-daily-2026` (in plaintext in `vercel.json`), `ljfc-friday-2026`, `ljfc-saturday-2026`.
-- **`PasswordGate` is client-side only** (`useState`, no server check) — gated content ships in the bundle regardless, so `/ohpc`, `/science`, `/education` and `/research` are readable by anyone who opens devtools. Admin pages gate the UI the same way; their APIs at least check server-side, but with the key above.
+### Security
+- **The `"ljfc"` shared key is gone — but `ADMIN_KEY` must be set in Vercel or admin is locked.** Every admin and cron route previously accepted the literal `"ljfc"` (or `ljfc-daily-2026` / `-friday-` / `-saturday-`), which shipped in the public JS bundle; `/api/admin/students?key=ljfc` returned real student medical records. Auth now lives in `src/lib/adminAuth.ts`:
+  - `requireAdmin(req)` — admin routes. Accepts the `ljfc_admin` httpOnly cookie (set by `POST /api/admin/login`), an `x-admin-key` header, or `?key=`/`?secret=` — all compared against `ADMIN_KEY` in constant time.
+  - `requireCron(req)` — cron/ops routes. Accepts `CRON_SECRET`, or admin credentials.
+  - **Fails closed:** with `ADMIN_KEY` unset, nothing authenticates.
+
+  Admin pages verify the typed password via `adminLogin()` in `src/lib/adminLogin.ts` rather than comparing to a bundled constant. The `?key=${SECRET}` still present in some inter-page links is harmless — `SECRET` is now `""`, the server ignores a non-matching key and falls through to the cookie.
+
+  **Rotating the key:** change `ADMIN_KEY` in Vercel and redeploy. Existing sessions break, because the cookie is an HMAC of the key.
+
+- **Still open — `/api/students` has no server-side auth at all.** Both GET and POST are unauthenticated; it proxies the coach-portal Google Sheet. The `/students` page gates client-side only, so the data behind it is reachable directly.
+- **Still open — `PasswordGate` is client-side only** (`useState`, no server check), so `/ohpc`, `/science`, `/education` and `/research` content ships in the bundle regardless of the gate. Lower priority: strategy docs, not PII.
 
 ### Correctness
 - **Build-time-frozen data routes — fixed on `chore/safety-net`, awaiting deploy.** Six routes had no `revalidate` and no revalidating `fetch()`, so Next prerendered them on build day and served that body forever. As of 2026-08-13 production had been serving **June 13** data for 61 days across `/api/almanac` (wrong moon phase, "next full moon" seven weeks past), `/api/visibility` (stale vis grade), `/api/water-quality` (stale beach advisories and closures — safety-relevant), `/api/ocean-intel`, `/api/local-intel`, and `/api/conditions-card`. Each now declares a `revalidate` matching the `s-maxage` it already set. Verify with `.next/prerender-manifest.json` — every `/api/*` entry should show a number, never `false`. The daily conditions email was never affected: it calls `getLocalIntel()` from the lib directly and deliberately skips `/api/visibility`.

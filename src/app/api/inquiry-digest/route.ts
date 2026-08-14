@@ -25,16 +25,13 @@ import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 import { supabase } from "@/lib/supabase";
 import { buildConflictReport, type InquiryLite, type CalendarEventLite } from "@/lib/inquiryConflicts";
+import { isCron } from "@/lib/adminAuth";
 
-const PUBLIC_SECRET = "ljfc-daily-2026";
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const OWNER_EMAIL = "joshuabeneventi@gmail.com";
 
 function authed(req: NextRequest): boolean {
-  if (req.nextUrl.searchParams.get("secret") === PUBLIC_SECRET) return true;
-  const cronHeader = req.headers.get("x-cron-secret");
-  if (cronHeader && process.env.CRON_SECRET && cronHeader === process.env.CRON_SECRET) return true;
-  return false;
+  return isCron(req);
 }
 
 export async function GET(req: NextRequest) {

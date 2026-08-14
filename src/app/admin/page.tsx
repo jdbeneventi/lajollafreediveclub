@@ -3,8 +3,11 @@
 import { useState, useEffect, Suspense } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import { adminLogin, adminSession } from "@/lib/adminLogin";
 
-const SECRET = "ljfc";
+// Session lives in an httpOnly cookie set by /api/admin/login.
+// Kept empty so the inter-page ?key= links below carry no secret.
+const SECRET = "";
 
 const ADMIN_PAGES = [
   {
@@ -153,7 +156,7 @@ function AdminContent() {
   const [password, setPassword] = useState("");
 
   useEffect(() => {
-    if (params.get("key") === SECRET) setAuthed(true);
+    adminSession().then((ok) => { if (ok) setAuthed(true); });
   }, [params]);
 
   if (!authed) {
@@ -166,9 +169,9 @@ function AdminContent() {
           <h1 className="font-serif text-3xl text-white mb-2">Admin</h1>
           <p className="text-white/30 text-sm mb-8">Enter code to continue.</p>
           <form
-            onSubmit={(e) => {
+            onSubmit={async (e) => {
               e.preventDefault();
-              if (password === SECRET) setAuthed(true);
+              if (await adminLogin(password)) setAuthed(true);
             }}
             className="flex gap-3"
           >

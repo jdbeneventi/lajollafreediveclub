@@ -2,14 +2,13 @@ import { NextRequest, NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
 import { issueMagicLink } from "@/lib/auth";
 import { Resend } from "resend";
+import { requireAdmin } from "@/lib/adminAuth";
 
-const SECRET = "ljfc";
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 
 export async function POST(req: NextRequest) {
-  if (req.nextUrl.searchParams.get("key") !== SECRET) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+  const denied = requireAdmin(req);
+  if (denied) return denied;
 
   const { emails } = await req.json();
   if (!Array.isArray(emails) || emails.length === 0) {

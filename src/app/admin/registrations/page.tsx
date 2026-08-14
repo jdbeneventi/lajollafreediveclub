@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useEffect, useMemo } from "react";
+import { adminLogin } from "@/lib/adminLogin";
 
-const SECRET = "ljfc";
 
 interface Registration {
   id: string;
@@ -331,7 +331,7 @@ export default function AdminRegistrationsPage() {
               value={pw}
               onChange={(e) => setPw(e.target.value)}
               onKeyDown={(e) => {
-                if (e.key === "Enter" && pw === SECRET) setAuthed(true);
+                if (e.key === "Enter") void adminLogin(pw).then((ok) => ok && setAuthed(true));
               }}
               className="w-full px-4 py-3 rounded-lg bg-white/[0.06] border border-white/10 text-white text-sm outline-none focus:border-seafoam transition-colors"
               placeholder="Enter password"
@@ -339,7 +339,7 @@ export default function AdminRegistrationsPage() {
             />
             <button
               onClick={() => {
-                if (pw === SECRET) setAuthed(true);
+                void adminLogin(pw).then((ok) => ok && setAuthed(true));
               }}
               className="w-full mt-4 py-3 bg-seafoam text-deep rounded-full font-semibold text-sm cursor-pointer border-none hover:shadow-lg transition-all"
             >

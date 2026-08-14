@@ -2,16 +2,14 @@ import { NextRequest, NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
 import { getReadinessScore } from "@/lib/readiness";
 import { Resend } from "resend";
+import { requireCron } from "@/lib/adminAuth";
 
-const CRON_SECRET = process.env.CRON_SECRET;
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const OWNER_EMAIL = "joshuabeneventi@gmail.com";
 
 export async function GET(req: NextRequest) {
-  const secret = req.nextUrl.searchParams.get("secret");
-  if (secret !== CRON_SECRET && secret !== "ljfc") {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+  const denied = requireCron(req);
+  if (denied) return denied;
 
   // Default to 2 days from now
   const dateParam = req.nextUrl.searchParams.get("date");

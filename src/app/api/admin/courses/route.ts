@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
 import { Resend } from "resend";
+import { requireAdmin } from "@/lib/adminAuth";
 
-const SECRET = "ljfc";
 
 function formatDateReadable(dateStr: string): string {
   const d = new Date(dateStr + "T12:00:00");
@@ -94,9 +94,8 @@ function enrollmentEmailHtml(studentName: string, courseName: string, courseDate
 }
 
 export async function GET(req: NextRequest) {
-  if (req.nextUrl.searchParams.get("key") !== SECRET) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+  const denied = requireAdmin(req);
+  if (denied) return denied;
 
   const today = new Date().toISOString().split("T")[0];
 
@@ -128,9 +127,8 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-  if (req.nextUrl.searchParams.get("key") !== SECRET) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+  const denied = requireAdmin(req);
+  if (denied) return denied;
 
   const body = await req.json();
   const { action } = body as { action: string };

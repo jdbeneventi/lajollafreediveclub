@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import Stripe from "stripe";
 import { Resend } from "resend";
 import { supabase } from "@/lib/supabase";
+import { requireAdmin } from "@/lib/adminAuth";
 
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 
@@ -16,12 +17,8 @@ function getStripe() {
 
 // POST: Create invoice and send payment link
 export async function POST(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const secret = searchParams.get("secret");
-
-  if (secret !== "ljfc" && secret !== process.env.CRON_SECRET) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+  const denied = requireAdmin(request);
+  if (denied) return denied;
 
   try {
     const data = await request.json();
@@ -185,12 +182,8 @@ export async function POST(request: Request) {
 
 // GET: list invoices/bookings
 export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const secret = searchParams.get("secret");
-
-  if (secret !== "ljfc" && secret !== process.env.CRON_SECRET) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+  const denied = requireAdmin(request);
+  if (denied) return denied;
 
   const { data, error } = await supabase
     .from("bookings")
@@ -203,11 +196,8 @@ export async function GET(request: Request) {
 
 // PATCH: update a booking
 export async function PATCH(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const secret = searchParams.get("secret");
-  if (secret !== "ljfc" && secret !== process.env.CRON_SECRET) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+  const denied = requireAdmin(request);
+  if (denied) return denied;
 
   const body = await request.json();
   const { id, ...updates } = body;
@@ -234,11 +224,8 @@ export async function PATCH(request: Request) {
 
 // DELETE: remove a booking
 export async function DELETE(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const secret = searchParams.get("secret");
-  if (secret !== "ljfc" && secret !== process.env.CRON_SECRET) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+  const denied = requireAdmin(request);
+  if (denied) return denied;
 
   const id = searchParams.get("id");
   if (!id) return NextResponse.json({ error: "id required" }, { status: 400 });

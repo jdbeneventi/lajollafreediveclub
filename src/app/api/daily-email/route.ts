@@ -3,6 +3,7 @@ import { Resend } from "resend";
 import { getMoonPhase } from "@/lib/moon";
 import { getTopEvents, isGrunionNight } from "@/lib/seasonal";
 import { getLocalIntel, LocalAlert } from "@/lib/local-intel";
+import { requireCron } from "@/lib/adminAuth";
 
 const KIT_API_SECRET = process.env.KIT_API_SECRET;
 const KIT_API_KEY = process.env.KIT_API_KEY;
@@ -529,14 +530,11 @@ function buildEmailHtml(
 // ─── Handler ───
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const secret = searchParams.get("secret");
   const preview = searchParams.get("preview") === "true";
   const testMode = searchParams.get("test") === "true";
 
-  const validSecret = secret === "ljfc" || (process.env.CRON_SECRET && secret === process.env.CRON_SECRET);
-  if (!validSecret) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+  const denied = requireCron(request);
+  if (denied) return denied;
 
   try {
     const [buoyData, windData, tideData, waterQuality, localIntel] = await Promise.all([

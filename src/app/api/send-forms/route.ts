@@ -1,15 +1,12 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
+import { requireAdmin } from "@/lib/adminAuth";
 
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 
 export async function POST(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const secret = searchParams.get("secret");
-
-  if (secret !== "ljfc" && secret !== process.env.CRON_SECRET) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+  const denied = requireAdmin(request);
+  if (denied) return denied;
 
   try {
     const { email, name, course } = await request.json();

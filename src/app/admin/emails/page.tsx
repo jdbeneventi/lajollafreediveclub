@@ -4,8 +4,11 @@ import { useEffect, useMemo, useState, Suspense } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { EMAIL_WORKFLOW_STAGES, getEmailWorkflowsByStage, EMAIL_WORKFLOWS, type EmailWorkflowKind } from "@/lib/emailWorkflows";
+import { adminLogin, adminSession } from "@/lib/adminLogin";
 
-const SECRET = "ljfc";
+// Session lives in an httpOnly cookie set by /api/admin/login.
+// Kept empty so the inter-page ?key= links below carry no secret.
+const SECRET = "";
 
 const KIND_LABELS: Record<EmailWorkflowKind, string> = {
   user: "User action",
@@ -40,7 +43,7 @@ function AdminEmailsContent() {
   const [kind, setKind] = useState<"all" | EmailWorkflowKind>("all");
 
   useEffect(() => {
-    if (params.get("key") === SECRET) setAuthed(true);
+    adminSession().then((ok) => { if (ok) setAuthed(true); });
   }, [params]);
 
   const filtered = useMemo(() => {
@@ -71,9 +74,9 @@ function AdminEmailsContent() {
           <h1 className="font-serif text-3xl text-white mb-2">Email Workflows</h1>
           <p className="text-white/30 text-sm mb-8">Enter code to continue.</p>
           <form
-            onSubmit={(e) => {
+            onSubmit={async (e) => {
               e.preventDefault();
-              if (password === SECRET) setAuthed(true);
+              if (await adminLogin(password)) setAuthed(true);
             }}
             className="flex gap-3"
           >

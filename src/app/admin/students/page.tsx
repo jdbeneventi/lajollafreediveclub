@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback, Suspense } from "react";
+import { adminSession } from "@/lib/adminLogin";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import {
@@ -12,7 +13,6 @@ import {
   type Requirement,
 } from "@/lib/certifications";
 
-const SECRET = "ljfc";
 
 interface Student {
   id: string;
@@ -80,10 +80,15 @@ function StudentsContent() {
     setLoading(false);
   }, [key]);
 
+  const [authed, setAuthed] = useState<boolean | null>(null);
   useEffect(() => {
-    if (key === SECRET) fetchData();
-    else setLoading(false);
-  }, [key, fetchData]);
+    adminSession().then(setAuthed);
+  }, []);
+
+  useEffect(() => {
+    if (authed) fetchData();
+    else if (authed === false) setLoading(false);
+  }, [authed, fetchData]);
 
   const apiCall = async (body: Record<string, unknown>) => {
     setSaving(true);
@@ -96,7 +101,7 @@ function StudentsContent() {
     setSaving(false);
   };
 
-  if (key !== SECRET) {
+  if (authed === false) {
     return (
       <div className="min-h-screen bg-deep flex items-center justify-center">
         <p className="text-white/30 text-sm">

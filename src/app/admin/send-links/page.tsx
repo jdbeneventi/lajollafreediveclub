@@ -1,10 +1,12 @@
 "use client";
 
 import { useState, useEffect, Suspense } from "react";
-import { useSearchParams } from "next/navigation";
 import Link from "next/link";
+import { adminLogin, adminSession } from "@/lib/adminLogin";
 
-const SECRET = "ljfc";
+// Session lives in an httpOnly cookie set by /api/admin/login.
+// Kept empty so the inter-page ?key= links below carry no secret.
+const SECRET = "";
 
 export default function SendLinksPage() {
   return (
@@ -15,8 +17,6 @@ export default function SendLinksPage() {
 }
 
 function SendLinksContent() {
-  const searchParams = useSearchParams();
-  const key = searchParams.get("key");
   const [password, setPassword] = useState("");
   const [authed, setAuthed] = useState(false);
   const [emailsText, setEmailsText] = useState("");
@@ -24,8 +24,8 @@ function SendLinksContent() {
   const [results, setResults] = useState<{ email: string; status: string; error?: string }[] | null>(null);
 
   useEffect(() => {
-    if (key === SECRET) setAuthed(true);
-  }, [key]);
+    adminSession().then((ok) => { if (ok) setAuthed(true); });
+  }, []);
 
   if (!authed) {
     return (
@@ -36,12 +36,12 @@ function SendLinksContent() {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && password === SECRET && setAuthed(true)}
+            onKeyDown={(e) => { if (e.key === "Enter") void adminLogin(password).then((ok) => ok && setAuthed(true)); }}
             placeholder="Password"
             className="w-full px-4 py-2.5 rounded-lg bg-white/[0.06] border border-white/10 text-white text-sm mb-3"
           />
           <button
-            onClick={() => password === SECRET && setAuthed(true)}
+            onClick={() => void adminLogin(password).then((ok) => ok && setAuthed(true))}
             className="w-full px-4 py-2.5 rounded-full bg-seafoam text-deep text-sm font-semibold"
           >
             Enter

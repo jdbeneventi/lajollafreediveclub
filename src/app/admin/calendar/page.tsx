@@ -4,7 +4,6 @@ import { useState, useEffect, useCallback, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 
-const SECRET = "ljfc";
 
 // Auth handled by password input → stored in secret state
 // Or auto-authed when ?key=ljfc is present in the URL (used by deep links
@@ -55,12 +54,11 @@ export default function CalendarAdmin() {
 
 function CalendarAdminContent() {
   const searchParams = useSearchParams();
-  const keyParam = searchParams.get("key");
   const prefillDate = searchParams.get("prefillDate");
   const prefillEndDate = searchParams.get("prefillEndDate");
 
-  const [secret, setSecret] = useState(keyParam === SECRET ? SECRET : "");
-  const [authed, setAuthed] = useState(keyParam === SECRET);
+  const [secret, setSecret] = useState("");
+  const [authed, setAuthed] = useState(false);
   const [events, setEvents] = useState<CalendarEvent[]>([]);
   const [loading, setLoading] = useState(false);
   const [editing, setEditing] = useState<CalendarEvent | null>(null);

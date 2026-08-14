@@ -1,13 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
+import { requireAdmin } from "@/lib/adminAuth";
 
-const SECRET = "ljfc";
 
 // GET — full gear catalog + all student gear entries
 export async function GET(req: NextRequest) {
-  if (req.nextUrl.searchParams.get("key") !== SECRET) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+  const denied = requireAdmin(req);
+  if (denied) return denied;
 
   const [{ data: catalog }, { data: studentGear }] = await Promise.all([
     supabase.from("gear_catalog").select("*").order("sort_order"),
@@ -22,9 +21,8 @@ export async function GET(req: NextRequest) {
 
 // POST — add/update/archive gear catalog items
 export async function POST(req: NextRequest) {
-  if (req.nextUrl.searchParams.get("key") !== SECRET) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+  const denied = requireAdmin(req);
+  if (denied) return denied;
 
   const body = await req.json();
   const { action } = body;

@@ -1,10 +1,10 @@
 "use client";
 
 import { useState, useMemo, useEffect } from "react";
+import { adminLogin, adminSession } from "@/lib/adminLogin";
 
 // ─── CONSTANTS ─────────────────────────────────────────────────────
 
-const SECRET = "ljfc";
 
 interface SessionConfig {
   label: string;
@@ -184,14 +184,13 @@ export default function EconomicsCalculatorPage() {
   // Auth
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const params = new URLSearchParams(window.location.search);
-      if (params.get("key") === SECRET) setAuthed(true);
+      adminSession().then((ok) => { if (ok) setAuthed(true); });
     }
   }, []);
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (password === SECRET) setAuthed(true);
+    if (await adminLogin(password)) setAuthed(true);
   };
 
   // ─── CALCULATIONS ────────────────────────────────────────────────

@@ -1,14 +1,11 @@
 import { NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
 import { events } from "@/lib/calendar";
+import { requireAdmin } from "@/lib/adminAuth";
 
 export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const secret = searchParams.get("secret");
-
-  if (secret !== "ljfc" && secret !== process.env.CRON_SECRET) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+  const denied = requireAdmin(request);
+  if (denied) return denied;
 
   const rows = events.map(e => ({
     title: e.title,

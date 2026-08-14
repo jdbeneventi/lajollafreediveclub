@@ -1,20 +1,13 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
+import { requireCron } from "@/lib/adminAuth";
 
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const OWNER_EMAIL = "joshuabeneventi@gmail.com";
 
 export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const secret = searchParams.get("secret");
-
-  const validSecret =
-    secret === "ljfc-friday-2026" ||
-    (process.env.CRON_SECRET && secret === process.env.CRON_SECRET);
-
-  if (!validSecret) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+  const denied = requireCron(request);
+  if (denied) return denied;
 
   // Only run on Fridays
   const now = new Date();

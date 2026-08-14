@@ -17,8 +17,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
 import { Resend } from "resend";
 import { findGroupings, findOverlaps, type InquiryLite } from "@/lib/inquiryConflicts";
+import { requireAdmin } from "@/lib/adminAuth";
 
-const SECRET = "ljfc";
 const OWNER_EMAIL = "joshuabeneventi@gmail.com";
 
 // ─── Joshua's voice + LJFC source-of-truth prompt ──────────────────────────
@@ -131,9 +131,8 @@ function describeOverlaps(thisInquiryId: string, allInquiries: InquiryLite[]): s
 // ─── Route ─────────────────────────────────────────────────────────────────
 
 export async function POST(req: NextRequest) {
-  if (req.nextUrl.searchParams.get("key") !== SECRET) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+  const denied = requireAdmin(req);
+  if (denied) return denied;
 
   const body = await req.json();
   const { action, id } = body;

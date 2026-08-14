@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { adminLogin } from "@/lib/adminLogin";
 
-const SECRET = "ljfc";
 
 interface SiteNode {
   path: string;
@@ -162,7 +162,7 @@ function SitemapContent() {
   if (!authed) {
     return (
       <div className="min-h-screen bg-deep flex items-center justify-center px-4">
-        <form onSubmit={(e) => { e.preventDefault(); if (password === SECRET) setAuthed(true); }} className="w-full max-w-sm">
+        <form onSubmit={async (e) => { e.preventDefault(); if (await adminLogin(password)) setAuthed(true); }} className="w-full max-w-sm">
           <div className="text-center mb-8">
             <div className="text-[11px] text-teal/60 font-medium tracking-[0.2em] uppercase mb-2">Admin</div>
             <h1 className="text-2xl font-serif text-salt">Site Map</h1>

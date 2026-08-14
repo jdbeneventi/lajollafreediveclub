@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
+import { requireAdmin } from "@/lib/adminAuth";
 
 // GET: public endpoint — returns active events
 export async function GET() {
@@ -22,16 +23,8 @@ export async function GET() {
 
 // POST: admin endpoint — create/update/delete events
 export async function POST(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const secret = searchParams.get("secret");
-
-  const validSecret =
-    secret === "ljfc" ||
-    (process.env.CRON_SECRET && secret === process.env.CRON_SECRET);
-
-  if (!validSecret) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+  const denied = requireAdmin(request);
+  if (denied) return denied;
 
   try {
     const body = await request.json();
