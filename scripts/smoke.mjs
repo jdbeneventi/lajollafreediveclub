@@ -28,19 +28,10 @@ const TIMEOUT_MS = 30_000;
 
 /** Pre-existing bugs. Keyed by check id. Remove an entry once it's fixed. */
 const KNOWN_ISSUES = {
-  // ── Build-time-frozen routes. Fixed on branch chore/safety-net; these entries
-  //    describe PRODUCTION, so they stay until that branch is deployed. Once it
-  //    is, these flip to FIXED and should be deleted.
-  "fresh:/api/almanac":
-    "Prerendered at build time with no revalidate, so it never refreshes. Serving build-day moon/seasonal data. Fixed on branch, awaiting deploy.",
-  "fresh:/api/visibility":
-    "Same build-time freeze — serving a stale underwater-visibility grade. Fixed on branch, awaiting deploy.",
-  "fresh:/api/water-quality":
-    "Same build-time freeze — serving stale beach advisories and closures. Safety-relevant. Fixed on branch, awaiting deploy.",
-  "fresh:/api/ocean-intel":
-    "Same build-time freeze — serving a stale sightings feed. Fixed on branch, awaiting deploy.",
-  "fresh:/api/local-intel":
-    "Same build-time freeze — serving stale local alerts. Fixed on branch, awaiting deploy.",
+  // The six build-time-frozen data routes were fixed and deployed 2026-08-13
+  // (commits 2dca4ed, 40683e3) and verified fresh in production, so their
+  // entries are gone. The freshness assertions above stay — they are what
+  // would catch a regression.
 
   "gate:/api/admin/students":
     "Admin API accepts the hardcoded fallback key 'ljfc', which ships in the public JS bundle.",
@@ -140,8 +131,10 @@ const APIS = [
     required: ["days", "station"],
     sane: (d) => {
       if (!Array.isArray(d.days) || d.days.length < 7) return `expected 7 days, got ${d.days?.length}`;
-      const today = new Date().toISOString().slice(0, 10);
-      if (d.days[0]?.date < today) return `first day ${d.days[0].date} is in the past (today ${today})`;
+      // Compare in Pacific, not UTC — the site is La Jolla-local, so a UTC
+      // "today" is a day ahead every evening after 5pm PT and fails falsely.
+      const today = new Date().toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
+      if (d.days[0]?.date < today) return `first day ${d.days[0].date} is in the past (today ${today} PT)`;
       return null;
     },
     maxAgeHours: 24,
