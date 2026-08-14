@@ -256,7 +256,11 @@ Backups (data + reconstructed schema + smoke baseline) live outside the repo in 
 
   Admin pages verify the typed password via `adminLogin()` in `src/lib/adminLogin.ts` rather than comparing to a bundled constant. The `?key=${SECRET}` still present in some inter-page links is harmless — `SECRET` is now `""`, the server ignores a non-matching key and falls through to the cookie.
 
-  **Rotating the key:** change `ADMIN_KEY` in Vercel and redeploy. Existing sessions break, because the cookie is an HMAC of the key.
+  **Rotating the key:** change `ADMIN_KEY` in Vercel and redeploy. Existing sessions break, because the cookie is an HMAC of the key. Note that env changes do **not** reach deployments that already exist — redeploy, or the old value stays live.
+
+  **Login throttling.** `POST /api/admin/login` escalates the delay on each wrong password (250ms × attempts, capped at 2s) and hard-locks an IP after 8 failures in 15 minutes, returning 429 with `Retry-After`. A successful login clears the counter. This is in-memory per serverless instance — it catches bursts from one source and makes sustained guessing expensive, but a distributed attacker spreading guesses across cold starts would evade it. The stronger version is a shared counter in Supabase keyed on IP; deferred because it needs a new table.
+
+  This matters in proportion to the password. The current `ADMIN_KEY` is a short themed phrase rather than a random string, chosen deliberately for memorability — the throttle is what compensates. If the key is ever shortened further, add the shared-state limiter first.
 
 - **Still open — `/api/students` has no server-side auth at all.** Both GET and POST are unauthenticated; it proxies the coach-portal Google Sheet. The `/students` page gates client-side only, so the data behind it is reachable directly.
 - **Still open — `PasswordGate` is client-side only** (`useState`, no server check), so `/ohpc`, `/science`, `/education` and `/research` content ships in the bundle regardless of the gate. Lower priority: strategy docs, not PII.
