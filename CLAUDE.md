@@ -197,7 +197,17 @@ node scripts/smoke.mjs <preview-url>  # verify the preview, not prod
 
 `scripts/smoke.mjs` — zero-dependency, read-only. Checks 16 pages render with real content, 8 data APIs for shape + plausible ranges + **freshness**, that admin/cron endpoints reject unauthenticated callers, and the apex redirect. Pre-existing bugs are listed in its `KNOWN_ISSUES` map so they don't mask new breakage; if a known issue starts passing, the run says `FIXED` and tells you to delete the entry. Exits non-zero only on unexpected failures.
 
-Baseline as of 2026-08-13: **38 passed, 0 failed, 5 known**.
+Baseline as of 2026-08-13: **44 passed, 0 failed, 4 known** (the 4 are the admin key, fixed on `fix/admin-auth`).
+
+## Monitoring — `.github/workflows/health.yml`
+
+Runs the smoke test hourly from GitHub Actions, plus on demand via *Actions → Health check → Run workflow* (which takes an optional URL, so you can point it at a preview deploy).
+
+It deliberately does **not** run on Vercel: a monitor hosted on the platform it watches cannot tell you that platform is down. GitHub is infrastructure we already own, the job needs no secrets, and `scripts/smoke.mjs` has no dependencies — so the whole run is a checkout plus one `node` invocation, a few seconds of the free tier.
+
+**Silent when healthy.** On failure GitHub emails the repo owner with a link to the run, and the job summary contains the full check output. It retries once after 90s and only alarms if both passes fail — a single slow request against the 30s timeout is enough to trip a check, and an hourly job that cries wolf is one you learn to ignore.
+
+Not covered yet: whether the five Vercel crons actually *fired*. That needs the Vercel API or CLI, neither of which is set up. Today the workflow only proves their endpoints are deployed and correctly reject unauthenticated callers.
 
 Backups (data + reconstructed schema + smoke baseline) live outside the repo in `~/Documents/ljfc-backups/`. They contain student PII — never commit them.
 

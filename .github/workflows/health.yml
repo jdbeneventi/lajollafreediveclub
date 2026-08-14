@@ -1,0 +1,87 @@
+name: Health check
+
+# Monitors production from outside Vercel — a monitor that runs on the thing it
+# watches cannot tell you the thing is down. GitHub's own infrastructure is the
+# cheapest place to stand that we already own.
+#
+# Silent when healthy. On failure GitHub emails the repo owner with a link to
+# the run, and the job summary names exactly which checks broke.
+
+on:
+  schedule:
+    # Hourly, on the 17th minute. Off the hour because everyone schedules on :00
+    # and GitHub's queue is busiest then — cron here is best-effort, not exact.
+    - cron: "17 * * * *"
+  workflow_dispatch:
+    inputs:
+      target:
+        description: "URL to check (defaults to production)"
+        required: false
+        default: "https://www.lajollafreediveclub.com"
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # No `npm ci` — scripts/smoke.mjs has zero dependencies on purpose, so
+      # this job is a checkout and a single node invocation. Runs in seconds.
+      # Confirm before alarming. A single slow request against the 30s timeout
+      # is enough to fail a check — observed in testing — and an hourly job that
+      # emails on every blip teaches you to ignore it. A real outage persists,
+      # so we only alarm when a second run 90s later agrees.
+      - name: Run smoke tests
+        id: smoke
+        run: |
+          TARGET="${{ github.event.inputs.target || 'https://www.lajollafreediveclub.com' }}"
+          echo "Checking $TARGET"
+
+          set +e
+          node scripts/smoke.mjs "$TARGET" > /tmp/smoke.txt 2>&1
+          FIRST=$?
+          cat /tmp/smoke.txt
+
+          if [ "$FIRST" -ne 0 ]; then
+            echo
+            echo "First pass failed. Waiting 90s to rule out a transient blip…"
+            sleep 90
+            node scripts/smoke.mjs "$TARGET" > /tmp/smoke.txt 2>&1
+            SECOND=$?
+            cat /tmp/smoke.txt
+            if [ "$SECOND" -eq 0 ]; then
+              echo "TRANSIENT: second pass clean. Not alarming."
+              echo "transient=true" >> "$GITHUB_OUTPUT"
+              FIRST=0
+            else
+              echo "CONFIRMED: failed twice, 90s apart."
+            fi
+          fi
+
+          echo "exit=$FIRST" >> "$GITHUB_OUTPUT"
+          set -e
+
+      - name: Job summary
+        if: always()
+        run: |
+          {
+            echo "## LJFC health check"
+            echo
+            echo '```'
+            cat /tmp/smoke.txt || echo "(no output — the run itself failed)"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Fail the run if any check failed
+        if: steps.smoke.outputs.exit != '0'
+        run: |
+          echo "::error::Smoke tests reported failures — see the job summary."
+          exit 1
