@@ -1,6 +1,7 @@
 # CLAUDE.md — La Jolla Freedive Club
 
-> Last verified against the codebase and production: **2026-08-13**.
+> Last verified against the codebase and production: **2026-08-13**, on top of `8f9c308`.
+> Always `git fetch` before trusting the local checkout — it was 4 days stale when this was written.
 > When something here contradicts the code, the code wins — and fix this file.
 
 ## Project Overview
@@ -58,6 +59,16 @@ Inquiry lifecycle (`inquiry_status` enum): `new → replied → quoted → depos
 5. `readiness.ts` scores each student 0-100% across six gates: onboarding · AIDA medical · physician clearance (only if flagged) · liability release · LJFC waiver · prep guide ≥80%.
 6. `course-briefing` cron emails the owner a roster with readiness scores 2 days out; `course-reminder` emails the students.
 
+## Email workflow registry
+
+`src/lib/emailWorkflows.ts` is the canonical inventory of every email the system sends — **26 workflows** across 6 stages (Lead capture · Conversion · Forms & waivers · Onboarding & readiness · Course operations · Saturday & conditions). Each entry records trigger, route, recipients, subject template, kind (`user` / `manual` / `webhook` / `cron` / `broadcast`), the status effect on the database, and which admin view surfaces it. Browsable at `/admin/emails`.
+
+**Read this before changing anything that sends mail** — it is more precise than grepping for `resend.emails.send`, and it records the intended side effects. Keep it in sync when adding or removing a send.
+
+## Planning docs — `docs/customer-journey/`
+
+Prior analysis of the lead → ready-student flow. Start with **`preservation-map.md` ("Do Not Break Existing Ops")** and **`safe-improvement-plan.md`** before changing pipeline behavior. Also: `current-state-audit.md`, `operational-journey-inventory.md`, `holes-and-opportunities.md`, `ljfc-lead-to-ready-student-prd.md`, and four interactive `.html` flow maps.
+
 ## Automations — 5 Vercel crons (`vercel.json`, times are UTC)
 
 | UTC | Local (PDT) | Endpoint | Does |
@@ -76,7 +87,7 @@ Inquiry lifecycle (`inquiry_status` enum): `new → replied → quoted → depos
 
 **Student-facing** — `/booking` (+ `/success`) · `/portal` (+ `/onboarding`, `/prep/aida1`, `/prep/aida2`, `/profile`, `/verify`) · `/waiver` · `/forms/aida` · `/students` (coach portal, gated)
 
-**Admin** (all gated) — `/admin` + `/calendar` `/courses` `/curriculum` `/economics` `/inquiries` `/invoices` `/onboarding` `/partners` `/registrations` `/send-forms` `/send-links` `/sitemap` `/students`
+**Admin** (all gated) — `/admin` + `/calendar` `/courses` `/curriculum` `/economics` `/emails` `/inquiries` `/invoices` `/onboarding` `/partners` `/registrations` `/send-forms` `/send-links` `/sitemap` `/students`
 
 **Private strategy** (noindex + password) — `/ohpc` (+ `/plan`) · `/education` (+ `/partners`) · `/science` (ORIGIN Protocol) · `/research`
 
