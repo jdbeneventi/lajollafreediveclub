@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
+import { adminLogin } from "@/lib/adminLogin";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -20,8 +21,10 @@ interface ParsedFields {
   [key: string]: string;
 }
 
-const COACH_CODE = "ljfc-coach";
-const STUDENT_CODE = "ljfc";
+// The coach code and student code used to live here as string literals, which
+// meant they shipped in the JS bundle. The coach now signs in with ADMIN_KEY
+// via /api/admin/login; the student code is checked server-side against the
+// STUDENT_CODE env var and travels as a header, never as a bundled constant.
 
 const LOCATIONS = ["La Jolla Shores", "La Jolla Cove", "Canyon", "Pool", "Other"];
 const DISCIPLINES = ["CWT", "FIM", "CNF", "STA", "DYN", "No-fins"];
@@ -163,6 +166,14 @@ export default function StudentPortal() {
   const [code, setCode] = useState("");
   const [codeError, setCodeError] = useState(false);
   const [role, setRole] = useState<"coach" | "student">("coach");
+  // The student code the user typed. Held in memory only, sent as a header.
+  const [studentCode, setStudentCode] = useState("");
+
+  // Coach requests authenticate with the admin cookie, which the browser sends
+  // automatically. Student requests carry the typed code.
+  const authHeaders = (): Record<string, string> =>
+    role === "student" && studentCode ? { "x-student-code": studentCode } : {};
+
   const [studentName, setStudentName] = useState("");
   const [studentFirstName, setStudentFirstName] = useState("");
   const [studentLastName, setStudentLastName] = useState("");
@@ -260,7 +271,7 @@ export default function StudentPortal() {
   const fetchLogs = useCallback(async (name: string) => {
     setLoading(true);
     try {
-      const res = await fetch(`/api/students?student=${encodeURIComponent(name)}`);
+      const res = await fetch(`/api/students?student=${encodeURIComponent(name)}`, { headers: authHeaders() });
       const data = await res.json();
       if (Array.isArray(data)) {
         setLogs(data.reverse());
@@ -273,7 +284,7 @@ export default function StudentPortal() {
 
   const fetchAllLogs = useCallback(async () => {
     try {
-      const res = await fetch("/api/students");
+      const res = await fetch("/api/students", { headers: authHeaders() });
       const data = await res.json();
       if (Array.isArray(data)) {
         setAllLogs(data);
@@ -313,20 +324,43 @@ export default function StudentPortal() {
   }, [logs]);
 
   // ─── Auth ───
-  const handleAuth = (e: React.FormEvent) => {
+  const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
-    const c = code.toLowerCase().trim();
-    if (role === "coach" && c === COACH_CODE) {
+    const c = code.trim();
+
+    if (role === "coach") {
+      // Same credential as the rest of the admin surface, checked server-side.
+      if (await adminLogin(c)) {
+        setAuthenticated(true);
+        setCodeError(false);
+      } else {
+        setCodeError(true);
+      }
+      return;
+    }
+
+    if (!studentFirstName.trim() || !studentLastName.trim()) {
+      setCodeError(true);
+      return;
+    }
+
+    // No separate verify endpoint: the student's own fetch IS the check. If the
+    // code is wrong the server answers 401 and we never leave the gate.
+    const fullName = normalizeName(`${studentFirstName.trim()} ${studentLastName.trim()}`);
+    try {
+      const res = await fetch(`/api/students?student=${encodeURIComponent(fullName)}`, {
+        headers: { "x-student-code": c },
+      });
+      if (!res.ok) {
+        setCodeError(true);
+        return;
+      }
+      setStudentCode(c);
       setAuthenticated(true);
-      setCodeError(false);
-    } else if (role === "student" && c === STUDENT_CODE && studentFirstName.trim() && studentLastName.trim()) {
-      setAuthenticated(true);
-      // Fix 1: normalize student name on login
-      const fullName = normalizeName(`${studentFirstName.trim()} ${studentLastName.trim()}`);
       setStudentName(fullName);
       setActiveStudent(fullName);
       setCodeError(false);
-    } else {
+    } catch {
       setCodeError(true);
     }
   };
@@ -393,7 +427,7 @@ export default function StudentPortal() {
     try {
       await fetch("/api/students", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", ...authHeaders() },
         body: JSON.stringify({
           student: normalizeName(activeStudent),
           date: formatNow(),
@@ -506,7 +540,7 @@ export default function StudentPortal() {
     try {
       await fetch("/api/students", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", ...authHeaders() },
         body: JSON.stringify({
           student: normalizeName(activeStudent),
           date: dateStr,
@@ -565,7 +599,7 @@ export default function StudentPortal() {
     try {
       await fetch("/api/students", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", ...authHeaders() },
         body: JSON.stringify({
           student: normalizeName(activeStudent),
           date: formatNow(),

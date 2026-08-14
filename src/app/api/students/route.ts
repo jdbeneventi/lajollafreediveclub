@@ -1,11 +1,45 @@
 import { NextResponse } from "next/server";
+import { isAdmin, unauthorized } from "@/lib/adminAuth";
 
 const STUDENTS_SHEET_URL = "https://script.google.com/macros/s/AKfycbxcEO1X0gVKrXUw44PbDf7KTskmJ3e1RE9M8Y1SBPo9zbftDX6NSbDRoXUJtZFNbtNb/exec";
 const FORMSPREE_URL = "https://formspree.io/f/mojknqlk";
 
+/**
+ * Coach portal backend — proxies the student dive-log Google Sheet.
+ *
+ * This route previously had NO authentication of any kind: GET with no
+ * parameters returned every student's logs to anyone who asked, and POST let
+ * anyone write entries. The Apps Script URL below is server-side only and does
+ * not reach the browser bundle, so gating here is the real boundary.
+ *
+ * Two access levels, matching the two roles the /students page offers:
+ *
+ *   coach    every student's logs. Requires ADMIN_KEY (same credential as the
+ *            rest of the admin surface — no separate coach code).
+ *   student  one student's own logs, via ?student=<name>. Requires the
+ *            STUDENT_CODE env var, sent as the x-student-code header.
+ *
+ * Both fail closed. A shared student code is weak by design — it is what the
+ * page already did — but it now lives in an env var instead of the JS bundle,
+ * and it no longer unlocks everyone's logs at once.
+ */
+function studentCodeOk(req: Request): boolean {
+  const expected = process.env.STUDENT_CODE;
+  if (!expected) return false; // fail closed
+  const provided = req.headers.get("x-student-code") || "";
+  return provided.toLowerCase().trim() === expected.toLowerCase().trim();
+}
+
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const student = searchParams.get("student") || "";
+
+  // No student parameter means "give me everything" — coach only.
+  if (!student) {
+    if (!isAdmin(request)) return unauthorized();
+  } else if (!isAdmin(request) && !studentCodeOk(request)) {
+    return unauthorized();
+  }
 
   try {
     const url = student
@@ -31,6 +65,15 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
+
+    // Writing as the coach is an admin action; a student writing their own log
+    // needs the student code. Anonymous writes are rejected either way.
+    const asCoach = body.author === "Coach";
+    if (asCoach) {
+      if (!isAdmin(request)) return unauthorized();
+    } else if (!isAdmin(request) && !studentCodeOk(request)) {
+      return unauthorized();
+    }
 
     // Save to sheet
     const res = await fetch(STUDENTS_SHEET_URL, {

@@ -262,7 +262,11 @@ Backups (data + reconstructed schema + smoke baseline) live outside the repo in 
 
   This matters in proportion to the password. The current `ADMIN_KEY` is a short themed phrase rather than a random string, chosen deliberately for memorability — the throttle is what compensates. If the key is ever shortened further, add the shared-state limiter first.
 
-- **Still open — `/api/students` has no server-side auth at all.** Both GET and POST are unauthenticated; it proxies the coach-portal Google Sheet. The `/students` page gates client-side only, so the data behind it is reachable directly.
+- **`/api/students` is now gated, with two access levels.** It previously had no server-side auth at all — GET with no parameters returned every student's dive logs to anyone, and POST let anyone write. The Apps Script URL it proxies is server-side only and never reaches the browser bundle, so this route is the real boundary.
+  - **coach** — all logs, and writing as `author: "Coach"`. Requires `ADMIN_KEY`, the same credential as the rest of the admin surface. No separate coach code.
+  - **student** — one student's own logs via `?student=<name>`, and writing as themselves. Requires `STUDENT_CODE`, sent as the `x-student-code` header.
+
+  A student code does **not** unlock the all-logs view — that check is on the absence of the `student` parameter, so privilege separation holds. Both fail closed; with `STUDENT_CODE` unset the student role simply cannot sign in while the coach role keeps working, which is a reasonable state if only Joshua uses that page. The literals `ljfc-coach` and `ljfc` are gone from the bundle.
 - **Still open — `PasswordGate` is client-side only** (`useState`, no server check), so `/ohpc`, `/science`, `/education` and `/research` content ships in the bundle regardless of the gate. Lower priority: strategy docs, not PII.
 
 ### Correctness
