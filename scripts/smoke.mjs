@@ -201,6 +201,11 @@ async function checkApis() {
 //    'ljfc' fallback is removed, these flip to PASS and stay that way.
 // ─────────────────────────────────────────────────────────────────────
 const ADMIN = ["/api/admin/students", "/api/admin/onboarding", "/api/admin/inquiries", "/api/admin/gear"];
+
+// The coach-portal Sheet proxy. Both levels must reject an anonymous caller:
+// the bare path is the all-students view, the ?student= form is one student's
+// own logs. Neither should ever answer without credentials again.
+const STUDENT_ROUTES = ["/api/students", "/api/students?student=Test%20Person"];
 const CRONS = ["/api/daily-email", "/api/inquiry-digest", "/api/course-briefing", "/api/friday-reminder", "/api/course-reminder"];
 
 async function checkGates() {
@@ -218,6 +223,16 @@ async function checkGates() {
       record(`gate:${path}`, `GET ${path}?key=ljfc`, status === 401, `expected 401, got ${status} — data is exposed`);
     } catch (e) {
       record(`gate:${path}`, `GET ${path}?key=ljfc`, false, e.message);
+    }
+  }
+
+  for (const path of STUDENT_ROUTES) {
+    const label = path.includes("?") ? "one student's logs" : "all student logs";
+    try {
+      const { status } = await get(path);
+      record(`students:${path}`, `GET ${path} (${label}, no auth)`, status === 401, `expected 401, got ${status}`);
+    } catch (e) {
+      record(`students:${path}`, `GET ${path} (${label}, no auth)`, false, e.message);
     }
   }
 
