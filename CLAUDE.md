@@ -25,10 +25,28 @@ The site is not a brochure. It runs the business: lead capture → inquiry pipel
 - **GitHub:** github.com/jdbeneventi/lajollafreediveclub.git (private)
 
 ### Environment variables
-On Vercel: `RESEND_API_KEY`, `ANTHROPIC_API_KEY`, `KIT_API_KEY`, `KIT_API_SECRET`, `CRON_SECRET`, `STRIPE_WEBHOOK_SECRET`, plus everything below.
-In `.env.local`: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `STRIPE_SECRET_KEY`, `STRIPE_TEST_SECRET_KEY`, `STRIPE_MODE`, `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`.
+`.env.example` is the annotated list — copy it to `.env.local` and fill in. Production values live in the Vercel dashboard; `.env.local` is gitignored and never affects the live site.
 
-⚠️ **`.env.local` points at the PRODUCTION Supabase project with the service-role key, and `STRIPE_MODE=live`.** `npm run dev` reads and writes real student data. Do not submit forms against local dev without changing this first.
+On Vercel: `RESEND_API_KEY`, `ANTHROPIC_API_KEY`, `KIT_API_KEY`, `KIT_API_SECRET`, `CRON_SECRET`, `STRIPE_WEBHOOK_SECRET`, plus everything below.
+In `.env.local`: `NEXT_PUBLIC_SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `STRIPE_SECRET_KEY`, `STRIPE_TEST_SECRET_KEY`, `STRIPE_MODE`.
+
+`NEXT_PUBLIC_SUPABASE_ANON_KEY` and `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` are set but **not referenced anywhere in `src/`** — Supabase is only ever accessed server-side with the service-role key, and checkout is a server-side redirect with no client-side Stripe.js.
+
+## Local development
+
+⚠️ **As shipped, `.env.local` points at the PRODUCTION Supabase project with the service-role key, and at LIVE Stripe.** Submitting a form locally writes real student records; completing a checkout locally creates a real Stripe session.
+
+`npm run dev` runs `scripts/check-env.mjs` first (via `predev`) and prints a banner naming exactly which production systems you are wired to. It warns rather than blocks — running against prod is sometimes legitimate, and a check that blocks gets disabled. Run it any time with `npm run check-env`, or `--strict` to make it exit non-zero.
+
+**The safe setup:** create a second Supabase project, seed it from `supabase/core-schema.sql` plus the other files in `supabase/`, and point `NEXT_PUBLIC_SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` at it. Put an `sk_test_` key in `STRIPE_SECRET_KEY` — note that `STRIPE_MODE=test` is **not** sufficient, since it is read only by `/api/invoice`; `/api/checkout` and the webhook read `STRIPE_SECRET_KEY` directly.
+
+Leave `RESEND_API_KEY`, `KIT_API_KEY` and `KIT_API_SECRET` unset locally. Without them the send routes return "not configured" instead of mailing real students — that absence is a safety feature, not an oversight.
+
+```bash
+npm run check-env    # what am I pointed at?
+npm run smoke        # 44 checks against production
+npm run smoke -- http://localhost:3000
+```
 
 ## Data Model — 14 Supabase tables
 
