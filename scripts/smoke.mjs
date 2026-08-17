@@ -200,7 +200,7 @@ async function checkApis() {
 // 3. Auth gates — these must reject. Regression guard: once the shared
 //    'ljfc' fallback is removed, these flip to PASS and stay that way.
 // ─────────────────────────────────────────────────────────────────────
-const ADMIN = ["/api/admin/students", "/api/admin/onboarding", "/api/admin/inquiries", "/api/admin/gear"];
+const ADMIN = ["/api/admin/students", "/api/admin/onboarding", "/api/admin/inquiries", "/api/admin/inquiries/intel", "/api/admin/gear"];
 
 // The invite-only strategy pages, gated server-side since the PasswordGate
 // rework. Each must answer an anonymous request with the gate form AND without

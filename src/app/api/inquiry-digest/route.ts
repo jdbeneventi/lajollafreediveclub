@@ -25,10 +25,14 @@ import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 import { supabase } from "@/lib/supabase";
 import { buildConflictReport, type InquiryLite, type CalendarEventLite } from "@/lib/inquiryConflicts";
+import { enrichInquiry } from "@/lib/extractInquiryFacts";
 import { isCron } from "@/lib/adminAuth";
 
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const OWNER_EMAIL = "joshuabeneventi@gmail.com";
+
+// The intel sweep adds a few sequential LLM calls before composing.
+export const maxDuration = 60;
 
 function authed(req: NextRequest): boolean {
   return isCron(req);
@@ -48,6 +52,27 @@ async function runDigest(req: NextRequest) {
   }
 
   const preview = req.nextUrl.searchParams.get("preview") === "true";
+
+  // ─── Intel sweep: extract facts for a few unprocessed inquiries ──────
+  // Self-healing catch-up for the insert-time extraction: rows created
+  // before the feature, or missed during a deploy/API blip, converge a
+  // few per day. Skipped in preview so the HTML check stays instant, and
+  // a no-op until the inquiry-intel migration + ANTHROPIC_API_KEY exist.
+  let swept = 0;
+  if (!preview && process.env.ANTHROPIC_API_KEY) {
+    const { data: unprocessed } = await supabase
+      .from("course_inquiries")
+      .select(
+        "id, created_at, course, experience, preferred_dates, group_size, message, parsed_start_date, parsed_end_date",
+      )
+      .eq("archived", false)
+      .is("ai_facts", null)
+      .order("created_at", { ascending: false })
+      .limit(3);
+    for (const row of unprocessed || []) {
+      if ((await enrichInquiry(row, "digest")) === "enriched") swept++;
+    }
+  }
 
   // ─── Pull everything we need ─────────────────────────────────────────
   const now = new Date();
@@ -103,6 +128,7 @@ async function runDigest(req: NextRequest) {
     parsed_start_date: i.parsed_start_date,
     parsed_end_date: i.parsed_end_date,
     group_size: i.group_size,
+    parsed_headcount: i.parsed_headcount ?? null,
     status: i.status,
   }));
   const liteEvents: CalendarEventLite[] = events.map((e) => ({
@@ -180,6 +206,7 @@ async function runDigest(req: NextRequest) {
       stalledQuotes: stalledQuotes.length,
       groupings: conflicts.groupings.length,
       upcomingCourses: upcomingCourseDetails.length,
+      intelSwept: swept,
     },
   });
 }
@@ -211,13 +238,19 @@ function composeDigestHtml(d: {
     </div>
   `;
 
+  // Prefer the LLM-extracted headcount over the raw group_size text.
+  const people = (i: AnyRow) =>
+    typeof i.parsed_headcount === "number"
+      ? `${i.parsed_headcount} ${i.parsed_headcount === 1 ? "person" : "people"}`
+      : String(i.group_size || "—");
+
   const renderRow = (i: AnyRow) => {
     const name = `${i.first_name} ${i.last_name || ""}`.trim();
     const course = String(i.course || "").split("—")[0].trim();
     return `
       <div style="border-left:2px solid #1B6B6B;padding:8px 12px;margin-bottom:6px;background:#f7f9f9;">
         <div style="font-size:13px;color:#0B1D2C;font-weight:600;">${name} <span style="font-weight:400;color:#5a6a7a;">· ${course}</span></div>
-        <div style="font-size:12px;color:#5a6a7a;margin-top:2px;">${i.preferred_dates || "no dates given"} · ${i.group_size || "—"} · ${i.experience || "no exp info"}</div>
+        <div style="font-size:12px;color:#5a6a7a;margin-top:2px;">${i.preferred_dates || "no dates given"} · ${people(i)} · ${i.experience || "no exp info"}</div>
       </div>
     `;
   };
@@ -241,10 +274,15 @@ function composeDigestHtml(d: {
         const start = g.windowStart.toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "UTC" });
         const end = g.windowEnd.toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "UTC" });
         const window = g.windowStart.getTime() === g.windowEnd.getTime() ? start : `${start} – ${end}`;
+        // Combined headcount across the grouping; an inquiry with no
+        // extracted count is at least the writer, so the total shows "≥".
+        const combined = g.inquiries.reduce((sum, i) => sum + (i.parsed_headcount ?? 1), 0);
+        const exact = g.inquiries.every((i) => i.parsed_headcount != null);
+        const peopleLabel = `${exact ? "" : "≥"}${combined} people`;
         return `
           <div style="border-left:2px solid #3db8a4;padding:8px 12px;margin-bottom:6px;background:#f7f9f9;">
             <div style="font-size:13px;color:#0B1D2C;font-weight:600;">${names}</div>
-            <div style="font-size:12px;color:#5a6a7a;margin-top:2px;">${window} · ${g.overlapDays}d overlap · ${g.course} — group rate ($575/person)</div>
+            <div style="font-size:12px;color:#5a6a7a;margin-top:2px;">${window} · ${g.overlapDays}d overlap · ${peopleLabel} · ${g.course} — group rate ($575/person)</div>
           </div>
         `;
       })

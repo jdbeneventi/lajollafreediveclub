@@ -70,7 +70,7 @@ Inquiry lifecycle (`inquiry_status` enum): `new → replied → quoted → depos
 
 ## The student pipeline
 
-1. `/contact/courses` → `course_inquiries`. `parseDateRange.ts` extracts a date window from free-text ("sometime mid-June?"); `inquiryConflicts.ts` finds overlapping requests and suggests grouping students into one course.
+1. `/contact/courses` → `course_inquiries`. `parseDateRange.ts` extracts a date window from free-text ("sometime mid-June?"); `inquiryConflicts.ts` finds overlapping requests and suggests grouping students into one course. `extractInquiryFacts.ts` runs an LLM pass at insert time (via `after()`, zero route latency) filling `parsed_headcount`, `date_flexibility`, `ai_facts`, and — only where the regex left them NULL — `parsed_start_date`/`parsed_end_date`; columns in `supabase/inquiry-intel.sql`. Backfill/status: `GET /api/admin/inquiries/intel?run=8` (admin auth); the digest cron sweeps 3 unprocessed rows per run as the catch-up.
 2. `/booking` → `/api/checkout` → Stripe. 50% deposit option; the 2.9% + $0.30 processing fee is added as a separate line item and passed to the student.
 3. Stripe webhook → booking `confirmed`, inquiry `paid`, magic link auto-issued, receipt to student + notification to owner.
 4. `/portal` — magic-link auth: 32-byte hex token in an `ljfc_session` cookie, 24h expiry, no password. **Onboarding is blocking**; dependent features show locked states until it's submitted.

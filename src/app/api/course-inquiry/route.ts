@@ -1,6 +1,7 @@
-import { NextResponse } from "next/server";
+import { NextResponse, after } from "next/server";
 import { Resend } from "resend";
 import { supabase } from "@/lib/supabase";
+import { enrichInquiry } from "@/lib/extractInquiryFacts";
 
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const OWNER_EMAIL = "joshuabeneventi@gmail.com";
@@ -24,17 +25,44 @@ export async function POST(request: Request) {
 
     // Store in Supabase
     try {
-      await supabase.from("course_inquiries").insert({
-        first_name: firstName,
-        last_name: lastName || "",
-        email,
-        phone: phone || null,
-        course,
-        experience: experience || null,
-        preferred_dates: dates || null,
-        group_size: groupSize || null,
-        message: message || null,
-      });
+      const { data: inserted, error: insertError } = await supabase
+        .from("course_inquiries")
+        .insert({
+          first_name: firstName,
+          last_name: lastName || "",
+          email,
+          phone: phone || null,
+          course,
+          experience: experience || null,
+          preferred_dates: dates || null,
+          group_size: groupSize || null,
+          message: message || null,
+        })
+        .select("id, created_at")
+        .single();
+      if (insertError) {
+        console.error("[course-inquiry] Supabase insert failed:", insertError.message);
+      }
+
+      // LLM fact extraction (headcount, date window) runs after the response
+      // is sent — zero added latency for the student, and a failure there
+      // can't touch this route. The digest sweep re-tries any row it misses.
+      if (inserted?.id) {
+        after(() =>
+          enrichInquiry(
+            {
+              id: inserted.id,
+              created_at: inserted.created_at,
+              course,
+              experience: experience || null,
+              preferred_dates: dates || null,
+              group_size: groupSize || null,
+              message: message || null,
+            },
+            "insert",
+          ),
+        );
+      }
     } catch (e) {
       console.error("[course-inquiry] Supabase insert failed:", e);
     }

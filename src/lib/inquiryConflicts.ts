@@ -23,6 +23,8 @@ export interface InquiryLite {
   parsed_start_date: string | null;
   parsed_end_date: string | null;
   group_size: string | null;
+  /** LLM-extracted people count (inquiry-intel). Optional — null/absent = unknown, treat as at least 1. */
+  parsed_headcount?: number | null;
   status: string;
 }
 
