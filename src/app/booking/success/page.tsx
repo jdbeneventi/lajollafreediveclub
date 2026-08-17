@@ -5,8 +5,14 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: "2025-03-31.basil",
 });
 
-export default async function BookingSuccessPage({ searchParams }: { searchParams: { session_id?: string } }) {
-  const { session_id } = searchParams;
+// searchParams is a Promise from Next 15 onward — see the async request APIs
+// change in the v15 upgrade guide.
+export default async function BookingSuccessPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ session_id?: string }>;
+}) {
+  const { session_id } = await searchParams;
 
   let session: Stripe.Checkout.Session | null = null;
   if (session_id) {
