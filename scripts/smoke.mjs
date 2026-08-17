@@ -202,6 +202,20 @@ async function checkApis() {
 // ─────────────────────────────────────────────────────────────────────
 const ADMIN = ["/api/admin/students", "/api/admin/onboarding", "/api/admin/inquiries", "/api/admin/gear"];
 
+// The invite-only strategy pages, gated server-side since the PasswordGate
+// rework. Each must answer an anonymous request with the gate form AND without
+// its body content — a 200 that includes the marker means the server is
+// leaking the page to unauthorized visitors again. Markers are body-only
+// phrases; page <title>s render regardless of the gate and are fine.
+const GATED_PAGES = [
+  ["/science", "ORIGIN"],
+  ["/ohpc", "Naval Special Warfare"],
+  ["/ohpc/plan", "Phase 2: Proof of Concept"],
+  ["/education", "Ocean Science Field Trip"],
+  ["/research", "Isobue"],
+  ["/camp-garibaldi/charter-funding", "Charter funding is"],
+];
+
 // The coach-portal Sheet proxy. Both levels must reject an anonymous caller:
 // the bare path is the all-students view, the ?student= form is one student's
 // own logs. Neither should ever answer without credentials again.
@@ -223,6 +237,21 @@ async function checkGates() {
       record(`gate:${path}`, `GET ${path}?key=ljfc`, status === 401, `expected 401, got ${status} — data is exposed`);
     } catch (e) {
       record(`gate:${path}`, `GET ${path}?key=ljfc`, false, e.message);
+    }
+  }
+
+  for (const [path, marker] of GATED_PAGES) {
+    const id = `gatedpage:${path}`;
+    try {
+      const { status, body } = await get(path);
+      if (status !== 200) record(id, `GET ${path} (gated, no auth)`, false, `expected 200, got ${status}`);
+      else if (body.includes(marker))
+        record(id, `GET ${path} (gated, no auth)`, false, `content "${marker}" is in the response — gate is leaking`);
+      else if (!body.includes("invite-only"))
+        record(id, `GET ${path} (gated, no auth)`, false, `gate form missing — page may be broken rather than gated`);
+      else record(id, `GET ${path} (gated, no auth)`, true, "gate form, no content leak");
+    } catch (e) {
+      record(id, `GET ${path} (gated, no auth)`, false, e.message);
     }
   }
 

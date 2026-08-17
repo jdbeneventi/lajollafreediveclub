@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Reveal } from "@/components/Reveal";
 import { EmailCapture } from "@/components/EmailCapture";
-import { PasswordGate } from "@/components/PasswordGate";
+import { gateAuthorized } from "@/lib/gate";
+import { GateForm } from "@/components/GateForm";
 import { getAllPrograms, getSeasonalThemes, getMonthlyEvents } from "@/lib/education";
 
 export const metadata: Metadata = {
@@ -90,13 +91,17 @@ function buildDetails(program: ReturnType<typeof getAllPrograms>[number]) {
   return details;
 }
 
-export default function EducationPage() {
+export default async function EducationPage() {
+  // Server-side gate: unauthorized visitors get the form and the page body
+  // never enters the response. See src/lib/gate.ts.
+  if (!(await gateAuthorized())) return <GateForm />;
+
   const programs = getAllPrograms();
   const seasonalThemes = getSeasonalThemes();
   const _monthlyEvents = getMonthlyEvents();
 
   return (
-    <PasswordGate>
+    <>
       {/* ── Hero ── */}
       <section className="bg-gradient-to-b from-deep to-ocean pt-36 pb-24 px-6 text-center">
         <Reveal>
@@ -468,6 +473,6 @@ export default function EducationPage() {
       </section>
 
       <EmailCapture />
-    </PasswordGate>
+    </>
   );
 }

@@ -114,7 +114,7 @@ Prior analysis of the lead → ready-student flow. Start with **`preservation-ma
 
 **Admin** (all gated) — `/admin` + `/calendar` `/courses` `/curriculum` `/economics` `/emails` `/inquiries` `/invoices` `/onboarding` `/partners` `/registrations` `/send-forms` `/send-links` `/sitemap` `/students`
 
-**Private strategy** (noindex + password) — `/ohpc` (+ `/plan`) · `/education` (+ `/partners`) · `/science` (ORIGIN Protocol) · `/research`
+**Private strategy** (noindex + server-side gate, GATE_CODE) — `/ohpc` (+ `/plan`) · `/education` (+ `/partners`) · `/science` (ORIGIN Protocol) · `/research` · `/camp-garibaldi/charter-funding`
 
 **PWA** — `manifest.json` + `sw.js` + `/offline` fallback. Shipped.
 
@@ -281,7 +281,7 @@ Backups (data + reconstructed schema + smoke baseline) live outside the repo in 
   - **student** — one student's own logs via `?student=<name>`, and writing as themselves. Requires `STUDENT_CODE`, sent as the `x-student-code` header.
 
   A student code does **not** unlock the all-logs view — that check is on the absence of the `student` parameter, so privilege separation holds. Both fail closed; with `STUDENT_CODE` unset the student role simply cannot sign in while the coach role keeps working, which is a reasonable state if only Joshua uses that page. The literals `ljfc-coach` and `ljfc` are gone from the bundle.
-- **Still open — `PasswordGate` is client-side only** (`useState`, no server check), so `/ohpc`, `/science`, `/education` and `/research` content ships in the bundle regardless of the gate. Lower priority: strategy docs, not PII.
+- **The strategy-page gate is server-side now.** The old `PasswordGate` compared against a bundled `"ljfc"` literal and only decided whether to *paint* — the full page body shipped to every visitor. The six invite-only pages (`/science`, `/ohpc`, `/ohpc/plan`, `/education`, `/research`, `/camp-garibaldi/charter-funding`) now check `gateAuthorized()` (src/lib/gate.ts) before returning content: unauthorized requests receive the gate form and nothing else. The code lives in the `GATE_CODE` env var, verified at `POST /api/gate` (throttled, case-insensitive to match the old contract) for a 30-day httpOnly cookie; an admin session opens the pages without it. Fails closed. Known, accepted leak: page `<title>`s from `metadata` exports render regardless of the gate — navigational, deliberate. The smoke suite asserts all six pages serve the gate form with zero body content to anonymous callers.
 
 ### Correctness
 - **Build-time-frozen data routes — fixed on `chore/safety-net`, awaiting deploy.** Six routes had no `revalidate` and no revalidating `fetch()`, so Next prerendered them on build day and served that body forever. As of 2026-08-13 production had been serving **June 13** data for 61 days across `/api/almanac` (wrong moon phase, "next full moon" seven weeks past), `/api/visibility` (stale vis grade), `/api/water-quality` (stale beach advisories and closures — safety-relevant), `/api/ocean-intel`, `/api/local-intel`, and `/api/conditions-card`. Each now declares a `revalidate` matching the `s-maxage` it already set. Verify with `.next/prerender-manifest.json` — every `/api/*` entry should show a number, never `false`. The daily conditions email was never affected: it calls `getLocalIntel()` from the lib directly and deliberately skips `/api/visibility`.

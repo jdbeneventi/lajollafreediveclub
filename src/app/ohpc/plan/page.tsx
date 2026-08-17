@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { PasswordGate } from "@/components/PasswordGate";
+import { gateAuthorized } from "@/lib/gate";
+import { GateForm } from "@/components/GateForm";
 
 const grain = {
   backgroundImage:
@@ -94,9 +95,12 @@ function Checklist({ items }: { items: { done: boolean; text: string }[] }) {
   );
 }
 
-export default function OHPCPlanPage() {
+export default async function OHPCPlanPage() {
+  // Server-side gate: unauthorized visitors get the form and the page body
+  // never enters the response. See src/lib/gate.ts.
+  if (!(await gateAuthorized())) return <GateForm />;
+
   return (
-    <PasswordGate>
       <div className="bg-deep min-h-screen text-salt">
         <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={grain} />
 
@@ -233,6 +237,5 @@ export default function OHPCPlanPage() {
           </div>
         </div>
       </div>
-    </PasswordGate>
   );
 }

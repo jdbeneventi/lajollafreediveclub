@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Reveal } from "@/components/Reveal";
 import { EmailCapture } from "@/components/EmailCapture";
-import { PasswordGate } from "@/components/PasswordGate";
+import { gateAuthorized } from "@/lib/gate";
+import { GateForm } from "@/components/GateForm";
 
 export const metadata: Metadata = {
   title: "Charter School Funding — Camp Garibaldi",
@@ -84,9 +85,13 @@ const provisions = [
   "California Environmental Principles & Concepts alignment",
 ];
 
-export default function CharterFundingPage() {
+export default async function CharterFundingPage() {
+  // Server-side gate: unauthorized visitors get the form and the page body
+  // never enters the response. See src/lib/gate.ts.
+  if (!(await gateAuthorized())) return <GateForm />;
+
   return (
-    <PasswordGate>
+    <>
       {/* Hero */}
       <section className="bg-deep pt-36 pb-20 px-6">
         <div className="max-w-[700px] mx-auto text-center">
@@ -329,6 +334,6 @@ export default function CharterFundingPage() {
       </section>
 
       <EmailCapture />
-    </PasswordGate>
+    </>
   );
 }

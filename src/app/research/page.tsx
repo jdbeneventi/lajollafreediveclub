@@ -1,4 +1,5 @@
-import { PasswordGate } from "@/components/PasswordGate";
+import { gateAuthorized } from "@/lib/gate";
+import { GateForm } from "@/components/GateForm";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -86,9 +87,12 @@ The Ama tradition is concentrated in Mie Prefecture (Toba, Shima) and parts of C
   },
 ];
 
-export default function ResearchPage() {
+export default async function ResearchPage() {
+  // Server-side gate: unauthorized visitors get the form and the page body
+  // never enters the response. See src/lib/gate.ts.
+  if (!(await gateAuthorized())) return <GateForm />;
+
   return (
-    <PasswordGate>
       <div className="min-h-screen bg-deep">
         <div className="max-w-[780px] mx-auto px-6 py-16">
           {/* Header */}
@@ -166,6 +170,5 @@ export default function ResearchPage() {
           ))}
         </div>
       </div>
-    </PasswordGate>
   );
 }
