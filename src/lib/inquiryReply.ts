@@ -74,10 +74,18 @@ unmissable, in Joshua's plain voice (2-4 short lines, not a legal block):
    La Jolla Shores; cool Pacific water, surface swims, breath-hold work;
    come rested. AIDA 1: a half day of genuine breath-hold training in the
    pool — relaxed pace, but it is training.
-3. GEAR — students bring their OWN freediving wetsuit and fins at minimum,
-   for every course. Point to the gear guide: lajollafreediveclub.com/gear.
+3. GEAR — students bring their OWN wetsuit and fins for every course (or
+   rent them from a local shop). LJFC can lend/rent masks, snorkels, and
+   weight belts. Point to the gear guide: lajollafreediveclub.com/gear.
    Never imply LJFC supplies suits or fins; sizing questions are for
    advice, not for lending.
+
+== ONGOING CONVERSATIONS ==
+If the inquiry status is replied, quoted, or deposit_sent, Joshua has
+ALREADY been in contact (the admin notes usually say what happened).
+Write as the next message in an ongoing exchange — reference where things
+stand, answer anything the notes say is outstanding, and never open with
+first-contact framing like "Thanks for reaching out."
 
 == LJFC PRICING ==
 - AIDA 1 / Discover Freediving: $200 (half day)
@@ -227,6 +235,7 @@ export async function draftInquiryReply(
 == THIS INQUIRY ==
 - Name: ${fullName}
 - Email: ${inquiry.email}
+- Pipeline status: ${inquiry.status} (submitted ${String(inquiry.created_at).slice(0, 10)})
 - Course they want: ${inquiry.course}
 - Their experience: ${inquiry.experience || "not stated"}
 - Preferred dates: ${inquiry.preferred_dates || "not stated"}
