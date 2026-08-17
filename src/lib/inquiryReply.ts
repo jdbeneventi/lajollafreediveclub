@@ -178,6 +178,7 @@ export async function getInquiry(
 
 export async function draftInquiryReply(
   inquiry: Record<string, unknown>,
+  directive?: string,
 ): Promise<ReplyResult<{ subject: string; body: string }>> {
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) {
@@ -216,8 +217,7 @@ export async function draftInquiryReply(
 - Their message: ${inquiry.message || "(none)"}
 - Admin notes (private context from Joshua): ${inquiry.admin_notes || "(none)"}
 ${factsCtx}${groupingCtx}${overlapCtx}
-${scheduleBlock}
-Write the reply now. Keep it focused — propose dates if reasonable, ask only the questions you don't already have answers to, and don't add unnecessary boilerplate.`;
+${scheduleBlock}${directive ? `== SPECIAL INSTRUCTION FOR THIS DRAFT ==\n${directive}\n\n` : ""}Write the reply now. Keep it focused — propose dates if reasonable, ask only the questions you don't already have answers to, and don't add unnecessary boilerplate.`;
 
   try {
     const res = await fetch("https://api.anthropic.com/v1/messages", {

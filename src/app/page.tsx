@@ -4,6 +4,10 @@ import { Reveal } from "@/components/Reveal";
 import { EmailCapture } from "@/components/EmailCapture";
 import { WeekendEmailForm } from "@/components/WeekendEmailForm";
 import { SaturdayBanner } from "@/components/SaturdayBanner";
+import { UpcomingCourses } from "@/components/UpcomingCourses";
+
+// The upcoming-courses strip reads live schedule data — refresh every 5 min.
+export const revalidate = 300;
 
 export const metadata: Metadata = {
   title: "Freediving Courses & AIDA Certification in La Jolla, San Diego",
@@ -104,6 +108,8 @@ export default function Home() {
       </section>
 
       <SaturdayBanner />
+
+      <UpcomingCourses />
 
       <section className="bg-deep py-16 md:py-24 px-6 md:px-12 relative">
         <div className="absolute inset-0 opacity-[0.015]" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E\")" }} />
