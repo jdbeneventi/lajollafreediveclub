@@ -24,7 +24,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 import { supabase } from "@/lib/supabase";
-import { buildConflictReport, type InquiryLite, type CalendarEventLite } from "@/lib/inquiryConflicts";
+import { getScheduleContext, type ScheduleContext } from "@/lib/schedule";
+import {
+  buildDemandReport,
+  type DemandInquiry,
+  type DemandReport,
+} from "@/lib/demandClusters";
+import { actionLink, type ActAction } from "@/lib/actionTokens";
 import { enrichInquiry } from "@/lib/extractInquiryFacts";
 import { isCron } from "@/lib/adminAuth";
 
@@ -119,27 +125,21 @@ async function runDigest(req: NextRequest) {
     return new Date(i.status_updated_at) < twoDaysAgo;
   });
 
-  // 4. Grouping opportunities
-  const liteInquiries: InquiryLite[] = inquiries.map((i) => ({
-    id: i.id,
-    first_name: i.first_name,
-    last_name: i.last_name,
-    email: i.email,
-    course: i.course,
-    parsed_start_date: i.parsed_start_date,
-    parsed_end_date: i.parsed_end_date,
-    group_size: i.group_size,
-    parsed_headcount: i.parsed_headcount ?? null,
-    status: i.status,
+  // 4. Demand + schedule intelligence: clusters of people who can share a
+  //    course, matched against the live calendar (seats left) and open
+  //    weekends, plus the triage lists (lapsed windows, duplicates).
+  const todayPT = now.toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
+  const scheduleCtx = await getScheduleContext(90).catch((): ScheduleContext => ({
+    courses: [],
+    busy: [],
+    openWeekends: [],
   }));
-  const liteEvents: CalendarEventLite[] = events.map((e) => ({
-    id: e.id,
-    title: e.title,
-    category: e.category,
-    date: e.date,
-    end_date: e.end_date,
-  }));
-  const conflicts = buildConflictReport(liteInquiries, liteEvents, { minOverlapDays: 2 });
+  const demand = buildDemandReport(
+    inquiries as unknown as DemandInquiry[],
+    scheduleCtx.courses,
+    scheduleCtx.openWeekends,
+    todayPT,
+  );
 
   // 5. Upcoming courses → readiness per booked student
   const upcomingCourseDetails = await Promise.all(
@@ -169,16 +169,19 @@ async function runDigest(req: NextRequest) {
 
   // ─── Compose email HTML ───────────────────────────────────────────────
   const totalActive = newToday.length + staleNew.length + stalledQuotes.length;
+  const dateLabel = now.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" });
+  const groupable = demand.clusters.filter((c) => c.people >= 2).length;
   const subject =
     totalActive === 0
-      ? `LJFC inquiries — all clear (${now.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" })})`
-      : `LJFC inquiries — ${totalActive} need attention (${now.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" })})`;
+      ? `LJFC inquiries — all clear (${dateLabel})`
+      : `LJFC inquiries — ${totalActive} need attention${groupable > 0 ? `, ${groupable} groupable` : ""} (${dateLabel})`;
 
   const html = composeDigestHtml({
     newToday,
     staleNew,
     stalledQuotes,
-    groupings: conflicts.groupings,
+    demand,
+    schedule: scheduleCtx,
     upcomingCourseDetails,
   });
 
@@ -205,7 +208,9 @@ async function runDigest(req: NextRequest) {
       newToday: newToday.length,
       staleNew: staleNew.length,
       stalledQuotes: stalledQuotes.length,
-      groupings: conflicts.groupings.length,
+      clusters: demand.clusters.length,
+      staleWindows: demand.staleActive.length,
+      scheduledCourses: scheduleCtx.courses.length,
       upcomingCourses: upcomingCourseDetails.length,
       intelSwept: swept,
     },
@@ -220,14 +225,42 @@ function composeDigestHtml(d: {
   newToday: AnyRow[];
   staleNew: AnyRow[];
   stalledQuotes: AnyRow[];
-  groupings: ReturnType<typeof buildConflictReport>["groupings"];
+  demand: DemandReport;
+  schedule: ScheduleContext;
   upcomingCourseDetails: Array<{
     event: AnyRow;
     students: Array<{ email: string; paymentStatus: string | null; onboarded: boolean }>;
   }>;
 }): string {
   const sections: string[] = [];
-  const pipelineLink = "https://lajollafreediveclub.com/admin/inquiries?key=ljfc";
+  const BASE = "https://lajollafreediveclub.com";
+  const pipelineLink = `${BASE}/admin/inquiries`;
+
+  const fmtDay = (iso: string) =>
+    new Date(iso + "T12:00:00Z").toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      timeZone: "UTC",
+    });
+
+  // Signed one-tap links (src/lib/actionTokens.ts). Silently omitted if
+  // ADMIN_KEY is unset — the digest must never fail over its buttons.
+  const ACT_LABELS: Record<ActAction, string> = {
+    draft: "Draft reply",
+    replied: "Mark replied",
+    archive: "Archive",
+  };
+  const actLinks = (id: unknown, actions: ActAction[]): string => {
+    const parts = actions
+      .map((a) => {
+        const url = actionLink(BASE, String(id), a);
+        return url
+          ? `<a href="${url}" style="display:inline-block;padding:3px 10px;border:1px solid #1B6B6B;border-radius:50px;color:#1B6B6B;text-decoration:none;font-size:11px;font-weight:600;margin:4px 6px 0 0;">${ACT_LABELS[a]}</a>`
+          : null;
+      })
+      .filter(Boolean);
+    return parts.length ? `<div>${parts.join("")}</div>` : "";
+  };
 
   const section = (title: string, badge: number, body: string, color: string) => `
     <div style="margin:24px 0;">
@@ -245,50 +278,150 @@ function composeDigestHtml(d: {
       ? `${i.parsed_headcount} ${i.parsed_headcount === 1 ? "person" : "people"}`
       : String(i.group_size || "—");
 
-  const renderRow = (i: AnyRow) => {
+  const renderRow = (i: AnyRow, actions: ActAction[] = []) => {
     const name = `${i.first_name} ${i.last_name || ""}`.trim();
     const course = String(i.course || "").split("—")[0].trim();
     return `
       <div style="border-left:2px solid #1B6B6B;padding:8px 12px;margin-bottom:6px;background:#f7f9f9;">
         <div style="font-size:13px;color:#0B1D2C;font-weight:600;">${name} <span style="font-weight:400;color:#5a6a7a;">· ${course}</span></div>
         <div style="font-size:12px;color:#5a6a7a;margin-top:2px;">${i.preferred_dates || "no dates given"} · ${people(i)} · ${i.experience || "no exp info"}</div>
+        ${actLinks(i.id, actions)}
       </div>
     `;
   };
 
+  const moreNote = (shown: number, total: number) =>
+    total > shown
+      ? `<div style="font-size:12px;color:#5a6a7a;padding:4px 12px;">+ ${total - shown} more in <a href="${pipelineLink}" style="color:#1B6B6B;">the pipeline</a></div>`
+      : "";
+
   if (d.newToday.length > 0) {
-    sections.push(section("New today", d.newToday.length, d.newToday.map(renderRow).join(""), "#3db8a4"));
+    sections.push(section("New today", d.newToday.length, d.newToday.map((i) => renderRow(i, ["draft", "replied"])).join(""), "#3db8a4"));
   }
 
   if (d.staleNew.length > 0) {
-    sections.push(section("Awaiting reply >24h", d.staleNew.length, d.staleNew.map(renderRow).join(""), "#C75B3A"));
+    const shown = d.staleNew.slice(0, 12);
+    sections.push(
+      section(
+        "Awaiting reply >24h",
+        d.staleNew.length,
+        shown.map((i) => renderRow(i, ["draft", "replied"])).join("") + moreNote(shown.length, d.staleNew.length),
+        "#C75B3A",
+      ),
+    );
   }
 
   if (d.stalledQuotes.length > 0) {
-    sections.push(section("Quotes/deposits stalled >48h", d.stalledQuotes.length, d.stalledQuotes.map(renderRow).join(""), "#f0b429"));
+    sections.push(section("Quotes/deposits stalled >48h", d.stalledQuotes.length, d.stalledQuotes.map((i) => renderRow(i)).join(""), "#f0b429"));
   }
 
-  if (d.groupings.length > 0) {
-    const body = d.groupings
-      .map((g) => {
-        const names = g.inquiries.map((i) => i.first_name).join(" + ");
-        const start = g.windowStart.toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "UTC" });
-        const end = g.windowEnd.toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "UTC" });
-        const window = g.windowStart.getTime() === g.windowEnd.getTime() ? start : `${start} – ${end}`;
-        // Combined headcount across the grouping; an inquiry with no
-        // extracted count is at least the writer, so the total shows "≥".
-        const combined = g.inquiries.reduce((sum, i) => sum + (i.parsed_headcount ?? 1), 0);
-        const exact = g.inquiries.every((i) => i.parsed_headcount != null);
-        const peopleLabel = `${exact ? "" : "≥"}${combined} people`;
+  // ── Demand clusters: who can share a course, and where it fits ──
+  if (d.demand.clusters.length > 0) {
+    const body = d.demand.clusters
+      .slice(0, 6)
+      .map((c) => {
+        const names = c.members
+          .slice(0, 5)
+          .map((m) => (m.parsed_headcount && m.parsed_headcount > 1 ? `${m.first_name} (${m.parsed_headcount})` : m.first_name))
+          .join(" + ");
+        const window =
+          c.windowStart === c.windowEnd
+            ? fmtDay(c.windowStart)
+            : `${fmtDay(c.windowStart)} – ${fmtDay(c.windowEnd)}`;
+        const peopleLabel = `${c.peopleExact ? "" : "≥"}${c.people} ${c.people === 1 ? "person" : "people"}`;
+        const fit = c.matchedEvent
+          ? `fits <strong>${c.matchedEvent.title}</strong> ${fmtDay(c.matchedEvent.date)}${c.matchedEvent.end_date ? `–${fmtDay(c.matchedEvent.end_date)}` : ""}${c.matchedEvent.seatsLeft != null ? ` (${c.matchedEvent.seatsLeft} seats left)` : ""}`
+          : c.suggestedWeekend
+            ? `no course scheduled — open weekend <strong>${fmtDay(c.suggestedWeekend.friday)}–${fmtDay(c.suggestedWeekend.sunday)}</strong>${c.suggestedWeekend.personalNotes.length ? ` (you have: ${c.suggestedWeekend.personalNotes[0]})` : ""}`
+            : "no open weekend inside their window";
+        const draftLinks = c.members
+          .slice(0, 5)
+          .map((m) => actLinks(m.id, ["draft"]).replace("Draft reply", `Draft ${m.first_name}`))
+          .join("");
         return `
           <div style="border-left:2px solid #3db8a4;padding:8px 12px;margin-bottom:6px;background:#f7f9f9;">
-            <div style="font-size:13px;color:#0B1D2C;font-weight:600;">${names}</div>
-            <div style="font-size:12px;color:#5a6a7a;margin-top:2px;">${window} · ${g.overlapDays}d overlap · ${peopleLabel} · ${g.course} — group rate ($575/person)</div>
+            <div style="font-size:13px;color:#0B1D2C;font-weight:600;">${names} <span style="font-weight:400;color:#5a6a7a;">— ${peopleLabel}</span></div>
+            <div style="font-size:12px;color:#5a6a7a;margin-top:2px;">${window} · ${c.course}${c.people >= 2 ? " · group rate unlocked" : ""} · ${fit}</div>
+            ${draftLinks}
           </div>
         `;
       })
       .join("");
-    sections.push(section("Suggested groupings", d.groupings.length, body, "#3db8a4"));
+    sections.push(section("Demand clusters", d.demand.clusters.length, body, "#3db8a4"));
+  }
+
+  // ── Flexible pool: said "any time" — fills whatever date is announced ──
+  if (d.demand.flexiblePools.length > 0) {
+    const body = d.demand.flexiblePools
+      .map(
+        (p) => `
+          <div style="border-left:2px solid #1B6B6B;padding:8px 12px;margin-bottom:6px;background:#f7f9f9;">
+            <div style="font-size:13px;color:#0B1D2C;font-weight:600;">${p.course} <span style="font-weight:400;color:#5a6a7a;">— ${p.people} people, any date</span></div>
+            <div style="font-size:12px;color:#5a6a7a;margin-top:2px;">${p.names.join(", ")}</div>
+          </div>
+        `,
+      )
+      .join("");
+    sections.push(section("Flexible — will take an announced date", d.demand.flexiblePools.reduce((s, p) => s + p.count, 0), body, "#1B6B6B"));
+  }
+
+  // ── Schedule snapshot: what's on the calendar, what's open ──
+  {
+    const courseLines =
+      d.schedule.courses.length > 0
+        ? d.schedule.courses
+            .map((c) => {
+              const range = c.end_date ? `${fmtDay(c.date)}–${fmtDay(c.end_date)}` : fmtDay(c.date);
+              const seats = c.seatsLeft != null ? `${c.seatsLeft} of ${c.capacity} seats left` : `${c.enrolled} enrolled`;
+              return `<div style="font-size:12px;color:#5a6a7a;margin:2px 0;"><strong style="color:#0B1D2C;">${c.title}</strong> · ${range} · ${seats}</div>`;
+            })
+            .join("")
+        : `<div style="font-size:12px;color:#C75B3A;margin:2px 0;">No courses on the calendar in the next 90 days.</div>`;
+    const weekends = d.schedule.openWeekends
+      .slice(0, 4)
+      .map((w) => `${fmtDay(w.friday)}–${fmtDay(w.sunday)}${w.personalNotes.length ? "*" : ""}`)
+      .join(" · ");
+    const icsNote = process.env.PERSONAL_ICS_URLS
+      ? `<div style="font-size:11px;color:#5a6a7a;margin-top:4px;">* has a personal-calendar entry</div>`
+      : `<div style="font-size:11px;color:#5a6a7a;margin-top:4px;">Personal calendars not connected — set PERSONAL_ICS_URLS to overlay your own commitments.</div>`;
+    const body = `
+      <div style="border-left:2px solid #163B4E;padding:8px 12px;margin-bottom:6px;background:#f7f9f9;">
+        ${courseLines}
+        <div style="font-size:12px;color:#5a6a7a;margin-top:6px;"><strong style="color:#0B1D2C;">Open weekends:</strong> ${weekends || "none in the next 8 weeks"}</div>
+        ${icsNote}
+      </div>
+    `;
+    sections.push(section("Schedule", d.schedule.courses.length, body, "#163B4E"));
+  }
+
+  // ── Triage: their window has passed but the status never moved ──
+  if (d.demand.staleActive.length > 0) {
+    const shown = d.demand.staleActive.slice(0, 12);
+    const body =
+      shown
+        .map(
+          (i) => `
+            <div style="border-left:2px solid #C75B3A;padding:8px 12px;margin-bottom:6px;background:#f7f9f9;">
+              <div style="font-size:13px;color:#0B1D2C;font-weight:600;">${i.first_name} ${i.last_name || ""} <span style="font-weight:400;color:#5a6a7a;">· ${i.course.split("—")[0].trim()}</span></div>
+              <div style="font-size:12px;color:#5a6a7a;margin-top:2px;">window ended ${fmtDay(i.parsed_end_date!)} · still "${i.status}" — handled in Gmail, or missed?</div>
+              ${actLinks(i.id, ["replied", "archive"])}
+            </div>
+          `,
+        )
+        .join("") + moreNote(shown.length, d.demand.staleActive.length);
+    sections.push(section("Window passed — mark or archive", d.demand.staleActive.length, body, "#C75B3A"));
+  }
+
+  // ── Duplicates ──
+  if (d.demand.duplicateEmails.length > 0) {
+    const body = d.demand.duplicateEmails
+      .map(
+        (dup) => `
+          <div style="font-size:12px;color:#5a6a7a;padding:4px 12px;">${dup.inquiries[0].first_name} (${dup.email}) has ${dup.inquiries.length} active inquiries — worth merging</div>
+        `,
+      )
+      .join("");
+    sections.push(section("Duplicates", d.demand.duplicateEmails.length, body, "#f0b429"));
   }
 
   if (d.upcomingCourseDetails.length > 0) {

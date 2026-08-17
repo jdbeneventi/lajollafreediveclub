@@ -95,8 +95,11 @@ async function analyzeWithVision(imageBase64: string): Promise<Record<string, un
         "anthropic-version": "2023-06-01",
       },
       body: JSON.stringify({
-        model: "claude-sonnet-4-20250514",
-        max_tokens: 500,
+        // claude-sonnet-4-20250514 was retired 2026-06-15 — calls 404'd and
+        // this route silently fell back to the predictive model ever since.
+        model: "claude-opus-5",
+        // Cap covers adaptive thinking + the small JSON answer.
+        max_tokens: 2000,
         messages: [
           {
             role: "user",
@@ -114,7 +117,11 @@ async function analyzeWithVision(imageBase64: string): Promise<Record<string, un
 
     if (!response.ok) return null;
     const data = await response.json();
-    const text = data.content?.[0]?.text || "";
+    // Adaptive-thinking models emit a thinking block before the text block.
+    const text =
+      (data.content as Array<{ type: string; text?: string }>)?.find(
+        (b) => b.type === "text",
+      )?.text || "";
     const clean = text.replace(/```json|```/g, "").trim();
     return JSON.parse(clean);
   } catch {

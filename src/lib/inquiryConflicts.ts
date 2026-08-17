@@ -90,8 +90,9 @@ function intersect(
 /**
  * Normalize a course string for grouping. "AIDA 2 — Open Water Certification"
  * → "aida 2". Used to detect when two inquiries want the same course.
+ * Exported so demandClusters.ts groups by the same key.
  */
-function courseKey(course: string): string {
+export function courseKey(course: string): string {
   return course.toLowerCase().split("—")[0].split("(")[0].trim();
 }
 
