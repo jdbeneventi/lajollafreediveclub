@@ -2,6 +2,7 @@ import { NextResponse, after } from "next/server";
 import { Resend } from "resend";
 import { supabase } from "@/lib/supabase";
 import { enrichInquiry } from "@/lib/extractInquiryFacts";
+import { contactLineHtml } from "@/lib/emailFooter";
 
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const OWNER_EMAIL = "joshuabeneventi@gmail.com";
@@ -124,6 +125,8 @@ export async function POST(request: Request) {
                   <li><a href="${calendarUrl}" style="color:#1B6B6B;">View the course calendar</a> — see all upcoming dates</li>
                 </ul>
               </div>
+
+              ${contactLineHtml()}
 
               <p style="color:#5a6a7a;font-size:12px;margin-top:24px;">
                 Questions? Reply to this email or visit <a href="https://lajollafreediveclub.com" style="color:#1B6B6B;">lajollafreediveclub.com</a>
