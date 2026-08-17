@@ -7,6 +7,7 @@ import {
   getInquiry,
 } from "@/lib/inquiryReply";
 import { getScheduledCourses, type ScheduledCourse } from "@/lib/schedule";
+import { createGmailDrafts, isGmailDraftsConfigured } from "@/lib/gmailDrafts";
 
 /**
  * /api/admin/blast — roster-confirmation blast over the active pipeline.
@@ -198,9 +199,11 @@ export async function POST(req: NextRequest) {
   if (denied) return denied;
 
   let items: Array<{ id: string; subject: string; body: string }>;
+  let mode: "send" | "gmail_draft" = "send";
   try {
     const parsed = await req.json();
     items = parsed.items;
+    if (parsed.mode === "gmail_draft") mode = "gmail_draft";
     if (!Array.isArray(items) || items.length === 0) throw new Error();
   } catch {
     return NextResponse.json(
@@ -213,6 +216,52 @@ export async function POST(req: NextRequest) {
       { error: `max ${SEND_CAP} sends per request` },
       { status: 400 },
     );
+  }
+
+  // gmail_draft mode: create drafts in Joshua's Gmail instead of sending.
+  // Nothing is sent and no status moves — when he sends from Gmail, the
+  // regular gmailSync sees the outbound and advances the pipeline.
+  if (mode === "gmail_draft") {
+    if (!isGmailDraftsConfigured()) {
+      return NextResponse.json(
+        { error: "Gmail drafts not configured (GMAIL_* env)" },
+        { status: 500 },
+      );
+    }
+    const rows = await Promise.all(items.map((i) => getInquiry(i.id)));
+    const draftable = items
+      .map((item, i) => ({ item, row: rows[i] }))
+      .filter((x): x is { item: (typeof items)[0]; row: Record<string, unknown> } =>
+        Boolean(x.row?.email),
+      );
+    const created = await createGmailDrafts(
+      draftable.map(({ item, row }) => ({
+        to: row.email as string,
+        toName: `${row.first_name} ${row.last_name || ""}`.trim(),
+        subject: item.subject,
+        text: item.body,
+      })),
+    );
+    const note = `gmail draft ${new Date().toISOString().slice(0, 10)}`;
+    await Promise.all(
+      created.map((r, j) =>
+        r.created
+          ? supabase
+              .from("course_inquiries")
+              .update({
+                admin_notes: draftable[j].row.admin_notes
+                  ? `${draftable[j].row.admin_notes} | ${note}`
+                  : note,
+              })
+              .eq("id", draftable[j].item.id)
+          : null,
+      ),
+    );
+    return NextResponse.json({
+      drafted: created.filter((r) => r.created).length,
+      skipped: items.length - draftable.length,
+      results: created,
+    });
   }
 
   const results: Array<{ id: string; sent: boolean; error?: string }> = [];

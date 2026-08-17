@@ -124,14 +124,13 @@ export default function BlastPage() {
     (c) => checked[c.id] && c.subject && c.body && !results[c.id]?.sent,
   );
 
-  async function sendSelected() {
+  async function sendSelected(mode: "send" | "gmail_draft" = "send") {
     if (selected.length === 0) return;
-    if (
-      !window.confirm(
-        `Send ${selected.length} confirmation email${selected.length === 1 ? "" : "s"}? This emails real students.`,
-      )
-    )
-      return;
+    const verb =
+      mode === "gmail_draft"
+        ? `Put ${selected.length} draft${selected.length === 1 ? "" : "s"} in your Gmail (nothing sends)?`
+        : `Send ${selected.length} confirmation email${selected.length === 1 ? "" : "s"}? This emails real students.`;
+    if (!window.confirm(verb)) return;
     setSending(true);
     setError("");
     try {
@@ -139,6 +138,7 @@ export default function BlastPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          mode,
           items: selected.map((c) => ({
             id: c.id,
             subject: c.subject,
@@ -148,11 +148,18 @@ export default function BlastPage() {
       });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
-      const map: Record<string, SendResult> = { ...results };
-      for (const r of data.results || []) {
-        map[r.id] = { sent: r.sent, error: r.error };
+      if (mode === "gmail_draft") {
+        setError("");
+        window.alert(
+          `${data.drafted} draft${data.drafted === 1 ? "" : "s"} now in your Gmail Drafts folder.`,
+        );
+      } else {
+        const map: Record<string, SendResult> = { ...results };
+        for (const r of data.results || []) {
+          map[r.id] = { sent: r.sent, error: r.error };
+        }
+        setResults(map);
       }
-      setResults(map);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Send failed");
     } finally {
@@ -235,15 +242,23 @@ export default function BlastPage() {
               : "Generate drafts"}
         </button>
         {candidates.length > 0 && (
-          <button
-            onClick={sendSelected}
-            disabled={sending || selected.length === 0}
-            className="btn bg-teal text-white disabled:opacity-40"
-          >
-            {sending
-              ? "Sending…"
-              : `Send ${selected.length} selected`}
-          </button>
+          <>
+            <button
+              onClick={() => sendSelected("send")}
+              disabled={sending || selected.length === 0}
+              className="btn bg-teal text-white disabled:opacity-40"
+            >
+              {sending ? "Working…" : `Send ${selected.length} selected`}
+            </button>
+            <button
+              onClick={() => sendSelected("gmail_draft")}
+              disabled={sending || selected.length === 0}
+              className="btn border border-teal text-teal disabled:opacity-40"
+              title="Creates drafts in the business Gmail — you send them yourself"
+            >
+              → Gmail drafts
+            </button>
+          </>
         )}
         {sentCount > 0 && (
           <span className="text-sm text-teal font-medium">

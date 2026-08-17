@@ -6,6 +6,7 @@ import { actionLink, type ActAction } from "@/lib/actionTokens";
 import { getInquiry, draftInquiryReply } from "@/lib/inquiryReply";
 import { syncGmail, isGmailSyncConfigured } from "@/lib/gmailSync";
 import { syncStripe, isStripeSyncConfigured } from "@/lib/stripeSync";
+import { createGmailDraft, isGmailDraftsConfigured } from "@/lib/gmailDrafts";
 import { enrichInquiry } from "@/lib/extractInquiryFacts";
 
 /**
@@ -227,6 +228,22 @@ async function cmdDraft(name: string): Promise<string> {
   const result = await draftInquiryReply(inquiry);
   if (!result.ok) return `Draft failed: ${result.error}`;
   const link = actionLink(BASE, String(inquiry.id), "draft");
+
+  // Also drop the draft into Joshua's Gmail so he can edit + send it from
+  // his own account. Fail-soft — the one-tap link still works without it.
+  let gmailNote = "";
+  if (isGmailDraftsConfigured()) {
+    const gd = await createGmailDraft({
+      to: String(inquiry.email),
+      toName: `${inquiry.first_name} ${inquiry.last_name || ""}`.trim(),
+      subject: result.subject,
+      text: result.body,
+    });
+    gmailNote = gd.created
+      ? "Also waiting in your Gmail drafts."
+      : `(Gmail draft failed: ${gd.error})`;
+  }
+
   return [
     `Draft for ${inquiry.first_name} (${inquiry.email}):`,
     "",
@@ -237,7 +254,10 @@ async function cmdDraft(name: string): Promise<string> {
     link
       ? `Review & send (one tap): ${link}`
       : "(signing unavailable — send from the pipeline UI)",
-  ].join("\n");
+    gmailNote,
+  ]
+    .filter(Boolean)
+    .join("\n");
 }
 
 async function cmdAct(name: string): Promise<string> {
