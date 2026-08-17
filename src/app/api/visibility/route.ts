@@ -97,7 +97,7 @@ async function analyzeWithVision(imageBase64: string): Promise<Record<string, un
       body: JSON.stringify({
         // claude-sonnet-4-20250514 was retired 2026-06-15 — calls 404'd and
         // this route silently fell back to the predictive model ever since.
-        model: "claude-opus-5",
+        model: "claude-haiku-4-5",
         // Cap covers adaptive thinking + the small JSON answer.
         max_tokens: 2000,
         messages: [

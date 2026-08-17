@@ -193,6 +193,66 @@ async function runDigest(req: NextRequest) {
   const totalActive = newToday.length + staleNew.length + stalledQuotes.length;
   const dateLabel = now.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" });
   const groupable = demand.clusters.filter((c) => c.people >= 2).length;
+  // ─── Course close-outs: ran in the last 3 days, roster not completed ──
+  // The roster feature creates bookings; once the course date passes, nudge
+  // until the students are marked completed (one tap on /admin/roster).
+  const threeDaysAgo = new Date(now.getTime() - 3 * 86_400_000)
+    .toISOString()
+    .slice(0, 10);
+  const todayStr = now.toISOString().slice(0, 10);
+  const closeouts: Array<{ label: string; count: number }> = [];
+  try {
+    const { data: ranEvents } = await supabase
+      .from("calendar_events")
+      .select("id, title, date, end_date")
+      .eq("active", true)
+      .in("category", ["course", "camp"])
+      .gte("date", threeDaysAgo)
+      .lt("date", todayStr);
+    const justRan = (ranEvents || []).filter(
+      (e) => (e.end_date || e.date) < todayStr,
+    );
+    if (justRan.length > 0) {
+      const { data: rb } = await supabase
+        .from("bookings")
+        .select("email, event_id, status")
+        .in(
+          "event_id",
+          justRan.map((e) => e.id),
+        )
+        .neq("status", "cancelled");
+      for (const ev of justRan) {
+        const emails = (rb || [])
+          .filter((b) => b.event_id === ev.id)
+          .map((b) => b.email.toLowerCase());
+        if (emails.length === 0) continue;
+        const open = inquiries.filter(
+          (i) =>
+            emails.includes(String(i.email).toLowerCase()) &&
+            !["completed", "declined", "expired"].includes(String(i.status)),
+        );
+        if (open.length > 0) {
+          closeouts.push({
+            label: `${ev.title} (${ev.date})`,
+            count: open.length,
+          });
+        }
+      }
+    }
+  } catch (e) {
+    console.error("[digest] closeout check failed:", e);
+  }
+  const escLite = (s: string) =>
+    s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  const closeoutBanner = closeouts.length
+    ? `<div style="background:#fff7ed;border:1px solid #fdba74;border-radius:10px;padding:12px 16px;margin-bottom:16px;font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:14px;color:#0B1D2C;">${closeouts
+        .map(
+          (c) =>
+            `Course ran — <strong>${escLite(c.label)}</strong>: ${c.count} student${c.count === 1 ? "" : "s"} to close out.`,
+        )
+        .join("<br>")} <a href="https://lajollafreediveclub.com/admin/roster" style="color:#1B6B6B;">Open rosters →</a></div>`
+    : "";
+
   const subject =
     totalActive === 0
       ? `LJFC inquiries — all clear (${dateLabel})`
@@ -208,7 +268,7 @@ async function runDigest(req: NextRequest) {
   });
 
   if (preview) {
-    return new NextResponse(html, { status: 200, headers: { "Content-Type": "text/html" } });
+    return new NextResponse(closeoutBanner + html, { status: 200, headers: { "Content-Type": "text/html" } });
   }
 
   if (!RESEND_API_KEY) {
@@ -220,7 +280,7 @@ async function runDigest(req: NextRequest) {
     from: "La Jolla Freedive Club <noreply@lajollafreediveclub.com>",
     to: DIGEST_RECIPIENTS,
     subject,
-    html,
+    html: closeoutBanner + html,
   });
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
 
@@ -237,6 +297,7 @@ async function runDigest(req: NextRequest) {
       intelSwept: swept,
       gmailSync: gmail,
       stripeSync: stripePay,
+      closeouts: closeouts.length,
     },
   });
 }
