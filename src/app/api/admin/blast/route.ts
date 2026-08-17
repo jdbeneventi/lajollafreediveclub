@@ -183,9 +183,20 @@ export async function GET(req: NextRequest) {
         const base = baseFor(row);
         const target = pickTarget(row, courses);
         const draft = await draftInquiryReply(row, directiveFor(row, target));
-        return draft.ok
-          ? { ...base, subject: draft.subject, body: draft.body }
-          : { ...base, error: draft.error };
+        if (!draft.ok) return { ...base, error: draft.error };
+        // Hard net against recipient bleed (once produced a draft greeting
+        // a different student): the opening must name THIS student.
+        const first = String(row.first_name || "").split(/\s+/)[0];
+        if (
+          first &&
+          !draft.body.slice(0, 80).toLowerCase().includes(first.toLowerCase())
+        ) {
+          return {
+            ...base,
+            error: `draft opened without greeting ${first} — regenerate`,
+          };
+        }
+        return { ...base, subject: draft.subject, body: draft.body };
       }),
     );
     candidates.push(...drafted);
