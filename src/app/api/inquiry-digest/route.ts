@@ -32,6 +32,7 @@ import {
 } from "@/lib/demandClusters";
 import { actionLink, type ActAction } from "@/lib/actionTokens";
 import { enrichInquiry } from "@/lib/extractInquiryFacts";
+import { syncGmail, isGmailSyncConfigured } from "@/lib/gmailSync";
 import { isCron } from "@/lib/adminAuth";
 
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
@@ -80,6 +81,13 @@ async function runDigest(req: NextRequest) {
     );
     swept = sweepResults.filter((r) => r === "enriched").length;
   }
+
+  // ─── Gmail sync: reconcile with what happened in Joshua's inbox ──────
+  // Runs BEFORE the pull so today's digest reflects reality — inquiries he
+  // already answered from his personal account flip to "replied" here
+  // instead of nagging him. Fail-soft; skipped in preview and when the
+  // GMAIL_* env vars are absent.
+  const gmail = !preview && isGmailSyncConfigured() ? await syncGmail(30) : null;
 
   // ─── Pull everything we need ─────────────────────────────────────────
   const now = new Date();
@@ -213,6 +221,7 @@ async function runDigest(req: NextRequest) {
       scheduledCourses: scheduleCtx.courses.length,
       upcomingCourses: upcomingCourseDetails.length,
       intelSwept: swept,
+      gmailSync: gmail,
     },
   });
 }
@@ -278,13 +287,26 @@ function composeDigestHtml(d: {
       ? `${i.parsed_headcount} ${i.parsed_headcount === 1 ? "person" : "people"}`
       : String(i.group_size || "—");
 
+  // Gmail-thread state, when the sync has data for this row.
+  const mailChip = (i: AnyRow): string => {
+    const inAt = i.last_email_in_at ? new Date(String(i.last_email_in_at)) : null;
+    const outAt = i.last_email_out_at ? new Date(String(i.last_email_out_at)) : null;
+    if (inAt && (!outAt || inAt > outAt)) {
+      return ` <span style="color:#C75B3A;font-weight:600;">· they emailed ${inAt.toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "America/Los_Angeles" })} — waiting on you</span>`;
+    }
+    if (outAt) {
+      return ` <span style="color:#1B6B6B;">· you replied ${outAt.toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "America/Los_Angeles" })} (Gmail)</span>`;
+    }
+    return "";
+  };
+
   const renderRow = (i: AnyRow, actions: ActAction[] = []) => {
     const name = `${i.first_name} ${i.last_name || ""}`.trim();
     const course = String(i.course || "").split("—")[0].trim();
     return `
       <div style="border-left:2px solid #1B6B6B;padding:8px 12px;margin-bottom:6px;background:#f7f9f9;">
         <div style="font-size:13px;color:#0B1D2C;font-weight:600;">${name} <span style="font-weight:400;color:#5a6a7a;">· ${course}</span></div>
-        <div style="font-size:12px;color:#5a6a7a;margin-top:2px;">${i.preferred_dates || "no dates given"} · ${people(i)} · ${i.experience || "no exp info"}</div>
+        <div style="font-size:12px;color:#5a6a7a;margin-top:2px;">${i.preferred_dates || "no dates given"} · ${people(i)} · ${i.experience || "no exp info"}${mailChip(i)}</div>
         ${actLinks(i.id, actions)}
       </div>
     `;

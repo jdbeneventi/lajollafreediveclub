@@ -76,6 +76,9 @@ export async function POST(request: Request) {
         await resend.emails.send({
           from: fromAddress,
           to: [email],
+          // The confirmation says "reply to this email" — make that land in
+          // Joshua's inbox instead of noreply@'s forwarding limbo.
+          replyTo: OWNER_EMAIL,
           subject: `Course inquiry received — ${course.split("—")[0].trim()}`,
           html: `
             <div style="font-family:-apple-system,sans-serif;max-width:540px;padding:20px;">
@@ -129,6 +132,10 @@ export async function POST(request: Request) {
         await resend.emails.send({
           from: fromAddress,
           to: [OWNER_EMAIL],
+          // Hitting "reply" on this notification in Gmail now addresses the
+          // STUDENT — matching how Joshua actually answers inquiries (from
+          // his personal account), instead of composing to noreply@.
+          replyTo: email,
           subject: `Course inquiry: ${name} — ${course.split("—")[0].trim()}`,
           html: `
             <div style="font-family:-apple-system,sans-serif;max-width:540px;padding:20px;">
