@@ -61,6 +61,20 @@ export function isGmailSyncConfigured(): boolean {
   return Boolean(process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD);
 }
 
+/**
+ * Addresses that count as "Joshua wrote this". The account itself, plus any
+ * Gmail "Send mail as" aliases (GMAIL_ALIASES, comma-separated) — a reply
+ * sent as joshua@lajollafreediveclub.com carries that From header, not the
+ * account's own address, and would otherwise be invisible to the sync.
+ */
+function ownAddresses(user: string): string[] {
+  const aliases = (process.env.GMAIL_ALIASES || "")
+    .split(",")
+    .map((a) => a.trim().toLowerCase())
+    .filter(Boolean);
+  return [user.toLowerCase(), ...aliases];
+}
+
 export async function syncGmail(windowDays = 30): Promise<GmailSyncSummary> {
   const user = process.env.GMAIL_USER?.trim();
   // App passwords display as "xxxx xxxx xxxx xxxx" — tolerate pasted spaces.
@@ -146,13 +160,19 @@ export async function syncGmail(windowDays = 30): Promise<GmailSyncSummary> {
         const inDate = await newestDateOf(inUids || []);
         if (inDate) newestIn.set(address, inDate);
 
-        // Outbound: Joshua → the student. All Mail includes Sent.
-        const outUids = await client.search(
-          { since, from: user, to: address },
-          { uid: true },
-        );
-        const outDate = await newestDateOf(outUids || []);
-        if (outDate) newestOut.set(address, outDate);
+        // Outbound: Joshua → the student, under the account address or any
+        // send-as alias. All Mail includes Sent.
+        for (const own of ownAddresses(user)) {
+          const outUids = await client.search(
+            { since, from: own, to: address },
+            { uid: true },
+          );
+          const outDate = await newestDateOf(outUids || []);
+          if (outDate) {
+            const prev = newestOut.get(address);
+            if (!prev || outDate > prev) newestOut.set(address, outDate);
+          }
+        }
       }
     } finally {
       lock.release();

@@ -5,6 +5,10 @@ import { enrichInquiry } from "@/lib/extractInquiryFacts";
 
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const OWNER_EMAIL = "joshuabeneventi@gmail.com";
+// The business mailbox (lajollafreediveclub@gmail.com). When set, inquiry
+// traffic routes there instead of Joshua's personal account, and the Gmail
+// sync watches it — the personal inbox stays personal.
+const INQUIRY_INBOX = process.env.BUSINESS_EMAIL?.trim() || OWNER_EMAIL;
 
 export async function POST(request: Request) {
   try {
@@ -78,7 +82,7 @@ export async function POST(request: Request) {
           to: [email],
           // The confirmation says "reply to this email" — make that land in
           // Joshua's inbox instead of noreply@'s forwarding limbo.
-          replyTo: OWNER_EMAIL,
+          replyTo: INQUIRY_INBOX,
           subject: `Course inquiry received — ${course.split("—")[0].trim()}`,
           html: `
             <div style="font-family:-apple-system,sans-serif;max-width:540px;padding:20px;">
@@ -131,7 +135,7 @@ export async function POST(request: Request) {
       try {
         await resend.emails.send({
           from: fromAddress,
-          to: [OWNER_EMAIL],
+          to: [INQUIRY_INBOX],
           // Hitting "reply" on this notification in Gmail now addresses the
           // STUDENT — matching how Joshua actually answers inquiries (from
           // his personal account), instead of composing to noreply@.

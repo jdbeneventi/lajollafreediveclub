@@ -37,6 +37,12 @@ import { isCron } from "@/lib/adminAuth";
 
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const OWNER_EMAIL = "joshuabeneventi@gmail.com";
+// During the business-mailbox transition the digest goes to BOTH inboxes;
+// drop OWNER_EMAIL from this list once the new account is home base.
+const BUSINESS_EMAIL = process.env.BUSINESS_EMAIL?.trim();
+const DIGEST_RECIPIENTS = BUSINESS_EMAIL
+  ? [OWNER_EMAIL, BUSINESS_EMAIL]
+  : [OWNER_EMAIL];
 
 // The intel sweep adds a few sequential LLM calls before composing.
 export const maxDuration = 60;
@@ -204,7 +210,7 @@ async function runDigest(req: NextRequest) {
   const resend = new Resend(RESEND_API_KEY);
   const { error } = await resend.emails.send({
     from: "La Jolla Freedive Club <noreply@lajollafreediveclub.com>",
-    to: [OWNER_EMAIL],
+    to: DIGEST_RECIPIENTS,
     subject,
     html,
   });

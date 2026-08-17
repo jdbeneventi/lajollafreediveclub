@@ -26,6 +26,9 @@ import { getScheduleContext, describeScheduleForPrompt } from "@/lib/schedule";
  */
 
 const OWNER_EMAIL = "joshuabeneventi@gmail.com";
+// Replies thread into the business mailbox when it's configured, so the
+// Gmail sync sees the whole conversation; personal account is the fallback.
+const INQUIRY_INBOX = process.env.BUSINESS_EMAIL?.trim() || OWNER_EMAIL;
 const DRAFT_MODEL = "claude-opus-5";
 
 export type ReplyResult<T> =
@@ -295,8 +298,8 @@ export async function sendInquiryReply(
   const { error } = await resend.emails.send({
     from: "Joshua Beneventi <noreply@lajollafreediveclub.com>",
     to: [inquiry.email as string],
-    replyTo: OWNER_EMAIL,
-    bcc: [OWNER_EMAIL],
+    replyTo: INQUIRY_INBOX,
+    bcc: [INQUIRY_INBOX],
     subject,
     html,
     text: emailBody,
