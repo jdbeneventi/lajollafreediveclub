@@ -136,8 +136,8 @@ export default function ShopPage() {
                 </a>
                 <p className="text-white/20 text-xs mt-4">
                   Or email{" "}
-                  <a href="mailto:joshuabeneventi@gmail.com" className="text-seafoam/40 no-underline hover:text-seafoam/60">
-                    joshuabeneventi@gmail.com
+                  <a href="mailto:lajollafreediveclub@gmail.com" className="text-seafoam/40 no-underline hover:text-seafoam/60">
+                    lajollafreediveclub@gmail.com
                   </a>
                 </p>
               </div>

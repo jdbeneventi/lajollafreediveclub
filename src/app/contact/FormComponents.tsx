@@ -120,10 +120,10 @@ export function FormShell({
       if (res.ok) {
         await onSuccess(formData);
       } else {
-        alert("Something went wrong. Email joshuabeneventi@gmail.com directly.");
+        alert("Something went wrong. Email lajollafreediveclub@gmail.com directly.");
       }
     } catch {
-      alert("Something went wrong. Email joshuabeneventi@gmail.com directly.");
+      alert("Something went wrong. Email lajollafreediveclub@gmail.com directly.");
     } finally {
       setSubmitting(false);
     }

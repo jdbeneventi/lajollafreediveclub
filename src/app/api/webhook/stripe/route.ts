@@ -9,6 +9,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 });
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const OWNER_EMAIL = "joshuabeneventi@gmail.com";
+const INQUIRY_INBOX = process.env.BUSINESS_EMAIL?.trim() || OWNER_EMAIL;
 const WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET;
 
 export async function POST(request: Request) {
@@ -147,7 +148,7 @@ export async function POST(request: Request) {
       try {
         await resend.emails.send({
           from: fromAddress,
-          to: [OWNER_EMAIL],
+          to: [INQUIRY_INBOX],
           subject: `Payment: ${meta.studentName || email} — ${courseName} — $${amountPaid}${isDeposit ? " (deposit)" : ""}`,
           html: `
             <div style="font-family:-apple-system,sans-serif;max-width:540px;padding:20px;">

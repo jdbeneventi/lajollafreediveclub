@@ -5,6 +5,7 @@ import { getNextSaturday } from "@/lib/saturday";
 
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const OWNER_EMAIL = "joshuabeneventi@gmail.com";
+const INQUIRY_INBOX = process.env.BUSINESS_EMAIL?.trim() || OWNER_EMAIL;
 
 export async function POST(request: Request) {
   try {
@@ -46,7 +47,7 @@ export async function POST(request: Request) {
       try {
         await resend.emails.send({
           from: "La Jolla Freedive Club <noreply@lajollafreediveclub.com>",
-          to: [OWNER_EMAIL],
+          to: [INQUIRY_INBOX],
           subject: `Saturday confirmed: ${email}${isDiving ? " — DIVING" : " — beach"}`,
           html: `
             <div style="font-family:-apple-system,sans-serif;padding:20px;">

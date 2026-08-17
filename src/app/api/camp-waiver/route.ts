@@ -4,6 +4,7 @@ import { Resend } from "resend";
 const FORMSPREE_URL = "https://formspree.io/f/mojknqlk";
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const OWNER_EMAIL = "joshuabeneventi@gmail.com";
+const INQUIRY_INBOX = process.env.BUSINESS_EMAIL?.trim() || OWNER_EMAIL;
 
 interface MedicalAnswer {
   answer: string;
@@ -215,7 +216,7 @@ export async function POST(request: Request) {
       try {
         await resend.emails.send({
           from: fromAddress,
-          to: [OWNER_EMAIL],
+          to: [INQUIRY_INBOX],
           subject: `${hasYes ? "\u26A0\uFE0F " : ""}Camp Waiver Signed — ${data.childName}`,
           html: `
             <div style="font-family:-apple-system,sans-serif;max-width:500px;padding:20px;">

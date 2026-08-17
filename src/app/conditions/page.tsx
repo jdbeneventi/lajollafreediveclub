@@ -182,7 +182,7 @@ export default function ConditionsPage() {
                   Buy me a coffee →
                 </a>
                 <a
-                  href="mailto:joshuabeneventi@gmail.com?subject=Conditions%20Dashboard%20Feedback"
+                  href="mailto:lajollafreediveclub@gmail.com?subject=Conditions%20Dashboard%20Feedback"
                   className="text-xs text-[#5a6a7a] underline hover:text-teal transition-colors"
                 >
                   Send feedback or suggestions

@@ -152,10 +152,10 @@ export default function ContactPage() {
                 Prefer email? Reach Joshua directly:
               </p>
               <a
-                href="mailto:joshuabeneventi@gmail.com"
+                href="mailto:lajollafreediveclub@gmail.com"
                 className="text-teal font-medium text-sm no-underline hover:underline"
               >
-                joshuabeneventi@gmail.com
+                lajollafreediveclub@gmail.com
               </a>
               <p className="text-xs text-[#5a6a7a] mt-6">
                 Follow us{" "}

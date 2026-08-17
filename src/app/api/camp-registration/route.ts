@@ -5,6 +5,7 @@ import { supabase } from "@/lib/supabase";
 const FORMSPREE_URL = "https://formspree.io/f/mojknqlk";
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const OWNER_EMAIL = "joshuabeneventi@gmail.com";
+const INQUIRY_INBOX = process.env.BUSINESS_EMAIL?.trim() || OWNER_EMAIL;
 
 const SESSION_MAP: Record<string, { name: string; dates: string; price: number }> = {
   "session-1": { name: "Session I", dates: "June 15–17", price: 450 },
@@ -141,7 +142,7 @@ export async function POST(request: Request) {
 
         await resend.emails.send({
           from: fromAddress,
-          to: [OWNER_EMAIL],
+          to: [INQUIRY_INBOX],
           subject: `New Camp Registration: ${studentName} — ${sessionDisplay}`,
           html: `
             <div style="font-family:-apple-system,sans-serif;max-width:540px;padding:20px;">

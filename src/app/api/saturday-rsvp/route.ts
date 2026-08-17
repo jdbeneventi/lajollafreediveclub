@@ -5,6 +5,7 @@ import { getNextSaturday } from "@/lib/saturday";
 
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const OWNER_EMAIL = "joshuabeneventi@gmail.com";
+const INQUIRY_INBOX = process.env.BUSINESS_EMAIL?.trim() || OWNER_EMAIL;
 
 export async function POST(request: Request) {
   try {
@@ -140,7 +141,7 @@ export async function POST(request: Request) {
       try {
         await resend.emails.send({
           from: fromAddress,
-          to: [OWNER_EMAIL],
+          to: [INQUIRY_INBOX],
           subject: `Saturday RSVP: ${name}${isDiving ? " — DIVING" : " — beach only"}`,
           html: `
             <div style="font-family:-apple-system,sans-serif;max-width:540px;padding:20px;">

@@ -316,7 +316,7 @@ export default function CommunityPage() {
               explore how we can work together.
             </p>
             <a
-              href="mailto:joshuabeneventi@gmail.com?subject=LJFC%20Partnership%20Inquiry"
+              href="mailto:lajollafreediveclub@gmail.com?subject=LJFC%20Partnership%20Inquiry"
               className="inline-block bg-coral text-white px-8 py-4 rounded-full font-medium text-[0.95rem] no-underline hover:-translate-y-0.5 hover:shadow-[0_8px_25px_rgba(199,91,58,0.4)] transition-all"
             >
               Get in touch &rarr;

@@ -470,7 +470,7 @@ export default function EducationPartnersPage() {
           If your organization works in marine science, ocean safety, conservation, or education &mdash; and you want to put your knowledge in front of kids who are actually in the water &mdash; let&apos;s talk.
         </p>
         <a
-          href="mailto:joshuabeneventi@gmail.com?subject=Education%20Partnership%20%E2%80%94%20LJFC&body=Hi%20Joshua%2C%0A%0AI%20saw%20the%20education%20partners%20page%20and"
+          href="mailto:lajollafreediveclub@gmail.com?subject=Education%20Partnership%20%E2%80%94%20LJFC&body=Hi%20Joshua%2C%0A%0AI%20saw%20the%20education%20partners%20page%20and"
           className="inline-block px-12 py-4 bg-transparent border border-sand text-sand font-medium text-sm tracking-[0.12em] uppercase no-underline hover:bg-sand hover:text-deep transition-all duration-300"
         >
           Start a Conversation

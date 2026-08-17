@@ -483,13 +483,13 @@ export default async function OHPCPage() {
           Whether you&apos;re a researcher, a military training officer, a competition organizer, or an institution that believes La Jolla deserves a permanent ocean performance center — I&apos;d like to talk.
         </p>
         <a
-          href="mailto:joshuabeneventi@gmail.com?subject=La%20Jolla%20Ocean%20Human%20Performance%20Center"
+          href="mailto:lajollafreediveclub@gmail.com?subject=La%20Jolla%20Ocean%20Human%20Performance%20Center"
           className="inline-block px-12 py-4 bg-transparent border border-sand text-sand font-medium text-sm tracking-[0.12em] uppercase no-underline hover:bg-sand hover:text-deep transition-all duration-300"
         >
           Start a conversation
         </a>
         <div className="mt-6 text-[0.85rem] text-salt/35">
-          Joshua Beneventi · joshuabeneventi@gmail.com<br />
+          Joshua Beneventi · lajollafreediveclub@gmail.com<br />
           <Link href="/conditions" className="text-seafoam/40 no-underline">lajollafreediveclub.com/conditions</Link>
           {" · "}
           <Link href="/programs" className="text-seafoam/40 no-underline">lajollafreediveclub.com/programs</Link>

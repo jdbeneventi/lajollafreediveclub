@@ -26,7 +26,7 @@ export default function FloatingFish() {
               Ask a Question
             </Link>
             <a
-              href="mailto:joshuabeneventi@gmail.com?subject=Camp Garibaldi Inquiry"
+              href="mailto:lajollafreediveclub@gmail.com?subject=Camp Garibaldi Inquiry"
               className="block px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/[0.04] rounded-lg no-underline transition-colors"
             >
               Email Us

@@ -8,6 +8,7 @@ import { requireAdmin } from "@/lib/adminAuth";
 
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const OWNER_EMAIL = "joshuabeneventi@gmail.com";
+const INQUIRY_INBOX = process.env.BUSINESS_EMAIL?.trim() || OWNER_EMAIL;
 
 // YES checkbox = even number, NO = odd number
 const MEDICAL_CHECKBOX_MAP: Record<number, { yes: string; no: string }> = {
@@ -220,7 +221,7 @@ export async function POST(request: Request) {
       // Email to Joshua
       try {
         await resend.emails.send({
-          from: fromAddress, to: [OWNER_EMAIL],
+          from: fromAddress, to: [INQUIRY_INBOX],
           subject: `AIDA Forms: ${fullName} — ${course}${physicianRequired ? " ⚠️ PHYSICIAN REQUIRED" : ""}`,
           attachments,
           html: `
