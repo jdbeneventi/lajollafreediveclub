@@ -208,7 +208,9 @@ const ADMIN = ["/api/admin/students", "/api/admin/onboarding", "/api/admin/inqui
 // leaking the page to unauthorized visitors again. Markers are body-only
 // phrases; page <title>s render regardless of the gate and are fine.
 const GATED_PAGES = [
-  ["/science", "ORIGIN"],
+  // Not "ORIGIN" — that word is in the page's own <title>/keywords metadata,
+  // which renders regardless of the gate (accepted). Marker must be body-only.
+  ["/science", "mammalian dive reflex"],
   ["/ohpc", "Naval Special Warfare"],
   ["/ohpc/plan", "Phase 2: Proof of Concept"],
   ["/education", "Ocean Science Field Trip"],
