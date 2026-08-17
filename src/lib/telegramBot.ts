@@ -5,6 +5,7 @@ import { buildDemandReport, type DemandInquiry } from "@/lib/demandClusters";
 import { actionLink, type ActAction } from "@/lib/actionTokens";
 import { getInquiry, draftInquiryReply } from "@/lib/inquiryReply";
 import { syncGmail, isGmailSyncConfigured } from "@/lib/gmailSync";
+import { syncStripe, isStripeSyncConfigured } from "@/lib/stripeSync";
 import { enrichInquiry } from "@/lib/extractInquiryFacts";
 
 /**
@@ -29,7 +30,7 @@ const HELP = `LJFC agent — what I know is live from the site.
 /schedule — courses, seats left, open weekends
 /draft <name> — AI reply draft + a one-tap send link
 /act <name> — mark-replied / archive / draft links
-/sync — run Gmail + extraction sync now
+/sync — run Gmail + Stripe + extraction sync now
 
 Or just ask in plain words — "who wants AIDA 2 in September?", "when's my next free weekend?", "how many people are waiting on me?"`;
 
@@ -162,6 +163,16 @@ async function cmdSync(): Promise<string> {
     );
   } else {
     lines.push("Gmail sync not configured.");
+  }
+  if (isStripeSyncConfigured()) {
+    const s = await syncStripe(90);
+    lines.push(
+      s.ok
+        ? `Stripe: ${s.checked} checked, ${s.advancedToPaid} marked paid${s.nonCoursePayments ? `, ${s.nonCoursePayments} non-course payment(s) ignored` : ""}`
+        : `Stripe sync failed: ${s.reason}`,
+    );
+  } else {
+    lines.push("Stripe sync not configured.");
   }
   const { data: unprocessed } = await supabase
     .from("course_inquiries")

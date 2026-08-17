@@ -33,6 +33,7 @@ import {
 import { actionLink, type ActAction } from "@/lib/actionTokens";
 import { enrichInquiry } from "@/lib/extractInquiryFacts";
 import { syncGmail, isGmailSyncConfigured } from "@/lib/gmailSync";
+import { syncStripe, isStripeSyncConfigured } from "@/lib/stripeSync";
 import { isCron } from "@/lib/adminAuth";
 
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
@@ -94,6 +95,13 @@ async function runDigest(req: NextRequest) {
   // instead of nagging him. Fail-soft; skipped in preview and when the
   // GMAIL_* env vars are absent.
   const gmail = !preview && isGmailSyncConfigured() ? await syncGmail(30) : null;
+
+  // ─── Stripe sync: payment truth from the Viriditas account ───────────
+  // Also before the pull, so a deposit paid yesterday shows as "paid"
+  // today instead of nagging. Course-keyword guarded (Viriditas bills
+  // other ventures too); Zelle stays manual. Fail-soft like Gmail.
+  const stripePay =
+    !preview && isStripeSyncConfigured() ? await syncStripe(90) : null;
 
   // ─── Pull everything we need ─────────────────────────────────────────
   const now = new Date();
@@ -228,6 +236,7 @@ async function runDigest(req: NextRequest) {
       upcomingCourses: upcomingCourseDetails.length,
       intelSwept: swept,
       gmailSync: gmail,
+      stripeSync: stripePay,
     },
   });
 }
