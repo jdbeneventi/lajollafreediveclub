@@ -53,21 +53,60 @@ export default function BlastPage() {
     else setError("Wrong password");
   }
 
+  const [progress, setProgress] = useState({ done: 0, total: 0 });
+
+  // One 28-draft request blows the 60s function ceiling — fetch the fast
+  // match list first, then draft in batches of 6 so results stream in.
   async function generate() {
     setLoading(true);
     setError("");
     setResults({});
     try {
-      const res = await fetch("/api/admin/blast");
+      const res = await fetch("/api/admin/blast?list=true");
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
-      setCandidates(data.candidates || []);
+      const bases: Candidate[] = data.candidates || [];
+      setCandidates(bases);
       setSchedule(data.schedule || []);
       const init: Record<string, boolean> = {};
-      for (const c of data.candidates || []) {
-        init[c.id] = Boolean(c.target && !c.error);
-      }
+      for (const c of bases) init[c.id] = Boolean(c.target);
       setChecked(init);
+      setProgress({ done: 0, total: bases.length });
+
+      const BATCH = 6;
+      for (let i = 0; i < bases.length; i += BATCH) {
+        const ids = bases.slice(i, i + BATCH).map((c) => c.id);
+        try {
+          const bres = await fetch(
+            `/api/admin/blast?ids=${ids.join(",")}`,
+          );
+          if (!bres.ok) throw new Error(`HTTP ${bres.status}`);
+          const bdata = await bres.json();
+          const byId = new Map<string, Candidate>(
+            (bdata.candidates || []).map((c: Candidate) => [c.id, c]),
+          );
+          setCandidates((cs) =>
+            cs.map((c) => {
+              const d = byId.get(c.id);
+              return d
+                ? { ...c, subject: d.subject, body: d.body, error: d.error }
+                : c;
+            }),
+          );
+        } catch {
+          setCandidates((cs) =>
+            cs.map((c) =>
+              ids.includes(c.id) && !c.subject
+                ? { ...c, error: "draft batch failed — re-generate" }
+                : c,
+            ),
+          );
+        }
+        setProgress({
+          done: Math.min(i + BATCH, bases.length),
+          total: bases.length,
+        });
+      }
     } catch (e) {
       setError(e instanceof Error ? e.message : "Draft generation failed");
     } finally {
@@ -188,7 +227,9 @@ export default function BlastPage() {
           className="btn btn-primary disabled:opacity-40"
         >
           {loading
-            ? "Drafting… (up to a minute)"
+            ? progress.total
+              ? `Drafting ${progress.done}/${progress.total}…`
+              : "Loading pipeline…"
             : candidates.length
               ? "Re-generate drafts"
               : "Generate drafts"}

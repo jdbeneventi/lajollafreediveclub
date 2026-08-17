@@ -139,27 +139,48 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
-  const candidates: Candidate[] = [];
   const list = rows || [];
+  const baseFor = (row: Record<string, unknown>): Candidate => {
+    const target = pickTarget(row, courses);
+    return {
+      id: row.id as string,
+      name: `${row.first_name} ${row.last_name || ""}`.trim(),
+      email: row.email as string,
+      status: row.status as string,
+      course: row.course as string,
+      target: target
+        ? {
+            title: target.title,
+            range: fmtRange(target),
+            seatsLeft: target.seatsLeft,
+          }
+        : null,
+    };
+  };
+
+  const scheduleOut = courses.map((c) => ({
+    title: c.title,
+    range: fmtRange(c),
+    seatsLeft: c.seatsLeft,
+  }));
+
+  // ?list=true → matching only, no LLM drafts. The page fetches this fast
+  // list first, then drafts in small ?ids= batches — 28 drafts in one
+  // request blows the 60s function ceiling (ground-tested: 504).
+  if (req.nextUrl.searchParams.get("list") === "true") {
+    return NextResponse.json({
+      candidates: list.map(baseFor),
+      schedule: scheduleOut,
+    });
+  }
+
+  const candidates: Candidate[] = [];
   for (let i = 0; i < list.length; i += DRAFT_CHUNK) {
     const chunk = list.slice(i, i + DRAFT_CHUNK);
     const drafted = await Promise.all(
       chunk.map(async (row): Promise<Candidate> => {
+        const base = baseFor(row);
         const target = pickTarget(row, courses);
-        const base: Candidate = {
-          id: row.id,
-          name: `${row.first_name} ${row.last_name || ""}`.trim(),
-          email: row.email,
-          status: row.status,
-          course: row.course,
-          target: target
-            ? {
-                title: target.title,
-                range: fmtRange(target),
-                seatsLeft: target.seatsLeft,
-              }
-            : null,
-        };
         const draft = await draftInquiryReply(row, directiveFor(row, target));
         return draft.ok
           ? { ...base, subject: draft.subject, body: draft.body }
@@ -169,14 +190,7 @@ export async function GET(req: NextRequest) {
     candidates.push(...drafted);
   }
 
-  return NextResponse.json({
-    candidates,
-    schedule: courses.map((c) => ({
-      title: c.title,
-      range: fmtRange(c),
-      seatsLeft: c.seatsLeft,
-    })),
-  });
+  return NextResponse.json({ candidates, schedule: scheduleOut });
 }
 
 export async function POST(req: NextRequest) {
