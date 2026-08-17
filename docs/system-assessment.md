@@ -154,10 +154,11 @@ nothing to restore from.
 
 Ranked by threat to the business, not by interest. Nothing is on fire.
 
-1. **Put the two Apps Script sources in git.** One logs signed waivers — a legal record —
-   and its code exists only inside Google's editor. No history, no backup, nothing to
-   rebuild from. An hour of copy-paste converts an unrecoverable dependency into an
-   inconvenient one. See `scripts/apps-script/README.md`.
+1. ~~**Put the two Apps Script sources in git.**~~ **Done 2026-08-14.** Both pulled
+   byte-exact with `clasp` into `scripts/apps-script/`, with manifests and a README
+   covering contracts, refresh and restore. The Google Apps Script row in the dependency
+   table above should now read *recoverable* rather than *unrecoverable* — the code is
+   held, though the deployment URLs still change on a rebuild.
 
 2. **Write down who holds what.** Every service, account, and where its credential lives.
    Not sophisticated — just somewhere other than one person's head.
