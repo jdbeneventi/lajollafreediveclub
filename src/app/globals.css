@@ -1,8 +1,14 @@
+/* Must stay above the @tailwind directives. CSS requires @import to precede all
+   other rules, and `@tailwind base` expands to roughly 4,000 lines — so with the
+   import below it, the expanded stylesheet had a stray @import at line ~3994.
+   Webpack tolerated that; Turbopack, the default builder from Next 16, rejects
+   it outright. Browsers ignore a late @import too, so top is the only correct
+   position. */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300;1,9..40,400&family=Instrument+Serif:ital@0;1&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300;1,9..40,400&family=Instrument+Serif:ital@0;1&display=swap');
 
 @layer base {
   html {

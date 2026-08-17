@@ -7,15 +7,15 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint src",
     "check-env": "node scripts/check-env.mjs",
     "smoke": "node scripts/smoke.mjs",
-    "verify": "rm -rf .next tsconfig.tsbuildinfo && next build"
+    "verify": "rm -rf .next tsconfig.tsbuildinfo && eslint src && next build"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.101.1",
     "jspdf": "^4.2.1",
-    "next": "^15.5.23",
+    "next": "^16.3.1",
     "pdf-lib": "^1.17.1",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
@@ -26,8 +26,8 @@
     "@types/node": "^20",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.4",
-    "eslint": "^8",
-    "eslint-config-next": "^15.5.23",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "^16.3.1",
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"

@@ -1,6 +1,6 @@
 # CLAUDE.md — La Jolla Freedive Club
 
-> Last verified against the codebase and production: **2026-08-13**, on top of `8f9c308`.
+> Last verified against the codebase and production: **2026-08-17**, on Next.js 16.
 > Always `git fetch` before trusting the local checkout — it was 4 days stale when this was written.
 > When something here contradicts the code, the code wins — and fix this file.
 
@@ -9,14 +9,14 @@ La Jolla Freedive Club (lajollafreediveclub.com) is a freediving community and A
 
 Camp Garibaldi is LJFC's youth program (ages 8-16) — a week-long ocean camp teaching freediving, surf survival, and water confidence through a breath-first methodology.
 
-The site is not a brochure. It runs the business: lead capture → inquiry pipeline → payment → student onboarding → medical/liability compliance → course-readiness scoring → certification tracking, plus a live ocean-conditions data layer and a partnership CRM. ~47k lines, ~100 routes.
+The site is not a brochure. It runs the business: lead capture → inquiry pipeline → payment → student onboarding → medical/liability compliance → course-readiness scoring → certification tracking, plus a live ocean-conditions data layer and a partnership CRM. ~48k lines, 108 routes.
 
 ## Tech Stack
-- **Framework:** Next.js 14 (App Router) + TypeScript + Tailwind CSS
+- **Framework:** Next.js 16 (App Router) + React 19 + TypeScript + Tailwind CSS. Turbopack is the default builder for both `dev` and `build`.
 - **Hosting:** Vercel (auto-deploy from GitHub on push to `main`). A failed build is NOT promoted — the previous production deployment stays live.
 - **Database:** Supabase Postgres, project `bvfxmqysquthijsntbnh`. Accessed server-side only, via `SUPABASE_SERVICE_ROLE_KEY` (bypasses RLS).
 - **Payments:** Stripe — card + ACH, deposit or full, `STRIPE_MODE` toggles live/test
-- **Transactional email:** Resend, from `noreply@lajollafreediveclub.com` (domain verified). 21 routes send mail.
+- **Transactional email:** Resend, from `noreply@lajollafreediveclub.com` (domain verified). 19 routes send mail.
 - **Broadcast email:** Kit/ConvertKit — v4 API with v3 fallback. Form ID 9207242. Tags: Daily Conditions `17696327`, Saturday Crew `17781468`.
 - **AI:** Anthropic API — used for exactly one thing, reading the Scripps underwater cam to estimate visibility
 - **Forms backup:** Formspree `mojknqlk` (every form also posts here)
@@ -44,7 +44,7 @@ Leave `RESEND_API_KEY`, `KIT_API_KEY` and `KIT_API_SECRET` unset locally. Withou
 
 ```bash
 npm run check-env    # what am I pointed at?
-npm run smoke        # 44 checks against production
+npm run smoke        # 50 checks against production
 npm run smoke -- http://localhost:3000
 ```
 
@@ -203,9 +203,16 @@ node scripts/smoke.mjs <preview-url>  # verify the preview, not prod
 # merge to main only once the preview is green
 ```
 
-⚠️ **`npm run build` is not a trustworthy check on its own.** TypeScript reuses `tsconfig.tsbuildinfo` between builds, and that file is gitignored — so it exists locally and never on Vercel. A local build can pass on stale incremental type info while Vercel fails on the same commit. This happened: `fix/admin-auth` built clean locally four times and failed on Vercel with `Cannot find name 'SECRET'`, then revealed a second hidden error once the cache was cleared.
+⚠️ **`npm run build` is not a trustworthy check on its own**, for two reasons.
 
-`npm run verify` removes both `.next` and `tsconfig.tsbuildinfo` first. Use it before every push.
+TypeScript reuses `tsconfig.tsbuildinfo` between builds, and that file is gitignored — so it exists locally and never on Vercel. A local build can pass on stale incremental type info while Vercel fails on the same commit. This happened: `fix/admin-auth` built clean locally four times and failed on Vercel with `Cannot find name 'SECRET'`, then revealed a second hidden error once the cache was cleared.
+
+And since Next 16, **`next build` no longer runs ESLint at all** — the `next lint` command was removed.
+
+`npm run verify` covers both: it clears `.next` and `tsconfig.tsbuildinfo`, runs `eslint src`, then builds. Use it before every push.
+
+### Lint debt carried over from the Next 16 upgrade
+`eslint.config.mjs` is flat config now (`.eslintrc.json` is gone) and downgrades two rules to warnings: `react-hooks/set-state-in-effect` (15 occurrences) and `react-hooks/static-components` (2), across 8 admin files. The newer `eslint-plugin-react-hooks` promoted them to errors; they flag **pre-existing patterns**, not anything the upgrade changed. Clearing them means restructuring effects across the admin cockpit — real work with real risk, deliberately not bundled into a framework upgrade. Fix them on purpose, then promote the rules back to `"error"`.
 
 To reproduce Vercel exactly — fresh tree, no `.env.local`, CI semantics:
 
@@ -302,3 +309,13 @@ Backups (data + reconstructed schema + smoke baseline) live outside the repo in 
 - Lawyer review of LJFC waiver
 - Google Business Profile optimization
 - Rotate exposed API keys (Kit, Resend)
+
+<!-- BEGIN:nextjs-agent-rules -->
+
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->
