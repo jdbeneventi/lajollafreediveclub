@@ -1,13 +1,21 @@
-# Google Apps Script — the two backends that aren't in this repo
+# Google Apps Script — the two backends behind `/api/waiver` and `/api/students`
 
-Two Apps Script projects sit behind `/api/waiver` and `/api/students`. Their source lives
-only inside Google's script editor: no version history, no backup, no review, and nothing
-to restore from if a project is deleted, an account changes, or Google alters the
-platform. For the waiver log — a legal record — that is the most consequential gap in the
-system.
+Two Apps Script projects sit behind these routes. Until 2026-08-14 their source existed
+only inside Google's script editor — no version history, no backup, nothing to restore
+from if a project were deleted or an account changed. For the waiver log, a legal record,
+that was the largest single gap in the system.
 
-This directory is where those sources belong. Until the `.gs` files are here, everything
-below is what we know about them, recorded 2026-08-14 by reading the editor directly.
+**Both are now in this directory**, pulled with `clasp` so they are byte-exact rather than
+transcribed:
+
+```
+waivers/Code.js    44 lines   + appsscript.json
+students/Code.js   48 lines   + appsscript.json
+```
+
+The `.clasp.json` in each folder is committed on purpose. It holds only the script ID and
+file-extension settings — no local paths, no credentials — so `clasp pull` and `clasp push`
+work for anyone who clones this repo and logs in.
 
 ---
 
@@ -19,7 +27,7 @@ below is what we know about them, recorded 2026-08-14 by reading the editor dire
 | Editor | https://script.google.com/home/projects/1sYGkf48Pl4s8rnYOuoJSsf4Xw7C3OwRjqL-fwcaQkbGPLYc-Mg8hiSMp/edit |
 | Writes to Sheet | `1B9-yB-kUS4qDrUFlyP_JrTvRxhFFDCVVx01RsV5GRyo` |
 | Called by | `src/app/api/waiver/route.ts` (`GOOGLE_SHEET_URL`) |
-| File | `Code.gs` |
+| File | `waivers/Code.js` (44 lines) |
 
 **`doPost(e)`** — accepts JSON and appends one row:
 
@@ -34,9 +42,15 @@ If the payload includes `pdfBase64`, it also:
 3. creates the file in that folder,
 4. writes the file's URL back into **column 7** of the row it just appended.
 
-> Worth knowing: CLAUDE.md has long carried "waiver PDF archiving to Google Drive not
-> fully working — PDF upload fails on large payloads." This confirms the mechanism is
-> fully built and wired; the failure is payload size, not a missing feature.
+**On failure it writes the error into the waiver sheet itself** — a row of
+`["ERROR", message, stack, timestamp, "", "", ""]`.
+
+Two things follow from that. First, CLAUDE.md has long carried "waiver PDF archiving to
+Google Drive not fully working — PDF upload fails on large payloads": the mechanism is
+fully built and wired, so this is a payload-size problem, not a missing feature. Second,
+**failed waiver submissions are visible as ERROR rows in the sheet** — that is where to
+look when a waiver doesn't arrive, and it is worth scanning periodically, because nothing
+else surfaces them.
 
 ## LJFC Students
 
@@ -46,7 +60,7 @@ If the payload includes `pdfBase64`, it also:
 | Editor | https://script.google.com/home/projects/12hr4iWFnpUWSk7ogx-W2i38e6HFIiifjSupHZpktPkH1i0gPFesYZYUq/edit |
 | Reads/writes Sheet | `17-XZMotYOiVIcJde2_Ppgxan7TFGBU6df-DI43Ygf8E` |
 | Called by | `src/app/api/students/route.ts` (`STUDENTS_SHEET_URL`) |
-| File | `Code.gs`, 49 lines |
+| File | `students/Code.js` (48 lines) |
 
 **`doPost(e)`** — appends one dive-log row:
 
@@ -65,41 +79,32 @@ logs.
 
 ---
 
-## Getting exact copies into this directory
+## Refreshing these copies
 
-Do **not** transcribe these by hand from the editor. A silent transcription error in a
-restored waiver script is worse than having no backup, because it would look correct.
-Use `clasp`, which pulls byte-exact source:
-
-```bash
-npm install -g @google/clasp
-clasp login          # opens a browser, sign in as joshuabeneventi@gmail.com
-```
-
-Then, from this directory:
+Never transcribe from the editor by hand. A silent transcription error in a restored
+waiver script is worse than no backup, because it would look correct. Use `clasp`, which
+pulls byte-exact source over Google's API. No global install and no `sudo` needed:
 
 ```bash
-mkdir waivers && cd waivers
-clasp clone 1sYGkf48Pl4s8rnYOuoJSsf4Xw7C3OwRjqL-fwcaQkbGPLYc-Mg8hiSMp
-cd ..
-
-mkdir students && cd students
-clasp clone 12hr4iWFnpUWSk7ogx-W2i38e6HFIiifjSupHZpktPkH1i0gPFesYZYUq
-cd ..
+npx @google/clasp login     # opens a browser; --no-localhost if that fails
 ```
 
-Each clone produces `Code.gs` and `appsscript.json`. Commit both.
+Then, from inside `waivers/` or `students/` — the `.clasp.json` already there tells clasp
+which project to talk to:
 
-Delete the generated `.clasp.json` files before committing, or add them to `.gitignore` —
-they hold local project state, not source.
+```bash
+npx @google/clasp pull
+```
 
-If Apps Script API access is disabled, `clasp` will say so; enable it once at
+`git diff` afterwards shows whether the running script has drifted from what's committed.
+
+If Apps Script API access is disabled, clasp will say so; enable it once at
 https://script.google.com/home/usersettings.
 
 ## Restoring after a loss
 
 1. Create a new Apps Script project.
-2. Paste in `Code.gs` from here.
+2. Paste in the matching `Code.js` from here.
 3. Deploy → New deployment → Web app, execute as **Me**, access **Anyone**.
 4. Copy the new `/exec` URL into the matching constant in `src/app/api/`.
 
