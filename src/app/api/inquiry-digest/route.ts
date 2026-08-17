@@ -69,9 +69,10 @@ async function runDigest(req: NextRequest) {
       .is("ai_facts", null)
       .order("created_at", { ascending: false })
       .limit(3);
-    for (const row of unprocessed || []) {
-      if ((await enrichInquiry(row, "digest")) === "enriched") swept++;
-    }
+    const sweepResults = await Promise.all(
+      (unprocessed || []).map((row) => enrichInquiry(row, "digest")),
+    );
+    swept = sweepResults.filter((r) => r === "enriched").length;
   }
 
   // ─── Pull everything we need ─────────────────────────────────────────

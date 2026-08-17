@@ -77,10 +77,15 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
-  const results: Array<{ id: string; result: EnrichResult }> = [];
-  for (const row of rows || []) {
-    results.push({ id: row.id, result: await enrichInquiry(row, "backfill") });
-  }
+  // Concurrent, not sequential — a sequential batch of 8 ran 40-60s and hit
+  // the function timeout (the enrichments persisted, but the browser saw an
+  // error page). Eight concurrent calls finish in roughly the time of one.
+  const results: Array<{ id: string; result: EnrichResult }> = await Promise.all(
+    (rows || []).map(async (row) => ({
+      id: row.id,
+      result: await enrichInquiry(row, "backfill"),
+    })),
+  );
 
   const enriched = results.filter((r) => r.result === "enriched").length;
   return NextResponse.json({
