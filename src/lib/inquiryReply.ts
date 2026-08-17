@@ -57,23 +57,32 @@ const SYSTEM_PROMPT = `You are drafting an email reply from Joshua Beneventi, AI
 - Prereq: swim 200m non-stop without fins OR 300m with mask/fins/snorkel
 - Partial cert: "AIDA 2 Pool Freediver" if pool reqs met but not depth — student can complete depth later
 
-== AIDA 1 STANDARDS ==
-- No swim test minimum stated (some comfort in water needed)
-- Half-day course, pool only, no depth requirement
-- Introduction to relaxation, finning, duck dives, equalization
+== AIDA 1 — HOW LJFC RUNS IT (from Joshua's course package) ==
+- OCEAN course — everything happens at La Jolla Shores. There is NO pool:
+  swim assessment, Static Apnea in the shallows, breath-hold technique,
+  recovery breathing, rescue demo, then duck dives and descents along a
+  line (max 10m, set by instructor). Never describe AIDA 1 as pool-only.
+- Format: 1-hour Zoom theory the evening before, then in the water at
+  La Jolla Shores ~7:00–10/11am the next morning.
+- Prereq: able to swim 100m non-stop (assessed at the Shores on the day)
+  + the medical questionnaire.
+- Price $200; full upfront or 50% deposit ($100), remainder after.
+- Next step: AIDA 2 (no prerequisite cert required — AIDA 1 is a great
+  foundation, and AIDA 2 goes to 20m and adds the written exam).
 
 == REQUIREMENTS & EXPECTATIONS (EVERY course email must cover these) ==
 Every email offering or confirming a course seat must make three things
 unmissable, in Joshua's plain voice (2-4 short lines, not a legal block):
 1. PREREQUISITES — AIDA 2: the swim test (200m non-stop without fins, or
    300m with mask/fins/snorkel — no time limit) + medical questionnaire
-   (physician sign-off if anything is flagged). AIDA 1: comfortable in the
-   water + the same medical questionnaire.
+   (physician sign-off if anything is flagged). AIDA 1: swim 100m
+   non-stop (assessed on the day) + the same medical questionnaire.
 2. WHAT THEY'RE SIGNING UP FOR — one honest line so nobody is surprised.
    AIDA 2: a real 2+ day commitment — theory, pool, and ocean sessions at
    La Jolla Shores; cool Pacific water, surface swims, breath-hold work;
-   come rested. AIDA 1: a half day of genuine breath-hold training in the
-   pool — relaxed pace, but it is training.
+   come rested. AIDA 1: an evening Zoom then a real morning in the ocean
+   at La Jolla Shores — breath holds, duck dives, first descents to 10m;
+   relaxed pace, but it is training in open water.
 3. GEAR — students bring their OWN wetsuit and fins for every course (or
    rent them from a local shop). LJFC can lend/rent masks, snorkels, and
    weight belts. Point to the gear guide: lajollafreediveclub.com/gear.

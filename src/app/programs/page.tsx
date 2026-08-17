@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Reveal } from "@/components/Reveal";
+import { getScheduledCourses } from "@/lib/schedule";
+
+// The schedule section reads live calendar data — refresh every 5 min.
+export const revalidate = 300;
 import { EmailCapture } from "@/components/EmailCapture";
 import { ExpandableCourse } from "@/components/ExpandableCourse";
 import { ExpandableYouthLevel } from "@/components/ExpandableYouthLevel";
@@ -30,7 +34,7 @@ const aidaCourses = [
     maxDepth: "10m",
     gradient: "from-[#14566a] to-seafoam",
     description:
-      "AIDA 1 is a half-day to full-day introduction designed for confident swimmers who are brand new to breath-hold diving. You'll learn the fundamentals of relaxation, basic static apnea, introductory finning and duck dive technique, and buddy safety. No performance minimums — just demonstrate correct technique, relaxation, and safe behavior.",
+      "AIDA 1 is a one-day introduction for confident swimmers who are brand new to breath-hold diving — a 1-hour Zoom theory session the evening before, then a morning in the ocean at La Jolla Shores: relaxation and static apnea in the shallows, duck dives, first descents along a line (max 10m), and buddy safety. No performance minimums — just demonstrate correct technique, relaxation, and safe behavior. You'll need to swim 100m non-stop (assessed on the day) and bring your own wetsuit and fins.",
     skills: [
       "Relaxation techniques for body and mind",
       "Introduction to static apnea (STA)",
@@ -183,7 +187,47 @@ const otherPrograms = [
   },
 ];
 
-export default function ProgramsPage() {
+export default async function ProgramsPage() {
+  // Live schedule — published once in the admin, shown here, on the
+  // homepage strip, and on /calendar. Replaces a hardcoded list that had
+  // gone stale (it still showed spring dates in August).
+  let scheduled: Awaited<ReturnType<typeof getScheduledCourses>> = [];
+  try {
+    scheduled = (await getScheduledCourses(120)).filter(
+      (c) => c.category === "course",
+    );
+  } catch {}
+  const fmtDate = (d: string, e: string | null) => {
+    const opts: Intl.DateTimeFormatOptions = { month: "short", day: "numeric" };
+    const s = new Date(d + "T12:00:00");
+    if (!e || e === d) return s.toLocaleDateString("en-US", opts);
+    const en = new Date(e + "T12:00:00");
+    return s.getMonth() === en.getMonth()
+      ? `${s.toLocaleDateString("en-US", opts)}–${en.getDate()}`
+      : `${s.toLocaleDateString("en-US", opts)} – ${en.toLocaleDateString("en-US", opts)}`;
+  };
+  const fmtDay = (d: string, e: string | null) => {
+    const w = (x: string) =>
+      new Date(x + "T12:00:00").toLocaleDateString("en-US", { weekday: "short" });
+    return !e || e === d ? w(d) : `${w(d)}–${w(e)}`;
+  };
+  const upcoming = scheduled.map((c) => ({
+    date: fmtDate(c.date, c.end_date),
+    day: fmtDay(c.date, c.end_date),
+    title: c.title,
+    detail: /aida\s*1/i.test(c.title)
+      ? "1-hour Zoom theory the evening before, then a morning in the ocean at La Jolla Shores — breath holds, duck dives, first descents."
+      : "Theory via Zoom, then pool and open water sessions at La Jolla Shores.",
+    spots:
+      c.seatsLeft !== null && c.seatsLeft <= 0
+        ? "Full — waitlist"
+        : c.seatsLeft !== null
+          ? `${c.seatsLeft} spot${c.seatsLeft === 1 ? "" : "s"}`
+          : "Open",
+    href: /aida\s*1/i.test(c.title)
+      ? "/contact/courses?course=aida1"
+      : "/contact/courses?course=aida2",
+  }));
   return (
     <>
       {/* Header */}
@@ -463,48 +507,7 @@ export default function ProgramsPage() {
           </Reveal>
 
           <div className="space-y-4">
-            {[
-              {
-                date: "Apr 15",
-                day: "Wed",
-                title: "AIDA 1 — Discover Freediving",
-                detail: "Half-day introduction. Theory, pool session, first breath-hold. No experience needed.",
-                spots: "6 spots",
-                href: "/contact/courses?course=aida1",
-              },
-              {
-                date: "Apr 29",
-                day: "Wed",
-                title: "AIDA 1 — Discover Freediving",
-                detail: "Half-day introduction. No experience needed.",
-                spots: "6 spots",
-                href: "/contact/courses?course=aida1",
-              },
-              {
-                date: "May 29–31",
-                day: "Thu–Sat",
-                title: "AIDA 2 Certification",
-                detail: "3-day course. Theory, pool session, open water dives at La Jolla Shores.",
-                spots: "4 spots",
-                href: "/contact/courses?course=aida2",
-              },
-              {
-                date: "Jun 19–21",
-                day: "Fri–Sun",
-                title: "AIDA 2 Certification",
-                detail: "3-day course. Theory, pool session, open water dives at La Jolla Shores.",
-                spots: "4 spots",
-                href: "/contact/courses?course=aida2",
-              },
-              {
-                date: "Jul 10–12",
-                day: "Fri–Sun",
-                title: "AIDA 2 Certification",
-                detail: "3-day course. Theory, pool session, open water dives at La Jolla Shores.",
-                spots: "4 spots",
-                href: "/contact/courses?course=aida2",
-              },
-            ].map((event, i) => (
+            {upcoming.map((event, i) => (
               <Reveal key={i} delay={i * 40}>
                 <Link
                   href={event.href}
