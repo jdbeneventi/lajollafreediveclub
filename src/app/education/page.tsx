@@ -21,11 +21,12 @@ export const metadata: Metadata = {
     "marine reserve education",
   ],
   openGraph: {
-    title: "Ocean Education — La Jolla Freedive Club",
+    title: "Ocean Education",
     description:
       "Field-based ocean science programs for ages 5-16 in La Jolla's marine reserve. Camp, field trips, after-school series, and community days.",
     url: "https://lajollafreediveclub.com/education",
   },
+  robots: { index: false, follow: false },
 };
 
 // Card subtitles and editorial descriptions that differ from the data file

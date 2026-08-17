@@ -118,8 +118,8 @@ export default function CampPage() {
                   label="Session preference"
                   name="session"
                   options={[
-                    "Summer 2026 — any week",
-                    "Summer 2026 — specific week (tell us below)",
+                    "Summer 2027 — any week",
+                    "Summer 2027 — specific week (tell us below)",
                     "Not sure yet — just exploring",
                   ]}
                 />

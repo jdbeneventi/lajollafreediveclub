@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "The ORIGIN Protocol — The Science Behind LJFC",
+  robots: { index: false, follow: false },
   description:
     "A CO\u2082-based protocol for induced neuroplasticity. Developed from freediving physiology, contemplative training, and memory reconsolidation research. The method behind everything LJFC teaches.",
   keywords: [

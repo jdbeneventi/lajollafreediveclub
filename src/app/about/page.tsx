@@ -4,7 +4,7 @@ import { Reveal } from "@/components/Reveal";
 import { EmailCapture } from "@/components/EmailCapture";
 
 export const metadata: Metadata = {
-  title: "About — La Jolla Freedive Club",
+  title: "About",
   description:
     "The story behind La Jolla Freedive Club. Founded by Joshua Beneventi, AIDA-certified instructor and youth instructor trained in Malaysia, Egypt, and Mexico. San Diego's only AIDA-certified freediving instructor for adults and kids.",
 };

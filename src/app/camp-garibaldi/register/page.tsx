@@ -6,33 +6,17 @@ import Link from "next/link";
 const stepLabels = ["Student", "Session", "Contacts", "Medical", "Review"];
 
 const sessions = [
+  // Summer 2026 wrapped — this funnel now feeds the 2027 early list.
+  // Swap back to real dated sessions when the 2027 schedule is set.
   {
-    id: "session-1",
-    name: "Session I",
-    dates: "June 15\u201317",
-    days: "3 days",
-    price: 450,
-    priceLabel: "$450",
-    featured: false,
-  },
-  {
-    id: "session-2",
-    name: "Session II",
-    dates: "July 13\u201317",
-    days: "5 days",
-    price: 750,
-    priceLabel: "$750",
+    id: "summer-2027",
+    name: "Summer 2027 — Early List",
+    dates: "Dates announced this winter",
+    days: "3-day + full week",
+    price: 0,
+    priceLabel: "No payment now",
     featured: true,
-    badge: "Full Week",
-  },
-  {
-    id: "session-3",
-    name: "Session III",
-    dates: "August 10\u201312",
-    days: "3 days",
-    price: 450,
-    priceLabel: "$450",
-    featured: false,
+    badge: "First pick",
   },
 ];
 
@@ -226,7 +210,7 @@ export default function CampRegistrationPage() {
             Camp Garibaldi Registration
           </h1>
           <p className="text-white/50 text-sm leading-relaxed">
-            Secure your child&apos;s spot for Summer 2026. Ages 8&ndash;14. All gear provided.
+            Join the Summer 2027 early list &mdash; first pick when dates open. Ages 8&ndash;14. All gear provided.
           </p>
         </div>
       </section>

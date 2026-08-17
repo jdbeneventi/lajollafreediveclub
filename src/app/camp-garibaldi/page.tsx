@@ -7,7 +7,7 @@ import FloatingFish from "./FloatingFish";
 import "./camp-styles.css";
 
 export const metadata: Metadata = {
-  title: "Camp Garibaldi — Ocean Camp for Kids | La Jolla Freedive Club",
+  title: "Camp Garibaldi — Ocean Camp for Kids",
   description:
     "A week-long ocean camp at La Jolla Shores teaching kids ages 8–14 real water skills — freediving, surf survival, and ocean confidence — through breath-first training.",
 };
@@ -33,7 +33,7 @@ export default function CampGaribaldiPage() {
           <img src="/images/camp/gary-fancy.png" alt="" width={140} height={140} style={{ display: "block" }} />
         </div>
         <div className="camp-hero-content">
-          <span className="eyebrow camp-fade-1">Ages 8–14 · La Jolla Shores · Summer 2026</span>
+          <span className="eyebrow camp-fade-1">Ages 8–14 · La Jolla Shores · Summer 2027 early list open</span>
           <h1 className="camp-fade-2">The ocean camp that starts from the <em>inside out.</em></h1>
           <p className="camp-hero-sub camp-fade-3">Breath skills, ocean wonder, real freediving. Kids leave calmer, more curious, and more at home in the water.</p>
           <div className="camp-pills camp-fade-3">
@@ -170,31 +170,17 @@ export default function CampGaribaldiPage() {
       <section className="camp-sessions camp-section" id="sessions">
         <div className="camp-container">
           <div className="camp-sessions-header">
-            <span className="eyebrow">Summer 2026</span>
+            <span className="eyebrow">Summer 2027</span>
             <h2>Camp Dates &amp; Pricing</h2>
-            <p>Small groups by design. Reserve early — spots are limited.</p>
+            <p>Summer 2026 has wrapped. Join the early list and get first pick of next summer&apos;s sessions.</p>
           </div>
           <div className="camp-sessions-grid">
-            <div className="camp-session-card">
-              <div className="camp-session-tag">Session I · June</div>
-              <div className="camp-session-date">Jun 15–17</div>
-              <div className="camp-session-type">3-day immersion · Mon–Wed</div>
-              <div className="camp-session-price">$450</div>
-              <Link href="/camp-garibaldi/register?session=june" className="camp-session-cta outline">Reserve →</Link>
-            </div>
             <div className="camp-session-card featured">
-              <div className="camp-session-tag">Session II · July · Peak Season</div>
-              <div className="camp-session-date">Jul 13–17</div>
-              <div className="camp-session-type">5-day full week · Mon–Fri</div>
-              <div className="camp-session-price">$750</div>
-              <Link href="/camp-garibaldi/register?session=july" className="camp-session-cta">Reserve →</Link>
-            </div>
-            <div className="camp-session-card">
-              <div className="camp-session-tag">Session III · August</div>
-              <div className="camp-session-date">Aug 10–12</div>
-              <div className="camp-session-type">3-day immersion · Mon–Wed</div>
-              <div className="camp-session-price">$450</div>
-              <Link href="/camp-garibaldi/register?session=august" className="camp-session-cta outline">Reserve →</Link>
+              <div className="camp-session-tag">Summer 2027 · Early List</div>
+              <div className="camp-session-date">Dates announced this winter</div>
+              <div className="camp-session-type">3-day and full-week sessions · Mon–Fri</div>
+              <div className="camp-session-price">From $450</div>
+              <Link href="/camp-garibaldi/register?session=summer-2027" className="camp-session-cta">Join the early list →</Link>
             </div>
           </div>
           <p style={{ fontSize: "0.76rem", color: "var(--ink-faint)", textAlign: "center", lineHeight: 1.6 }}>

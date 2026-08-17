@@ -153,6 +153,11 @@ function CourseFormInner() {
                   name="message"
                   placeholder="Goals, concerns, questions — whatever's on your mind."
                 />
+
+                <p className="text-xs text-deep/40">
+                  Deposits, cancellations, and weather calls are covered in our{" "}
+                  <a href="/policies" className="text-teal underline">policies</a>.
+                </p>
               </FormShell>
             </Reveal>
           )}

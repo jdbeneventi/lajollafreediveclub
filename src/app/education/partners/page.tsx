@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Education Partners — La Jolla Freedive Club",
+  title: "Education Partners",
   description:
     "Partner with LJFC to deliver field-based ocean science education in La Jolla's marine reserve. Guest educator model for Scripps, Birch Aquarium, lifeguards, and conservation organizations.",
   robots: { index: false, follow: false },

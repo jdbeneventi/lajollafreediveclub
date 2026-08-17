@@ -72,22 +72,22 @@ const siteTree: SiteNode[] = [
   },
   { path: "/saturday-sessions", label: "Saturday Landing (→ RSVP)", type: "page" },
   {
-    path: "/science", label: "ORIGIN Protocol", type: "gated", meta: "Password: ljfc",
+    path: "/science", label: "ORIGIN Protocol", type: "gated", meta: "Gated (GATE_CODE env)",
   },
   {
-    path: "/education", label: "Education Programs", type: "gated", meta: "Password: ljfc",
+    path: "/education", label: "Education Programs", type: "gated", meta: "Gated (GATE_CODE env)",
     children: [
       { path: "/education/partners", label: "Education Partners", type: "page" },
     ],
   },
-  { path: "/students", label: "Student Portal", type: "gated", meta: "Password: ljfc-coach / ljfc" },
-  { path: "/ohpc/plan", label: "OHPC Action Plan", type: "gated", meta: "Password: ljfc" },
+  { path: "/students", label: "Student Portal", type: "gated", meta: "Coach + student codes (env vars)" },
+  { path: "/ohpc/plan", label: "OHPC Action Plan", type: "gated", meta: "Gated (GATE_CODE env)" },
   { path: "/shop", label: "Shop (placeholder)", type: "page" },
   { path: "/offline", label: "Offline Fallback", type: "page" },
 ];
 
 const adminTree: SiteNode[] = [
-  { path: "/admin", label: "Admin Hub", type: "admin", meta: "Central dashboard, password: ljfc" },
+  { path: "/admin", label: "Admin Hub", type: "admin", meta: "Central dashboard, gated (GATE_CODE env)" },
   { path: "/admin/calendar", label: "Calendar Manager", type: "admin", meta: "CRUD events → Supabase" },
   { path: "/admin/registrations", label: "Camp Registrations", type: "admin", meta: "View signups from Supabase" },
   { path: "/admin/partners", label: "Partner Network", type: "admin", meta: "Track outreach & relationships" },

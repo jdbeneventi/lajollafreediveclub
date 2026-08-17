@@ -4,7 +4,7 @@ import { Reveal } from "@/components/Reveal";
 import { EmailCapture } from "@/components/EmailCapture";
 
 export const metadata: Metadata = {
-  title: "Freediving Gear Guide for La Jolla | La Jolla Freedive Club",
+  title: "Freediving Gear Guide for La Jolla",
   description: "What to wear and bring for freediving in La Jolla at every water temperature. Wetsuit guide, fin recommendations, mask selection, and essential safety gear.",
 };
 

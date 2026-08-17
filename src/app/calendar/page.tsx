@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   description:
     "Upcoming AIDA certification courses, Camp Garibaldi sessions, and weekly events at La Jolla Freedive Club.",
   openGraph: {
-    title: "Calendar — La Jolla Freedive Club",
+    title: "Calendar",
     description: "Upcoming courses, camp sessions, and weekly events.",
     url: "https://lajollafreediveclub.com/calendar",
   },

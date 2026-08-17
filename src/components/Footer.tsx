@@ -17,7 +17,6 @@ const resourceLinks = [
   { href: "/tides", label: "Tide Calendar" },
   { href: "/gear", label: "Gear Guide" },
   { href: "/blog", label: "The Journal" },
-  { href: "/science", label: "The Science" },
 ];
 
 const infoLinks = [

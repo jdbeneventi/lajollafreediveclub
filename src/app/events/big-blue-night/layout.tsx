@@ -4,7 +4,7 @@ export const metadata: Metadata = {
   title: "The Big Blue — Movie Night at the Beach",
   description:
     "Free outdoor screening of The Big Blue at Kellogg Park, La Jolla Shores. Sunset yoga, ORIGIN Protocol, and the film that started it all.",
-  robots: { index: true, follow: true },
+  robots: { index: false, follow: false },
   openGraph: {
     title: "The Big Blue — Movie Night at the Beach | LJFC",
     description:

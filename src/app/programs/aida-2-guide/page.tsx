@@ -5,7 +5,7 @@ import { Footer } from "@/components/Footer";
 import { Reveal } from "@/components/Reveal";
 
 export const metadata: Metadata = {
-  title: "AIDA 2 Freediver — What to Expect | La Jolla Freedive Club",
+  title: "AIDA 2 Freediver — What to Expect",
   description:
     "A complete guide to the AIDA 2 Freediver course at LJFC — performance standards, course structure, prerequisites, pricing, and how to prepare. The world's most widely recognized entry-level freediving certification.",
   robots: { index: false, follow: false },
@@ -108,7 +108,7 @@ export default function Aida2GuidePage() {
             <Reveal delay={300}>
               <div className="flex flex-wrap gap-3">
                 <Link
-                  href="/contact/courses?course=aida-2"
+                  href="/contact/courses?course=aida2"
                   className="inline-block px-7 py-3 bg-coral text-salt rounded-full font-medium text-sm hover:bg-coral/90 transition-colors no-underline"
                 >
                   Inquire about dates →
@@ -797,13 +797,13 @@ export default function Aida2GuidePage() {
             <Reveal delay={100}>
               <div className="flex flex-wrap gap-3 justify-center">
                 <Link
-                  href="/contact/courses?course=aida-2"
+                  href="/contact/courses?course=aida2"
                   className="inline-block px-8 py-3 bg-coral text-salt rounded-full font-medium text-sm hover:bg-coral/90 transition-colors no-underline"
                 >
                   Inquire about course dates →
                 </Link>
                 <a
-                  href="/api/guide-pdf?course=aida-2"
+                  href="/documents/LJFC-AIDA2-Course-Guide.pdf"
                   className="inline-block px-8 py-3 bg-transparent text-salt border border-salt/30 rounded-full font-medium text-sm hover:border-salt/60 transition-colors no-underline"
                 >
                   Download as PDF

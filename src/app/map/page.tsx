@@ -5,7 +5,7 @@ import { Reveal } from "@/components/Reveal";
 import { EmailCapture } from "@/components/EmailCapture";
 
 export const metadata = {
-  title: "La Jolla Underwater Guide | La Jolla Freedive Club",
+  title: "La Jolla Underwater Guide",
   description: "Interactive guide to La Jolla's underwater world — dive sites, submarine canyons, kelp forests, marine life field guide, and live data sources.",
 };
 

@@ -364,7 +364,7 @@ function InquiriesContent() {
               </li>
             </ol>
             <div className="text-xs text-salt/40 mt-4">
-              Coming soon: conflict detection (suggest groupings when date windows overlap), embedded calendar, and AI-drafted replies.
+              Conflict detection, the embedded calendar, and AI-drafted replies are live — the daily digest carries one-tap action links for all of it.
             </div>
           </div>
         )}

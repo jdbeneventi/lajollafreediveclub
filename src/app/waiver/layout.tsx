@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Sign Waiver — La Jolla Freedive Club",
+  title: "Sign Waiver",
   description:
     "Complete the LJFC liability waiver and medical questionnaire online. Required before participating in any La Jolla Freedive Club activity.",
 };

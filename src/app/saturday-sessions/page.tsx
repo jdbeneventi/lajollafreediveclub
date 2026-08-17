@@ -27,7 +27,7 @@ export default function SaturdaySessionsPage() {
         <div className="relative z-10 w-full px-6 md:px-12 pb-16 md:pb-24 max-w-[1200px] mx-auto">
           <Reveal>
             <div className="text-[11px] text-seafoam/60 font-medium tracking-[0.2em] uppercase mb-4">
-              Every Saturday · La Jolla Shores · 7:00–10:00 AM
+              Every Saturday · La Jolla Shores · 7:00–10:00 AM · Free with Ocean Flow · $25 drop-in
             </div>
             <h1 className="font-serif text-[clamp(2.8rem,7vw,5rem)] text-white font-normal leading-[1.05] tracking-tight max-w-[700px]">
               Saturday at{" "}

@@ -7,6 +7,7 @@ import { GateForm } from "@/components/GateForm";
 
 export const metadata: Metadata = {
   title: "Charter School Funding — Camp Garibaldi",
+  robots: { index: false, follow: false },
   description:
     "How to use homeschool charter enrichment funds for Camp Garibaldi. Most families pay $50 or less out of pocket.",
 };

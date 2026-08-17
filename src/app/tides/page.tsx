@@ -5,7 +5,7 @@ import { Reveal } from "@/components/Reveal";
 import { EmailCapture } from "@/components/EmailCapture";
 
 export const metadata: Metadata = {
-  title: "La Jolla Tide Calendar | La Jolla Freedive Club",
+  title: "La Jolla Tide Calendar",
   description: "7-day tide calendar for La Jolla with best dive windows, tide heights, and freediving tips. Updated daily from NOAA.",
 };
 

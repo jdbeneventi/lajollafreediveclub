@@ -17,7 +17,7 @@ const programs = [
   { id: "aida1", title: "AIDA 1 — Introduction", meta: "1 day", desc: "Your first day in freediving. Breathing, pool skills, your first real breath hold. Walk away certified.", href: "/programs#aida1" },
   { id: "group", title: "Group Ocean Sessions", meta: "Every Saturday", desc: "Weekly guided dives at La Jolla's best spots. Structured training with safety divers.", href: "/programs" },
   { id: "coaching", title: "Private Coaching", meta: "Flexible", desc: "Personalized training — competition prep, equalization, depth anxiety, accelerated cert.", href: "/programs" },
-  { id: "camp", title: "Camp Garibaldi", meta: "Ages 8–16", desc: "Week-long ocean camp for kids. Freediving, surf survival, water confidence.", href: "/education#camp-garibaldi" },
+  { id: "camp", title: "Camp Garibaldi", meta: "Ages 8–14", desc: "Week-long ocean camp for kids. Freediving, surf survival, water confidence.", href: "/camp-garibaldi" },
 ];
 
 const tools = [
@@ -401,39 +401,6 @@ export default function Home() {
               </Reveal>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* ═══ EVENT — Big Blue Movie Night ═══ */}
-      <section className="bg-deep py-16 md:py-20 px-6 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E\")" }} />
-        <div className="max-w-[1000px] mx-auto relative z-10">
-          <Reveal>
-            <Link href="/events/big-blue-night" className="block no-underline group">
-              <div className="grid md:grid-cols-[200px_1fr] gap-6 md:gap-10 items-center">
-                <div className="rounded-xl overflow-hidden shadow-2xl shadow-black/40 hidden md:block">
-                  <img src="/images/blog/big-blue-poster.jpg" alt="The Big Blue movie poster" className="w-full h-auto" />
-                </div>
-                <div>
-                  <div className="flex items-center gap-3 mb-3">
-                    <span className="px-3 py-1 bg-seafoam/15 border border-seafoam/25 rounded-full text-seafoam text-[10px] font-medium tracking-[0.15em] uppercase">
-                      Free Event
-                    </span>
-                    <span className="text-white/25 text-xs">Friday, April 25</span>
-                  </div>
-                  <h3 className="font-serif text-[clamp(1.5rem,3vw,2.2rem)] text-white italic group-hover:text-seafoam transition-colors">
-                    &ldquo;The Big Blue&rdquo; — Movie Night at the Beach
-                  </h3>
-                  <p className="text-white/40 text-sm mt-2 leading-relaxed max-w-[500px]">
-                    Sunset Ocean Flow, breathing drills, then the film that made a generation want to freedive. Kellogg Park, La Jolla Shores.
-                  </p>
-                  <span className="inline-block text-seafoam text-xs font-medium mt-4 group-hover:text-white transition-colors">
-                    RSVP &amp; Details &rarr;
-                  </span>
-                </div>
-              </div>
-            </Link>
-          </Reveal>
         </div>
       </section>
 

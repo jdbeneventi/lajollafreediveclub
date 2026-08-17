@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Reveal } from "@/components/Reveal";
 
 export const metadata: Metadata = {
-  title: "Booking & Cancellation Policy — La Jolla Freedive Club",
+  title: "Booking & Cancellation Policy",
   description:
     "Deposit, cancellation, rescheduling, and weather policies for AIDA courses, private coaching, and Camp Garibaldi at La Jolla Freedive Club.",
   alternates: { canonical: "/policies" },

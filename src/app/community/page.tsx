@@ -8,11 +8,11 @@ import {
 } from "@/lib/partner-network";
 
 export const metadata: Metadata = {
-  title: "Community — La Jolla Freedive Club",
+  title: "Community",
   description:
     "The partners, researchers, educators, and organizations behind La Jolla Freedive Club. Science, safety, conservation, and ocean community in La Jolla, San Diego.",
   openGraph: {
-    title: "Community — La Jolla Freedive Club",
+    title: "Community",
     description:
       "The partners, researchers, educators, and organizations behind La Jolla Freedive Club.",
     url: "https://lajollafreediveclub.com/community",
