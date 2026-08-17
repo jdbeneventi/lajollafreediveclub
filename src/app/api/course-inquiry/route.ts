@@ -10,6 +10,14 @@ const OWNER_EMAIL = "joshuabeneventi@gmail.com";
 // sync watches it — the personal inbox stays personal.
 const INQUIRY_INBOX = process.env.BUSINESS_EMAIL?.trim() || OWNER_EMAIL;
 
+// Form values render into email HTML — escape so typed markup stays text.
+const esc = (v: unknown): string =>
+  String(v ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+
 export async function POST(request: Request) {
   try {
     const data = await request.json();
@@ -86,9 +94,9 @@ export async function POST(request: Request) {
           subject: `Course inquiry received — ${course.split("—")[0].trim()}`,
           html: `
             <div style="font-family:-apple-system,sans-serif;max-width:540px;padding:20px;">
-              <h2 style="color:#0B1D2C;margin-bottom:8px;">Thanks, ${firstName}!</h2>
+              <h2 style="color:#0B1D2C;margin-bottom:8px;">Thanks, ${esc(firstName)}!</h2>
               <p style="color:#5a6a7a;font-size:14px;line-height:1.6;">
-                We received your inquiry for <strong>${course}</strong>.
+                We received your inquiry for <strong>${esc(course)}</strong>.
                 Joshua will get back to you within 24 hours with available dates and next steps.
               </p>
 
@@ -145,14 +153,14 @@ export async function POST(request: Request) {
             <div style="font-family:-apple-system,sans-serif;max-width:540px;padding:20px;">
               <h3 style="color:#0B1D2C;">New course inquiry</h3>
               <table style="font-size:14px;border-collapse:collapse;">
-                <tr><td style="padding:4px 12px 4px 0;color:#5a6a7a;">Name</td><td style="font-weight:600;">${name}</td></tr>
-                <tr><td style="padding:4px 12px 4px 0;color:#5a6a7a;">Email</td><td>${email}</td></tr>
-                ${phone ? `<tr><td style="padding:4px 12px 4px 0;color:#5a6a7a;">Phone</td><td>${phone}</td></tr>` : ""}
-                <tr><td style="padding:4px 12px 4px 0;color:#5a6a7a;">Course</td><td style="font-weight:600;">${course}</td></tr>
-                <tr><td style="padding:4px 12px 4px 0;color:#5a6a7a;">Experience</td><td>${experience || "Not specified"}</td></tr>
-                <tr><td style="padding:4px 12px 4px 0;color:#5a6a7a;">Dates</td><td>${dates || "Flexible"}</td></tr>
-                <tr><td style="padding:4px 12px 4px 0;color:#5a6a7a;">Group</td><td>${groupSize || "Just me"}</td></tr>
-                ${message ? `<tr><td style="padding:4px 12px 4px 0;color:#5a6a7a;">Message</td><td>${message}</td></tr>` : ""}
+                <tr><td style="padding:4px 12px 4px 0;color:#5a6a7a;">Name</td><td style="font-weight:600;">${esc(name)}</td></tr>
+                <tr><td style="padding:4px 12px 4px 0;color:#5a6a7a;">Email</td><td>${esc(email)}</td></tr>
+                ${phone ? `<tr><td style="padding:4px 12px 4px 0;color:#5a6a7a;">Phone</td><td>${esc(phone)}</td></tr>` : ""}
+                <tr><td style="padding:4px 12px 4px 0;color:#5a6a7a;">Course</td><td style="font-weight:600;">${esc(course)}</td></tr>
+                <tr><td style="padding:4px 12px 4px 0;color:#5a6a7a;">Experience</td><td>${esc(experience || "Not specified")}</td></tr>
+                <tr><td style="padding:4px 12px 4px 0;color:#5a6a7a;">Dates</td><td>${esc(dates || "Flexible")}</td></tr>
+                <tr><td style="padding:4px 12px 4px 0;color:#5a6a7a;">Group</td><td>${esc(groupSize || "Just me")}</td></tr>
+                ${message ? `<tr><td style="padding:4px 12px 4px 0;color:#5a6a7a;">Message</td><td>${esc(message)}</td></tr>` : ""}
               </table>
               <p style="font-size:12px;color:#5a6a7a;margin-top:12px;">
                 ${isAIDA ? "AIDA forms were included in their confirmation email." : "Non-AIDA inquiry — no forms sent."}

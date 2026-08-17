@@ -258,6 +258,15 @@ function composeDigestHtml(d: {
       timeZone: "UTC",
     });
 
+  // Student-typed strings (names, courses, free-text dates, notes) render
+  // into this HTML — escape them so markup in a form field stays text.
+  const esc = (v: unknown): string =>
+    String(v ?? "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+
   // Signed one-tap links (src/lib/actionTokens.ts). Silently omitted if
   // ADMIN_KEY is unset — the digest must never fail over its buttons.
   const ACT_LABELS: Record<ActAction, string> = {
@@ -311,8 +320,8 @@ function composeDigestHtml(d: {
     const course = String(i.course || "").split("—")[0].trim();
     return `
       <div style="border-left:2px solid #1B6B6B;padding:8px 12px;margin-bottom:6px;background:#f7f9f9;">
-        <div style="font-size:13px;color:#0B1D2C;font-weight:600;">${name} <span style="font-weight:400;color:#5a6a7a;">· ${course}</span></div>
-        <div style="font-size:12px;color:#5a6a7a;margin-top:2px;">${i.preferred_dates || "no dates given"} · ${people(i)} · ${i.experience || "no exp info"}${mailChip(i)}</div>
+        <div style="font-size:13px;color:#0B1D2C;font-weight:600;">${esc(name)} <span style="font-weight:400;color:#5a6a7a;">· ${esc(course)}</span></div>
+        <div style="font-size:12px;color:#5a6a7a;margin-top:2px;">${esc(i.preferred_dates || "no dates given")} · ${esc(people(i))} · ${esc(i.experience || "no exp info")}${mailChip(i)}</div>
         ${actLinks(i.id, actions)}
       </div>
     `;
@@ -350,7 +359,7 @@ function composeDigestHtml(d: {
       .map((c) => {
         const names = c.members
           .slice(0, 5)
-          .map((m) => (m.parsed_headcount && m.parsed_headcount > 1 ? `${m.first_name} (${m.parsed_headcount})` : m.first_name))
+          .map((m) => (m.parsed_headcount && m.parsed_headcount > 1 ? `${esc(m.first_name)} (${m.parsed_headcount})` : esc(m.first_name)))
           .join(" + ");
         const window =
           c.windowStart === c.windowEnd
@@ -358,18 +367,18 @@ function composeDigestHtml(d: {
             : `${fmtDay(c.windowStart)} – ${fmtDay(c.windowEnd)}`;
         const peopleLabel = `${c.peopleExact ? "" : "≥"}${c.people} ${c.people === 1 ? "person" : "people"}`;
         const fit = c.matchedEvent
-          ? `fits <strong>${c.matchedEvent.title}</strong> ${fmtDay(c.matchedEvent.date)}${c.matchedEvent.end_date ? `–${fmtDay(c.matchedEvent.end_date)}` : ""}${c.matchedEvent.seatsLeft != null ? ` (${c.matchedEvent.seatsLeft} seats left)` : ""}`
+          ? `fits <strong>${esc(c.matchedEvent.title)}</strong> ${fmtDay(c.matchedEvent.date)}${c.matchedEvent.end_date ? `–${fmtDay(c.matchedEvent.end_date)}` : ""}${c.matchedEvent.seatsLeft != null ? ` (${c.matchedEvent.seatsLeft} seats left)` : ""}`
           : c.suggestedWeekend
-            ? `no course scheduled — open weekend <strong>${fmtDay(c.suggestedWeekend.friday)}–${fmtDay(c.suggestedWeekend.sunday)}</strong>${c.suggestedWeekend.personalNotes.length ? ` (you have: ${c.suggestedWeekend.personalNotes[0]})` : ""}`
+            ? `no course scheduled — open weekend <strong>${fmtDay(c.suggestedWeekend.friday)}–${fmtDay(c.suggestedWeekend.sunday)}</strong>${c.suggestedWeekend.personalNotes.length ? ` (you have: ${esc(c.suggestedWeekend.personalNotes[0])})` : ""}`
             : "no open weekend inside their window";
         const draftLinks = c.members
           .slice(0, 5)
-          .map((m) => actLinks(m.id, ["draft"]).replace("Draft reply", `Draft ${m.first_name}`))
+          .map((m) => actLinks(m.id, ["draft"]).replace("Draft reply", `Draft ${esc(m.first_name)}`))
           .join("");
         return `
           <div style="border-left:2px solid #3db8a4;padding:8px 12px;margin-bottom:6px;background:#f7f9f9;">
             <div style="font-size:13px;color:#0B1D2C;font-weight:600;">${names} <span style="font-weight:400;color:#5a6a7a;">— ${peopleLabel}</span></div>
-            <div style="font-size:12px;color:#5a6a7a;margin-top:2px;">${window} · ${c.course}${c.people >= 2 ? " · group rate unlocked" : ""} · ${fit}</div>
+            <div style="font-size:12px;color:#5a6a7a;margin-top:2px;">${window} · ${esc(c.course)}${c.people >= 2 ? " · group rate unlocked" : ""} · ${fit}</div>
             ${draftLinks}
           </div>
         `;
@@ -384,8 +393,8 @@ function composeDigestHtml(d: {
       .map(
         (p) => `
           <div style="border-left:2px solid #1B6B6B;padding:8px 12px;margin-bottom:6px;background:#f7f9f9;">
-            <div style="font-size:13px;color:#0B1D2C;font-weight:600;">${p.course} <span style="font-weight:400;color:#5a6a7a;">— ${p.people} people, any date</span></div>
-            <div style="font-size:12px;color:#5a6a7a;margin-top:2px;">${p.names.join(", ")}</div>
+            <div style="font-size:13px;color:#0B1D2C;font-weight:600;">${esc(p.course)} <span style="font-weight:400;color:#5a6a7a;">— ${p.people} people, any date</span></div>
+            <div style="font-size:12px;color:#5a6a7a;margin-top:2px;">${esc(p.names.join(", "))}</div>
           </div>
         `,
       )
@@ -401,7 +410,7 @@ function composeDigestHtml(d: {
             .map((c) => {
               const range = c.end_date ? `${fmtDay(c.date)}–${fmtDay(c.end_date)}` : fmtDay(c.date);
               const seats = c.seatsLeft != null ? `${c.seatsLeft} of ${c.capacity} seats left` : `${c.enrolled} enrolled`;
-              return `<div style="font-size:12px;color:#5a6a7a;margin:2px 0;"><strong style="color:#0B1D2C;">${c.title}</strong> · ${range} · ${seats}</div>`;
+              return `<div style="font-size:12px;color:#5a6a7a;margin:2px 0;"><strong style="color:#0B1D2C;">${esc(c.title)}</strong> · ${range} · ${seats}</div>`;
             })
             .join("")
         : `<div style="font-size:12px;color:#C75B3A;margin:2px 0;">No courses on the calendar in the next 90 days.</div>`;
@@ -430,8 +439,8 @@ function composeDigestHtml(d: {
         .map(
           (i) => `
             <div style="border-left:2px solid #C75B3A;padding:8px 12px;margin-bottom:6px;background:#f7f9f9;">
-              <div style="font-size:13px;color:#0B1D2C;font-weight:600;">${i.first_name} ${i.last_name || ""} <span style="font-weight:400;color:#5a6a7a;">· ${i.course.split("—")[0].trim()}</span></div>
-              <div style="font-size:12px;color:#5a6a7a;margin-top:2px;">window ended ${fmtDay(i.parsed_end_date!)} · still "${i.status}" — handled in Gmail, or missed?</div>
+              <div style="font-size:13px;color:#0B1D2C;font-weight:600;">${esc(i.first_name)} ${esc(i.last_name || "")} <span style="font-weight:400;color:#5a6a7a;">· ${esc(i.course.split("—")[0].trim())}</span></div>
+              <div style="font-size:12px;color:#5a6a7a;margin-top:2px;">window ended ${fmtDay(i.parsed_end_date!)} · still "${esc(i.status)}" — handled in Gmail, or missed?</div>
               ${actLinks(i.id, ["replied", "archive"])}
             </div>
           `,
@@ -445,7 +454,7 @@ function composeDigestHtml(d: {
     const body = d.demand.duplicateEmails
       .map(
         (dup) => `
-          <div style="font-size:12px;color:#5a6a7a;padding:4px 12px;">${dup.inquiries[0].first_name} (${dup.email}) has ${dup.inquiries.length} active inquiries — worth merging</div>
+          <div style="font-size:12px;color:#5a6a7a;padding:4px 12px;">${esc(dup.inquiries[0].first_name)} (${esc(dup.email)}) has ${dup.inquiries.length} active inquiries — worth merging</div>
         `,
       )
       .join("");
@@ -463,12 +472,12 @@ function composeDigestHtml(d: {
             : c.students
                 .map(
                   (s) =>
-                    `<div style="font-size:12px;color:#5a6a7a;margin:2px 0;">${s.email} · ${s.paymentStatus || "pending"} · ${s.onboarded ? "<strong style=\"color:#1B6B6B;\">onboarded ✓</strong>" : "<span style=\"color:#C75B3A;\">not onboarded</span>"}</div>`,
+                    `<div style="font-size:12px;color:#5a6a7a;margin:2px 0;">${esc(s.email)} · ${s.paymentStatus || "pending"} · ${s.onboarded ? "<strong style=\"color:#1B6B6B;\">onboarded ✓</strong>" : "<span style=\"color:#C75B3A;\">not onboarded</span>"}</div>`,
                 )
                 .join("");
         return `
           <div style="border-left:2px solid #163B4E;padding:8px 12px;margin-bottom:8px;background:#f7f9f9;">
-            <div style="font-size:13px;color:#0B1D2C;font-weight:600;">${c.event.title} <span style="font-weight:400;color:#5a6a7a;">· ${date}${endDate}</span></div>
+            <div style="font-size:13px;color:#0B1D2C;font-weight:600;">${esc(c.event.title)} <span style="font-weight:400;color:#5a6a7a;">· ${date}${endDate}</span></div>
             ${studentList}
           </div>
         `;
