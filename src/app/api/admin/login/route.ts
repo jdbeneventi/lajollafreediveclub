@@ -87,7 +87,9 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Expected JSON body { password }" }, { status: 400 });
   }
 
-  const key = process.env.ADMIN_KEY!;
+  // Trimmed for the same reason as in adminAuth.ts — a paste artifact in the
+  // Vercel env value must not lock the correct password out.
+  const key = process.env.ADMIN_KEY!.trim();
   const a = Buffer.from(String(password ?? ""), "utf8");
   const b = Buffer.from(key, "utf8");
   const ok = a.length === b.length && timingSafeEqual(a, b);

@@ -24,7 +24,12 @@ import { createHmac, timingSafeEqual } from "crypto";
  * deployment is locked, never open.
  */
 
-const ADMIN_KEY = process.env.ADMIN_KEY;
+// Trimmed at read time: a trailing space or newline picked up while pasting the
+// value into the Vercel dashboard would otherwise reject the correct password
+// forever, with nothing visible from outside — configured:true, wrong passwords
+// 401 normally, right password fails. Classic env-var paste lockout. User input
+// is deliberately NOT trimmed; only the stored side.
+const ADMIN_KEY = process.env.ADMIN_KEY?.trim() || undefined;
 export const ADMIN_COOKIE = "ljfc_admin";
 
 /** Constant-time compare that tolerates differing lengths. */
@@ -73,7 +78,7 @@ export function isAdmin(req: Request): boolean {
  * a cron endpoint by hand.
  */
 export function isCron(req: Request): boolean {
-  const secret = process.env.CRON_SECRET;
+  const secret = process.env.CRON_SECRET?.trim();
   if (secret) {
     const url = new URL(req.url);
     const provided =
