@@ -29,18 +29,23 @@ export interface StripeSyncSummary {
   ok: boolean;
   reason?: string;
   checked: number;
+  customersFound: number; // emails with a Stripe customer record at all
   advancedToPaid: number;
   courseMatches: number;
   nonCoursePayments: number; // paid *something* under Viriditas, but not course-like
+  errors: number;
+  firstError?: string; // per-student failures are swallowed — surface one for diagnosis
 }
 
 const skip = (reason: string): StripeSyncSummary => ({
   ok: false,
   reason,
   checked: 0,
+  customersFound: 0,
   advancedToPaid: 0,
   courseMatches: 0,
   nonCoursePayments: 0,
+  errors: 0,
 });
 
 const COURSE_RX = /aida|freedive|freediving|course|coaching|deposit|ljfc|la jolla/i;
@@ -65,36 +70,37 @@ export async function syncStripe(windowDays = 90): Promise<StripeSyncSummary> {
   }
 
   const since = Math.floor(Date.now() / 1000) - windowDays * 86_400;
+  let customersFound = 0;
   let advancedToPaid = 0;
   let courseMatches = 0;
   let nonCoursePayments = 0;
+  let errors = 0;
+  let firstError: string | undefined;
 
   for (const row of rows || []) {
     const email = row.email.toLowerCase();
     try {
+      // Customer-first, plain list endpoints only — the Search API is not
+      // available to restricted keys, and every Viriditas invoice creates
+      // a customer anyway.
+      const customers = await stripe.customers.list({ email, limit: 5 });
+      if (customers.data.length === 0) continue;
+      customersFound++;
+
       const hits: Array<{ when: number; amount: number; what: string }> = [];
-
-      // Succeeded charges under this email (covers invoices + payment links).
-      const charges = await stripe.charges.search({
-        query: `billing_details.email:'${email.replace(/'/g, "")}' AND status:'succeeded' AND created>${since}`,
-        limit: 10,
-      });
-      for (const c of charges.data) {
-        hits.push({
-          when: c.created,
-          amount: c.amount,
-          what: c.description || c.calculated_statement_descriptor || "",
-        });
-      }
-
-      // Paid invoices via the customer object, for descriptions charges lack.
-      const customers = await stripe.customers.list({ email, limit: 3 });
       for (const cust of customers.data) {
-        const invoices = await stripe.invoices.list({
-          customer: cust.id,
-          status: "paid",
-          limit: 10,
-        });
+        const [charges, invoices] = await Promise.all([
+          stripe.charges.list({ customer: cust.id, limit: 20 }),
+          stripe.invoices.list({ customer: cust.id, status: "paid", limit: 10 }),
+        ]);
+        for (const c of charges.data) {
+          if (c.status !== "succeeded" || c.refunded || c.created < since) continue;
+          hits.push({
+            when: c.created,
+            amount: c.amount,
+            what: c.description || c.calculated_statement_descriptor || "",
+          });
+        }
         for (const inv of invoices.data) {
           if ((inv.status_transitions?.paid_at || 0) < since) continue;
           hits.push({
@@ -129,18 +135,21 @@ export async function syncStripe(windowDays = 90): Promise<StripeSyncSummary> {
       }
     } catch (e) {
       // One student's lookup failing must not sink the run.
-      console.error(
-        `[stripe-sync] lookup failed for ${row.first_name}:`,
-        e instanceof Error ? e.message : e,
-      );
+      errors++;
+      const msg = e instanceof Error ? e.message : String(e);
+      firstError ||= msg;
+      console.error(`[stripe-sync] lookup failed for ${row.first_name}:`, msg);
     }
   }
 
   return {
     ok: true,
     checked: (rows || []).length,
+    customersFound,
     advancedToPaid,
     courseMatches,
     nonCoursePayments,
+    errors,
+    firstError,
   };
 }
