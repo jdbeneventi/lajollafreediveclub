@@ -35,6 +35,11 @@ import { enrichInquiry } from "@/lib/extractInquiryFacts";
 import { syncGmail, isGmailSyncConfigured } from "@/lib/gmailSync";
 import { syncStripe, isStripeSyncConfigured } from "@/lib/stripeSync";
 import { isCron } from "@/lib/adminAuth";
+import {
+  sendTelegram,
+  ALLOWED_CHAT_ID,
+  isTelegramConfigured,
+} from "@/lib/telegram";
 
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const OWNER_EMAIL = "joshuabeneventi@gmail.com";
@@ -283,6 +288,34 @@ async function runDigest(req: NextRequest) {
     html: closeoutBanner + html,
   });
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+
+  // Morning ping to Telegram alongside the email — same wake-up, second
+  // surface. Fail-soft: a Telegram hiccup never blocks the digest.
+  if (isTelegramConfigured() && ALLOWED_CHAT_ID) {
+    try {
+      await sendTelegram(
+        ALLOWED_CHAT_ID,
+        [
+          `📬 ${subject}`,
+          `new: ${newToday.length} · stale: ${staleNew.length} · stalled quotes: ${stalledQuotes.length} · clusters: ${demand.clusters.length}`,
+          gmail?.ok
+            ? `gmail sync: ${gmail.advancedToReplied} auto-replied`
+            : null,
+          stripePay?.ok
+            ? `stripe: ${stripePay.advancedToPaid} newly paid`
+            : null,
+          closeouts.length
+            ? `⚠ ${closeouts.length} course(s) ran — close out rosters`
+            : null,
+          `Full digest in your inbox · /pipeline for live view`,
+        ]
+          .filter(Boolean)
+          .join("\n"),
+      );
+    } catch (e) {
+      console.error("[digest] telegram ping failed:", e);
+    }
+  }
 
   return NextResponse.json({
     sent: true,

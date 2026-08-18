@@ -80,6 +80,14 @@ export function isAdmin(req: Request): boolean {
 export function isCron(req: Request): boolean {
   const secret = process.env.CRON_SECRET?.trim();
   if (secret) {
+    // Vercel cron invocations carry "Authorization: Bearer <CRON_SECRET>"
+    // automatically when the env var exists — the ${CRON_SECRET} query
+    // syntax in vercel.json is NEVER interpolated (all five crons 401'd
+    // silently for 3 days on exactly that).
+    const bearer = req.headers.get("authorization");
+    if (bearer?.startsWith("Bearer ") && safeEqual(bearer.slice(7), secret)) {
+      return true;
+    }
     const url = new URL(req.url);
     const provided =
       url.searchParams.get("secret") ||

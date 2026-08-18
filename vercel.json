@@ -1,23 +1,23 @@
 {
   "crons": [
     {
-      "path": "/api/daily-email?secret=${CRON_SECRET}",
+      "path": "/api/daily-email",
       "schedule": "0 13 * * *"
     },
     {
-      "path": "/api/friday-reminder?secret=${CRON_SECRET}",
+      "path": "/api/friday-reminder",
       "schedule": "0 14 * * 5"
     },
     {
-      "path": "/api/course-briefing?secret=${CRON_SECRET}",
+      "path": "/api/course-briefing",
       "schedule": "0 16 * * *"
     },
     {
-      "path": "/api/course-reminder?secret=${CRON_SECRET}",
+      "path": "/api/course-reminder",
       "schedule": "0 16 * * *"
     },
     {
-      "path": "/api/inquiry-digest?secret=${CRON_SECRET}",
+      "path": "/api/inquiry-digest",
       "schedule": "0 14 * * *"
     }
   ]
