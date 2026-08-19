@@ -28,7 +28,7 @@ const faqs = [
   },
   {
     q: "Do I need my own gear?",
-    a: "Not for courses or intro experiences — all gear is included. For ongoing group sessions, you'll want your own mask, fins, wetsuit, and weight belt. We can help you choose the right setup.",
+    a: "You'll need your own wetsuit and fins for every course — masks, snorkels, and weight belts we can lend. For ongoing group sessions, you'll want a full setup of your own. Our gear guide helps you choose: sizing, brands, and what works at every water temp.",
   },
   {
     q: "How deep will I dive?",
