@@ -209,7 +209,7 @@ export async function POST(req: NextRequest) {
   const denied = requireAdmin(req);
   if (denied) return denied;
 
-  let items: Array<{ id: string; subject: string; body: string }>;
+  let items: Array<{ id: string; subject: string; body: string; html?: string }>;
   let mode: "send" | "gmail_draft" = "send";
   try {
     const parsed = await req.json();
@@ -251,6 +251,7 @@ export async function POST(req: NextRequest) {
         toName: `${row.first_name} ${row.last_name || ""}`.trim(),
         subject: item.subject,
         text: item.body,
+        html: item.html,
       })),
     );
     const note = `gmail draft ${new Date().toISOString().slice(0, 10)}`;

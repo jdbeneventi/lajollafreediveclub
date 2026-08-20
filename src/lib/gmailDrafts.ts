@@ -19,6 +19,9 @@ export interface DraftItem {
   toName?: string;
   subject: string;
   text: string;
+  /** Optional HTML body — when present the draft is multipart/alternative
+   *  (plain text fallback + HTML), like any modern mail client composes. */
+  html?: string;
 }
 
 export interface DraftResult {
@@ -38,25 +41,48 @@ function encodeWord(s: string): string {
     : `=?UTF-8?B?${Buffer.from(s, "utf-8").toString("base64")}?=`;
 }
 
+function b64(s: string): string {
+  return Buffer.from(s, "utf-8").toString("base64").replace(/(.{76})/g, "$1\r\n");
+}
+
 function buildRfc822(from: string, item: DraftItem): string {
-  const bodyB64 = Buffer.from(item.text, "utf-8")
-    .toString("base64")
-    .replace(/(.{76})/g, "$1\r\n");
   const toHeader = item.toName
     ? `${encodeWord(item.toName)} <${item.to}>`
     : item.to;
   const msgId = `<draft-${Date.now()}-${Math.random().toString(36).slice(2)}@lajollafreediveclub.com>`;
-  return [
+  const headers = [
     `From: Joshua Beneventi <${from}>`,
     `To: ${toHeader}`,
     `Subject: ${encodeWord(item.subject)}`,
     `Date: ${new Date().toUTCString()}`,
     `Message-ID: ${msgId}`,
     "MIME-Version: 1.0",
+  ];
+  if (!item.html) {
+    return [
+      ...headers,
+      'Content-Type: text/plain; charset=UTF-8',
+      "Content-Transfer-Encoding: base64",
+      "",
+      b64(item.text),
+    ].join("\r\n");
+  }
+  const boundary = `ljfc-${Math.random().toString(36).slice(2)}`;
+  return [
+    ...headers,
+    `Content-Type: multipart/alternative; boundary="${boundary}"`,
+    "",
+    `--${boundary}`,
     'Content-Type: text/plain; charset=UTF-8',
     "Content-Transfer-Encoding: base64",
     "",
-    bodyB64,
+    b64(item.text),
+    `--${boundary}`,
+    'Content-Type: text/html; charset=UTF-8',
+    "Content-Transfer-Encoding: base64",
+    "",
+    b64(item.html),
+    `--${boundary}--`,
   ].join("\r\n");
 }
 
