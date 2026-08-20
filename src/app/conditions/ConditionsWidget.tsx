@@ -156,8 +156,10 @@ function scoreTemperature(tempF: number | null, isEstimate: boolean = false): Fa
   return { name: "Water temp", score, weight: 10, label: `${prefix}${tempF}\u00B0F \u00B7 ${label}${suffix}`, color, detail: `Wetsuit: ${wetsuit}.${isEstimate ? " Based on Scripps Pier 100-year seasonal average for this month." : ""}${tempF < 60 ? " Cold water reduces breath hold \u2014 limit session length." : ""}`, education: "Surface temp only \u2014 thermocline can drop 5\u201310\u00B0F at depth. La Jolla ranges from ~56\u00B0F (winter) to ~72\u00B0F (late summer). A sudden 4\u00B0F+ drop often signals upwelling \u2014 cold, clear water from the Canyon \u2014 which typically improves visibility.", ...src };
 }
 
-function scoreSafety(recentRain: boolean): FactorScore {
+function scoreSafety(recentRain: boolean, wqStatus?: string | null): FactorScore {
   const src = { sourceLabel: "SD Beach & Bay Water Quality", sourceUrl: "https://www.sdbeachinfo.com/" };
+  if (wqStatus === "red") return { name: "Water safety", score: 15, weight: 15, label: "Closures active", color: "#C75B3A", detail: "Active beach closures in La Jolla \u2014 bacteria exceeds health standards at one or more sites. Check the Water Quality panel below and avoid closed areas.", education: "SD County tests beaches weekly for fecal indicator bacteria. A closure means levels exceed health standards \u2014 do not enter the water at that site. Check sdbeachinfo.com for the current map.", ...src };
+  if (wqStatus === "yellow") return { name: "Water safety", score: 50, weight: 15, label: "Advisory", color: "#D4A574", detail: "A water-quality advisory is active nearby \u2014 bacteria may exceed health standards. See the Water Quality panel below.", education: "An advisory means bacteria levels may exceed health standards \u2014 swimming is not prohibited but carries elevated risk, especially with open cuts or ear issues. Check sdbeachinfo.com.", ...src };
   if (recentRain) return { name: "Water safety", score: 10, weight: 15, label: "Rain advisory", color: "#C75B3A", detail: "Recent rainfall detected. Avoid ocean contact for 72 hours after rain \u2014 elevated bacteria from urban runoff.", education: "After 0.2+ inches of rain, SD County issues a General Advisory for all coastal waters. Urban runoff carries bacteria, chemicals, and sediment. Bacteria levels stay elevated up to 72 hours. Rain also destroys visibility for 1\u20133 days. Check sdbeachinfo.com for advisories.", ...src };
   return { name: "Water safety", score: 90, weight: 15, label: "Clear", color: "#1B6B6B", detail: "No active advisories or recent rainfall.", education: "SD County tests beaches weekly for fecal indicator bacteria. The 72-hour post-rain rule is the most important guideline. Check sdbeachinfo.com for the latest advisories.", ...src };
 }
@@ -183,6 +185,7 @@ export function ConditionsWidget() {
   const [waterTemp, setWaterTemp] = useState<number | null>(null);
   const [tempIsEstimate, setTempIsEstimate] = useState(false);
   const [tideState, setTideState] = useState<string>("unknown");
+  const [wqStatus, setWqStatus] = useState<string | null>(null);
   const [tides, setTides] = useState<TideEvent[]>([]);
   const [loading, setLoading] = useState(true);
   const [openTooltip, setOpenTooltip] = useState<string | null>(null);
@@ -205,6 +208,7 @@ export function ConditionsWidget() {
       if (d.tides) setTides(d.tides);
     }).catch(() => {});
     fetch("/api/forecast").then(r => r.json()).then(d => { if (d.days) setForecast(d.days); if (d.todayPeriods) setTodayPeriods(d.todayPeriods); }).catch(() => {});
+    fetch("/api/water-quality").then(r => r.json()).then(d => setWqStatus(d.status || null)).catch(() => {});
   }, [waterTemp]);
 
   useEffect(() => {
@@ -219,7 +223,7 @@ export function ConditionsWidget() {
     scoreSwell(conditions),
     scoreWind(conditions),
     scoreTemperature(waterTemp, tempIsEstimate),
-    scoreSafety(false),
+    scoreSafety(false, wqStatus),
   ];
   const overall = calculateOverallGrade(factors);
 
@@ -263,7 +267,7 @@ export function ConditionsWidget() {
         <div className="grid grid-cols-2 md:grid-cols-4 border-t border-deep/[0.06]">
           {[
             { label: "Swell", value: conditions?.waveHeight ? `${conditions.waveHeight} Ft` : "\u2014", sub: conditions?.wavePeriod ? `@ ${conditions.wavePeriod} sec` : "" },
-            { label: "Wind", value: conditions?.windSpeed ? `${conditions.windSpeed} Knots` : "\u2014", sub: conditions?.windDir || "" },
+            { label: "Wind", value: conditions?.windSpeed ? `${String(conditions.windSpeed).replace(/\s*(knots?|kts?)\s*/gi, "")} kt` : "\u2014", sub: conditions?.windDir || "" },
             { label: "Water", value: waterTemp ? `${waterTemp}\u00B0F` : "\u2014", sub: waterTemp && waterTemp >= 72 ? "3–5mm" : waterTemp && waterTemp >= 63 ? "5mm" : "5–7mm" },
             { label: "Tide", value: tideState !== "unknown" ? tideState : "\u2014", sub: tides[0] ? `Next: ${tides[0].height}ft ${tides[0].type}` : "" },
           ].map((s, i) => (

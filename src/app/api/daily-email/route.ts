@@ -212,6 +212,21 @@ async function fetchTideData(): Promise<{ note: string; state: string }> {
 // Only triggers if La Jolla area is specifically mentioned,
 // or if there are widespread closures (5+) suggesting a major event
 async function checkWaterQuality(): Promise<"none" | "advisory" | "closure"> {
+  // Source of truth first: our own structured feed (same one the widget's
+  // Water Quality panel renders). The raw-HTML scrape below is fallback —
+  // it missed active La Jolla closures the API had (status "red").
+  try {
+    const own = await fetch("https://www.lajollafreediveclub.com/api/water-quality", {
+      signal: AbortSignal.timeout(8000),
+      cache: "no-store",
+    });
+    if (own.ok) {
+      const d = await own.json();
+      if (d.status === "red") return "closure";
+      if (d.status === "yellow") return "advisory";
+      if (d.status === "green") return "none";
+    }
+  } catch {}
   try {
     const res = await fetch("https://www.sdbeachinfo.com/", {
       headers: { "User-Agent": "LaJollaFreediveClub/1.0" },
