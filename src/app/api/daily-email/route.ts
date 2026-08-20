@@ -27,6 +27,37 @@ interface VisData {
   summary: string;
 }
 
+/**
+ * Camera-verified visibility from the Scripps Pier underwater cam analysis
+ * (/api/visibility). Only trusted when fresh (<3h), daylight, and parsed —
+ * otherwise the email falls back to the swell/wind predictive estimate.
+ * This was hardcoded null before: on divergent days the email promised
+ * "likely good" visibility while the camera showed green murk.
+ */
+async function fetchCameraVisibility(): Promise<VisData | null> {
+  try {
+    const res = await fetch("https://www.lajollafreediveclub.com/api/visibility", {
+      signal: AbortSignal.timeout(8000),
+      cache: "no-store",
+    });
+    if (!res.ok) return null;
+    const d = await res.json();
+    if (
+      d.is_dark ||
+      !d.grade ||
+      d.grade === "N/A" ||
+      d.visibility_ft_low == null
+    ) {
+      return null;
+    }
+    const age = Date.now() - new Date(d.updated).getTime();
+    if (!Number.isFinite(age) || age > 3 * 3600_000) return null;
+    return d as VisData;
+  } catch {
+    return null;
+  }
+}
+
 // ─── Fetch directly from NDBC 46254 realtime text file ───
 async function fetchBuoyDirect(): Promise<Partial<ConditionsData>> {
   const data: Partial<ConditionsData> = {};
@@ -557,7 +588,8 @@ export async function GET(request: Request) {
 
     // No self-call to /api/visibility — use predictive model only
     // This avoids Vercel function-to-function timeout issues
-    const grade = scoreConditions(conditions, null, tideData.state, waterQuality);
+    const cameraVis = await fetchCameraVisibility();
+    const grade = scoreConditions(conditions, cameraVis, tideData.state, waterQuality);
     const moon = getMoonPhase();
     const events = getTopEvents(new Date(), 4);
     const grunion = isGrunionNight(new Date(), moon.age);
