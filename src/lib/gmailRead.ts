@@ -35,11 +35,22 @@ function decodeBody(raw: string, cte: string): string {
       return Buffer.from(raw.replace(/\s+/g, ""), "base64").toString("utf-8");
     }
     if (enc.includes("quoted-printable")) {
-      return raw
-        .replace(/=\r?\n/g, "")
-        .replace(/=([0-9A-Fa-f]{2})/g, (_, h) =>
-          String.fromCharCode(parseInt(h, 16)),
-        );
+      // Decode to BYTES then UTF-8 — per-char decoding mangles multibyte
+      // sequences (curly quotes became mojibake in ground testing).
+      const cleaned = raw.replace(/=\r?\n/g, "");
+      const bytes: number[] = [];
+      for (let i = 0; i < cleaned.length; i++) {
+        if (
+          cleaned[i] === "=" &&
+          /^[0-9A-Fa-f]{2}/.test(cleaned.slice(i + 1, i + 3))
+        ) {
+          bytes.push(parseInt(cleaned.slice(i + 1, i + 3), 16));
+          i += 2;
+        } else {
+          bytes.push(cleaned.charCodeAt(i) & 0xff);
+        }
+      }
+      return Buffer.from(bytes).toString("utf-8");
     }
     return raw;
   } catch {
