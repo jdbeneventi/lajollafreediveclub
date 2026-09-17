@@ -17,7 +17,7 @@ export function SaturdayBanner() {
             href="/contact/courses?course=coaching"
             className="text-seafoam text-xs font-medium tracking-wide no-underline hover:text-white transition-colors shrink-0"
           >
-            See courses &rarr;
+            Book private &rarr;
           </Link>
         </div>
       </div>
