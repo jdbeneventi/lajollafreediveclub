@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Reveal } from "@/components/Reveal";
 import { getScheduledCourses } from "@/lib/schedule";
+import { COURSES_PAUSED, COURSES_PAUSE_NOTE } from "@/lib/siteConfig";
 
 // The schedule section reads live calendar data — refresh every 5 min.
 export const revalidate = 300;
@@ -193,9 +194,9 @@ export default async function ProgramsPage() {
   // gone stale (it still showed spring dates in August).
   let scheduled: Awaited<ReturnType<typeof getScheduledCourses>> = [];
   try {
-    scheduled = (await getScheduledCourses(120)).filter(
-      (c) => c.category === "course",
-    );
+    scheduled = COURSES_PAUSED
+      ? []
+      : (await getScheduledCourses(120)).filter((c) => c.category === "course");
   } catch {}
   const fmtDate = (d: string, e: string | null) => {
     const opts: Intl.DateTimeFormatOptions = { month: "short", day: "numeric" };
@@ -501,7 +502,9 @@ export default async function ProgramsPage() {
               <div className="section-label justify-center">Schedule</div>
               <h2 className="section-title">Upcoming courses</h2>
               <p className="section-desc max-w-[560px] mx-auto">
-                Dates fill up fast — inquire early to reserve your spot.
+                {COURSES_PAUSED
+                  ? COURSES_PAUSE_NOTE
+                  : "Dates fill up fast — inquire early to reserve your spot."}
               </p>
             </div>
           </Reveal>

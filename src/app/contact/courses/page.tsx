@@ -1,5 +1,7 @@
 "use client";
 
+import { COURSES_PAUSED } from "@/lib/siteConfig";
+
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
@@ -47,6 +49,14 @@ function CourseFormInner() {
   return (
     <>
       <section className="bg-gradient-to-b from-deep to-ocean pt-36 pb-20 px-6 text-center">
+        {COURSES_PAUSED && (
+          <div className="max-w-[640px] mx-auto mb-8 bg-white/[0.08] border border-sun/40 rounded-2xl px-6 py-4 text-left">
+            <strong className="text-sun text-sm block mb-1">Courses are on pause until 2027</strong>
+            <span className="text-white/70 text-sm leading-relaxed">
+              Submit the form anyway — you&rsquo;ll be on the first-to-know list and get first pick of seats when 2027 dates are published.
+            </span>
+          </div>
+        )}
         <Reveal>
           <div className="section-label text-seafoam before:bg-seafoam justify-center">
             Course Inquiry
