@@ -18,4 +18,4 @@ export const SATURDAY_PAUSE_NOTE =
 export const COURSES_PAUSED = true;
 
 export const COURSES_PAUSE_NOTE =
-  "Courses are on pause until 2027 — leave your details and you'll hear new dates first, with first pick of seats. Private coaching is still running.";
+  "Courses are on pause until 2027 — leave your details and you'll hear new dates first, with first pick of seats. Private coaching and private courses are still available.";

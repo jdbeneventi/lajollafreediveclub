@@ -10,7 +10,7 @@ export function SaturdayBanner() {
             <span className="w-1.5 h-1.5 rounded-full bg-sun/70" />
             <span className="text-white/60 text-sm">
               <strong className="text-white/80 font-medium">Sessions &amp; courses are paused until 2027</strong>
-              {" "}&middot; private coaching is still running &middot; you&rsquo;ll hear first when we&rsquo;re back
+              {" "}&middot; private coaching &amp; private courses still available &middot; you&rsquo;ll hear first when we&rsquo;re back
             </span>
           </div>
           <Link

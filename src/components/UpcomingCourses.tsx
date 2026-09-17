@@ -44,7 +44,7 @@ export async function UpcomingCourses() {
               Join the 2027 list &rarr;
             </a>
             <a href="/contact/courses?course=coaching" className="inline-block text-sm font-semibold text-teal border border-teal rounded-full px-5 py-2.5 no-underline">
-              Private coaching — still running
+              Private coaching &amp; private courses — available now
             </a>
           </div>
         </div>
