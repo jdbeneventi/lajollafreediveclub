@@ -395,7 +395,7 @@ export default function Aida2GuidePage() {
                   Whichever partial cert you receive, you complete the remaining portion within 12
                   months and upgrade to the full AIDA 2 card. Most students who don&apos;t hit depth
                   on cert day get there within one or two additional sessions. Follow-up days are
-                  arranged directly with Joshua — just reach out when you're ready. (The certs are named &quot;Pool&quot; and &quot;Depth&quot; in the AIDA
+                  arranged directly with Joshua — just reach out when you&apos;re ready. (The certs are named &quot;Pool&quot; and &quot;Depth&quot; in the AIDA
                   system — confined water can happen at the Shores when conditions allow.)
                 </p>
               </div>
