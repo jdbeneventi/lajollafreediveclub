@@ -154,7 +154,7 @@ const otherPrograms = [
     subtitle: "Focused training for your specific goals",
     price: "$150 / session",
     priceNote: "2–3 hours · Certified freedivers only",
-    duration: "Flexible schedule",
+    duration: "Available now — running through the pause",
     level: "Any level",
     gradient: "from-teal to-sun",
     description:

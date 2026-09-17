@@ -53,7 +53,7 @@ function CourseFormInner() {
           <div className="max-w-[640px] mx-auto mb-8 bg-white/[0.08] border border-sun/40 rounded-2xl px-6 py-4 text-left">
             <strong className="text-sun text-sm block mb-1">Courses are on pause until 2027</strong>
             <span className="text-white/70 text-sm leading-relaxed">
-              Submit the form anyway — you&rsquo;ll be on the first-to-know list and get first pick of seats when 2027 dates are published.
+              Submit the form anyway — you&rsquo;ll be on the first-to-know list and get first pick of seats when 2027 dates are published. <strong className="text-white/90">Private coaching is still running</strong> — pick it below and I&rsquo;ll be in touch to schedule.
             </span>
           </div>
         )}

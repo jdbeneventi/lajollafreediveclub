@@ -39,9 +39,14 @@ export async function UpcomingCourses() {
             On pause until 2027
           </h2>
           <p className="text-deep/60 text-sm max-w-[560px] mb-5">{COURSES_PAUSE_NOTE}</p>
-          <a href="/contact/courses" className="inline-block text-sm font-semibold text-white bg-teal rounded-full px-5 py-2.5 no-underline">
-            Join the 2027 list &rarr;
-          </a>
+          <div className="flex flex-wrap gap-3">
+            <a href="/contact/courses" className="inline-block text-sm font-semibold text-white bg-teal rounded-full px-5 py-2.5 no-underline">
+              Join the 2027 list &rarr;
+            </a>
+            <a href="/contact/courses?course=coaching" className="inline-block text-sm font-semibold text-teal border border-teal rounded-full px-5 py-2.5 no-underline">
+              Private coaching — still running
+            </a>
+          </div>
         </div>
       </section>
     );

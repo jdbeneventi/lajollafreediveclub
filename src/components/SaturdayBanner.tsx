@@ -9,12 +9,12 @@ export function SaturdayBanner() {
           <div className="flex items-center gap-3">
             <span className="w-1.5 h-1.5 rounded-full bg-sun/70" />
             <span className="text-white/60 text-sm">
-              <strong className="text-white/80 font-medium">Saturday sessions are on pause</strong>
-              {" "}&middot; courses run as usual &middot; we&rsquo;ll announce when they return
+              <strong className="text-white/80 font-medium">Sessions &amp; courses are paused until 2027</strong>
+              {" "}&middot; private coaching is still running &middot; you&rsquo;ll hear first when we&rsquo;re back
             </span>
           </div>
           <Link
-            href="/programs"
+            href="/contact/courses?course=coaching"
             className="text-seafoam text-xs font-medium tracking-wide no-underline hover:text-white transition-colors shrink-0"
           >
             See courses &rarr;
