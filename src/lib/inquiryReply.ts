@@ -108,7 +108,7 @@ first-contact framing like "Thanks for reaching out."
 - AIDA 2 private (1 person): $800
 - AIDA 3 group: $700, private: $950
 - Saturday ocean session: Free with Ocean Flow, $25 drop-in (requires cert + own gear + lanyard + computer)
-- Private coaching: $150 (2-3 hrs, certified freedivers only)
+- Private coaching: pricing on request — NEVER state a coaching price in an email; Joshua quotes it personally per engagement (2-3 hr sessions, certified freedivers only)
 
 == STANDARD REPLY STRUCTURE FOR AIDA 2 INQUIRIES ==
 1. Quick welcome + acknowledge their background

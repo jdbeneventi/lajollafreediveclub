@@ -152,7 +152,7 @@ const otherPrograms = [
     id: "coaching",
     title: "Private Coaching",
     subtitle: "Focused training for your specific goals",
-    price: "$150 / session",
+    price: "By request",
     priceNote: "2–3 hours · Certified freedivers only",
     duration: "Available now — running through the pause",
     level: "Any level",
