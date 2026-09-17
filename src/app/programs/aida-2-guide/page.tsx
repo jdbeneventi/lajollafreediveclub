@@ -317,7 +317,7 @@ export default function Aida2GuidePage() {
                   <p className="text-[11px] text-salt/50 font-medium tracking-[0.15em] uppercase mb-3">
                     Private · solo
                   </p>
-                  <p className="font-serif text-5xl text-salt mb-1">$800</p>
+                  <p className="font-serif text-5xl text-salt mb-1">$1,000</p>
                   <p className="text-sm text-salt/50 mb-5">one-on-one</p>
                   <p className="text-sm text-salt/80 leading-relaxed">
                     Same curriculum, taught one-on-one with flexible scheduling around your week.
@@ -330,7 +330,7 @@ export default function Aida2GuidePage() {
                 Includes: AIDA certification card, full course, digital manual, instructor time,
                 LJFC mooring line access. Not included: personal gear (rentals available), AIDA
                 membership (first year free with certification), optional extra ocean training days
-                ($150/day if needed).
+                (arranged directly, priced per session).
               </p>
             </Reveal>
           </div>
@@ -395,8 +395,7 @@ export default function Aida2GuidePage() {
                   Whichever partial cert you receive, you complete the remaining portion within 12
                   months and upgrade to the full AIDA 2 card. Most students who don&apos;t hit depth
                   on cert day get there within one or two additional sessions. Follow-up days are
-                  $150 each, or join our Saturday Sessions once you have the partial cert and your
-                  own gear. (The certs are named &quot;Pool&quot; and &quot;Depth&quot; in the AIDA
+                  arranged directly with Joshua — just reach out when you're ready. (The certs are named &quot;Pool&quot; and &quot;Depth&quot; in the AIDA
                   system — confined water can happen at the Shores when conditions allow.)
                 </p>
               </div>
