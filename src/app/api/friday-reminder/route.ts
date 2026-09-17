@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 import { requireCron } from "@/lib/adminAuth";
+import { SATURDAY_SESSIONS_PAUSED } from "@/lib/siteConfig";
 
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const OWNER_EMAIL = "joshuabeneventi@gmail.com";
@@ -8,6 +9,12 @@ const OWNER_EMAIL = "joshuabeneventi@gmail.com";
 export async function GET(request: Request) {
   const denied = requireCron(request);
   if (denied) return denied;
+
+  // Saturday sessions are paused — no reminders or blasts until resumed
+  // (flip SATURDAY_SESSIONS_PAUSED in src/lib/siteConfig.ts).
+  if (SATURDAY_SESSIONS_PAUSED) {
+    return NextResponse.json({ status: "skipped", reason: "Saturday sessions paused" });
+  }
 
   // Only run on Fridays
   const now = new Date();

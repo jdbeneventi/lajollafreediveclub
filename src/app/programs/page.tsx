@@ -135,11 +135,11 @@ const otherPrograms = [
     subtitle: "Weekly guided dives with your crew",
     price: "Drop-in",
     priceNote: "Open to all certified divers · Register weekly for headcount",
-    duration: "Every Saturday",
+    duration: "Currently on pause",
     level: "AIDA 2+ certified",
     gradient: "from-ocean to-[#14566a]",
     description:
-      "The heart of the club. Every Saturday, we meet at one of La Jolla's best dive spots — the Cove, the Canyon, Shores, or beyond — based on conditions. Sessions include a warm-up, skills focus, free diving time, and full safety coverage. It's training, community, and ocean exploration in one morning.",
+      "Currently on pause — we\u2019ll announce the return date here and by email. When running: every Saturday, we meet at one of La Jolla's best dive spots — the Cove, the Canyon, Shores, or beyond — based on conditions. Sessions include a warm-up, skills focus, free diving time, and full safety coverage. It's training, community, and ocean exploration in one morning.",
     includes: [
       "Guided dives at La Jolla Cove, Canyon, Shores, and beyond",
       "Safety divers on every session",

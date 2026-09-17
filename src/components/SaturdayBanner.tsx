@@ -1,6 +1,28 @@
 import Link from "next/link";
+import { SATURDAY_SESSIONS_PAUSED } from "@/lib/siteConfig";
 
 export function SaturdayBanner() {
+  if (SATURDAY_SESSIONS_PAUSED) {
+    return (
+      <div className="bg-deep border-b border-white/[0.06]">
+        <div className="max-w-[1200px] mx-auto px-6 py-3.5 flex items-center justify-between gap-4 flex-wrap">
+          <div className="flex items-center gap-3">
+            <span className="w-1.5 h-1.5 rounded-full bg-sun/70" />
+            <span className="text-white/60 text-sm">
+              <strong className="text-white/80 font-medium">Saturday sessions are on pause</strong>
+              {" "}&middot; courses run as usual &middot; we&rsquo;ll announce when they return
+            </span>
+          </div>
+          <Link
+            href="/programs"
+            className="text-seafoam text-xs font-medium tracking-wide no-underline hover:text-white transition-colors shrink-0"
+          >
+            See courses &rarr;
+          </Link>
+        </div>
+      </div>
+    );
+  }
   return (
     <div className="bg-deep border-b border-white/[0.06]">
       <div className="max-w-[1200px] mx-auto px-6 py-3.5 flex items-center justify-between gap-4 flex-wrap">

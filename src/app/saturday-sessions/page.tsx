@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Reveal } from "@/components/Reveal";
 import { SaturdayRSVP } from "./SaturdayRSVP";
+import { SATURDAY_SESSIONS_PAUSED, SATURDAY_PAUSE_NOTE } from "@/lib/siteConfig";
 
 const grain = {
   backgroundImage:
@@ -228,7 +229,14 @@ export default function SaturdaySessionsPage() {
       <section id="register" className="bg-gradient-to-br from-ocean to-teal py-16 md:py-24 px-6 relative overflow-hidden scroll-mt-20">
         <div className="absolute inset-0 opacity-[0.03]" style={grain} />
         <div className="max-w-[520px] mx-auto relative z-10">
-          <SaturdayRSVP />
+          {SATURDAY_SESSIONS_PAUSED ? (
+              <div className="bg-white/[0.06] border border-sun/30 rounded-2xl p-6 text-white/80 text-sm leading-relaxed max-w-[520px]">
+                <strong className="text-sun block mb-2">On pause</strong>
+                {SATURDAY_PAUSE_NOTE}
+              </div>
+            ) : (
+            <SaturdayRSVP />
+            )}
         </div>
       </section>
     </>

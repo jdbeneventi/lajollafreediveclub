@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { requireCron } from "@/lib/adminAuth";
+import { SATURDAY_SESSIONS_PAUSED } from "@/lib/siteConfig";
 
 const KIT_API_SECRET = process.env.KIT_API_SECRET;
 const KIT_API_KEY = process.env.KIT_API_KEY;
@@ -446,6 +447,12 @@ export async function POST(request: Request) {
     if (!bodySecretOk) {
       const denied = requireCron(request);
       if (denied) return denied;
+
+  // Saturday sessions are paused — no reminders or blasts until resumed
+  // (flip SATURDAY_SESSIONS_PAUSED in src/lib/siteConfig.ts).
+  if (SATURDAY_SESSIONS_PAUSED) {
+    return NextResponse.json({ status: "skipped", reason: "Saturday sessions paused" });
+  }
     }
 
     if (type !== "go" && type !== "nogo") {
