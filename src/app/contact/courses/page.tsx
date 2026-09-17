@@ -20,7 +20,7 @@ const COURSES = [
   "AIDA 1 — Discover Freediving ($200, half day)",
   "AIDA 2 — Open Water Certification ($575 group / $800 private)",
   "AIDA 3 — Advanced Freediver ($700 group / $950 private)",
-  "Private Coaching ($150/session, 2–3 hrs)",
+  "Private Coaching (2–3 hrs per session)",
   "Saturday Ocean Session ($25 drop-in)",
   "Ocean Flow with Lena ($20 drop-in)",
   "Not sure — help me decide",
@@ -38,7 +38,7 @@ function CourseFormInner() {
         aida1: "AIDA 1 — Discover Freediving ($200, half day)",
         aida2: "AIDA 2 — Open Water Certification ($575 group / $800 private)",
         aida3: "AIDA 3 — Advanced Freediver ($700 group / $950 private)",
-        private: "Private Coaching ($150/session, 2–3 hrs)",
+        private: "Private Coaching (2–3 hrs per session)",
         saturday: "Saturday Ocean Session ($25 drop-in)",
         oceanflow: "Ocean Flow with Lena ($20 drop-in)",
       };
