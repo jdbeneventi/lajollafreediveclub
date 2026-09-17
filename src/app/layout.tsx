@@ -94,7 +94,7 @@ export default function RootLayout({
                 address: { "@type": "PostalAddress", addressLocality: "La Jolla", addressRegion: "CA", postalCode: "92037", addressCountry: "US" },
                 geo: { "@type": "GeoCoordinates", latitude: 32.8568, longitude: -117.2555 },
                 areaServed: { "@type": "City", name: "San Diego" },
-                priceRange: "$200-$950",
+                priceRange: "$300-$1250",
                 openingHours: "Sa 07:00-12:00",
                 sport: "Freediving",
                 sameAs: [

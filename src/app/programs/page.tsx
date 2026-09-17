@@ -28,7 +28,7 @@ const aidaCourses = [
     id: "aida1",
     title: "AIDA 1 — Introduction to Freediving",
     subtitle: "A one-day door into the sport",
-    price: "$200",
+    price: "$300",
     priceNote: "Half day · All equipment guidance included",
     duration: "1 day (3–6 hours)",
     level: "Complete beginners",
@@ -63,7 +63,7 @@ const aidaCourses = [
     title: "AIDA 2 — Freediver Certification",
     subtitle: "The first full certification — your entry into real freediving",
     price: "$575",
-    priceNote: "Group (max 4) · Private 1-on-1 available for $800",
+    priceNote: "Group (max 4) · Private 1-on-1 available for $1,000",
     duration: "2.5 days minimum",
     level: "Beginners with strong swim skills",
     maxDepth: "20m",
@@ -98,7 +98,7 @@ const aidaCourses = [
     title: "AIDA 3 — Advanced Freediver",
     subtitle: "Go deeper with precision and autonomy",
     price: "$700",
-    priceNote: "Group (max 4) · Private 1-on-1 available for $950",
+    priceNote: "Group (max 4) · Private 1-on-1 available for $1,250",
     duration: "3 days minimum",
     level: "AIDA 2 certified (or crossover)",
     maxDepth: "30m",
@@ -288,7 +288,7 @@ export default async function ProgramsPage() {
                     </thead>
                     <tbody className="text-[#2a2a2a]">
                       {[
-                        { label: "Price", a1: "$200", a2: "$575", a3: "$700" },
+                        { label: "Price", a1: "$300", a2: "$575", a3: "$700" },
                         { label: "Duration", a1: "1 day", a2: "2.5 days", a3: "3 days" },
                         { label: "Max depth", a1: "10m", a2: "20m", a3: "30m" },
                         { label: "STA", a1: "None", a2: "2:00 min", a3: "2:45 min" },
