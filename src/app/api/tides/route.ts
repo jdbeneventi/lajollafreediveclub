@@ -22,12 +22,14 @@ export async function GET(request: Request) {
     );
 
     if (!res.ok) {
-      return NextResponse.json({ error: "NOAA API unavailable" }, { status: 502 });
+      return NextResponse.json({ error: "NOAA API unavailable" }, { status: 502, headers: { "Cache-Control": "no-store" } });
     }
 
     const data = await res.json();
     if (!data.predictions) {
-      return NextResponse.json({ error: "No predictions available" }, { status: 200 });
+      // Empty predictions = upstream blip. 5xx + no-store so the CDN keeps
+      // serving the last GOOD copy (long SWR below) instead of caching this.
+      return NextResponse.json({ error: "No predictions available" }, { status: 502, headers: { "Cache-Control": "no-store" } });
     }
 
     // NOAA hilo interval gives us exact high/low times
@@ -98,9 +100,9 @@ export async function GET(request: Request) {
       source_url: "https://tidesandcurrents.noaa.gov/stationhome.html?id=9410230",
       updated: new Date().toISOString(),
     }, {
-      headers: { "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=7200" },
+      headers: { "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=86400" },
     });
   } catch (error) {
-    return NextResponse.json({ error: error instanceof Error ? error.message : "Failed" }, { status: 500 });
+    return NextResponse.json({ error: error instanceof Error ? error.message : "Failed" }, { status: 500, headers: { "Cache-Control": "no-store" } });
   }
 }
