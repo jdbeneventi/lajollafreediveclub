@@ -209,12 +209,12 @@ async function fetchTideData(): Promise<{ note: string; state: string }> {
 
 // ─── Check for recent rain / water quality ───
 // Returns: "none" | "advisory" | "closure"
-// Only triggers if La Jolla area is specifically mentioned,
-// or if there are widespread closures (5+) suggesting a major event
 async function checkWaterQuality(): Promise<"none" | "advisory" | "closure"> {
-  // Source of truth first: our own structured feed (same one the widget's
-  // Water Quality panel renders). The raw-HTML scrape below is fallback —
-  // it missed active La Jolla closures the API had (status "red").
+  // Our own structured feed (same one the widget's Water Quality panel
+  // renders — observed-rain advisories only, see src/lib/waterQuality.ts).
+  // If it's unreachable, report nothing rather than scraping raw HTML: the
+  // old regex fallback invented closures that didn't exist (subscriber
+  // report, Sep 26 2026).
   try {
     const own = await fetch("https://www.lajollafreediveclub.com/api/water-quality", {
       signal: AbortSignal.timeout(8000),
@@ -224,36 +224,9 @@ async function checkWaterQuality(): Promise<"none" | "advisory" | "closure"> {
       const d = await own.json();
       if (d.status === "red") return "closure";
       if (d.status === "yellow") return "advisory";
-      if (d.status === "green") return "none";
     }
   } catch {}
-  try {
-    const res = await fetch("https://www.sdbeachinfo.com/", {
-      headers: { "User-Agent": "LaJollaFreediveClub/1.0" },
-    });
-    if (!res.ok) return "none";
-    const html = await res.text();
-
-    // Check for La Jolla specific mentions near advisory/closure context
-    const hasLaJollaIssue = /la jolla.*(?:advisory|closure|warning)|(?:advisory|closure|warning).*la jolla/i.test(html);
-
-    // Check county-wide numbers
-    const cm = html.match(/Closures\s*\((\d+)\)/i);
-    const cc = cm ? parseInt(cm[1]) : 0;
-
-    // La Jolla specifically flagged → closure
-    if (hasLaJollaIssue) return "closure";
-
-    // Widespread closures (5+) suggest a major rain event affecting the whole coast
-    if (cc >= 5) return "closure";
-
-    // Some closures but not widespread — advisory level, don't hard-fail
-    if (cc > 0) return "advisory";
-
-    return "none";
-  } catch {
-    return "none";
-  }
+  return "none";
 }
 
 // ─── Predictive visibility (same as ConditionsWidget) ───
@@ -620,7 +593,7 @@ export async function GET(request: Request) {
     } else if (waterQuality === "advisory") {
       waterQualityAlert = {
         hasAlert: true,
-        alertText: "Water quality advisories active in San Diego County. Check sdbeachinfo.com for La Jolla status.",
+        alertText: "Water-quality advisory for La Jolla — county guidance is to avoid ocean contact for 72 hours after rain. Live station status: sdbeachinfo.com.",
         color: "#D4A574",
       };
     }

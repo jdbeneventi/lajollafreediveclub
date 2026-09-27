@@ -1,89 +1,47 @@
 import { NextResponse } from "next/server";
+import { checkRain72h, CHRONIC_ADVISORIES, formatLifts } from "@/lib/waterQuality";
 
 // Matches the s-maxage=600 this route already sets. Without it Next prerenders
 // at build time and never revalidates — see /api/almanac for the full note.
-// This one carries beach advisories and closures, so staleness is a safety issue.
+// This one carries beach advisories, so staleness is a safety issue.
 export const revalidate = 600;
 
-const LA_JOLLA_STATIONS = [
-  "Vallecitos - La Jolla Shores",
-  "Avenida De La Playa - La Jolla Shores",
-  "La Jolla Cove",
-  "El Paseo Grande - La Jolla Shores",
-  "Children's Pool - La Jolla",
-  "Scripps Pier",
-];
-
-const PERSISTENT_ADVISORIES = [
-  { station: "Children's Pool", since: "1997", reason: "Seal colony — elevated bacteria from marine mammal waste." },
-  { station: "La Jolla Cove", since: "Jan 2026", reason: "Ongoing water quality advisory." },
-];
-
+// Reports only what we can verify: observed 72-hour rainfall (the county's
+// General Rain Advisory rule) plus the county's one chronic La Jolla
+// advisory. We never synthesize closures — sdbeachinfo.com is linked as the
+// authority for live per-station status. History: the previous version
+// keyword-matched a news page and regexed countywide banner counts, which
+// invented La Jolla closures that didn't exist (reported by a subscriber
+// Sep 26, 2026).
 export async function GET() {
-  const alerts: { icon: string; station: string; detail: string }[] = [];
-  let advisoryCount = 0;
-  let closureCount = 0;
-  let rainWarning = false;
+  const alerts: { icon: string; station: string; detail: string; persistent?: boolean }[] = [];
 
-  try {
-    const [sdRes, ljRes, nwsRes] = await Promise.all([
-      fetch("https://www.sdbeachinfo.com/", { headers: { "User-Agent": "LaJollaFreediveClub/1.0" } }).catch(() => null),
-      fetch("https://lajolla.ca/news/local-impact/", { headers: { "User-Agent": "LaJollaFreediveClub/1.0" } }).catch(() => null),
-      fetch("https://forecast.weather.gov/MapClick.php?lat=32.8328&lon=-117.2713&FcstType=json", { headers: { "User-Agent": "LaJollaFreediveClub/1.0" } }).catch(() => null),
-    ]);
-
-    if (sdRes && sdRes.ok) {
-      const html = await sdRes.text();
-      const am = html.match(/Advisories\s*\((\d+)\)/i);
-      const cm = html.match(/Closures\s*\((\d+)\)/i);
-      advisoryCount = am ? parseInt(am[1]) : 0;
-      closureCount = cm ? parseInt(cm[1]) : 0;
-    }
-
-    if (ljRes && ljRes.ok) {
-      const ljLower = (await ljRes.text()).toLowerCase();
-      for (const station of LA_JOLLA_STATIONS) {
-        const shortName = station.split(" - ")[0] || station;
-        if (ljLower.includes(shortName.toLowerCase()) &&
-            (ljLower.includes("advisory") || ljLower.includes("closure") || ljLower.includes("bacteria"))) {
-          const isClosure = ljLower.includes("closure") || ljLower.includes("closed");
-          alerts.push({
-            icon: isClosure ? "🔴" : "🟡",
-            station: shortName,
-            detail: isClosure ? "Closed — bacteria exceeds health standards" : "Advisory — elevated bacteria levels",
-          });
-        }
-      }
-    }
-
-    if (nwsRes && nwsRes.ok) {
-      try {
-        const nwsData = await nwsRes.json();
-        const periods = nwsData?.data?.text || [];
-        const recent = periods.slice(0, 4).join(" ").toLowerCase();
-        if (recent.includes("rain") || recent.includes("showers") || recent.includes("precipitation")) {
-          rainWarning = true;
-        }
-      } catch {}
-    }
-  } catch {}
-
-  // Always add persistent advisories
-  for (const pa of PERSISTENT_ADVISORIES) {
-    if (!alerts.some((a) => a.station === pa.station)) {
-      alerts.push({ icon: "🟡", station: pa.station, detail: pa.reason + " (since " + pa.since + ")" });
-    }
+  const rain = await checkRain72h();
+  if (rain.advisory) {
+    const lifts = formatLifts(rain.liftsAt);
+    alerts.push({
+      icon: "🌧️",
+      station: "All entries",
+      detail:
+        `Rain advisory — ${rain.totalIn}" of rain in the last 72 hours. County guidance: avoid ocean contact ` +
+        `for 72 hours after rainfall${lifts ? ` (clears ~${lifts})` : ""}. Runoff raises bacteria near storm drains.`,
+    });
   }
 
-  const hasClosure = alerts.some((a) => a.icon === "🔴");
-  const hasAdvisory = alerts.length > 0;
-  const status = hasClosure ? "red" : hasAdvisory ? "yellow" : "green";
+  for (const pa of CHRONIC_ADVISORIES) {
+    alerts.push({ icon: "🟡", station: pa.station, detail: pa.reason + " (since " + pa.since + ")", persistent: true });
+  }
+
+  // Chronic advisories are informational — only an active (rain) advisory
+  // changes status. Closures come from the county map, not from us.
+  const status = rain.advisory ? "yellow" : "green";
 
   return NextResponse.json({
     status,
-    advisoryCount,
-    closureCount,
-    rainWarning,
+    advisoryCount: rain.advisory ? 1 : 0,
+    closureCount: 0,
+    rainWarning: rain.advisory,
+    rain: { totalIn: rain.totalIn, lastRain: rain.lastRain, liftsAt: rain.liftsAt },
     alerts,
     updated: new Date().toISOString(),
   }, {

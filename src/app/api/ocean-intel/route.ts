@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { checkRain72h, CHRONIC_ADVISORIES, formatLifts } from "@/lib/waterQuality";
 
 // Hourly. This route sets no Cache-Control of its own, and without a revalidate
 // Next prerenders it at build time and never refreshes — see /api/almanac.
@@ -158,147 +159,48 @@ async function fetchReddit(): Promise<Sighting[]> {
 }
 
 
-// --- SD Beach Water Quality (sdbeachinfo.com) ---
-const LA_JOLLA_STATIONS = [
-  "Vallecitos - La Jolla Shores",
-  "Avenida De La Playa - La Jolla Shores",
-  "La Jolla Cove",
-  "El Paseo Grande - La Jolla Shores",
-  "Camino Del Oro - La Jolla Shores",
-  "Children's Pool - La Jolla",
-  "Scripps Pier",
-  "Blacks Beach - La Jolla",
-];
-
-// Known persistent advisories — these are always active
-const PERSISTENT_ADVISORIES = [
-  { station: "Children's Pool", since: "1997", reason: "Seal colony — elevated bacteria from marine mammal waste. Water contact not recommended." },
-  { station: "La Jolla Cove", since: "Jan 2026", reason: "Ongoing water quality advisory. Check sdbeachinfo.com before entering." },
-];
-
+// --- Water quality (shared verifiable source: src/lib/waterQuality.ts) ---
+// Only reports observed-rain advisories and the county's chronic Children's
+// Pool advisory. The old version keyword-matched a news page and invented
+// per-station closures that didn't exist (subscriber report, Sep 26 2026).
 async function fetchWaterQuality(): Promise<Sighting[]> {
   const sightings: Sighting[] = [];
-  let advisoryCount = 0;
-  let closureCount = 0;
-  let warningCount = 0;
+  const today = new Date().toISOString().split("T")[0];
 
   try {
-    // Fetch sdbeachinfo, lajolla.ca news, and NWS forecast in parallel
-    const [sdRes, ljRes, nwsRes] = await Promise.all([
-      fetch("https://www.sdbeachinfo.com/", { headers: { "User-Agent": "LaJollaFreediveClub/1.0" } }).catch(() => null),
-      fetch("https://lajolla.ca/news/local-impact/", { headers: { "User-Agent": "LaJollaFreediveClub/1.0" } }).catch(() => null),
-      fetch("https://forecast.weather.gov/MapClick.php?lat=32.8328&lon=-117.2713&FcstType=json", { headers: { "User-Agent": "LaJollaFreediveClub/1.0" } }).catch(() => null),
-    ]);
-
-    // Parse sdbeachinfo nav menu counts
-    if (sdRes && sdRes.ok) {
-      const html = await sdRes.text();
-      const advisoryMatch = html.match(/Advisories\s*\((\d+)\)/i);
-      const closureMatch = html.match(/Closures\s*\((\d+)\)/i);
-      const warningMatch = html.match(/Warnings\s*\((\d+)\)/i);
-      advisoryCount = advisoryMatch ? parseInt(advisoryMatch[1]) : 0;
-      closureCount = closureMatch ? parseInt(closureMatch[1]) : 0;
-      warningCount = warningMatch ? parseInt(warningMatch[1]) : 0;
-    }
-
-    // Check lajolla.ca for La Jolla-specific advisories
-    if (ljRes && ljRes.ok) {
-      const ljHtml = await ljRes.text();
-      const ljLower = ljHtml.toLowerCase();
-
-      for (const station of LA_JOLLA_STATIONS) {
-        const shortName = station.split(" - ")[0] || station;
-        const searchTerm = shortName.toLowerCase();
-
-        if (ljLower.includes(searchTerm) &&
-            (ljLower.includes("advisory") || ljLower.includes("closure") || ljLower.includes("bacteria") || ljLower.includes("water quality"))) {
-          const isClosure = ljLower.includes("closure") || ljLower.includes("closed");
-          sightings.push({
-            source: "SD Beach Info",
-            type: "Advisory",
-            icon: isClosure ? "\u{1F534}" : "\u{1F7E1}",
-            title: isClosure ? "Beach closure: " + shortName : "Water quality advisory: " + shortName,
-            description: isClosure
-              ? "Beach closed. Bacteria levels exceed health standards. Avoid water contact."
-              : "Bacteria levels exceed health standards. Water contact may cause illness.",
-            date: new Date().toISOString().split("T")[0],
-            url: "https://www.sdbeachinfo.com/",
-          });
-        }
-      }
-    }
-
-    // Check NWS forecast for recent rain (72-hour window)
-    if (nwsRes && nwsRes.ok) {
-      try {
-        const nwsData = await nwsRes.json();
-        const periods = nwsData?.data?.text || [];
-        const recentWeather = periods.slice(0, 4).join(" ").toLowerCase();
-        if (recentWeather.includes("rain") || recentWeather.includes("showers") || recentWeather.includes("precipitation")) {
-          sightings.push({
-            source: "NWS",
-            type: "Advisory",
-            icon: "🌧️",
-            title: "Rain in recent forecast — runoff advisory",
-            description: "Rain within 72 hours increases bacteria levels at all beach entries. Avoid diving near storm drains and river mouths.",
-            date: new Date().toISOString().split("T")[0],
-            url: "https://www.sdbeachinfo.com/",
-          });
-        }
-      } catch {
-        // NWS JSON parse failed
-      }
-    }
-
-    // Add known persistent advisories
-    for (const pa of PERSISTENT_ADVISORIES) {
+    const rain = await checkRain72h();
+    if (rain.advisory) {
+      const lifts = formatLifts(rain.liftsAt);
       sightings.push({
-        source: "SD Beach Info",
+        source: "Open-Meteo",
         type: "Advisory",
-        icon: "\u{1F7E1}",
-        title: "Persistent advisory: " + pa.station,
-        description: pa.reason + " (since " + pa.since + ")",
-        date: new Date().toISOString().split("T")[0],
+        icon: "\u{1F327}\uFE0F",
+        title: "Rain advisory \u2014 " + rain.totalIn + "\" in the last 72 hours",
+        description:
+          "County guidance: avoid ocean contact for 72 hours after rainfall" +
+          (lifts ? " (clears ~" + lifts + ")" : "") +
+          ". Runoff raises bacteria near storm drains and river mouths.",
+        date: today,
         url: "https://www.sdbeachinfo.com/",
       });
     }
-
-    // Deduplicate by title
-    const seen = new Set<string>();
-    const unique: Sighting[] = [];
-    for (const s of sightings) {
-      if (!seen.has(s.title)) {
-        seen.add(s.title);
-        unique.push(s);
-      }
-    }
-
-    // If countywide alerts are high, add a summary
-    if (advisoryCount >= 5 || closureCount > 0 || warningCount > 0) {
-      unique.push({
-        source: "SD Beach Info",
-        type: "Advisory",
-        icon: "\u26A0\uFE0F",
-        title: advisoryCount + " advisories, " + closureCount + " closures active countywide",
-        description: "Multiple SD beaches under advisory. Check sdbeachinfo.com for La Jolla status.",
-        date: new Date().toISOString().split("T")[0],
-        url: "https://www.sdbeachinfo.com/",
-      });
-    }
-
-    return unique;
   } catch {
-    // Return persistent advisories even if fetches fail
-    return PERSISTENT_ADVISORIES.map((pa) => ({
+    // rain check failed — report nothing rather than guessing
+  }
+
+  for (const pa of CHRONIC_ADVISORIES) {
+    sightings.push({
       source: "SD Beach Info",
       type: "Advisory",
       icon: "\u{1F7E1}",
       title: "Persistent advisory: " + pa.station,
       description: pa.reason + " (since " + pa.since + ")",
-      date: new Date().toISOString().split("T")[0],
+      date: today,
       url: "https://www.sdbeachinfo.com/",
-    }));
+    });
   }
+
+  return sightings;
 }
 
 

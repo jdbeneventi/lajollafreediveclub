@@ -1,5 +1,7 @@
 // Local Intel — scrapes multiple sources for anything affecting La Jolla Shores divers
 
+import { checkRain72h } from "@/lib/waterQuality";
+
 const UA = "LaJollaFreediveClub/1.0";
 
 interface RawItem {
@@ -25,9 +27,10 @@ export interface LocalIntelResult {
   sourcesChecked: number;
 }
 
+// County-map-confirmed chronic advisory only (the Cove advisory has lifted —
+// verified against sdbeachinfo per-station data, Sep 2026).
 const PERSISTENT_ADVISORIES = [
   { beach: "Children's Pool", status: "advisory", since: "1997" },
-  { beach: "La Jolla Cove", status: "advisory", since: "Jan 2026" },
 ];
 
 // ─── Source: lajolla.ca ───
@@ -111,20 +114,13 @@ async function scrapeNWSAlerts(): Promise<LocalAlert[]> {
   return alerts;
 }
 
-// ─── Source: sdbeachinfo.com ───
+// ─── Water quality (observed rain — see src/lib/waterQuality.ts) ───
+// The old sdbeachinfo regex matched nothing (the county site is a JS app),
+// and countywide counts misled anyway. Counts here are La Jolla-scoped.
 async function scrapeSDBeachInfo(): Promise<{ advisories: number; closures: number; warnings: number }> {
   try {
-    const res = await fetch("https://www.sdbeachinfo.com/", { headers: { "User-Agent": UA } });
-    if (!res.ok) return { advisories: 0, closures: 0, warnings: 0 };
-    const html = await res.text();
-    const am = html.match(/Advisories\s*\((\d+)\)/i);
-    const cm = html.match(/Closures\s*\((\d+)\)/i);
-    const wm = html.match(/Warnings\s*\((\d+)\)/i);
-    return {
-      advisories: am ? parseInt(am[1]) : 0,
-      closures: cm ? parseInt(cm[1]) : 0,
-      warnings: wm ? parseInt(wm[1]) : 0,
-    };
+    const rain = await checkRain72h();
+    return { advisories: rain.advisory ? 1 : 0, closures: 0, warnings: 0 };
   } catch {
     return { advisories: 0, closures: 0, warnings: 0 };
   }
