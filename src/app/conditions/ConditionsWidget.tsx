@@ -159,8 +159,8 @@ function scoreTemperature(tempF: number | null, isEstimate: boolean = false): Fa
 function scoreSafety(recentRain: boolean, wqStatus?: string | null): FactorScore {
   const src = { sourceLabel: "SD Beach & Bay Water Quality", sourceUrl: "https://www.sdbeachinfo.com/" };
   if (wqStatus === "red") return { name: "Water safety", score: 15, weight: 15, label: "Closures active", color: "#C75B3A", detail: "Active beach closures in La Jolla \u2014 bacteria exceeds health standards at one or more sites. Check the Water Quality panel below and avoid closed areas.", education: "SD County tests beaches weekly for fecal indicator bacteria. A closure means levels exceed health standards \u2014 do not enter the water at that site. Check sdbeachinfo.com for the current map.", ...src };
+  if (recentRain) return { name: "Water safety", score: 10, weight: 15, label: "Rain advisory", color: "#C75B3A", detail: "Measurable rain fell within the last 72 hours. Avoid ocean contact for 72 hours after rain \u2014 elevated bacteria from urban runoff.", education: "After 0.2+ inches of rain, SD County issues a General Advisory for all coastal waters. Urban runoff carries bacteria, chemicals, and sediment. Bacteria levels stay elevated up to 72 hours. Rain also destroys visibility for 1\u20133 days. Check sdbeachinfo.com for advisories.", ...src };
   if (wqStatus === "yellow") return { name: "Water safety", score: 50, weight: 15, label: "Advisory", color: "#D4A574", detail: "A water-quality advisory is active nearby \u2014 bacteria may exceed health standards. See the Water Quality panel below.", education: "An advisory means bacteria levels may exceed health standards \u2014 swimming is not prohibited but carries elevated risk, especially with open cuts or ear issues. Check sdbeachinfo.com.", ...src };
-  if (recentRain) return { name: "Water safety", score: 10, weight: 15, label: "Rain advisory", color: "#C75B3A", detail: "Recent rainfall detected. Avoid ocean contact for 72 hours after rain \u2014 elevated bacteria from urban runoff.", education: "After 0.2+ inches of rain, SD County issues a General Advisory for all coastal waters. Urban runoff carries bacteria, chemicals, and sediment. Bacteria levels stay elevated up to 72 hours. Rain also destroys visibility for 1\u20133 days. Check sdbeachinfo.com for advisories.", ...src };
   return { name: "Water safety", score: 90, weight: 15, label: "Clear", color: "#1B6B6B", detail: "No active advisories or recent rainfall.", education: "SD County tests beaches weekly for fecal indicator bacteria. The 72-hour post-rain rule is the most important guideline. Check sdbeachinfo.com for the latest advisories.", ...src };
 }
 
@@ -186,6 +186,7 @@ export function ConditionsWidget() {
   const [tempIsEstimate, setTempIsEstimate] = useState(false);
   const [tideState, setTideState] = useState<string>("unknown");
   const [wqStatus, setWqStatus] = useState<string | null>(null);
+  const [rainAdvisory, setRainAdvisory] = useState(false);
   const [tides, setTides] = useState<TideEvent[]>([]);
   const [loading, setLoading] = useState(true);
   const [openTooltip, setOpenTooltip] = useState<string | null>(null);
@@ -208,7 +209,7 @@ export function ConditionsWidget() {
       if (d.tides) setTides(d.tides);
     }).catch(() => {});
     fetch("/api/forecast").then(r => r.json()).then(d => { if (d.days) setForecast(d.days); if (d.todayPeriods) setTodayPeriods(d.todayPeriods); }).catch(() => {});
-    fetch("/api/water-quality").then(r => r.json()).then(d => setWqStatus(d.status || null)).catch(() => {});
+    fetch("/api/water-quality").then(r => r.json()).then(d => { setWqStatus(d.status || null); setRainAdvisory(!!d.rainWarning); }).catch(() => {});
   }, [waterTemp]);
 
   useEffect(() => {
@@ -223,7 +224,7 @@ export function ConditionsWidget() {
     scoreSwell(conditions),
     scoreWind(conditions),
     scoreTemperature(waterTemp, tempIsEstimate),
-    scoreSafety(false, wqStatus),
+    scoreSafety(rainAdvisory, wqStatus),
   ];
   const overall = calculateOverallGrade(factors);
 

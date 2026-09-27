@@ -204,50 +204,23 @@ async function fetchWaterQuality(): Promise<Sighting[]> {
 }
 
 
-// ─── CDFW Harmful Algal Bloom ───
-async function fetchHABStatus(): Promise<Sighting[]> {
-  const sightings: Sighting[] = [];
-  try {
-    // Check for recent HAB advisories
-    const res = await fetch("https://www.sccwrp.org/about/research-areas/regional-monitoring/southern-california-hab-bulletin/", {
-      headers: { "User-Agent": "LaJollaFreediveClub/1.0" },
-    });
-    if (res.ok) {
-      const html = await res.text();
-      // Look for red tide / HAB mentions near San Diego
-      const hasAlert = html.toLowerCase().includes("san diego") &&
-        (html.toLowerCase().includes("bloom") || html.toLowerCase().includes("red tide") || html.toLowerCase().includes("harmful algal"));
-      if (hasAlert) {
-        sightings.push({
-          source: "CDFW/SCCWRP",
-          type: "Advisory",
-          icon: "🔴",
-          title: "Harmful algal bloom advisory active",
-          description: "HAB conditions reported in the San Diego region. Check water quality before diving.",
-          date: new Date().toISOString().split("T")[0],
-          url: "https://www.sccwrp.org/about/research-areas/regional-monitoring/southern-california-hab-bulletin/",
-        });
-      }
-    }
-  } catch {
-    // Skip HAB check
-  }
-  return sightings;
-}
+// HAB detection removed 2026-09-27: the SCCWRP bulletin page serves a JS
+// shell to server fetches (zero keywords ever match), so the old check could
+// never fire — a detector that can't detect implies coverage we don't have.
+// Red tide surfaces via the visibility camera grade and Reddit/iNat chatter.
 
 // ─── Handler ───
 export async function GET() {
   try {
     // Fetch all sources in parallel
-    const [inat, reddit, waterQualityResults, hab] = await Promise.all([
+    const [inat, reddit, waterQualityResults] = await Promise.all([
       fetchINaturalist(),
       fetchReddit(),
       fetchWaterQuality(),
-      fetchHABStatus(),
     ]);
 
     // Combine and sort by date (newest first)
-    const all = [...inat, ...reddit, ...waterQualityResults, ...hab]
+    const all = [...inat, ...reddit, ...waterQualityResults]
       .sort((a, b) => b.date.localeCompare(a.date));
 
     // Deduplicate by rough title similarity
@@ -264,7 +237,7 @@ export async function GET() {
       sources: {
         inaturalist: inat.length,
         reddit: reddit.length,
-        hab: hab.length,
+        waterQuality: waterQualityResults.length,
       },
       updated: new Date().toISOString(),
     });
