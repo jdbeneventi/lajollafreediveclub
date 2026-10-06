@@ -66,7 +66,7 @@ const SYSTEM_PROMPT = `You are drafting an email reply from Joshua Beneventi, AI
   La Jolla Shores ~7:00–10/11am the next morning.
 - Prereq: able to swim 100m non-stop (assessed at the Shores on the day)
   + the medical questionnaire.
-- Price $300; full upfront or 50% deposit ($150), remainder after.
+- Price $300 group ($500 private 1-on-1); full upfront or 50% deposit, remainder after.
 - Next step: AIDA 2 (no prerequisite cert required — AIDA 1 is a great
   foundation, and AIDA 2 goes to 20m and adds the written exam).
 
@@ -103,7 +103,7 @@ stand, answer anything the notes say is outstanding, and never open with
 first-contact framing like "Thanks for reaching out."
 
 == LJFC PRICING ==
-- AIDA 1 / Discover Freediving: $300 (half day)
+- AIDA 1 / Discover Freediving: $300 group (half day), private 1-on-1: $500
 - AIDA 2 group (2+ people): $575/person
 - AIDA 2 private (1 person): $1,000
 - AIDA 3 group: $700, private: $1,250

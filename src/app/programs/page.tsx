@@ -29,7 +29,7 @@ const aidaCourses = [
     title: "AIDA 1 — Introduction to Freediving",
     subtitle: "A one-day door into the sport",
     price: "$300",
-    priceNote: "Half day · All equipment guidance included",
+    priceNote: "Half day · Private 1-on-1 available for $500",
     duration: "1 day (3–6 hours)",
     level: "Complete beginners",
     maxDepth: "10m",

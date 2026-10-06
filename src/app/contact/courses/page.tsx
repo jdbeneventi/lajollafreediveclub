@@ -17,7 +17,7 @@ import {
 const FORMSPREE = "https://formspree.io/f/mojknqlk";
 
 const COURSES = [
-  "AIDA 1 — Discover Freediving ($300, half day)",
+  "AIDA 1 — Discover Freediving ($300 group / $500 private, half day)",
   "AIDA 2 — Open Water Certification ($575 group / $1000 private)",
   "AIDA 3 — Advanced Freediver ($700 group / $1250 private)",
   "Private Coaching (2–3 hrs per session)",
@@ -33,7 +33,7 @@ function CourseFormInner() {
     const course = searchParams.get("course");
     if (course) {
       const map: Record<string, string> = {
-        aida1: "AIDA 1 — Discover Freediving ($300, half day)",
+        aida1: "AIDA 1 — Discover Freediving ($300 group / $500 private, half day)",
         aida2: "AIDA 2 — Open Water Certification ($575 group / $1000 private)",
         aida3: "AIDA 3 — Advanced Freediver ($700 group / $1250 private)",
         private: "Private Coaching (2–3 hrs per session)",
