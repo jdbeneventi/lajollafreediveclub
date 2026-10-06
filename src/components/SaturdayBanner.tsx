@@ -9,8 +9,8 @@ export function SaturdayBanner() {
           <div className="flex items-center gap-3">
             <span className="w-1.5 h-1.5 rounded-full bg-sun/70" />
             <span className="text-white/60 text-sm">
-              <strong className="text-white/80 font-medium">Sessions &amp; courses are paused until 2027</strong>
-              {" "}&middot; private coaching &amp; private courses still available &middot; you&rsquo;ll hear first when we&rsquo;re back
+              <strong className="text-white/80 font-medium">Public sessions &amp; courses are paused until 2027</strong>
+              {" "}&middot; private coaching &amp; private courses still available upon request
             </span>
           </div>
           <Link
